@@ -1,0 +1,18 @@
+h1 {
+  color: red;
+}
+td,
+th {
+  padding: 0.5em;
+  text-align: center;
+  border-collapse: initial;
+  border: thin solid black;
+}
+
+#main{
+  margin-top: 5em;
+}
+
+body{
+  font-family: sans-serif
+}
