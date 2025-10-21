@@ -10,7 +10,7 @@ def load_user(id):
 
 
 class Personne(UserMixin, db.Model):
-    id_personne = db.Column(db.Intger, primary_key=True)
+    id_personne = db.Column(db.Integer, primary_key=True)
     mdp = db.Column(db.String(64))
     role = db.Column(db.String(6))
     nom_personne = db.Column(db.String(64))
@@ -19,7 +19,7 @@ class Personne(UserMixin, db.Model):
 
 
 class Evenement(db.Model):
-    id_evenement = db.Column(db.Intger, primary_key=True)
+    id_evenement = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date)
     heure = db.Column(db.Integer)
     type_evenement = db.Column(db.String(64))
@@ -31,10 +31,10 @@ class Evenement(db.Model):
 
 
 class Classer(db.Model):
-    id_competition = db.Column(db.Intger,
-                               db.ForeignKey("evenement.id_evenement"))
-    id_inscription = db.Column(db.Intger,
-                               db.ForeignKey("evenement.id_evenement"))
+    id_competition = db.Column(db.Integer,
+                               db.ForeignKey("evenement.id_evenement"),primary_key=True)
+    id_inscription = db.Column(db.Integer,
+                               db.ForeignKey("evenement.id_evenement"),primary_key=True)
 
     @validates('id_competition', 'id_inscription')
     def validate_evenement_type(self, key, value):
@@ -49,7 +49,7 @@ class Classer(db.Model):
 
 
 class Formulaire(db.Model):
-    id_formulaire = db.Column(db.Intger, primary_key=True)
+    id_formulaire = db.Column(db.Integer, primary_key=True)
     nom_auteur = db.Column(db.String(64))
     prenom_auteur = db.Column(db.String(64))
     email_auteur = db.Column(db.String(64))
@@ -58,8 +58,8 @@ class Formulaire(db.Model):
 
 
 class Repondre(db.Model):
-    id_responsable = db.ForeignKey("personne.id_personne")
-    id_formulaire = db.ForeignKey("formulaire.id_formulaire")
+    id_responsable = db.Column(db.Integer,db.ForeignKey("personne.id_personne"),primary_key=True)
+    id_formulaire = db.Column(db.Integer,db.ForeignKey("formulaire.id_formulaire"),primary_key=True)
 
     @validates('id_responsable')
     def validate_responsable_type(self, key, value):
@@ -75,7 +75,7 @@ class Repondre(db.Model):
 
 
 class Article(db.Model):
-    id_article = db.Column(db.Intger, primary_key=True)
+    id_article = db.Column(db.Integer, primary_key=True)
     titre = db.Column(db.String(64))
     date_publication = db.Column(db.Date)
     contenu = db.Column(db.String(1000))
