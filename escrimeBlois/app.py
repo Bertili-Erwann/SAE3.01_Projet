@@ -1,8 +1,9 @@
 from flask import Flask
-from flask_bootstrap5 import Bootstrap
-app=Flask(__name__)
-Bootstrap(app)
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
-# Config options - Make sure you created a 'config.py' file.
+app = Flask(__name__)
 app.config.from_object('config')
-# To get one variable, tape app.config['MY_VARIABLE']
+db = SQLAlchemy(app)
+# db.init_app(app)
+login_manager = LoginManager(app)                  
