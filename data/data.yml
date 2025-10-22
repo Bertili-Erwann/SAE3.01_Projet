@@ -1,0 +1,114 @@
+personnes:
+  - id_personne: 1
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"  # hashed 'password'
+    role: "admin"
+    nom_personne: "Dupont"
+    prenom_personne: "Jean"
+    email_personne: "jean.dupont@example.com"
+    sexe: "M"
+    adresse: "123 Rue de la Paix, Blois"
+    date_naissance: "1990-01-01"
+    etudiant: null
+    arme_principale: null
+    niveau: null
+  - id_personne: 2
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"  # hashed 'password'
+    role: "responsable"
+    nom_personne: "Martin"
+    prenom_personne: "Marie"
+    email_personne: "marie.martin@example.com"
+    sexe: "F"
+    adresse: "456 Avenue des Sports, Blois"
+    date_naissance: "1985-05-15"
+    etudiant: true
+    arme_principale: "Épée"
+    niveau: "Régional"
+  - id_personne: 3
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"  # hashed 'password'
+    role: "membre"
+    nom_personne: "Lemoine"
+    prenom_personne: "Pierre"
+    email_personne: "pierre.lemoine@example.com"
+    sexe: "M"
+    adresse: "789 Boulevard de l'Escrime, Blois"
+    date_naissance: "2000-03-20"
+    etudiant: false
+    arme_principale: "Fleuret"
+    niveau: "Débutant"
+  - id_personne: 4
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"  # hashed 'password'
+    role: "personne"
+    nom_personne: "Durand"
+    prenom_personne: "Alice"
+    email_personne: "alice.durand@example.com"
+    sexe: "F"
+    adresse: "101 Rue des Formulaires, Blois"
+    date_naissance: "1995-07-10"
+    etudiant: null
+    arme_principale: null
+    niveau: null
+
+evenements:
+  - id_evenement: 1
+    date: "2025-10-25"
+    heure: 14
+    type_evenement: "competition"
+    categorie: "Régionale"
+    lieu: "Salle des sports Blois"
+    description: "Compétition régionale d'escrime"
+    niveau: "Régional"
+    discipline: "Épée"
+    cooperative: "Individuel"
+  - id_evenement: 2
+    date: "2025-10-26"
+    heure: 10
+    type_evenement: "inscription"
+    categorie: "Administrative"
+    lieu: "Bureau du club"
+    description: "Session d'inscription pour la saison"
+    niveau: null
+    discipline: null
+    cooperative: null
+
+inscriptions:
+  - id_inscription: 1
+    id_evenement: 1
+  - id_inscription: 2
+    id_evenement: 2
+
+classers:
+  - id_competition: 1  
+    id_inscription: 1 
+    point: 100
+
+formulaires:
+  - id_formulaire: 1
+    nom_auteur: "Durand"
+    prenom_auteur: "Alice"
+    email_auteur: "alice.durand@example.com"
+    objet: "Demande d'information"
+    message: "Bonjour, je souhaite m'inscrire au club."
+
+repondre:
+  - id_responsable: 2
+    id_formulaire: 1
+
+articles:
+  - id_article: 1
+    titre: "Nouvelles du club"
+    date_publication: "2025-10-20"
+    description: "Bienvenue à tous les membres pour la nouvelle saison d'escrime à Blois."
+    categorie: "Actualités"
+    commentable: true
+    responsable_id: 2
+
+image:
+  - id_image: 1
+    nom_image: "nouveau membre"
+    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e2b30608f3f68caf31d3_94.png"
+
+posseder:
+  - id_image: 1
+    id_article: 1
+    miniature: true
+ 
