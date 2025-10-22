@@ -101,3 +101,14 @@ articles:
     categorie: "Actualités"
     commentable: true
     responsable_id: 2
+
+image:
+  - id_image: 1
+    nom_image: "nouveau membre"
+    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e2b30608f3f68caf31d3_94.png"
+
+posseder:
+  - id_image: 1
+    id_article: 1
+    miniature: true
+ 

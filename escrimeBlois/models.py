@@ -374,6 +374,8 @@ class Article(db.Model):
     commentable = db.Column(db.Boolean)
     responsable_id = db.ForeignKey("personne.id_personne")
     responsable = None
+    fichier_principal = db.Column(db.String(100))
+    fichier_principal = db.Column(db.String(100))
 
     @validates('id_responsable')
     def validate_responsable_type(self, key: str, value: int) -> int:
@@ -420,3 +422,35 @@ class Article(db.Model):
             str: Le titre de l'article.
         """
         return self.titre
+
+
+class Image(db.Model):
+    """
+    Modèle représentant une image de la base de donnée.
+    
+    Attributs:
+        id_image (int): Clé primaire.
+        nom_image (str): nom de l'image.
+        url_image (str): url de l'image.
+    """
+    id_image = db.Column(db.Integer, primary_key=True)
+    nom_image = db.Column(db.String(15))
+    url_image = db.Column(db.String(60))
+
+
+class Posseder(db.Model):
+    """
+    Modèle représentant l'association entre les articles et les images.
+    
+    Attributs:
+        id_image (int): partie de la clé primaire, une clé étrangère référencant l'id de la table image.
+        id_competition (int): partie de la clé primaire,une clé étrangère référencant l'id de la table article.
+        miniature(bool): True si c'est la maniature d'un article, False sinon. 
+    """
+    id_image = db.Column(db.Integer,
+                         db.ForeignKey("image.id_image"),
+                         primary_key=True)
+    id_article = db.Column(db.Integer,
+                               db.ForeignKey("article.id_article"),
+                               primary_key=True)
+    miniature = db.Column(db.Boolean)

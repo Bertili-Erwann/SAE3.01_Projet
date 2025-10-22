@@ -18,13 +18,12 @@ def loaddb(filename: str) -> None:
     Args:
         filename (str): Chemin du fichier YAML contenant les données.
     """
-    """Creates the tables and populates them with data."""
     # recréer la base
     db.drop_all()
     db.create_all()
 
     import yaml
-    from .models import Personne, Evenement, Classer, Formulaire, Repondre, Article, Inscription
+    from .models import Personne, Evenement, Classer, Formulaire, Repondre, Article, Inscription, Image, Posseder
 
     with open(filename, 'r', encoding='utf-8') as file:
         data = yaml.safe_load(file) or []
@@ -104,6 +103,18 @@ def loaddb(filename: str) -> None:
                           responsable_id=art['responsable_id'])
         db.session.add(article)
         db.session.commit()
+    for img in data['image']:
+        image = Image(id_image=img['id_image'],
+                      nom_image=img['nom_image'],
+                      url_image=img['url_image'])
+        db.session.add(image)
+        db.session.commit()
+    for poss in data['posseder']:
+        posseder = Posseder(id_image=poss['id_image'],
+                            id_article=poss['id_article'],
+                            miniature=poss['miniature'])
+        db.session.add(posseder)
+        db.session.commit()
 
 
 @app.cli.command()
@@ -111,7 +122,6 @@ def syncdb() -> None:
     """
     Crée les tables de la base de données.
     """
-    """Crée les tables de la BD"""
     db.create_all()
     lg.warning('Base de donnée synchronisée!')
 
@@ -123,8 +133,6 @@ def maxutilisateur() -> int:
     Returns:
         int: L'ID disponible.
     """
-    """donne l'id de l'utilisateur le plus grand de la BD, 0 si il n'y en à pas
-    """
     max_id = db.session.query(func.max(Personne.id_personne)).scalar()
     return (int(max_id) + 1) if max_id is not None else 1
 
@@ -135,7 +143,8 @@ def maxutilisateur() -> int:
 @click.argument('role_user')
 @click.argument('pwd')
 @click.argument('mail')
-def nouvpers(nom: str, prenom: str, role_user: str, pwd: str, mail: str) -> None:
+def nouvpers(nom: str, prenom: str, role_user: str, pwd: str,
+             mail: str) -> None:
     """
     Ajoute un nouvel utilisateur dans la base de données.
     
@@ -145,8 +154,6 @@ def nouvpers(nom: str, prenom: str, role_user: str, pwd: str, mail: str) -> None
         role_user (str): Rôle de l'utilisateur.
         pwd (str): Mot de passe en clair (sera haché).
         mail (str): Adresse email.
-    """
-    """Ajoute un nouveau membre dans la base de donnée 
     """
 
     if Personne.query.filter_by(email_personne=mail).first():
