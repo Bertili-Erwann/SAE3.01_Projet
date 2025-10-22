@@ -11,7 +11,13 @@ lg = logging.getLogger(__name__)
 
 @app.cli.command()
 @click.argument('filename')
-def loaddb(filename):
+def loaddb(filename: str) -> None:
+    """
+    Crée les tables et les remplit avec des données depuis un fichier YAML.
+    
+    Args:
+        filename (str): Chemin du fichier YAML contenant les données.
+    """
     """Creates the tables and populates them with data."""
     # recréer la base
     db.drop_all()
@@ -101,13 +107,22 @@ def loaddb(filename):
 
 
 @app.cli.command()
-def syncdb():
+def syncdb() -> None:
+    """
+    Crée les tables de la base de données.
+    """
     """Crée les tables de la BD"""
     db.create_all()
     lg.warning('Base de donnée synchronisée!')
 
 
 def maxutilisateur() -> int:
+    """
+    Retourne l'ID du prochain utilisateur disponible (max ID + 1, ou 1 si aucun).
+    
+    Returns:
+        int: L'ID disponible.
+    """
     """donne l'id de l'utilisateur le plus grand de la BD, 0 si il n'y en à pas
     """
     max_id = db.session.query(func.max(Personne.id_personne)).scalar()
@@ -120,7 +135,17 @@ def maxutilisateur() -> int:
 @click.argument('role_user')
 @click.argument('pwd')
 @click.argument('mail')
-def nouvpers(nom, prenom, role_user, pwd, mail):
+def nouvpers(nom: str, prenom: str, role_user: str, pwd: str, mail: str) -> None:
+    """
+    Ajoute un nouvel utilisateur dans la base de données.
+    
+    Args:
+        nom (str): Nom de famille.
+        prenom (str): Prénom.
+        role_user (str): Rôle de l'utilisateur.
+        pwd (str): Mot de passe en clair (sera haché).
+        mail (str): Adresse email.
+    """
     """Ajoute un nouveau membre dans la base de donnée 
     """
 
