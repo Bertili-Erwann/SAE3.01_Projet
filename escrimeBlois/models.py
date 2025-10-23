@@ -73,7 +73,8 @@ class Personne(UserMixin, db.Model):
                 if self.etudiant is not None or self.arme_principale is not None or self.niveau is not None:
                     raise ValueError(f"'{value}' a des informations en trop")
         return value
-
+    def get_id(self):
+        return self.id_personne
     def __repr__(self) -> str:
         """
         Représentation simple de la personne.
@@ -374,9 +375,7 @@ class Article(db.Model):
     commentable = db.Column(db.Boolean)
     responsable_id = db.ForeignKey("personne.id_personne")
     responsable = None
-    fichier_principal = db.Column(db.String(100))
-    fichier_principal = db.Column(db.String(100))
-
+    
     @validates('id_responsable')
     def validate_responsable_type(self, key: str, value: int) -> int:
         """
@@ -395,10 +394,9 @@ class Article(db.Model):
         pers = Personne.query.get(value)
         if pers is None:
             raise ValueError(f"La personne {value} est introuvable")
-        role_attendu = "resp"
-        if pers.role != role_attendu:
+        if pers.role != 'responsable':
             raise ValueError(
-                f"La personne {value} doit être de type '{role_attendu}' vous avez le type {pers.role}"
+                f"La personne {value} doit être de type 'responsable' vous avez le type {pers.role}"
             )
         self.responsable = db.relationship("Personne",
                                            backref=db.backref("articles",
