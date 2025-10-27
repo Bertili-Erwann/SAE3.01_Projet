@@ -1,18 +1,39 @@
-h1 {
-  color: red;
+#main {
+  margin-top: 3rem;
 }
-td,
-th {
-  padding: 0.5em;
+
+.header {
+  background-image: url("images/haut_page_escrime.png");
+  width: 100%;
+  height: 98vh;            
+  min-height: 320px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: white;
+  overflow: hidden;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.header-content {
+  position: relative;
+  z-index: 1;
   text-align: center;
-  border-collapse: initial;
-  border: thin solid black;
+  padding: 1rem;
 }
 
-#main{
-  margin-top: 5em;
-}
-
-body{
-  font-family: sans-serif
+.header-content h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 4rem); /* taille responsive */
+  font-weight: 700;
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.835);
 }
