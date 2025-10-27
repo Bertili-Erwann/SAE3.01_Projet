@@ -5,7 +5,7 @@
 .header {
   background-image: url("images/haut_page_escrime.png");
   width: 100%;
-  height: 98vh;            
+  height: 98vh;
   min-height: 320px;
   background-size: cover;
   background-position: center;
@@ -31,9 +31,20 @@
   padding: 1rem;
 }
 
+
 .header-content h1 {
   margin: 0;
-  font-size: clamp(1.8rem, 4vw, 4rem); /* taille responsive */
+  font-size: clamp(1.8rem, 4vw, 4rem);
+  /* taille responsive */
   font-weight: 700;
   text-shadow: 0 4px 14px rgba(0, 0, 0, 0.835);
+}
+
+.header img {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 1rem;
 }
