@@ -1,5 +1,6 @@
 #main {
   margin-top: 3rem;
+  overflow: clip;
 }
 
 .header {
@@ -15,7 +16,6 @@
   justify-content: center;
   position: relative;
   color: white;
-  overflow: hidden;
 }
 
 .header::after {
@@ -48,3 +48,51 @@
   right: 0;
   padding: 1rem;
 }
+
+.main {
+  background-color: #C3C2F4;
+  margin: 5;
+
+}
+
+.main-content {
+  text-align: center;
+}
+.carousel-row {
+  position: relative;
+}
+.articles {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 0 3rem; /* espace pour les boutons */
+}
+.articles > article {
+  flex: 0 0 280px; /* largeur carte */
+  scroll-snap-align: start;
+}
+.articles::-webkit-scrollbar {
+  display: none;
+}
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  cursor: pointer;
+  z-index: 2;
+}
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+.carousel-btn.prev { left: 0.5rem; }
+.carousel-btn.next { right: 0.5rem; }

@@ -3,7 +3,99 @@
   <div class="header-content">
     <h1>Cercle d'Escrime de Blois</h1>
   </div>
-    <img src="../static/images/logo_cercle_escrime_blois.png" alt="Logo du cercle d'éscrime de Blois">
-
+  <img src="../static/images/logo_cercle_escrime_blois.png" alt="Logo du cercle d'éscrime de Blois">
 </div>
+<div class="main">
+  <div class="main-content" id="actualite">
+    <h1>ACTUALITÉ</h1>
+      <div class="carousel-row">
+        <button type="button" class="carousel-btn prev" aria-label="Précédent">‹</button>
+        <div class="articles">
+          <article>
+            <a href="#" class="image featured"><img src="" alt="" /></a>
+            <header>
+              <h3><a href="#">Pulvinar sagittis congue</a></h3>
+            </header>
+            <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+          </article>
+
+          <article>
+            <a href="#" class="image featured"><img src="" alt="" /></a>
+            <header>
+              <h3><a href="#">Fermentum sagittis proin</a></h3>
+            </header>
+            <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+          </article>
+
+          <article>
+            <a href="#" class="image featured"><img src="" alt="" /></a>
+            <header>
+              <h3><a href="#">Sed quis rhoncus placerat</a></h3>
+            </header>
+            <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+          </article>
+
+          <article>
+            <a href="#" class="image featured"><img src="" alt="" /></a>
+            <header>
+              <h3><a href="#">Ultrices urna sit lobortis</a></h3>
+            </header>
+            <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+          </article>
+
+          <article>
+            <a href="#" class="image featured"><img src="" alt="" /></a>
+            <header>
+              <h3><a href="#">Varius magnis sollicitudin</a></h3>
+            </header>
+            <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+          </article>
+
+          <article>
+            <a href="#" class="image featured"><img src="" alt="" /></a>
+            <header>
+              <h3><a href="#">Pulvinar sagittis congue</a></h3>
+            </header>
+            <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+          </article>
+
+          <article>
+            <a href="#" class="image featured"><img src="" alt="" /></a>
+            <header>
+              <h3><a href="#">Fermentum sagittis proin</a></h3>
+            </header>
+            <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+          </article>
+
+          <article>
+            <a href="#" class="image featured"><img src="" alt="" /></a>
+            <header>
+              <h3><a href="#">Sed quis rhoncus placerat</a></h3>
+            </header>
+            <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+          </article>
+
+          <article>
+            <a href="#" class="image featured"><img src="" alt="" /></a>
+            <header>
+              <h3><a href="#">Ultrices urna sit lobortis</a></h3>
+            </header>
+            <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+          </article>
+
+          <article>
+            <a href="#" class="image featured"><img src="" alt="" /></a>
+            <header>
+              <h3><a href="#">Varius magnis sollicitudin</a></h3>
+            </header>
+            <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+          </article>
+        </div>
+        <button type="button" class="carousel-btn next" aria-label="Suivant">›</button>
+      </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
 {% endblock %}
