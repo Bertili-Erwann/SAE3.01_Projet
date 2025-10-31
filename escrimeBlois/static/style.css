@@ -1,6 +1,11 @@
+:root {
+  --cold: #C3C2F4;
+}
+
 #main {
   margin-top: 3rem;
   overflow: clip;
+  background-color: #E5E5E5;
 }
 
 .header {
@@ -25,7 +30,7 @@
 }
 
 .header-content {
-  position: relative;
+  position: reflative;
   z-index: 1;
   text-align: center;
   padding: 1rem;
@@ -49,18 +54,21 @@
   padding: 1rem;
 }
 
-.main {
-  background-color: #C3C2F4;
-  margin: 5;
-
-}
-
 .main-content {
+  background-color: var(--cold);
   text-align: center;
+
 }
+
+.main-content>h1 {
+  letter-spacing: 5px;
+  font-weight: 600;
+}
+
 .carousel-row {
   position: relative;
 }
+
 .articles {
   display: flex;
   flex-direction: row;
@@ -69,15 +77,40 @@
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-  padding: 0 3rem; /* espace pour les boutons */
+  padding: 0 3rem;
 }
-.articles > article {
-  flex: 0 0 280px; /* largeur carte */
+
+.articles>article {
+  flex: 0 0 280px;
+  /* largeur carte */
   scroll-snap-align: start;
+  background-color: #C7C3F4;
+  box-shadow: 1px 10px 10px black;
+  padding: 2em;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  border-radius: 10px;
+  margin: 15px;
+  margin-bottom: 60px;
 }
+
+.articles img {
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 200px;
+  max-height: 200px;
+
+}
+
+.articles h3 {
+  font-weight: 650;
+  font-size: 20px;
+
+}
+
 .articles::-webkit-scrollbar {
   display: none;
 }
+
 .carousel-btn {
   position: absolute;
   top: 50%;
@@ -91,8 +124,39 @@
   cursor: pointer;
   z-index: 2;
 }
+
 .carousel-btn:hover {
   background: rgba(0, 0, 0, 0.6);
 }
-.carousel-btn.prev { left: 0.5rem; }
-.carousel-btn.next { right: 0.5rem; }
+
+.carousel-btn.prev {
+  left: 0.5rem;
+}
+
+.carousel-btn.next {
+  right: 0.5rem;
+}
+
+#inscritpion {
+  background-color: var(--cold);
+  margin: 2em;
+  text-align: center;
+  border-radius: 10px;
+  color: #fff;
+  -webkit-text-stroke: 1px #ffffff;
+  text-shadow:
+    0 1px 0 #000, 1px 0 0 #000, -1px 0 0 #000, 0 -1px 0 #000,
+    1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000,
+    0 2px 0 #000, 2px 0 0 #000, -2px 0 0 #000, 0 -2px 0 #000,
+    2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
+}
+
+
+#inscritpion a {
+  text-decoration: none;
+  color: rgb(255, 130, 130);
+  -webkit-text-stroke: 1px rgb(255, 130, 130);
+  letter-spacing: 2px;
+
+
+}
