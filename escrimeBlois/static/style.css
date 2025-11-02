@@ -57,7 +57,6 @@
 .main-content {
   background-color: var(--cold);
   text-align: center;
-
 }
 
 .main-content>h1 {
@@ -85,12 +84,11 @@
   /* largeur carte */
   scroll-snap-align: start;
   background-color: #C7C3F4;
-  box-shadow: 1px 10px 10px black;
   padding: 2em;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
   border-radius: 10px;
   margin: 15px;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
 }
 
 .articles img {
@@ -137,9 +135,10 @@
   right: 0.5rem;
 }
 
-#inscritpion {
+.inscritpion {
   background-color: var(--cold);
-  margin: 2em;
+  margin: 50px;
+  padding: 50px;
   text-align: center;
   border-radius: 10px;
   color: #fff;
@@ -152,11 +151,46 @@
 }
 
 
-#inscritpion a {
+.inscritpion a {
   text-decoration: none;
   color: rgb(255, 130, 130);
   -webkit-text-stroke: 1px rgb(255, 130, 130);
   letter-spacing: 2px;
+}
 
+.inscritpion h1 {
+  margin: -25px;
 
+}
+
+.inscritpion img {
+  width: 50px;
+  height: 70px;
+}
+
+.partenaire {
+  text-align: center;
+  letter-spacing: 1px;
+  font-weight: 700;
+
+}
+
+#partenaire-content {
+  display: flex;
+  justify-content: center;
+
+}
+
+#partenaire-content section {
+  margin-inline: 10%;
+}
+
+#partenaire-content p {
+  font-size: large;
+  padding: 5%;
+}
+
+.partenaire img {
+  width: 250px;
+  height: 200px;
 }
