@@ -1,8 +1,10 @@
 :root {
-  --cold: #C3C2F4;
+  --cold: #c3c2f4;
 }
 
-html, body {
+/* ==================== Global ====================*/
+html,
+body {
   margin: 0;
   padding: 0;
 }
@@ -11,8 +13,7 @@ body {
   font-family: sans-serif;
 }
 
-/* NAV BAR */
-
+/* ==================== Base.html - Navbar ====================*/
 .navbar-nav {
   float: none;
   margin: 0 auto;
@@ -34,7 +35,7 @@ body {
   font-weight: bold;
 }
 
-/* LOUPE RECHERCHE */
+/* -------------------- Base.html - Loupe Recherche --------------------*/
 .navbar-brand {
   display: flex;
   align-items: center;
@@ -50,10 +51,10 @@ body {
   display: inline !important;
   height: 30px;
 }
+
+/* ==================== Index.html - Main ==================== */
 #main {
   margin-top: 0;
-  overflow: clip;
-  background-color: #E5E5E5;
   position: relative;
 }
 
@@ -86,7 +87,6 @@ body {
   padding: 1rem;
 }
 
-
 .header-content h1 {
   margin: 0;
   font-size: clamp(1.8rem, 4vw, 4rem);
@@ -109,11 +109,12 @@ body {
   text-align: center;
 }
 
-.main-content>h1 {
+.main-content > h1 {
   letter-spacing: 5px;
   font-weight: 600;
 }
 
+/* -------------------- Index.html - Carousel --------------------*/
 .carousel-row {
   position: relative;
 }
@@ -129,13 +130,13 @@ body {
   padding: 0 3rem;
 }
 
-.articles>article {
+.articles > article {
   flex: 0 0 280px;
-  /* largeur carte */
   scroll-snap-align: start;
-  background-color: #C7C3F4;
+  background-color: #c7c3f4;
   padding: 2em;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
   border-radius: 10px;
   margin: 15px;
   margin-bottom: 50px;
@@ -146,13 +147,11 @@ body {
   max-width: 250px;
   min-height: 200px;
   max-height: 200px;
-
 }
 
 .articles h3 {
   font-weight: 650;
   font-size: 20px;
-
 }
 
 .articles::-webkit-scrollbar {
@@ -185,6 +184,7 @@ body {
   right: 0.5rem;
 }
 
+/* -------------------- Index.html - Inscription --------------------*/
 .inscritpion {
   background-color: var(--cold);
   margin: 50px;
@@ -193,13 +193,11 @@ body {
   border-radius: 10px;
   color: #fff;
   -webkit-text-stroke: 1px #ffffff;
-  text-shadow:
-    0 1px 0 #000, 1px 0 0 #000, -1px 0 0 #000, 0 -1px 0 #000,
+  text-shadow: 0 1px 0 #000, 1px 0 0 #000, -1px 0 0 #000, 0 -1px 0 #000,
     1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000,
-    0 2px 0 #000, 2px 0 0 #000, -2px 0 0 #000, 0 -2px 0 #000,
-    2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
+    0 2px 0 #000, 2px 0 0 #000, -2px 0 0 #000, 0 -2px 0 #000, 2px 2px 0 #000,
+    -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
 }
-
 
 .inscritpion a {
   text-decoration: none;
@@ -217,17 +215,16 @@ body {
   height: 70px;
 }
 
+/* -------------------- Index.html - Partenaires --------------------*/
 .partenaire {
   text-align: center;
   letter-spacing: 1px;
   font-weight: 700;
-
 }
 
 #partenaire-content {
   display: flex;
   justify-content: center;
-
 }
 
 #partenaire-content section {
@@ -242,4 +239,75 @@ body {
 .partenaire img {
   width: 250px;
   height: 200px;
+}
+
+/* ==================== Login.html - fenetre-login ==================== */
+.fenetre-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #e6e6e6;
+  border-radius: 5%;
+}
+
+.logo-texte {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-texte img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+  margin-top: 70px;
+}
+
+.logo-texte p {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.fenetre-login h2 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #000000;
+}
+
+.fenetre-login input[type="email"],
+.fenetre-login input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.fenetre-login input[type="button"] {
+  width: 100%;
+  padding: 12px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  background-color: #6691ff;
+  color: #000000;
+}
+.fenetre-login input[type="button"]:hover {
+  background-color: #5273cc;
+}
+
+.fenetre-login #passwrd-oublie {
+  align-self: flex-start;
+  margin-top: 10px;
+  color: #2a4088;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.fenetre-login #passwrd-oublie:hover {
+  text-decoration: underline;
 }
