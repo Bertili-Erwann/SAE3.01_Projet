@@ -185,10 +185,13 @@ body {
 }
 
 .inscritpion {
+  display: flex;
   background-color: var(--cold);
   margin: 50px;
-  padding: 50px;
-  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 40px;
+  width: 70%;
   border-radius: 10px;
   color: #fff;
   -webkit-text-stroke: 1px #ffffff;
@@ -198,22 +201,31 @@ body {
     -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
 }
 
-.inscritpion a {
+.inscritpion > img {
+  width: 40vh;
+  height: 30vh;
+  margin: -40px;
+}
+
+.inscritpion-wrap {
+  margin-top: 50px;
+}
+.inscritpion-wrap h1 {
+  margin-top: -5px;
+  margin-left: 50px;
+}
+
+.inscritpion-wrap a {
   text-decoration: none;
   color: rgb(255, 130, 130);
   -webkit-text-stroke: 1px rgb(255, 130, 130);
   letter-spacing: 2px;
 }
 
-.inscritpion h1 {
-  margin: -25px;
-}
-
-.inscritpion img {
+.inscritpion-wrap img {
   width: 50px;
   height: 70px;
 }
-
 .partenaire {
   text-align: center;
   letter-spacing: 1px;
