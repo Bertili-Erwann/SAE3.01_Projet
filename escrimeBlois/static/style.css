@@ -2,6 +2,11 @@
   --cold: #C3C2F4;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: sans-serif;
 }
@@ -44,26 +49,28 @@ body {
 .show-form {
   display: inline !important;
   height: 30px;
-
+}
 #main {
-  margin-top: 3rem;
+  margin-top: 0;
   overflow: clip;
   background-color: #E5E5E5;
+  position: relative;
 }
 
 .header {
   background-image: url("images/haut_page_escrime.png");
   width: 100%;
-  height: 98vh;
+  height: 100vh;
   min-height: 320px;
   background-size: cover;
-  background-position: center;
+  background-position: top center;
   background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   color: white;
+  margin-top: 0;
 }
 
 .header::after {
