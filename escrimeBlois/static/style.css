@@ -2,6 +2,49 @@
   --cold: #C3C2F4;
 }
 
+body {
+  font-family: sans-serif;
+}
+
+/* NAV BAR */
+
+.navbar-nav {
+  float: none;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+
+.navbar-nav > li {
+  display: inline-block;
+  float: none;
+}
+
+.navbar {
+  background-color: #000000;
+  opacity: 0.5;
+}
+
+.nav-link.accueil {
+  font-weight: bold;
+}
+
+/* LOUPE RECHERCHE */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+.form-image {
+  margin-right: 5px;
+}
+.hidden-form {
+  display: none;
+}
+.show-form {
+  display: inline !important;
+  height: 30px;
+
 #main {
   margin-top: 3rem;
   overflow: clip;
@@ -160,7 +203,6 @@
 
 .inscritpion h1 {
   margin: -25px;
-
 }
 
 .inscritpion img {
