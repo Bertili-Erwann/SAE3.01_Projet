@@ -1,5 +1,114 @@
 {% extends "base.html" %} {% block main %}
-<body>
-  <h1>Placeholder Blois Escrime</h1>
-</body>
+<div class="header">
+  <div class="header-content">
+    <h1>Cercle d'Escrime de Blois</h1>
+  </div>
+  <img src="../static/images/logo_cercle_escrime_blois.png" alt="Logo du cercle d'éscrime de Blois">
+</div>
+<div class="main-content" id="actualite">
+  <h1>ACTUALITÉ</h1>
+  <div class="carousel-row">
+    <button type="button" class="carousel-btn prev" aria-label="Précédent">‹</button>
+    <div class="articles">
+      <article>
+        <a href="#" class="image featured"><img src="../static/images/placeholder1.png" alt="" /></a>
+        <header>
+          <h3>Titre 1</h3>
+        </header>
+        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+      </article>
+
+      <article>
+        <a href="#" class="image featured"><img src="../static/images/placeholder2.png" alt="" /></a>
+        <header>
+          <h3>Titre 2</h3>
+        </header>
+        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+      </article>
+
+      <article>
+        <a href="#" class="image featured"><img src="../static/images/placeholder3.png" alt="" /></a>
+        <header>
+          <h3>Titre 3</h3>
+        </header>
+        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+      </article>
+
+      <article>
+        <a href="#" class="image featured"><img src="../static/images/placeholder4.png" alt="" /></a>
+        <header>
+          <h3>Titre 4</h3>
+        </header>
+        <p> TitreCommodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+      </article>
+
+      <article>
+        <a href="#" class="image featured"><img src="../static/images/placeholder5.png" alt="" /></a>
+        <header>
+          <h3>Titre 5</h3>
+        </header>
+        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+      </article>
+
+      <article>
+        <a href="#" class="image featured"><img src="../static/images/placeholder6.png" alt="" /></a>
+        <header>
+          <h3>Titre 6</h3>
+        </header>
+        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+      </article>
+
+      <article>
+        <a href="#" class="image featured"><img src="../static/images/placeholder7.png" alt="" /></a>
+        <header>
+          <h3>Titre 7</h3>
+        </header>
+        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+      </article>
+
+      <article>
+        <a href="#" class="image featured"><img src="../static/images/placeholder8.png" alt="" /></a>
+        <header>
+          <h3>Titre 8</h3>
+        </header>
+        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+      </article>
+
+      <article>
+        <a href="#" class="image featured"><img src="../static/images/placeholder9.png" alt="" /></a>
+        <header>
+          <h3>Titre 9</h3>
+        </header>
+        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+      </article>
+
+      <article>
+        <a href="#" class="image featured"><img src="../static/images/placeholder10.png" alt="" /></a>
+        <header>
+          <h3>Titre 10</h3>
+        </header>
+        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+      </article>
+    </div>
+    <button type="button" class="carousel-btn next" aria-label="Suivant">›</button>
+  </div>
+</div>
+<div class="inscritpion">
+  <h1>N'attendez plus et cliquez <a href="#">ICI</a><img src="../static/images/double_fleche.png"></h1>
+  <h1>pour vous inscrire</h1>
+</div>
+<div class="partenaire">
+  <h1>Nos partenaires</h1>
+  <div id="partenaire-content">
+    <section><img src="../static/images/logo_blois.png">
+      <p>Ville de Blois</p>
+    </section>
+    <section><img src="../static/images/logo_escrime_centre_val_de_loire.png">
+      <p>Ligue d'Escrime Centre-Val de Loire</p>
+    </section>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
 {% endblock %}
