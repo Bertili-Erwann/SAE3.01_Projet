@@ -8,3 +8,6 @@ def index():
 @app.route('/historique/')
 def historique():
         return render_template('historique.html')
+@app.route('/renseignement/')
+def renseignement():
+    return render_template("renseignement.html",title = "renseignement")

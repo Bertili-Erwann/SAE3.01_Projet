@@ -1,0 +1,84 @@
+body{
+    color: white;
+}
+
+div{
+    border-radius: 20px;
+    background-color: rgb(102, 102, 102);
+    margin: 1%;
+    border-collapse: collapse;
+}
+
+div h1{
+    background-color: rgb(49, 49, 49);
+    border-collapse: collapse;
+    border-radius: 20px 20px / 20px 20px 0px 0px;
+    text-indent : 20px;
+}
+
+table {
+    border: 2px solid white;
+    margin: auto;
+    margin-bottom: auto;
+    padding: 20px;
+    width: 90%;
+    text-align: center;
+    border-spacing: 0;
+    border-collapse: collapse;
+    
+}
+
+th,td{
+  border: 2px solid white;
+  margin: 1px;
+  text-decoration: solid;
+  text-decoration-color: aliceblue;
+}
+
+div li {
+    text-indent : 15px;
+}
+
+div p {
+    text-indent : 10px;
+    
+}
+
+.deux-colonnes {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px; /* espace horizontal entre les colonnes */
+  margin: 20px;
+}
+
+.deux-colonnes {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(102,102,102); /* fond commun de la section */
+  border-radius: 20px;
+  padding: 20px;
+  gap: 30px;
+  position: relative; /* pour le pseudo-élément */
+}
+
+/* Les colonnes elles-mêmes */
+.colonne {
+  flex: 1;
+  padding: 15px;
+  background-color: transparent; /* fond transparent pour garder le fond de la section */
+}
+
+/* Trait vertical fin centré entre les colonnes */
+.deux-colonnes::after {
+  content: "";
+  position: absolute;
+  top: 25%;   /* commence à 25% de la hauteur de la section */
+  bottom: 25%; /* finit à 25% de la hauteur */
+  left: 50%;  /* centré horizontalement */
+  width: 1px;
+  background-color: white;
+  transform: translateX(-50%);
+}
+
+
+
