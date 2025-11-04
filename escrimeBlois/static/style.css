@@ -81,7 +81,7 @@ body {
 }
 
 .header-content {
-  position: reflative;
+  position: relative;
   z-index: 1;
   text-align: center;
   padding: 1rem;
@@ -359,6 +359,10 @@ table {
   padding-right: 25%;
   padding-top: 5%;
 }
+.block-inscription img {
+  margin-left: 40%;
+  /* margin-right: 50%; */
+}
 .form-inscription {
   flex-direction: column;
   margin: 5%;
@@ -385,7 +389,6 @@ table {
 #obligatoire {
   color: red;
 }
-
 .nom-prenom {
   display: block;
 }

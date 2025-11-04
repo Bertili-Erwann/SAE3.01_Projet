@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block main %}
 <div class="block-inscription">
   <img src="../static/images/logo_cercle_escrime_blois.png" id="logo-fiche" />
-  <form class="form-inscription">
+  <form class="form-inscription" method="POST">
     <h1>Inscription au cercle</h1>
     <div class="nom-prenom">
       <label for="nom"> 1. Nom complet <span id="obligatoire">*</span> </label>
@@ -32,14 +32,14 @@
         <input type="radio" name="choix_sexe" value="Homme" />
         <label for="homme">Homme</label><br />
         <input type="radio" name="choix_sexe" value="Femme" />
-        <label for="Femme">Femme</label><br />
+        <label for="femme">Femme</label><br />
       </div>
     </div>
     <div class="ddn">
       <label for="date-naissance"
         >4. Date de naissance <span id="obligatoire">*</span></label
       >
-      <div><input type="date" id="date-naissance" name="date-naissance" /></div>
+      <div><input type="date" name="date-naissance" id="date-naissance" /></div>
     </div>
     <div class="num base-block">
       <label for="num">
@@ -67,4 +67,6 @@
     </div>
   </form>
 </div>
+{% endblock %}{% block scripts %}
+<script src="{{ url_for('static', filename='js/date_dynamique.js') }}"></script>
 {% endblock %}
