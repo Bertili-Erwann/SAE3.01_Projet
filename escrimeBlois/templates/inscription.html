@@ -1,0 +1,70 @@
+{% extends "base.html" %} {% block main %}
+<div class="block-inscription">
+  <img src="../static/images/logo_cercle_escrime_blois.png" id="logo-fiche" />
+  <form class="form-inscription">
+    <h1>Inscription au cercle</h1>
+    <div class="nom-prenom">
+      <label for="nom"> 1. Nom complet <span id="obligatoire">*</span> </label>
+      <div>
+        <input class="nom" type="text" placeholder="Nom" />
+        <input class="prenom" type="text" placeholder="Prenom" />
+      </div>
+    </div>
+    <div class="mot-de-passe base-block">
+      <label for="mot-de-passe">
+        2. Mot de passe <span id="obligatoire">*</span>
+      </label>
+      <div>
+        <input class="mdp" type="password" />
+      </div>
+    </div>
+    <div class="confirme-mdp base-block">
+      <label for="confirme-mdp">
+        Confirmer le mot de passe <span id="obligatoire">*</span>
+      </label>
+      <div>
+        <input class="mdp" type="password" />
+      </div>
+    </div>
+    <div class="sexe">
+      <label for="sexe"> 3. Sexe <span id="obligatoire">*</span> </label>
+      <div>
+        <input type="radio" name="choix_sexe" value="Homme" />
+        <label for="homme">Homme</label><br />
+        <input type="radio" name="choix_sexe" value="Femme" />
+        <label for="Femme">Femme</label><br />
+      </div>
+    </div>
+    <div class="ddn">
+      <label for="date-naissance"
+        >4. Date de naissance <span id="obligatoire">*</span></label
+      >
+      <div><input type="date" id="date-naissance" name="date-naissance" /></div>
+    </div>
+    <div class="num base-block">
+      <label for="num">
+        5. Numéro de téléphone <span id="obligatoire">*</span>
+      </label>
+      <div>
+        <input class="textfield" type="text" />
+      </div>
+    </div>
+    <div class="mail base-block">
+      <label for="mail">
+        6. Adresse email <span id="obligatoire">*</span></label
+      >
+      <div>
+        <input class="textfield" type="text" />
+      </div>
+    </div>
+    <div class="adresse-postale base-block">
+      <label for="adresse-postale">
+        7. Adresse postale <span id="obligatoire">*</span>
+      </label>
+      <div>
+        <input class="textfield" type="text" />
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

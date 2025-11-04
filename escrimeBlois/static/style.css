@@ -135,10 +135,8 @@ body {
   scroll-snap-align: start;
   background-color: #c7c3f4;
   padding: 2em;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
-    rgba(0, 0, 0, 0.22) 0px 10px 10px;
-  border-radius: 10px;
-  margin: 15px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px;
+  padding-top: 15px;
   margin-bottom: 50px;
 }
 
@@ -191,7 +189,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   padding: 40px;
-  width:  60%;
+  width: 60%;
   border-radius: 10px;
   color: #fff;
   -webkit-text-stroke: 1px #ffffff;
@@ -352,4 +350,52 @@ table {
 
 .table100 .table100-body tr:nth-child(even) {
   background-color: #f8f6ff;
+}
+/*//////////////////////////////////////////////////////////////////
+[ Fiche d'inscription ]*/
+
+.block-inscription {
+  padding-left: 25%;
+  padding-right: 25%;
+  padding-top: 5%;
+}
+.form-inscription {
+  flex-direction: column;
+  margin: 5%;
+  padding: 2%;
+  background-color: #d9d9d9;
+  border-radius: 15px;
+}
+.form-inscription input {
+  border-radius: 5px;
+}
+.form-inscription > div {
+  margin: 5px;
+  padding-left: 15%;
+}
+
+.form-inscription h1 {
+  font-size: larger;
+  text-align: center;
+  font-weight: bold;
+}
+.form-inscription label {
+  font-weight: 600;
+}
+#obligatoire {
+  color: red;
+}
+
+.nom-prenom {
+  display: block;
+}
+.nom-prenom input {
+  margin-inline: 5px;
+}
+.block-inscription img {
+  height: 160px;
+  width: 160px;
+}
+.textfield {
+  width: 80%;
 }
