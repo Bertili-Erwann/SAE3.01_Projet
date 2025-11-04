@@ -4,25 +4,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}{% endblock %}</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
+    <!-- Initialisation JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../static/js/loupe_recherche.js"></script>
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
   </head>
   <body>
     {% block navbar %}
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <div class="container-fluid">
-        <a class="navbar-brand">Blois Escrime</a>
+      <div class="collapse navbar-collapse" id="mainNavbar">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <!-- BOUTON ACCUEIL -->
+          <li class="nav-item">
+            <a class="nav-link accueil" href="">Accueil</a>
+          </li>
+
+          <!-- BOUTON EVENEMENT -->
+          <li class="nav-item">
+            <a class="nav-link" href="">Événement</a>
+          </li>
+
+          <!-- BOUTON RENSEIGNEMENT  -->
+          <li class="nav-item">
+            <a class="nav-link" href="">Renseignement</a>
+          </li>
+
+          <!-- BOUTON HISTORIQUE  -->
+          <li class="nav-item">
+            <a class="nav-link" href="">Historique</a>
+          </li>
+
+          <!-- BOUTON SE CONNECTER  -->
+          <li class="nav-item">
+            <a class="nav-link" href="">Se connecter</a>
+          </li>
+        </ul>
       </div>
+      <!-- IMAGE LOUPE ET RECHERCHE -->
+      <a class="navbar-brand" href="#">
+        <input
+          class="form-image"
+          type="image"
+          src="../static/images/loupe_recherche.png"
+          width="20"
+          height="20"
+          name="loupe"
+        />
+        <input class="hidden-form" type="text" name="nm" />
+      </a>
     </nav>
     {% endblock %} {% block content %}
-    <main id="main" role="main" class="container">
+    <main id="main" role="main" class="container-fluid p-0">
       {% block main %}{% endblock %}
     </main>
     {% endblock %}
@@ -32,5 +72,6 @@
     <div id="footer">
       {% extends "footer.html" %}
     </div>
+    {% block scripts %}{% endblock %}
   </body>
 </html>

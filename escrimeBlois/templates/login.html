@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block main %}
+<div class="logo-texte">
+  <img
+    src="../static/images/logo_cercle_escrime_blois.png"
+    alt="Logo du cercle d'escrime de Blois"
+    width="100"
+    height="100"
+  />
+  <p>Connexion au cercle d'escrime de Blois</p>
+</div>
+<div class="fenetre-login">
+  <!-- EMAIL -->
+  <h2>Adresse e-mail</h2>
+  <input type="email" placeholder="Entrez votre e-mail"/>
+
+  <!-- MOT DE PASSE -->
+  <h2>Mot de passe</h2>
+  <input type="password" placeholder="Entrez votre mot de passe"/>
+  <a href="#" id="passwrd-oublie">Mot de passe oublié ?</a>
+
+  <!-- BOUTON LOGIN -->
+  <input type="button" value="Se Connecter" />
+</div>
+{% endblock %}
