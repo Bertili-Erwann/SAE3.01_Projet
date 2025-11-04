@@ -1,95 +1,110 @@
-{% extends "base.html" %}
-
-{% block styles %}
-<link rel="stylesheet"
-    href="{{ url_for('static', filename='renseignement.css') }}">
-{% endblock %}
-
-{% block main %}
-<div>
-    <h1>Comité directeur du Cercle</h1>
-    <p>Le comité directeur du Cercle d’Escrime de Blois est constitué comme suit
-        :</p>
-    <ul>
-        <li><strong>Président</strong> : Régis ECHE</li>
-        <li><strong>Vice-président</strong> : Dominique MARQUET</li>
-        <li><strong>Trésorier Général</strong> : Bernard DELADERIERE</li>
-        <li><strong>Secrétaire Générale</strong> : Pascale LHOMME</li>
-        <li><strong>Membres</strong> : Pascal BIZIEUX; Jon NOTTINGHAM;
-            Christophe LECHOPIER</li>
-    </ul>
-    <br>
+{% extends "base.html" %}{% block main %}
+<div class='firstbloc'></div>
+<div class='rens'>
+    <input type="checkbox" id="bloc1" class="toggle">
+    <label for="bloc1" class="TRens">Comité directeur du Cercle</label>
+    <div class="contenu">
+        <p class='indentP'>Le comité directeur du Cercle d’Escrime de Blois
+            est
+            constitué comme suit
+            :</p>
+        <ul>
+            <li class='indentL' ><strong>Président</strong> : Régis ECHE</li>
+            <li class='indentL'><strong>Vice-président</strong> : Dominique
+                MARQUET</li>
+            <li class='indentL'><strong>Trésorier Général</strong> : Bernard
+                DELADERIERE</li>
+            <li class='indentL'><strong>Secrétaire Générale</strong> :
+                Pascale
+                LHOMME</li>
+            <li class='indentL'><strong>Membres</strong> : Pascal BIZIEUX;
+                Jon
+                NOTTINGHAM;
+                Christophe LECHOPIER</li>
+        </ul>
+        <br>
+    </div>
 </div>
-
-<div>
-    <h1>Horaires</h1>
-    <table>
-        <thead>
-            <tr>
-                <th scope="col">Jour</th>
-                <th scope="col">Horaires</th>
-                <th scope="col">Activité</th>
-                <th scope="col">Public concerné</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>Mardi</th>
-                <td>19h00 – 21h15</td>
-                <td>Entraînement Épée</td>
-                <td>M17, M20, Seniors, Vétérans</td>
-            </tr>
-            <tr>
-                <th scope="row" rowspan="3">Mercredi</th>
-                <td>17h00 – 18h00</td>
-                <td>Initiation Fleuret</td>
-                <td>Débutants (filles & garçons, 8 à 12 ans)</td>
-            </tr>
-            <tr>
-                <td>18h15 – 19h45</td>
-                <td>Entraînement Fleuret ou Épée</td>
-                <td>M11 à M20</td>
-            </tr>
-            <tr>
-                <td>19h45 – 21h15</td>
-                <td>Escrime Loisir (Épée)</td>
-                <td>Débutants ados & adultes (H & F)</td>
-            </tr>
-            <tr>
-                <th scope="row">Vendredi</th>
-                <td>19h00 – 21h15</td>
-                <td>Entraînement Épée (libre)</td>
-                <td>M17 à Vétérans</td>
-            </tr>
-        </tbody>
-    </table>
-    <br>
+<div class='rens'>
+    <input type="checkbox" id="bloc2" class="toggle">
+    <label for="bloc2" class="TRens">Horaires</label>
+    <div class="contenu">
+        <table class="table100-body">
+            <br>
+            <thead>
+                <tr class=table100>
+                    <th scope="col" class='tab'>Jour</th>
+                    <th scope="col" class='tab'>Horaires</th>
+                    <th scope="col" class='tab'>Activité</th>
+                    <th scope="col" class='tab'>Public concerné</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="body">
+                    <th class='tab'>Mardi</th>
+                    <td class='tab'>19h00 – 21h15</td>
+                    <td class='tab'>Entraînement Épée</td>
+                    <td class='tab'>M17, M20, Seniors, Vétérans</td>
+                </tr>
+                <tr class="body">
+                    <th scope="row" rowspan="3" class='tab'>Mercredi</th>
+                    <td class='tab'>17h00 – 18h00</td>
+                    <td class='tab'>Initiation Fleuret</td>
+                    <td class='tab'>Débutants (filles & garçons, 8 à 12
+                        ans)</td>
+                </tr>
+                <tr class="body">
+                    <td class='tab'>18h15 – 19h45</td>
+                    <td class='tab'>Entraînement Fleuret ou Épée</td>
+                    <td class='tab'>M11 à M20</td>
+                </tr>
+                <tr class="body">
+                    <td class='tab'>19h45 – 21h15</td>
+                    <td class='tab'>Escrime Loisir (Épée)</td>
+                    <td class='tab'>Débutants ados & adultes (H & F)</td>
+                </tr>
+                <tr class="body">
+                    <th scope="row" class='tab'>Vendredi</th>
+                    <td class='tab'>19h00 – 21h15</td>
+                    <td class='tab'>Entraînement Épée (libre)</td>
+                    <td class='tab'>M17 à Vétérans</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
 </div>
+<div class='rens'>
+    <input type="checkbox" id="bloc3" class="toggle">
+    <label for="bloc3" class="TRens">Matériels et tenues</label>
+    <div class="contenu">
+        <div class="deux-colonnes">
+            <div class="colonne">
+                <p class='indentP'>Il est possible de louer à l’année sa
+                    tenue d’escrime :</p>
+                <ul>
+                    <li class='indentL'>Veste</li>
+                    <li class='indentL'>Pantalon</li>
+                    <li class='indentL'>Sous-cuirasse</li>
+                </ul>
+                <p class='indentP'>Le gant n’est pas fourni.</p>
+                <p class='indentP'>Le montant de la location est de
+                    45.00€</p>
+            </div>
 
-<div>
-    <h1>Matériel et tenues</h1>
-    <div class="deux-colonnes">
-        <div class="colonne">
-            <p>Il est possible de louer à l’année sa tenue d’escrime :</p>
-            <ul>
-                <li>Veste</li>
-                <li>Pantalon</li>
-                <li>Sous-cuirasse</li>
-            </ul>
-            <p>Le gant n’est pas fourni.</p>
-            <p>Le montant de la location est de 45.00€</p>
-        </div>
-
-        <div class="colonne">
-            <p>Les licenciés sont ensuite tenus d’acheter leur propre matériel
-                :</p>
-            <ul>
-                <li>Masque</li>
-                <li>Gant (main armée)</li>
-                <li>Chaussettes montantes</li>
-                <li>Chaussures adaptées</li>
-                <li>Arme (fleuret, épée ou sabre selon la pratique)</li>
-            </ul>
+            <div class="colonne">
+                <p class='indentP'>Les licenciés sont ensuite tenus
+                    d’acheter leur propre matériel
+                    :</p>
+                <ul>
+                    <li class='indentL'>Masque</li>
+                    <li class='indentL'>Gant (main armée)</li>
+                    <li class='indentL'>Chaussettes montantes</li>
+                    <li class='indentL'>Chaussures adaptées</li>
+                    <li class='indentL'>Arme (fleuret, épée ou sabre
+                        selon la pratique)</li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

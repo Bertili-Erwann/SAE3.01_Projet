@@ -321,6 +321,7 @@ table {
   -webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
   -o-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
   -ms-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+  
 }
 
 .table100-head {
@@ -334,6 +335,7 @@ table {
 .table100-body {
   max-height: 585px;
   overflow: scroll;
+  
 }
 
 .table100 th {
@@ -353,3 +355,125 @@ table {
 .table100 .table100-body tr:nth-child(even) {
   background-color: #f8f6ff;
 }
+
+/*/////////////////Page Renseignement///////////////////////*/
+
+.rens{
+    border-radius: 20px;
+    background-color: rgb(75,75,75);
+    margin: 1%;
+    border-collapse: collapse;
+    color: rgb(255,255,255)
+}
+
+
+.TRens{
+    background-color: rgb(15,15,15);
+    border-collapse: collapse;
+    border-radius: 20px 20px / 20px 20px 0px 0px;
+    text-indent : 20px;
+    display: block;
+    padding: 0.8em;
+    font-style: italic;
+    font: small-caps bold 24px/1 sans-serif;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.indentL {
+    text-indent : 15px;
+    color: rgb(255, 255, 255)
+}
+
+.indentP {
+    text-indent : 10px;
+    color: rgb(255, 255, 255)
+}
+
+.deux-colonnes {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px; /* espace horizontal entre les colonnes */
+  margin: 20px;
+}
+
+.deux-colonnes {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(75,75,75);
+  border-radius: 20px;
+  padding: 20px;
+  gap: 30px;
+  position: relative;
+}
+
+.colonne {
+  flex: 1;
+  padding: 15px;
+  background-color: transparent; 
+}
+
+/* Trait vertical fin centré entre les colonnes */
+.deux-colonnes::after {
+  content: "";
+  position: absolute;
+  top: 25%;   /* commence à 25% de la hauteur de la section */
+  bottom: 25%; /* finit à 25% de la hauteur */
+  left: 50%;  /* centré horizontalement */
+  width: 1px;
+  background-color: white;
+  transform: translateX(-50%);
+}
+
+.tab{
+  border: 3px solid white;
+  margin: 1px;
+  text-decoration: solid;
+  text-decoration-color: aliceblue;
+  text-align: center;
+}
+
+.firstbloc{
+  margin-top: 2cm;
+}
+
+.toggle {
+  display: none;
+}
+
+
+.TRens:hover {
+  background-color: rgb(100, 100, 100);
+}
+
+.contenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.3s ease;
+  padding: 0 1em;
+}
+
+/* Quand on coche → le bloc s’ouvre */
+.toggle:checked ~ .contenu {
+  max-height: 2000px;
+  padding: 1em;
+}
+
+/* Animation de la flèche ▼ */
+.TRens::after {
+  content: "▶";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+}
+
+.toggle:checked + .TRens::after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+
+
