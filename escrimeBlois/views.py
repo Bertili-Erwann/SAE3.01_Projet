@@ -1,5 +1,6 @@
 from flask import flash, redirect, render_template, request, url_for
 from .app import app
+from escrimeBlois.models import Personne
 
 @app.route('/')
 @app.route('/index/')
@@ -33,6 +34,18 @@ def mdp_oublier_confirmer_mdp():
         return redirect(url_for('login'))  # Ou une autre page
     
     return render_template('mdp_oublier_confirmer_mdp.html')
+
+@app.route('/admin/miseajour/membres')
+def admin_miseajour_membres():
+        les_responsables = []
+        les_membres = []
+        personne = Personne.query.all()
+        for e in personne:
+                if e.role == "responsable":
+                        les_responsables.append(e)
+                elif e.role == "membre":
+                        les_membres.append(e)
+        return render_template('admin_miseajour_membres.html',  membres = les_membres, responsables = les_responsables)
 
 @app.route('/historique/')
 def historique():

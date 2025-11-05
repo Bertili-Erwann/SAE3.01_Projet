@@ -19,6 +19,7 @@ body {
   margin: 0 auto;
   display: block;
   text-align: center;
+  overflow-x: auto;
 }
 
 .navbar-nav > li {
@@ -548,4 +549,87 @@ table {
   margin-left: 2%;
 }
 
-/*----------------------------------------------------------*/
+/* ==================== ADMIN ==================== */
+#navbar_admin {
+  background-color: #cacaca;
+  padding: 10px 0;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#nav_admin {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#nav_admin > li {
+  flex-basis: 20%;
+  margin: 0 10px;
+  text-align: center;
+}
+
+#nav_admin > li:hover {
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+#blank_space {
+  padding-top: 60px;
+}
+
+#banniere_responsable,
+#banniere_membre {
+  text-align: center;
+  margin: 20px 0;
+  border-radius: 2px;
+  background-color: #797979;
+  margin-left: 15px;
+  margin-right: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#personne {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 3px;
+  border-width: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#personne_options {
+  gap: 10px;
+}
+
+#membre_modifier,
+#membre_supprimer {
+  border-radius: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-style: solid;
+  border-color: #000;
+  transition: all 0.3s;
+}
+
+#membre_modifier {
+  background-color: #949494;
+}
+
+#membre_modifier:hover {
+  background-color: #d3d3d3;
+  transform: scale(1.05);
+}
+
+#membre_supprimer {
+  background-color: #d90000;
+}
+
+#membre_supprimer:hover {
+  background-color: #ff5d5d;
+  transform: scale(1.05);
+}

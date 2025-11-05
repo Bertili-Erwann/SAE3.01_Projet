@@ -4,7 +4,7 @@
     <h1>Cercle d'Escrime de Blois</h1>
   </div>
   <img
-    src="../static/images/logo_cercle_escrime_blois.png"
+    src="{{ url_for('static', filename='images/logo_cercle_escrime_blois.png') }}"
     alt="Logo du cercle d'éscrime de Blois"
   />
 </div>
@@ -17,7 +17,7 @@
     <div class="articles">
       <article>
         <a href="#" class="image featured"
-          ><img src="../static/images/placeholder1.png" alt=""
+          ><img src="{{ url_for('static', filename='images/placeholder1.png') }}" alt=""
         /></a>
         <header>
           <h3>Titre 1</h3>
@@ -27,7 +27,7 @@
 
       <article>
         <a href="#" class="image featured"
-          ><img src="../static/images/placeholder2.png" alt=""
+          ><img src="{{ url_for('static', filename='images/placeholder2.png') }}" alt=""
         /></a>
         <header>
           <h3>Titre 2</h3>
@@ -37,7 +37,7 @@
 
       <article>
         <a href="#" class="image featured"
-          ><img src="../static/images/placeholder3.png" alt=""
+          ><img src="{{ url_for('static', filename='images/placeholder3.png') }}" alt=""
         /></a>
         <header>
           <h3>Titre 3</h3>
@@ -47,7 +47,7 @@
 
       <article>
         <a href="#" class="image featured"
-          ><img src="../static/images/placeholder4.png" alt=""
+          ><img src="{{ url_for('static', filename='images/placeholder4.png') }}" alt=""
         /></a>
         <header>
           <h3>Titre 4</h3>
@@ -59,7 +59,7 @@
 
       <article>
         <a href="#" class="image featured"
-          ><img src="../static/images/placeholder5.png" alt=""
+          ><img src="{{ url_for('static', filename='images/placeholder5.png') }}" alt=""
         /></a>
         <header>
           <h3>Titre 5</h3>
@@ -69,7 +69,7 @@
 
       <article>
         <a href="#" class="image featured"
-          ><img src="../static/images/placeholder6.png" alt=""
+          ><img src="{{ url_for('static', filename='images/placeholder6.png') }}" alt=""
         /></a>
         <header>
           <h3>Titre 6</h3>
@@ -79,7 +79,7 @@
 
       <article>
         <a href="#" class="image featured"
-          ><img src="../static/images/placeholder7.png" alt=""
+          ><img src="{{ url_for('static', filename='images/placeholder7.png') }}" alt=""
         /></a>
         <header>
           <h3>Titre 7</h3>
@@ -89,7 +89,7 @@
 
       <article>
         <a href="#" class="image featured"
-          ><img src="../static/images/placeholder8.png" alt=""
+          ><img src="{{ url_for('static', filename='images/placeholder8.png') }}" alt=""
         /></a>
         <header>
           <h3>Titre 8</h3>
@@ -99,7 +99,7 @@
 
       <article>
         <a href="#" class="image featured"
-          ><img src="../static/images/placeholder9.png" alt=""
+          ><img src="{{ url_for('static', filename='images/placeholder9.png') }}" alt=""
         /></a>
         <header>
           <h3>Titre 9</h3>
@@ -109,7 +109,7 @@
 
       <article>
         <a href="#" class="image featured"
-          ><img src="../static/images/placeholder10.png" alt=""
+          ><img src="{{ url_for('static', filename='images/placeholder10.png') }}" alt=""
         /></a>
         <header>
           <h3>Titre 10</h3>
@@ -123,11 +123,11 @@
   </div>
 </div>
 <div class="inscription">
-  <img src="../static/images/escrimeur.png" />
+  <img src="{{ url_for('static', filename='images/escrimeur.png') }}" />
   <div class="inscription-wrap">
     <h1>
       N'attendez plus et cliquez <a href="#">ICI</a
-      ><img src="../static/images/double_fleche.png" />
+      ><img src="{{ url_for('static', filename='images/double_fleche.png') }}" />
     </h1>
     <h1>pour vous inscrire</h1>
   </div>
@@ -136,11 +136,11 @@
   <h1>Nos partenaires</h1>
   <div id="partenaire-content">
     <section>
-      <img src="../static/images/logo_blois.png" />
+      <img src="{{ url_for('static', filename='images/logo_blois.png') }}" />
       <p>Ville de Blois</p>
     </section>
     <section>
-      <img src="../static/images/logo_escrime_centre_val_de_loire.png" />
+      <img src="{{ url_for('static', filename='images/logo_escrime_centre_val_de_loire.png') }}" />
       <p>Ligue d'Escrime Centre-Val de Loire</p>
     </section>
   </div>

@@ -1,0 +1,87 @@
+{% extends "base.html" %} {% block main %}
+<main id="admin_nav" role="admin_nav" class="container-fluid p-0">
+  {% include "admin_nav_bar.html" %}
+</main>
+<div>
+  <h1>Liste des membres du club</h1>
+
+  <!-- RESPONSABLES -->
+  <div id="banniere_responsable">
+    <p>Responsables</p>
+  </div>
+  {% if responsables|length == 0 %}
+  <h1>Aucun responsable trouvé</h1>
+  {% else %}
+  <div class="limiter">
+    <div id="container_table_form">
+      <div class="wrap-table100">
+        <div id="table_form">
+          <div class="table100-body js-pscroll">
+            <table>
+              {% for resp in responsables %}
+              <tr id="table_personne">
+                <td id="personne">
+                  <div id="personne_infos">
+                    <p>
+                      {{ resp.nom_personne }} {{ resp.prenom_personne }} | {{
+                      resp.sexe }} | {{ resp.email_personne }}
+                    </p>
+                  </div>
+                  <div id="personne_options">
+                    <button type="button" id="membre_modifier">Modifier</button>
+                    <button type="button" id="membre_supprimer">
+                      Supprimer
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- MEMBRES -->
+  <div id="banniere_membre">
+    <p>Membres</p>
+  </div>
+  {% if membres|length == 0 %}
+  <h1>Aucun membre trouvé</h1>
+  {% else %}
+  <div class="limiter">
+    <div id="container_table_form">
+      <div class="wrap-table100">
+        <div id="table_form">
+          <div class="table100-body js-pscroll">
+            <table>
+              {% for memb in membres %}
+              <tr id="table_personne">
+                <td id="personne">
+                  <div id="personne_infos">
+                    <p>
+                      {{ memb.nom_personne }} {{ memb.prenom_personne }} | {{
+                      memb.sexe }} | {{ memb.email_personne }}
+                    </p>
+                  </div>
+                  <div id="personne_options">
+                    <button type="button" id="membre_modifier">Modifier</button>
+                    <button type="button" id="membre_supprimer">
+                      Supprimer
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  {% endblock %}
+</div>
