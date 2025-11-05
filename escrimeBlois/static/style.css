@@ -445,7 +445,7 @@ table {
   background-color: #f8f6ff;
 }
 
-/* CSS partie footer ---------------------------------------*/
+/* -------------------- footer.html --------------------*/
 
 #footer {
   background-color: #484848;
@@ -548,4 +548,128 @@ table {
   margin-left: 2%;
 }
 
-/*----------------------------------------------------------*/
+/* -------------------- nav_responsable.html --------------------*/
+
+#resp_navbar{
+  background-color: #cacaca;
+  padding: 10px 0;
+}
+
+#nav_responsable{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#nav_responsable > li{
+  flex-basis: 20%;
+  margin: 0 10px;
+}
+
+#nav_responsable > li:hover{
+  font-weight: bold;
+}
+
+#blank_space{
+  padding:25px;
+}
+
+#nav_responsable .nav-link {
+  text-decoration: none;
+  color: #333;
+  text-align: center;
+  margin-right: 20px;
+}
+
+#nav_responsable .nav-link:hover {
+  color: #000;
+}
+
+/* -------------------- getion_formulaire.html --------------------*/
+
+#gest_form {
+  margin: 1%;
+  align-content: center;
+
+}
+
+.text_form {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#table_form {
+  position: relative;
+  padding-top: 60px;
+  border-radius: 10px;
+  overflow: scroll;
+}
+
+#container_table_form {
+  margin-left: 10%;
+  width: 80%;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  background-color: #ffffff;
+}
+
+#formulaire {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 90%;
+  margin-top: -40px;
+  margin-bottom: 60px;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-style: solid;
+  border-width: 2px;
+}
+
+#formulaire_infos,
+#formulaire_options {
+  flex-basis: 40%;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+#formulaire_options {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+#form_consulter,
+#form_supprimer {
+  border-radius: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 100%;
+  border-style: solid;
+  border-color: #000;
+}
+
+#form_consulter {
+  background-color: #949494;
+}
+
+#form_consulter:hover {
+  background-color: #d3d3d3;
+}
+
+#form_supprimer {
+  background-color: #D90000;
+}
+
+#form_supprimer:hover {
+  background-color: #ff5d5d;
+}

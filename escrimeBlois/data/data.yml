@@ -88,10 +88,76 @@ formulaires:
     email_auteur: "alice.durand@example.com"
     objet: "Demande d'information"
     message: "Bonjour, je souhaite m'inscrire au club."
+  - id_formulaire: 2
+    nom_auteur: "Durand"
+    prenom_auteur: "Alice"
+    email_auteur: "alice.durand@example.com"
+    objet: "Demande d'information"
+    message: "Bonjour, je souhaite m'inscrire au club."
+  - id_formulaire: 3
+    nom_auteur: "Durand"
+    prenom_auteur: "Alice"
+    email_auteur: "alice.durand@example.com"
+    objet: "Demande d'information"
+    message: "Bonjour, je souhaite m'inscrire au club."
+  - id_formulaire: 4
+    nom_auteur: "Durand"
+    prenom_auteur: "Alice"
+    email_auteur: "alice.durand@example.com"
+    objet: "Demande d'information"
+    message: "Bonjour, je souhaite m'inscrire au club."
+  - id_formulaire: 5
+    nom_auteur: "Durand"
+    prenom_auteur: "Alice"
+    email_auteur: "alice.durand@example.com"
+    objet: "Demande d'information"
+    message: "Bonjour, je souhaite m'inscrire au club."
+  - id_formulaire: 6
+    nom_auteur: "Durand"
+    prenom_auteur: "Alice"
+    email_auteur: "alice.durand@example.com"
+    objet: "Demande d'information"
+    message: "Bonjour, je souhaite m'inscrire au club."
+  - id_formulaire: 7
+    nom_auteur: "Durand"
+    prenom_auteur: "Alice"
+    email_auteur: "alice.durand@example.com"
+    objet: "Demande d'information"
+    message: "Bonjour, je souhaite m'inscrire au club."
+  - id_formulaire: 8
+    nom_auteur: "Durand"
+    prenom_auteur: "Alice"
+    email_auteur: "alice.durand@example.com"
+    objet: "Demande d'information"
+    message: "Bonjour, je souhaite m'inscrire au club."
+  - id_formulaire: 9
+    nom_auteur: "Durand"
+    prenom_auteur: "Alice"
+    email_auteur: "alice.durand@example.com"
+    objet: "Demande d'information"
+    message: "Bonjour, je souhaite m'inscrire au club."
+
 
 repondre:
   - id_responsable: 2
     id_formulaire: 1
+  - id_responsable: 2
+    id_formulaire: 2
+  - id_responsable: 2
+    id_formulaire: 3
+  - id_responsable: 2
+    id_formulaire: 4
+  - id_responsable: 2
+    id_formulaire: 5
+  - id_responsable: 2
+    id_formulaire: 6
+  - id_responsable: 2
+    id_formulaire: 7
+  - id_responsable: 2
+    id_formulaire: 8
+  - id_responsable: 2
+    id_formulaire: 9
+
 
 articles:
   - id_article: 1

@@ -1,5 +1,6 @@
 from flask import flash, redirect, render_template, request, url_for
 from .app import app
+from escrimeBlois.models import Formulaire
 
 @app.route('/')
 @app.route('/index/')
@@ -37,3 +38,12 @@ def mdp_oublier_confirmer_mdp():
 @app.route('/historique/')
 def historique():
         return render_template('historique.html')
+
+@app.route('/nav_responsable/')
+def nav_resp():
+        return render_template('nav_responsable.html')
+
+@app.route('/gestion_formulaire/')
+def gest_form():
+        lesFormulaires = Formulaire.query.all()
+        return render_template('gestion_formulaire.html', formulaires = lesFormulaires)

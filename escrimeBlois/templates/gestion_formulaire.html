@@ -1,0 +1,36 @@
+{% extends "nav_responsable.html" %} 
+
+{% block section_resp %}
+<main id="gest_form">
+
+    {% if formulaires|length == 0 %}
+        <h1 class="text_form">Aucun formulaire trouvé</h1>
+    {% else %}
+    <h1 class="text_form">Formulaires déposés</h1>
+    <div class="limiter">
+        <div id="container_table_form">
+            <div class="wrap-table100">
+                <div id="table_form">
+                    <div class="table100-body js-pscroll">
+                        <table>
+                            {% for form in formulaires %}
+                                <td id="formulaire">
+                                    <div id="formulaire_infos">
+                                        <p><strong>{{ form.nom_auteur }} {{ form.prenom_auteur }}</strong></p>
+                                        <p>Objet : {{ form.objet }}</p>
+                                    </div>
+                                    <div id="formulaire_options">
+                                        <button type="button" id="form_consulter">Consulter</button>
+                                        <button type="button" id="form_supprimer">Supprimer</button>
+                                    </div>
+                                </td>
+                            {% endfor %} 
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</main>
+{% endblock %}
