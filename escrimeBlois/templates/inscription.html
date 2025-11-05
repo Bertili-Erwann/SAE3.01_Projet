@@ -1,13 +1,17 @@
 {% extends "base.html" %} {% block main %}
 <div class="block-inscription">
-  <img src="../static/images/logo_cercle_escrime_blois.png" id="logo-fiche" />
+  <img
+    src="../static/images/logo_cercle_escrime_blois.png"
+    id="logo-fiche"
+    required
+  />
   <form class="form-inscription" method="POST" name="form-inscrip">
     <h1>Inscription au cercle</h1>
     <div class="two-tf">
       <label for="nom"> 1. Nom complet <span id="obligatoire">*</span> </label>
       <div>
-        <input class="nom" type="text" placeholder="Nom" />
-        <input class="prenom" type="text" placeholder="Prenom" />
+        <input class="nom" type="text" placeholder="Nom" required />
+        <input class="prenom" type="text" placeholder="Prenom" required />
       </div>
     </div>
     <div class="mot-de-passe base-block two-tf">
@@ -15,16 +19,26 @@
         2. Mot de passe <span id="obligatoire">*</span>
       </label>
       <div>
-        <input class="mdp" type="password" placeholder="le mot de passe" />
-        <input class="mdp" type="password" placeholder="Confirmer le mot de passe"/>
+        <input
+          class="mdp"
+          type="password"
+          placeholder="Le mot de passe"
+          required
+        />
+        <input
+          class="mdp"
+          type="password"
+          placeholder="Confirmer le mot de passe"
+          required
+        />
       </div>
     </div>
     <div class="sexe">
       <label for="sexe"> 3. Sexe <span id="obligatoire">*</span> </label>
       <div>
-        <input type="radio" name="choix_sexe" value="Homme" />
+        <input type="radio" name="choix_sexe" value="Homme" required />
         <label for="homme">Homme</label><br />
-        <input type="radio" name="choix_sexe" value="Femme" />
+        <input type="radio" name="choix_sexe" value="Femme" required />
         <label for="femme">Femme</label><br />
       </div>
     </div>
@@ -32,14 +46,23 @@
       <label for="date-naissance"
         >4. Date de naissance <span id="obligatoire">*</span></label
       >
-      <div><input type="date" name="date-naissance" id="date-naissance" /></div>
+      <div>
+        <input type="date" name="date-naissance" id="date-naissance" required />
+      </div>
     </div>
     <div class="num base-block">
       <label for="num">
         5. Numéro de téléphone <span id="obligatoire">*</span>
       </label>
       <div>
-        <input class="textfield" type="text" />
+        <input
+          class="textfield"
+          type="text"
+          required
+          pattern="[0-9]"
+          inputmode="numeric"
+          oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+        />
       </div>
     </div>
     <div class="mail base-block">
@@ -47,7 +70,7 @@
         6. Adresse email <span id="obligatoire">*</span></label
       >
       <div>
-        <input class="textfield" type="text" />
+        <input class="textfield" type="text" required />
       </div>
     </div>
     <div class="adresse-postale base-block">
@@ -55,11 +78,12 @@
         7. Adresse postale <span id="obligatoire">*</span>
       </label>
       <div>
-        <input class="textfield" type="text" />
+        <input class="textfield" type="text" required />
       </div>
     </div>
-    <div id="form-dyna">
-
+    <div id="form-dyna"></div>
+    <div class="CACA">
+      <input type="submit" value="Déposer l'inscription" />
     </div>
   </form>
 </div>
