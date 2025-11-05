@@ -548,4 +548,147 @@ table {
   margin-left: 2%;
 }
 
-/*----------------------------------------------------------*/
+/* ==================== Responsable - Ajouter un article ==================== */
+
+.longbloc{
+  margin: 3cm;
+}
+.container-article {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.container-article h1 {
+    display: none; 
+}
+
+.article-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #e9e9e9;
+}
+
+.textarea-large {
+    height: 150px;
+    resize: vertical;
+}
+
+.file-upload-area {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.drop-zone {
+    flex: 1;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    background-color: #e9e9e9;
+    color: #888;
+    position: relative;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.drop-zone .icon-upload {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-upload-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-select-files {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    background-color: #dcdcdc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.compteur-fichiers {
+    font-size: 0.9em;
+}
+
+.liste-fichiers {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+}
+
+.liste-fichiers li {
+    background-color: #f9f9f9;
+    padding: 5px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.form-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.bouton {
+    padding: 10px 30px;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.bouton-annuler {
+    background-color: #dc3545;
+}
+
+.bouton-publier {
+    background-color: #28a745;
+}
