@@ -563,11 +563,30 @@ table {
 
 #gest_form {
   margin: 1%;
+  align-content: center;
+
 }
 
-#text_form {
+.text_form {
   text-align: center;
   margin-bottom: 20px;
+}
+
+#table_form {
+  position: relative;
+  padding-top: 60px;
+  border-radius: 10px;
+  overflow: scroll;
+}
+
+#container_table_form {
+  margin-left: 10%;
+  width: 80%;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  background-color: #ffffff;
 }
 
 #formulaire {
@@ -575,10 +594,13 @@ table {
   flex-wrap: nowrap;
   background-color: #ffffff;
   border-radius: 20px;
-  width: 60%;
-  margin-left: 20%;
-  margin-bottom: 20px;
+  width: 90%;
+  margin-top: -40px;
+  margin-bottom: 60px;
+  margin-left: 5%;
+  margin-right: 5%;
   border-style: solid;
+  border-width: 2px;
 }
 
 #formulaire_infos,
