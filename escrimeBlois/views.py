@@ -47,3 +47,8 @@ def nav_resp():
 def gest_form():
         lesFormulaires = Formulaire.query.all()
         return render_template('gestion_formulaire.html', formulaires = lesFormulaires)
+
+@app.route('/consultation_form/<id_formulaire>/')
+def consult_form(id_formulaire):
+        unForm = Formulaire.query.get(id_formulaire)
+        return render_template('consultation_form.html', selectedFormulaire=unForm)
