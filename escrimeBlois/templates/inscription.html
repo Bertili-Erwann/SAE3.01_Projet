@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block main %}
 <div class="block-inscription">
   <img src="../static/images/logo_cercle_escrime_blois.png" id="logo-fiche" />
-  <form class="form-inscription" method="POST">
+  <form class="form-inscription" method="POST" name="form-inscrip">
     <h1>Inscription au cercle</h1>
     <div class="nom-prenom">
       <label for="nom"> 1. Nom complet <span id="obligatoire">*</span> </label>
@@ -65,8 +65,12 @@
         <input class="textfield" type="text" />
       </div>
     </div>
+    <div id="form-dyna">
+
+    </div>
   </form>
 </div>
 {% endblock %}{% block scripts %}
 <script src="{{ url_for('static', filename='js/date_dynamique.js') }}"></script>
+<script src="{{ url_for('static', filename='js/justificatif.js') }}"></script>
 {% endblock %}
