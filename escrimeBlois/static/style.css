@@ -389,10 +389,10 @@ table {
 #obligatoire {
   color: red;
 }
-.nom-prenom {
+.two-tf {
   display: block;
 }
-.nom-prenom input {
+.two-tf input {
   margin-inline: 5px;
 }
 .block-inscription img {
@@ -400,5 +400,5 @@ table {
   width: 160px;
 }
 .textfield {
-  width: 80%;
+  width: 63%;
 }
