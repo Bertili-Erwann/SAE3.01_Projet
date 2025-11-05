@@ -548,4 +548,34 @@ table {
   margin-left: 2%;
 }
 
-/*----------------------------------------------------------*/
+/* ==================== navbar_admin ==================== */
+#navbar_admin,
+#navbar_inscription {
+  background-color: #cacaca;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+
+#nav_admin,
+#nav_inscr {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#nav_admin > li,
+#nav_inscr > li {
+  flex-basis: 20%;
+  margin: 0 10px;
+}
+
+#nav_admin > li:hover,
+#nav_inscr > li:hover {
+  font-weight: bold;
+}
+
+#blank_space {
+  padding-top: 60px;
+}
