@@ -692,3 +692,20 @@ table {
 .bouton-publier {
     background-color: #28a745;
 }
+
+/* ==================== Navbar Membres ==================== */
+#nav_membre{
+display: flex;
+flex-wrap: nowrap;
+}
+
+#nav_membre > li{
+list-style-type: none;
+flex-basis: 15%;
+margin-left: 10%;
+margin-right: 10%;
+margin-top: 10px;
+}
+#nav_membre > li:hover{
+font-weight: bold;
+}
