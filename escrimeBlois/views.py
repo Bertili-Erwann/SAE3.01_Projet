@@ -47,3 +47,7 @@ def nav_resp():
 def gest_form():
         lesFormulaires = Formulaire.query.all()
         return render_template('gestion_formulaire.html', formulaires = lesFormulaires)
+
+@app.route('/create_event/')
+def create_event():
+        return render_template('resp_creation_event.html')
