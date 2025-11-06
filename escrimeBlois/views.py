@@ -48,6 +48,10 @@ def gest_form():
         lesFormulaires = Formulaire.query.all()
         return render_template('gestion_formulaire.html', formulaires = lesFormulaires)
 
+@app.route('/create_event/')
+def create_event():
+        return render_template('resp_creation_event.html')
+  
 @app.route('/consultation_form/<id_formulaire>/')
 def consult_form(id_formulaire):
         unForm = Formulaire.query.get(id_formulaire)
