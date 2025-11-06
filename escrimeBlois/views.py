@@ -51,3 +51,8 @@ def gest_form():
 @app.route('/create_event/')
 def create_event():
         return render_template('resp_creation_event.html')
+  
+@app.route('/consultation_form/<id_formulaire>/')
+def consult_form(id_formulaire):
+        unForm = Formulaire.query.get(id_formulaire)
+        return render_template('consultation_form.html', selectedFormulaire=unForm)

@@ -589,7 +589,7 @@ table {
   color: #000;
 }
 
-/* -------------------- getion_formulaire.html --------------------*/
+/* -------------------- gestion_formulaire.html --------------------*/
 
 #gest_form {
   margin: 1%;
@@ -631,15 +631,16 @@ table {
   margin-right: 5%;
   border-style: solid;
   border-width: 2px;
+  align-items: center;
 }
 
 #formulaire_infos,
 #formulaire_options {
-  flex-basis: 40%;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  margin-left: 5%;
-  margin-right: 5%;
+  flex-basis: 44%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 3%;
+  margin-right: 3%;
 }
 
 #formulaire_options {
@@ -647,11 +648,16 @@ table {
   flex-wrap: nowrap;
 }
 
+.gest_form_button_container {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
 #form_consulter,
 #form_supprimer {
   border-radius: 20px;
-  margin-right: 10px;
-  margin-left: 10px;
+  margin-right: 20px;
+  margin-left: 20px;
   padding-left: 30px;
   padding-right: 30px;
   width: 100%;
@@ -740,4 +746,53 @@ table {
   margin-top: 20px;
   width: 20%;
   background-color: #1ECC2A;
+}
+/* -------------------- consultation_form.html --------------------*/
+
+#consult_form {
+  margin: 20px;
+}
+
+#info_form_area {
+  text-align: center;
+}
+
+.data_form {
+  margin-left: 5px;
+}
+
+.form_area {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+#reponse_form_area {
+  margin-bottom: 20px;
+}
+
+#form_button_area {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 50%;
+  margin-left: 25%;
+}
+
+.form_button_container {
+  width: 30%;
+
+}
+
+#form_bouton_back,
+#form_bouton_rep {
+  border-radius: 5px;
+  margin-left: 25%;
+  width: 50%;
+}
+
+#form_bouton_back {
+  background-color: #D90000;
+}
+
+#form_bouton_rep {
+  background-color: #6691FF;
 }
