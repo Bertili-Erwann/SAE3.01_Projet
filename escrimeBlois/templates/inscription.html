@@ -5,13 +5,20 @@
     id="logo-fiche"
     required
   />
-  <form class="form-inscription" method="POST" name="form-inscrip">
+  <form
+    role ="form"
+    class="form-inscription"
+    method="POST"
+    name="form-inscrip"
+    action="{{ url_for('insert_inscription') }}"
+  >
     <h1>Inscription au cercle</h1>
     <div class="two-tf">
       <label for="nom"> 1. Nom complet <span id="obligatoire">*</span> </label>
-      <div>
-        <input class="nom" type="text" placeholder="Nom" required />
-        <input class="prenom" type="text" placeholder="Prenom" required />
+      <div {% if formInscription.nom.errors %}class="form-group has-error"{% else %}class="form-group mb-3"{% endif %} >
+        <!-- <input class="nom" type="text" placeholder="Nom" required />
+        <input class="prenom" type="text" placeholder="Prenom" required /> -->
+        {{ formInscription.nom.label }}
       </div>
     </div>
     <div class="mot-de-passe base-block two-tf">
@@ -82,7 +89,7 @@
       </div>
     </div>
     <div id="form-dyna"></div>
-    <div class="CACA">
+    <div class="btn-wrap">
       <input type="submit" value="Déposer l'inscription" />
     </div>
   </form>
