@@ -44,7 +44,7 @@ class Personne(UserMixin, db.Model):
     sexe = db.Column(db.String(1))
     adresse = db.Column(db.String(64))
     date_naissance = db.Column(db.Date)
-    etudiant = db.Column(db.Boolean)
+    eleve = db.Column(db.Boolean)
     arme_principale = db.Column(db.String(30))
     niveau = db.Column(db.String(20))
     role = db.Column(db.String(10))
@@ -65,16 +65,14 @@ class Personne(UserMixin, db.Model):
             ValueError: Si les champs requis ne sont pas remplis ou si des champs en trop sont présents.
         """
         match value:
-            case "membre" | "responsable":
-                if self.etudiant is None or self.arme_principale is None or self.niveau is None:
-                    raise ValueError(
-                        f"Le  '{value}' n'a pas rempli un des champs requis")
             case "personne" | "admin":
-                if self.etudiant is not None or self.arme_principale is not None or self.niveau is not None:
+                if self.eleve is not None or self.arme_principale is not None or self.niveau is not None:
                     raise ValueError(f"'{value}' a des informations en trop")
         return value
+
     def get_id(self):
         return self.id_personne
+
     def __repr__(self) -> str:
         """
         Représentation simple de la personne.
@@ -92,6 +90,55 @@ class Personne(UserMixin, db.Model):
             str: Le nom complet de la personne.
         """
         return f"{self.nom_personne} {self.prenom_personne}"
+
+
+class Demande_inscription(db.Model):
+    """
+    Modèle représentant une demande d'inscription.
+    
+    Attributs:
+        id_inscription (int): Clé primaire.
+        nom (str): Nom de famille.
+        prenom (str): Prénom.
+        mot_de_passe (str): Mot de passe.
+        sexe (str): Sexe (1 caractère).
+        date_naissance (Date): Date de naissance.
+        num_tel (str): Numéro de téléphone.
+        adresse_mail (str): Adresse email.
+        adresse_postale (str): Adresse postale.
+        scolarisee (bool): Indique si la personne est scolarisée.
+        etudiant (bool): Indique si la personne est étudiante.
+        justificatif (str): Justificatif fourni.
+    """
+    id_inscription = db.Column(db.Integer, primary_key=True)
+    nom = db.Column(db.String(64))
+    prenom = db.Column(db.String(64))
+    mot_de_passe = db.Column(db.String(64))
+    sexe = db.Column(db.String(1))
+    date_naissance = db.Column(db.Date)
+    num_tel = db.Column(db.String(10))
+    adresse_mail = db.Column(db.String(64))
+    adresse_postale = db.Column(db.String(64))
+    eleve = db.Column(db.Boolean)
+    justificatif = db.Column(db.String(64))
+
+    def __repr__(self) -> str:
+        """
+        Représentation simple de la demande d'inscription.
+        
+        Returns:
+            str: Chaîne basique avec l'ID.
+        """
+        return f"Demande_inscription {self.id_inscription}"
+
+    def __str__(self) -> str:
+        """
+        Représentation simple du nom de la personne.
+        
+        Returns:
+            str: Le nom complet de la personne.
+        """
+        return f"{self.nom} {self.prenom}"
 
 
 class Evenement(db.Model):
@@ -375,7 +422,7 @@ class Article(db.Model):
     commentable = db.Column(db.Boolean)
     responsable_id = db.ForeignKey("personne.id_personne")
     responsable = None
-    
+
     @validates('id_responsable')
     def validate_responsable_type(self, key: str, value: int) -> int:
         """
@@ -449,6 +496,47 @@ class Posseder(db.Model):
                          db.ForeignKey("image.id_image"),
                          primary_key=True)
     id_article = db.Column(db.Integer,
-                               db.ForeignKey("article.id_article"),
-                               primary_key=True)
+                           db.ForeignKey("article.id_article"),
+                           primary_key=True)
     miniature = db.Column(db.Boolean)
+
+
+class Gerer(db.Model):
+    """
+    Modèle représentant la gestion des demandes d'inscription par un admin.
+    
+    Attributs:
+        id_admin (int): Clé étrangère vers Personne (admin), partie de la clé primaire.
+        id_inscription (int): Clé étrangère vers Demande_inscription, partie de la clé primaire.
+    """
+    id_admin = db.Column(db.Integer,
+                         db.ForeignKey("personne.id_personne"),
+                         primary_key=True)
+    id_inscription = db.Column(
+        db.Integer,
+        db.ForeignKey("demande_inscription.id_inscription"),
+        primary_key=True)
+
+    @validates('id_admin')
+    def validate_admin_type(self, key: str, value: int) -> int:
+        """
+        Valide que la personne est un admin.
+        
+        Args:
+            key (str): Le nom de l'attribut ('id_admin').
+            value (int): L'ID de la personne.
+        
+        Returns:
+            int: La valeur validée.
+        
+        Raises:
+            ValueError: Si la personne n'existe pas ou n'est pas un admin.
+        """
+        pers = Personne.query.get(value)
+        if pers is None:
+            raise ValueError(f"La personne {value} est introuvable")
+        if pers.role != 'admin':
+            raise ValueError(
+                f"La personne {value} doit être de type 'admin' vous avez le type {pers.role}"
+            )
+        return value
