@@ -606,7 +606,7 @@ table {
   border-radius: 3px;
   border-width: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  min-width: 500px; /* Largeur minimale pour forcer le scroll si nécessaire */
+  min-width: 500px;
   flex-wrap: nowrap;
 }
 
