@@ -2,6 +2,7 @@ from flask import flash, redirect, render_template, request, url_for, flash
 from .app import app,db
 from .models import Article
 from datetime import date
+from escrimeBlois.models import Formulaire
 import os
 
 @app.route('/')
