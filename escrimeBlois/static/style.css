@@ -360,23 +360,23 @@ table {
 
 .rens{
     border-radius: 20px;
-    background-color: rgb(75,75,75);
+    background-color: #cccccc;
     margin: 1%;
     border-collapse: collapse;
-    color: rgb(255,255,255)
+    color: #000000
 }
 
 
 .TRens{
-    background-color: rgb(15,15,15);
+    background-color: #666666;
     border-collapse: collapse;
-    border-radius: 20px 20px / 20px 20px 0px 0px;
+    border-radius: 20px;
     text-indent : 20px;
     display: block;
     padding: 0.8em;
     font-style: italic;
     font: small-caps bold 24px/1 sans-serif;
-    color: white;
+    color: #e6e6e6;
     cursor: pointer;
     position: relative;
     transition: background 0.3s ease;
@@ -384,12 +384,12 @@ table {
 
 .indentL {
     text-indent : 15px;
-    color: rgb(255, 255, 255)
+    color: #000000
 }
 
 .indentP {
     text-indent : 10px;
-    color: rgb(255, 255, 255)
+    color: #000000
 }
 
 .deux-colonnes {
@@ -402,7 +402,7 @@ table {
 .deux-colonnes {
   display: flex;
   justify-content: space-between;
-  background-color: rgb(75,75,75);
+  background-color: #aaaaaa;
   border-radius: 20px;
   padding: 20px;
   gap: 30px;
@@ -423,15 +423,15 @@ table {
   bottom: 25%; /* finit à 25% de la hauteur */
   left: 50%;  /* centré horizontalement */
   width: 1px;
-  background-color: white;
+  background-color: #cccccc;
   transform: translateX(-50%);
 }
 
 .tab{
-  border: 3px solid white;
+  border: 3px solid #e6e6e6;
   margin: 1px;
   text-decoration: solid;
-  text-decoration-color: aliceblue;
+  text-decoration-color: #cccccc;
   text-align: center;
 }
 
@@ -445,7 +445,7 @@ table {
 
 
 .TRens:hover {
-  background-color: rgb(100, 100, 100);
+  background-color: #888888;
 }
 
 .contenu {
