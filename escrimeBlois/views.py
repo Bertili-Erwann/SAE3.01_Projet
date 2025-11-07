@@ -38,6 +38,9 @@ def mdp_oublier_confirmer_mdp():
 @app.route('/historique/')
 def historique():
         return render_template('historique.html')
+@app.route('/renseignement/')
+def renseignement():
+    return render_template("renseignement.html",title = "renseignement")
 
 @app.route('/nav_responsable/')
 def nav_resp():

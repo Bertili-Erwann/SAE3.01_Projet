@@ -34,7 +34,7 @@
 
           <!-- BOUTON RENSEIGNEMENT  -->
           <li class="nav-item">
-            <a class="nav-link" href="">Renseignement</a>
+            <a class="nav-link" href="{{ url_for('renseignement') }}">Renseignement</a>
           </li>
 
           <!-- BOUTON HISTORIQUE  -->
@@ -73,5 +73,6 @@
       {% extends "footer.html" %}
     </div>
     {% block scripts %}{% endblock %}
+    
   </body>
 </html>
