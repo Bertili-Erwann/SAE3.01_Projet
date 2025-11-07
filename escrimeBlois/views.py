@@ -1,4 +1,6 @@
 from flask import flash, redirect, render_template, request, url_for, flash
+from flask_login import login_required, current_user
+from werkzeug.security import generate_password_hash
 from .app import app,db
 from .models import Article
 from datetime import date
@@ -84,4 +86,61 @@ def ajouter_article():
         return redirect(url_for('ajouter_article'))
 
     return render_template('ajout_article.html')
+
+@app.route('/infos_persos/')
+@login_required
+def infos_persos():
+    return render_template('infos_persos_espMembre.html', personne=current_user)
+
+@app.route('/change_password', methods=['POST'])
+@login_required
+def change_password():
+    new_password = request.form.get('new_password')
+    confirm_password = request.form.get('confirm_password')
+    
+    if not new_password or not confirm_password:
+        flash('Les deux champs de mot de passe sont requis.', 'error')
+        return redirect(url_for('infos_persos'))
+        
+    if new_password != confirm_password:
+        flash('Les mots de passe ne correspondent pas.', 'error')
+        return redirect(url_for('infos_persos'))
+    
+    # Vérification de la complexité du mot de passe
+    if len(new_password) < 8:
+        flash('Le mot de passe doit contenir au moins 8 caractères.', 'error')
+        return redirect(url_for('infos_persos'))
+    
+    if not any(c.isalpha() for c in new_password) or not any(c.isdigit() for c in new_password):
+        flash('Le mot de passe doit contenir au moins une lettre et un chiffre.', 'error')
+        return redirect(url_for('infos_persos'))
+    
+    try:
+        # Hasher le nouveau mot de passe
+        hashed_password = generate_password_hash(new_password)
+        current_user.mdp = hashed_password
+        db.session.commit()
+        flash('Votre mot de passe a été mis à jour avec succès.', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash('Une erreur est survenue lors de la mise à jour du mot de passe.', 'error')
+        app.logger.error(f'Erreur lors du changement de mot de passe: {str(e)}')
+    
+    return redirect(url_for('infos_persos'))
+
+@app.route('/update_arme', methods=['POST'])
+@login_required
+def update_arme():
+    arme = request.form.get('arme_principale') 
+    try:
+        current_user.arme_principale = arme
+        db.session.commit()
+        flash('Votre arme principale a été mise à jour avec succès.', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash('Une erreur est survenue lors de la mise à jour de l\'arme.', 'error')
+        app.logger.error(f'Erreur lors de la mise à jour de l\'arme: {str(e)}')
+    
+    return redirect(url_for('infos_persos'))
+
 

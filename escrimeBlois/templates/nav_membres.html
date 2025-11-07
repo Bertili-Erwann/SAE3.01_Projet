@@ -5,7 +5,7 @@
         <ul id="nav_membre">
             <!-- SECTION INFORMATIONS PERSONNELLES -->
             <li id="nav-item">
-                <a class="nav-link" href="">Informations Personnelles</a>
+                <a class="nav-link" href="{{ url_for('infos_persos') }}">Informations Personnelles</a>
             </li>
 
             <!-- SECTION RESULTATS PASSES -->
@@ -20,4 +20,7 @@
         </ul>
     </div>
 </nav>
-{% endblock %}
+    <section id="membre" role="membre" class="container-fluid p-0">
+      {% block membre %}{% endblock %}
+    </section>
+    {% endblock %}

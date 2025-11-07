@@ -1,0 +1,84 @@
+{% extends "nav_membres.html" %}{% block membre %}
+<div class="blank_space"></div>
+<div class="infos-container-v2">
+    <div class="section-v2">
+        <h2>Informations générales</h2>
+        <div class="form-columns-v2">
+            <div class="form-col-v2">
+                <div class="form-field-v2">
+                    <label>Nom<span class="non-modifiable-v2"></span></label>
+                    <input type="text" disabled value="{{ personne.nom_personne }}">
+                </div>
+                <div class="form-field-v2">
+                    <label>Prénom<span class="non-modifiable-v2"></span></label>
+                    <input type="text" disabled value="{{ personne.prenom_personne }}">
+                </div>
+                <div class="form-field-v2">
+                    <label>Numéro de téléphone<span class="non-modifiable-v2"></span></label>
+                    <input type="tel" disabled value="{{ personne.telephone }}">
+                </div>
+            </div>
+            <div class="form-col-v2">
+                <div class="form-field-v2">
+                    <label>Adresse email<span class="non-modifiable-v2"></span></label>
+                    <input type="email" disabled value="{{ personne.email_personne }}">
+                </div>
+                <div class="form-field-v2">
+                    <label>Date de naissance<span class="non-modifiable-v2"></span></label>
+                    <input type="date" disabled value="{{ personne.date_naissance }}">
+                </div>
+                <div class="form-field-v2">
+                    <label>Adresse<span class="non-modifiable-v2"></span></label>
+                    <input type="text" disabled value="{{ personne.adresse }}">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form method="POST" action="{{ url_for('change_password') }}" class="form-group">
+        <div class="section-v2">
+            <h2>Changer mot de passe</h2>
+            <div class="form-columns-v2">
+                <div class="form-col-v2">
+                    <div class="form-field-v2">
+                        <label>Nouveau mot de passe<span class="modifiable-v2"></span></label>
+                        <input type="password" name="new_password" required>
+                    </div>
+                </div>
+                <div class="form-col-v2">
+                    <div class="form-field-v2">
+                        <label>Confirmation nouveau mot de passe<span class="modifiable-v2"></span></label>
+                        <input type="password" name="confirm_password" required>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn-v2 green-btn-v2">Confirmer</button>
+        </div>
+    </form>
+
+    <form method="POST" action="{{ url_for('update_arme') }}" class="form-group">
+        <div class="section-v2">
+            <h2>Informations sportives</h2>
+            <div class="form-columns-v2">
+                <div class="form-col-v2">
+                    <div class="form-field-v2">
+                        <label>Arme principale<span class="modifiable-v2"></span></label>
+                        <select name="arme_principale" class="form-control" required>
+                            <option value="fleuret" {% if personne.arme_principale == 'fleuret' %}selected{% endif %}>Fleuret</option>
+                            <option value="épée" {% if personne.arme_principale == 'épée' %}selected{% endif %}>Épée</option>
+                            <option value="sabre" {% if personne.arme_principale == 'sabre' %}selected{% endif %}>Sabre</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-col-v2">
+                    <div class="form-field-v2">
+                        <label>Catégorie<span class="non-modifiable-v2"></span></label>
+                        <input type="text" disabled value="{{ personne.niveau }}">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn-v2 green-btn-v2">Mettre à jour l'arme</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
