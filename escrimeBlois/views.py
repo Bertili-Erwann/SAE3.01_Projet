@@ -42,6 +42,27 @@ def mdp_oublier_confirmer_mdp():
 def historique():
         return render_template('historique.html')
 
+@app.route('/renseignement/')
+def renseignement():
+    return render_template("renseignement.html",title = "renseignement")
+
+@app.route('/nav_responsable/')
+def nav_resp():
+        return render_template('nav_responsable.html')
+
+@app.route('/gestion_formulaire/')
+def gest_form():
+        lesFormulaires = Formulaire.query.all()
+        return render_template('gestion_formulaire.html', formulaires = lesFormulaires)
+
+@app.route('/create_event/')
+def create_event():
+        return render_template('resp_creation_event.html')
+
+@app.route('/consultation_form/<id_formulaire>/')
+def consult_form(id_formulaire):
+        unForm = Formulaire.query.get(id_formulaire)
+        return render_template('consultation_form.html', selectedFormulaire=unForm)
 
 # Dossier de stockage des fichiers
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
