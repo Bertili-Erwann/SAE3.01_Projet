@@ -361,7 +361,6 @@ table {
 }
 .block-inscription img {
   margin-left: 40%;
-  /* margin-right: 50%; */
 }
 .form-inscription {
   flex-direction: column;
@@ -370,8 +369,16 @@ table {
   background-color: #d9d9d9;
   border-radius: 15px;
 }
-.form-inscription input {
-  border-radius: 5px;
+.form-control {
+  width: 30%;
+}
+.full-space {
+  width: 63%;
+}
+#sexe, #eleve{
+  background-color: inherit;
+  list-style-type: none;
+  border: inherit;
 }
 .form-inscription > div {
   margin: 5px;
@@ -399,10 +406,13 @@ table {
 }
 .form-inscription input[type="submit"]:hover {
   background-color: #5273cc;
-} 
+}
 
 .two-tf {
   display: block;
+}
+.form-group {
+  display: flex;
 }
 .two-tf input {
   margin-inline: 5px;
@@ -410,7 +420,4 @@ table {
 .block-inscription img {
   height: 160px;
   width: 160px;
-}
-.textfield {
-  width: 63%;
 }

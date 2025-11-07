@@ -6,7 +6,7 @@
     required
   />
   <form
-    role ="form"
+    role="form"
     class="form-inscription"
     method="POST"
     name="form-inscrip"
@@ -15,46 +15,52 @@
     <h1>Inscription au cercle</h1>
     <div class="two-tf">
       <label for="nom"> 1. Nom complet <span id="obligatoire">*</span> </label>
-      <div {% if formInscription.nom.errors %}class="form-group has-error"{% else %}class="form-group mb-3"{% endif %} >
-        <!-- <input class="nom" type="text" placeholder="Nom" required />
-        <input class="prenom" type="text" placeholder="Prenom" required /> -->
-        {{ formInscription.nom.label }}
+      <div
+        {%
+        if
+        formInscription.nom.errors
+        %}class="form-group has-error"
+        {%
+        else
+        %}class="form-group mb-3"
+        {%
+        endif
+        %}
+      >
+        {{ formInscription.nom(size=10, class_="form-control")}} {{
+        formInscription.prenom(size=10, class_="form-control")}}
       </div>
     </div>
     <div class="mot-de-passe base-block two-tf">
       <label for="mot-de-passe">
         2. Mot de passe <span id="obligatoire">*</span>
       </label>
-      <div>
-        <input
-          class="mdp"
-          type="password"
-          placeholder="Le mot de passe"
-          required
-        />
-        <input
-          class="mdp"
-          type="password"
-          placeholder="Confirmer le mot de passe"
-          required
-        />
+      <div
+        {%
+        if
+        formInscription.nom.errors
+        %}class="form-group has-error"
+        {%
+        else
+        %}class="form-group mb-3"
+        {%
+        endif
+        %}
+      >
+        {{ formInscription.mot_de_passe(size=10, class_="form-control")}} {{
+        formInscription.conf_mot_de_passe(size=10, class_="form-control")}}
       </div>
     </div>
     <div class="sexe">
       <label for="sexe"> 3. Sexe <span id="obligatoire">*</span> </label>
-      <div>
-        <input type="radio" name="choix_sexe" value="Homme" required />
-        <label for="homme">Homme</label><br />
-        <input type="radio" name="choix_sexe" value="Femme" required />
-        <label for="femme">Femme</label><br />
-      </div>
+      <div>{{ formInscription.sexe(size=10, class_="form-control")}}</div>
     </div>
     <div class="ddn">
       <label for="date-naissance"
         >4. Date de naissance <span id="obligatoire">*</span></label
       >
       <div>
-        <input type="date" name="date-naissance" id="date-naissance" required />
+        {{ formInscription.date_naissance(size=10, class_="form-control") }}
       </div>
     </div>
     <div class="num base-block">
@@ -62,14 +68,7 @@
         5. Numéro de téléphone <span id="obligatoire">*</span>
       </label>
       <div>
-        <input
-          class="textfield"
-          type="text"
-          required
-          pattern="[0-9]"
-          inputmode="numeric"
-          oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-        />
+        {{ formInscription.num_tel(size=10, class_="form-control full-space") }}
       </div>
     </div>
     <div class="mail base-block">
@@ -77,24 +76,28 @@
         6. Adresse email <span id="obligatoire">*</span></label
       >
       <div>
-        <input class="textfield" type="text" required />
+        {{ formInscription.adresse_mail(size=10, class_="form-control
+        full-space") }}
       </div>
     </div>
     <div class="adresse-postale base-block">
       <label for="adresse-postale">
         7. Adresse postale <span id="obligatoire">*</span>
       </label>
-      <div>
-        <input class="textfield" type="text" required />
-      </div>
+      <div>{{ formInscription.adresse_postale(size=10, class_="form-control full-space") }}</div>
     </div>
-    <div id="form-dyna"></div>
+    <div>
+      <label for="etudiant eleve">
+        8. Êtes-vous étudiant(e)/élève ? <span id="obligatoire">*</span>
+      </label>
+      {{ formInscription.eleve(size=10, class_="form-control") }}
+    </div>
+    <div id="fichier"></div>
     <div class="btn-wrap">
       <input type="submit" value="Déposer l'inscription" />
     </div>
   </form>
 </div>
 {% endblock %}{% block scripts %}
-<script src="{{ url_for('static', filename='js/date_dynamique.js') }}"></script>
 <script src="{{ url_for('static', filename='js/justificatif.js') }}"></script>
 {% endblock %}

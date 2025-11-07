@@ -16,7 +16,7 @@ def historique():
 
 @app.route('/inscription/')
 def inscription():
-    form = FormInscription()
+    form = FormInscription(request.form)
     return render_template('inscription.html', formInscription=form)
     
 

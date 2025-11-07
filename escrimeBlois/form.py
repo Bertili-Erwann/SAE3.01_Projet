@@ -1,5 +1,4 @@
-from wtforms import StringField, HiddenField, RadioField, DateField, FileField
-from wtforms import PasswordField
+from wtforms import Form, StringField, PasswordField, RadioField, DateField, FileField
 from .models import Demande_inscription
 from hashlib import sha256
 from email_validator import validate_email, EmailNotValidError, ValidatedEmail
@@ -7,17 +6,17 @@ from .app import app, db
 from sqlalchemy import func
 
 
-class FormInscription():
+class FormInscription(Form):
     nom = StringField('Nom')
     prenom = StringField('Prenom')
     mot_de_passe = PasswordField('Mot de passe')
     conf_mot_de_passe = PasswordField('Confirmer mot de passe')
-    sexe = RadioField('Sexe')
+    sexe = RadioField('Sexe',choices=[('H','Homme'),('F','Femme')])
     date_naissance = DateField('Date de naissance')
     num_tel = StringField('Numéro de téléphone')
     adresse_mail = StringField("Adresse mail")
     adresse_postale = StringField('Adresse postale')
-    eleve = RadioField('Adresse postale')
+    eleve = RadioField('Adresse postale',choices=[('Oui','Oui'),('Non','Non')])
     justificatif = FileField('justificatif')
 
     def max_id() -> int:
