@@ -19,7 +19,6 @@ body {
   margin: 0 auto;
   display: block;
   text-align: center;
-  overflow-x: auto;
 }
 
 .navbar-nav > li {

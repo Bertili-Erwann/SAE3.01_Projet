@@ -44,6 +44,7 @@ class Personne(UserMixin, db.Model):
     sexe = db.Column(db.String(1))
     adresse = db.Column(db.String(64))
     date_naissance = db.Column(db.Date)
+    numero_telephone = db.Column(db.Integer)
     eleve = db.Column(db.Boolean)
     arme_principale = db.Column(db.String(30))
     niveau = db.Column(db.String(20))
