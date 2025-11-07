@@ -84,13 +84,21 @@
       <label for="adresse-postale">
         7. Adresse postale <span id="obligatoire">*</span>
       </label>
-      <div>{{ formInscription.adresse_postale(size=10, class_="form-control full-space") }}</div>
+      <div>
+        {{ formInscription.adresse_postale(size=10, class_="form-control
+        full-space") }}
+      </div>
     </div>
     <div>
       <label for="etudiant eleve">
         8. Êtes-vous étudiant(e)/élève ? <span id="obligatoire">*</span>
       </label>
-      {{ formInscription.eleve(size=10, class_="form-control") }}
+      {% for rep in formInscription.eleve %}
+      <tr>
+        <td>{{ rep }}</td>
+        <td>{{ rep.label }}</td>
+      </tr>
+      {% endfor %}
     </div>
     <div id="fichier"></div>
     <div class="btn-wrap">
@@ -100,4 +108,5 @@
 </div>
 {% endblock %}{% block scripts %}
 <script src="{{ url_for('static', filename='js/justificatif.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 {% endblock %}

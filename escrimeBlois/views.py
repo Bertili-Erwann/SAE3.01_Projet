@@ -1,7 +1,5 @@
 from flask import render_template, request, jsonify
 from .app import app
-from datetime import datetime
-from datetime import date
 from escrimeBlois.form import FormInscription
 
 @app.route('/')
