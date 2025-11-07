@@ -2,6 +2,7 @@
   --cold: #c3c2f4;
 }
 
+/* ==================== Global ====================*/
 html,
 body {
   margin: 0;
@@ -12,8 +13,7 @@ body {
   font-family: sans-serif;
 }
 
-/* NAV BAR */
-
+/* ==================== Base.html - Navbar ====================*/
 .navbar-nav {
   float: none;
   margin: 0 auto;
@@ -35,7 +35,7 @@ body {
   font-weight: bold;
 }
 
-/* LOUPE RECHERCHE */
+/* -------------------- Base.html - Loupe Recherche --------------------*/
 .navbar-brand {
   display: flex;
   align-items: center;
@@ -51,10 +51,10 @@ body {
   display: inline !important;
   height: 30px;
 }
+
+/* ==================== Index.html - Main ==================== */
 #main {
   margin-top: 0;
-  overflow: clip;
-  background-color: #e5e5e5;
   position: relative;
 }
 
@@ -81,7 +81,7 @@ body {
 }
 
 .header-content {
-  position: reflative;
+  position: relative;
   z-index: 1;
   text-align: center;
   padding: 1rem;
@@ -114,6 +114,7 @@ body {
   font-weight: 600;
 }
 
+/* -------------------- Index.html - Carousel --------------------*/
 .carousel-row {
   position: relative;
 }
@@ -131,7 +132,6 @@ body {
 
 .articles > article {
   flex: 0 0 280px;
-  /* largeur carte */
   scroll-snap-align: start;
   background-color: #c7c3f4;
   padding: 2em;
@@ -184,14 +184,15 @@ body {
   right: 0.5rem;
 }
 
-.inscritpion {
+/* -------------------- Index.html - Inscription --------------------*/
+.inscription {
   display: flex;
   background-color: var(--cold);
   margin: 50px;
   margin-left: auto;
   margin-right: auto;
   padding: 40px;
-  width:  60%;
+  width: 60%;
   border-radius: 10px;
   color: #fff;
   -webkit-text-stroke: 1px #ffffff;
@@ -201,31 +202,33 @@ body {
     -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
 }
 
-.inscritpion > img {
+.inscription > img {
   width: 40vh;
   height: 30vh;
   margin: -40px;
 }
 
-.inscritpion-wrap {
+.inscription-wrap {
   margin-top: 50px;
 }
-.inscritpion-wrap h1 {
+.inscription-wrap h1 {
   margin-top: -5px;
   margin-left: 50px;
 }
 
-.inscritpion-wrap a {
+.inscription-wrap a {
   text-decoration: none;
   color: rgb(255, 130, 130);
   -webkit-text-stroke: 1px rgb(255, 130, 130);
   letter-spacing: 2px;
 }
 
-.inscritpion-wrap img {
+.inscription-wrap img {
   width: 50px;
   height: 70px;
 }
+
+/* -------------------- Index.html - Partenaires --------------------*/
 .partenaire {
   text-align: center;
   letter-spacing: 1px;
@@ -251,6 +254,97 @@ body {
   height: 200px;
 }
 
+/* ==================== Toute les fenetre de login et mdp oublier ==================== */
+.fenetre-login,
+.fenetre-mdp-oublier,
+.fenetre-mdp-oublier-code-envoyer,
+.fenetre-mdp-confirmer_mdp {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #e6e6e6;
+  border-radius: 5%;
+}
+
+.logo-texte {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-texte img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+  margin-top: 70px;
+}
+
+.logo-texte p {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.fenetre-login h2,
+.fenetre-mdp-oublier h2,
+.fenetre-mdp-confirmer_mdp h2 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #000000;
+}
+
+.fenetre-login input[type="email"],
+.fenetre-login input[type="password"],
+.fenetre-mdp-oublier input[type="email"],
+.fenetre-mdp-oublier-code-envoyer input[type="text"],
+.fenetre-mdp-confirmer_mdp input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.fenetre-login input[type="submit"],
+.fenetre-mdp-oublier input[type="submit"],
+.fenetre-mdp-oublier-code-envoyer input[type="submit"],
+.fenetre-mdp-confirmer_mdp input[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  background-color: #6691ff;
+  color: #000000;
+}
+
+.fenetre-login input[type="submit"]:hover,
+.fenetre-mdp-oublier input[type="submit"]:hover,
+.fenetre-mdp-oublier-code-envoyer input[type="submit"]:hover,
+.fenetre-mdp-confirmer_mdp input[type="submit"]:hover {
+  background-color: #5273cc;
+}
+
+.fenetre-login #passwrd-oublie {
+  align-self: flex-start;
+  margin-top: 10px;
+  color: #2a4088;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.fenetre-login #passwrd-oublie:hover {
+  text-decoration: underline;
+}
+
+.fenetre-mdp-oublier-code-envoyer > form[method="POST"] > p {
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* ==================== Historique.html ==================== */
+
 .historique-content h1 {
   margin-top: 55px;
   margin-bottom: -30px;
@@ -266,8 +360,6 @@ body {
   margin-left: 50px;
 }
 
-/*//////////////////////////////////////////////////////////////////
-[ Table ]*/
 .limiter {
   width: 1000px;
   margin-left: auto;
@@ -334,8 +426,6 @@ table {
 
 .table100-body {
   max-height: 585px;
-  overflow: scroll;
-  
 }
 
 .table100 th {
@@ -477,3 +567,354 @@ table {
 
 
 
+/* -------------------- footer.html --------------------*/
+
+#footer {
+  background-color: #484848;
+}
+
+#foot_title {
+  text-align: center;
+  color: #ffffff;
+  padding: 2%;
+}
+
+#foot_section_1 {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+#foot_section_2 {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 60%;
+}
+
+#name_formulaire,
+#email_formulaire,
+#foot_bouton_robot,
+#foot_bouton_envoi {
+  flex-basis: 42%;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 2%;
+}
+
+#object_formulaire,
+#message_formulaire {
+  flex-basis: 92%;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 2%;
+}
+
+#message_formulaire {
+  height: 50%;
+  text-align: left;
+}
+
+#foot_bouton_envoi {
+  background-color: #c96666;
+}
+
+#foot_logo_CEB {
+  width: 90px;
+  height: 90px;
+  margin-top: 2%;
+  margin-left: 4%;
+}
+
+#foot_last_line {
+  flex-basis: 35%;
+  margin-top: 4%;
+  color: #ffffff;
+}
+
+#foot_section_2_bis {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 40%;
+  margin-bottom: 5%;
+}
+
+#foot_div_1,
+#foot_div_2,
+#foot_div_3 {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-basis: 60%;
+  margin-right: 38%;
+  margin-left: 2%;
+  margin-top: 2%;
+}
+
+#foot_image_email,
+#foot_image_tel,
+#foot_image_geo {
+  margin-right: 2%;
+  width: 30px;
+  height: 30px;
+}
+
+#foot_adresse_email,
+#foot_num_tel,
+#foot_adresse_postale {
+  color: #ffffff;
+}
+
+#foot_adresse_postale:hover {
+  color: #166fff;
+}
+
+#foot_map {
+  margin-left: 2%;
+}
+
+/* -------------------- nav_responsable.html --------------------*/
+
+#resp_navbar{
+  background-color: #cacaca;
+  padding: 10px 0;
+  box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+}
+
+#nav_responsable{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#nav_responsable > li{
+  flex-basis: 20%;
+  margin: 0 10px;
+}
+
+#nav_responsable > li:hover{
+  font-weight: bold;
+}
+
+#blank_space{
+  padding:25px;
+}
+
+#nav_responsable .nav-link {
+  text-decoration: none;
+  color: #333;
+  text-align: center;
+  margin-right: 20px;
+}
+
+#nav_responsable .nav-link:hover {
+  color: #000;
+}
+
+/* -------------------- gestion_formulaire.html --------------------*/
+
+#gest_form {
+  margin: 1%;
+  align-content: center;
+
+}
+
+.text_form {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#table_form {
+  position: relative;
+  padding-top: 60px;
+  border-radius: 10px;
+  overflow: scroll;
+}
+
+#container_table_form {
+  margin-left: 10%;
+  width: 80%;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  background-color: #ffffff;
+}
+
+#formulaire {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 90%;
+  margin-top: -40px;
+  margin-bottom: 60px;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-style: solid;
+  border-width: 2px;
+  align-items: center;
+}
+
+#formulaire_infos,
+#formulaire_options {
+  flex-basis: 44%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 3%;
+  margin-right: 3%;
+}
+
+#formulaire_options {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.gest_form_button_container {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+#form_consulter,
+#form_supprimer {
+  border-radius: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 100%;
+  border-style: solid;
+  border-color: #000;
+}
+
+#form_consulter {
+  background-color: #949494;
+}
+
+#form_consulter:hover {
+  background-color: #d3d3d3;
+}
+
+#form_supprimer {
+  background-color: #D90000;
+}
+
+#form_supprimer:hover {
+  background-color: #ff5d5d;
+}
+
+/* -------------------- nav_creation_event.html --------------------*/
+
+#blank_space_2 {
+  padding:2px;
+}
+
+/* -------------------- creation_entrainement.html --------------------*/
+
+
+.event_creation_area {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 5px;
+}
+
+#event_creation__bottom_area {
+  margin-bottom: 10px;
+}
+
+.event_container {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  flex-grow: 1;
+}
+
+#event_creation_global_container {
+  width: 50%;
+  padding: 10px;
+  margin-left: 25%;
+  margin-top: 30px;
+  border-radius: 15px;
+  background-color: #d3d3d3;
+  margin-bottom: 20px;
+  box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+}
+
+#event_creation_title {
+  text-align: center;
+  margin: 20px;
+}
+
+.creation_event_info_required_area {
+  margin-left: 5%;
+  margin-right: 3%;
+  flex-basis: 80%;
+}
+
+.creation_event_text {
+  margin-left: 2%;
+  flex-basis: 10%;
+}
+
+#type_create_event_div {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+}
+
+#create_event_save {
+  border-radius: 5px;
+  margin-left: 40%;
+  margin-top: 20px;
+  width: 20%;
+  background-color: #1ECC2A;
+}
+/* -------------------- consultation_form.html --------------------*/
+
+#consult_form {
+  margin: 20px;
+}
+
+#info_form_area {
+  text-align: center;
+}
+
+.data_form {
+  margin-left: 5px;
+}
+
+.form_area {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+#reponse_form_area {
+  margin-bottom: 20px;
+}
+
+#form_button_area {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 50%;
+  margin-left: 25%;
+}
+
+.form_button_container {
+  width: 30%;
+
+}
+
+#form_bouton_back,
+#form_bouton_rep {
+  border-radius: 5px;
+  margin-left: 25%;
+  width: 50%;
+}
+
+#form_bouton_back {
+  background-color: #D90000;
+}
+
+#form_bouton_rep {
+  background-color: #6691FF;
+}
