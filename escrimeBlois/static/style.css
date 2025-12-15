@@ -803,4 +803,48 @@ span.modifiable-v2 {
     margin-left: 0.25rem;
 }
 
+.blank_space_nav{
+  margin: 2cm;
+}
 
+/* ==================== Infos Persos - Détails/Sommaire ==================== */
+summary {
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary::after,.ic::after {
+    content: '▶';
+    font-size: 1em;
+    transition: transform 0.3s ease;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+details[open] summary::after{
+    transform: rotate(90deg);
+}
+
+summary h2 {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+/* Supprimer la marge inférieure par défaut du h2 dans le summary */
+.section-v2 summary h2 {
+    margin-bottom: 0;
+}
+
+/* Ajouter un espacement après le résumé lorsqu'il est ouvert */
+details[open] summary {
+    margin-bottom: 1.5rem;
+}

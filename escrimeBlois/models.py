@@ -28,6 +28,7 @@ class Personne(UserMixin, db.Model):
         nom_personne (str): Nom de famille.
         prenom_personne (str): Prénom.
         email_personne (str): Adresse email.
+        telephone (str): Numéro de telephone
         sexe (str): Sexe (1 caractère).
         adresse (str): Adresse postale.
         date_naissance (Date): Date de naissance.
@@ -41,6 +42,7 @@ class Personne(UserMixin, db.Model):
     nom_personne = db.Column(db.String(64))
     prenom_personne = db.Column(db.String(64))
     email_personne = db.Column(db.String(64))
+    telephone = db.column(db.String(64))
     sexe = db.Column(db.String(1))
     adresse = db.Column(db.String(64))
     date_naissance = db.Column(db.Date)

@@ -2,7 +2,7 @@ from flask import flash, redirect, render_template, request, url_for, flash
 from flask_login import login_required, current_user
 from werkzeug.security import generate_password_hash
 from .app import app,db
-from .models import Article
+from .models import *
 from datetime import date
 import os
 

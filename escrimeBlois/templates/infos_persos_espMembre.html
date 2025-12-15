@@ -2,8 +2,9 @@
 <div class="blank_space"></div>
 <div class="infos-container-v2">
     <div class="section-v2">
-        <h2>Informations générales</h2>
-        <div class="form-columns-v2">
+        <details open>
+            <summary><h2>Informations générales</h2></summary>
+            <div class="form-columns-v2">
             <div class="form-col-v2">
                 <div class="form-field-v2">
                     <label>Nom<span class="non-modifiable-v2"></span></label>
@@ -32,13 +33,14 @@
                     <input type="text" disabled value="{{ personne.adresse }}">
                 </div>
             </div>
-        </div>
+        </details>
     </div>
 
     <form method="POST" action="{{ url_for('change_password') }}" class="form-group">
         <div class="section-v2">
-            <h2>Changer mot de passe</h2>
-            <div class="form-columns-v2">
+            <details open>
+                <summary><h2>Changer mot de passe</h2></summary>
+                <div class="form-columns-v2">
                 <div class="form-col-v2">
                     <div class="form-field-v2">
                         <label>Nouveau mot de passe<span class="modifiable-v2"></span></label>
@@ -53,17 +55,19 @@
                 </div>
             </div>
             <button type="submit" class="submit-btn-v2 green-btn-v2">Confirmer</button>
+            </details>
         </div>
     </form>
 
     <form method="POST" action="{{ url_for('update_arme') }}" class="form-group">
         <div class="section-v2">
-            <h2>Informations sportives</h2>
-            <div class="form-columns-v2">
+            <details open>
+                <summary><h2>Informations sportives</h2></summary>
+                <div class="form-columns-v2">
                 <div class="form-col-v2">
                     <div class="form-field-v2">
                         <label>Arme principale<span class="modifiable-v2"></span></label>
-                        <select name="arme_principale" class="form-control" required>
+                        <select class="ic" id="theme" name="arme_principale" class="form-control" required>
                             <option value="fleuret" {% if personne.arme_principale == 'fleuret' %}selected{% endif %}>Fleuret</option>
                             <option value="épée" {% if personne.arme_principale == 'épée' %}selected{% endif %}>Épée</option>
                             <option value="sabre" {% if personne.arme_principale == 'sabre' %}selected{% endif %}>Sabre</option>
@@ -78,6 +82,7 @@
                 </div>
             </div>
             <button type="submit" class="submit-btn-v2 green-btn-v2">Mettre à jour l'arme</button>
+            </details>
         </div>
     </form>
 </div>
