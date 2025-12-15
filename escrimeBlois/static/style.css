@@ -631,7 +631,8 @@ table {
 }
 
 #membre_modifier,
-#membre_supprimer {
+#membre_supprimer,
+.membre_supprimer {
   border-radius: 20px;
   padding: 5px 15px;
   border-style: solid;
@@ -650,11 +651,13 @@ table {
   transform: scale(1.05);
 }
 
-#membre_supprimer {
+#membre_supprimer,
+.membre_supprimer {
   background-color: #d90000;
 }
 
-#membre_supprimer:hover {
+#membre_supprimer:hover,
+.membre_supprimer:hover {
   background-color: #ff5d5d;
   transform: scale(1.05);
 }
