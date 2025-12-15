@@ -1,5 +1,5 @@
 {% extends "nav_membres.html" %}{% block membre %}
-<div class="blank_space"></div>
+<div id="blank_space"></div>
 <div class="infos-container-v2">
     <div class="section-v2">
         <details open>
@@ -44,13 +44,19 @@
                 <div class="form-col-v2">
                     <div class="form-field-v2">
                         <label>Nouveau mot de passe<span class="modifiable-v2"></span></label>
-                        <input type="password" name="new_password" required>
+                        <div class="password-wrapper">
+                            <input type="password" name="new_password" id="new_password" required autocomplete="new-password">
+                            <span class="toggle-password" onclick="togglePassword('new_password', this)">👁️</span>
+                        </div>
                     </div>
                 </div>
                 <div class="form-col-v2">
                     <div class="form-field-v2">
                         <label>Confirmation nouveau mot de passe<span class="modifiable-v2"></span></label>
-                        <input type="password" name="confirm_password" required>
+                        <div class="password-wrapper">
+                            <input type="password" name="confirm_password" id="confirm_password" required autocomplete="new-password">
+                            <span class="toggle-password" onclick="togglePassword('confirm_password', this)">👁️</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -86,4 +92,16 @@
         </div>
     </form>
 </div>
+<script>
+    function togglePassword(inputId, icon) {
+        const input = document.getElementById(inputId);
+        if (input.type === "password") {
+            input.type = "text";
+            icon.textContent = "🔒"; // Icône quand le mdp est visible (pour le recacher)
+        } else {
+            input.type = "password";
+            icon.textContent = "👁️"; // Icône quand le mdp est caché
+        }
+    }
+</script>
 {% endblock %}
