@@ -2,13 +2,33 @@ from flask import flash, redirect, render_template, request, url_for, flash
 from .app import app,db
 from .models import Article
 from datetime import date
-from escrimeBlois.models import Formulaire
+from escrimeBlois.models import Formulaire, FormInscription
 import os
 
 @app.route('/')
 @app.route('/index/')
 def index():
-        return render_template("index.html")
+    return render_template("index.html")
+
+
+@app.route('/historique/')
+def historique():
+    return render_template('historique.html')
+
+
+@app.route('/inscription/', )
+def inscription():
+    form = FormInscription(request.form)
+    return render_template('inscription.html', formInscription=form)
+
+
+@app.route('/inscription/insert', methods=("POST", ))
+def insert_inscription():
+    form = FormInscription()
+    if form.validate_on_submit():
+        form.commit_inscription()
+
+    return render_template('inscription.html', formInscription=form)
 
 @app.route('/login/')
 def login():
