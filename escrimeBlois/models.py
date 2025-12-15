@@ -35,12 +35,14 @@ class Personne(UserMixin, db.Model):
         arme_principale (str): Arme principale (épée, fleuret, sabre).
         niveau (str): Niveau de compétence.
         role (str): Rôle ('personne', 'membre', 'responsable', 'admin').
+        telephone (str): Numéro de téléphone.
     """
     id_personne = db.Column(db.Integer, primary_key=True)
     mdp = db.Column(db.String(64))
     nom_personne = db.Column(db.String(64))
     prenom_personne = db.Column(db.String(64))
     email_personne = db.Column(db.String(64))
+    telephone = db.Column(db.String(64))
     sexe = db.Column(db.String(1))
     adresse = db.Column(db.String(64))
     date_naissance = db.Column(db.Date)

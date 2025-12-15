@@ -1,5 +1,6 @@
 from flask import flash, redirect, render_template, request, url_for
-from .app import app
+from .app import app, db
+from escrimeBlois.models import Personne, Demande_inscription
 
 
 @app.route('/')
@@ -42,7 +43,45 @@ def mdp_oublier_confirmer_mdp():
 
 @app.route('/admin/gestion_inscription/club')
 def admin_inscription_club():
-    return render_template('admin_gestion_inscription_club.html')
+    demandes = Demande_inscription.query.all()
+    return render_template('admin_gestion_inscription_club.html', demandes=demandes)
+
+
+@app.route('/admin/gestion_inscription/club/view/<int:id_inscription>', methods=['GET', 'POST'])
+def admin_inscription_club_view(id_inscription):
+    demande = Demande_inscription.query.get_or_404(id_inscription)
+    
+    if request.method == 'POST':
+        action = request.form.get('action')
+        
+        if action == 'accepter':
+            # Créer un nouveau membre avec les infos de la demande
+            nouveau_membre = Personne(
+                mdp=demande.mot_de_passe,
+                nom_personne=demande.nom,
+                prenom_personne=demande.prenom,
+                email_personne=demande.adresse_mail,
+                telephone=demande.num_tel,
+                sexe=demande.sexe,
+                adresse=demande.adresse_postale,
+                date_naissance=demande.date_naissance,
+                eleve=demande.eleve,
+                role='membre'
+            )
+            db.session.add(nouveau_membre)
+            db.session.delete(demande)
+            db.session.commit()
+            flash('Demande acceptée, membre créé avec succès', 'success')
+        
+        elif action == 'refuser':
+            # Supprimer la demande
+            db.session.delete(demande)
+            db.session.commit()
+            flash('Demande refusée et supprimée', 'success')
+        
+        return redirect(url_for('admin_inscription_club'))
+    
+    return render_template('admin_gestion_inscription_club_view.html', demande=demande)
 
 
 @app.route('/historique/')
