@@ -1,22 +1,24 @@
 from wtforms import Form, StringField, PasswordField, RadioField, DateField, FileField
 from .models import Demande_inscription
+from flask_wtf import FlaskForm
 from hashlib import sha256
 from email_validator import validate_email, EmailNotValidError, ValidatedEmail
 from .app import app, db
 from sqlalchemy import func
 
 
-class FormInscription(Form):
+class FormInscription(FlaskForm):
     nom = StringField('Nom')
     prenom = StringField('Prenom')
     mot_de_passe = PasswordField('Mot de passe')
     conf_mot_de_passe = PasswordField('Confirmer mot de passe')
-    sexe = RadioField('Sexe',choices=[('H','Homme'),('F','Femme')])
+    sexe = RadioField('Sexe', choices=[('H', 'Homme'), ('F', 'Femme')])
     date_naissance = DateField('Date de naissance')
     num_tel = StringField('Numéro de téléphone')
     adresse_mail = StringField("Adresse mail")
     adresse_postale = StringField('Adresse postale')
-    eleve = RadioField('Adresse postale',choices=[('Oui','Oui'),('Non','Non')])
+    eleve = RadioField('Adresse postale',
+                       choices=[('Oui', 'Oui'), ('Non', 'Non')])
     justificatif = FileField('justificatif')
 
     def max_id() -> int:
@@ -35,7 +37,7 @@ class FormInscription(Form):
             print(str(e))
 
     def commit_inscription(self):
-        id = self.max_id()
+        id = FormInscription.max_id()
         self.bon_mdp()
         mail = self.format_mail()
         m = sha256()
@@ -53,4 +55,5 @@ class FormInscription(Form):
                                 adresse_postale=self.adresse_postale.data,
                                 eleve=est_scolarisee,
                                 justificatif=self.justificatif.data))
+
         db.session.commit()

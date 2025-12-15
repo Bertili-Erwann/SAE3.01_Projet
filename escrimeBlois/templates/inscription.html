@@ -12,6 +12,7 @@
     name="form-inscrip"
     action="{{ url_for('insert_inscription') }}"
   >
+    {{ formInscription.hidden_tag() }}
     <h1>Inscription au cercle</h1>
     <div class="two-tf">
       <label for="nom"> 1. Nom complet <span id="obligatoire">*</span> </label>
@@ -95,7 +96,8 @@
       </label>
       {% for rep in formInscription.eleve %}
       <tr>
-        <td>{{ rep }}</td>
+        <br />
+        <td>{{ rep(onclick="afficheFichier()") }}</td>
         <td>{{ rep.label }}</td>
       </tr>
       {% endfor %}
