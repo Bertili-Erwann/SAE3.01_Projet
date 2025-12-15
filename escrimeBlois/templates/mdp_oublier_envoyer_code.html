@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block main %}
+<div class="logo-texte">
+  <img
+    src="../static/images/logo_cercle_escrime_blois.png"
+    alt="Logo du cercle d'escrime de Blois"
+    width="100"
+    height="100"
+  />
+  <p>Mot de passe oublier</p>
+</div>
+<div class="fenetre-mdp-oublier">
+  <form method="POST" onsubmit="return false;">
+    <!-- EMAIL -->
+    <h2>Adresse e-mail</h2>
+    <input
+      type="email"
+      name="email"
+      placeholder="Entrez votre e-mail"
+      required
+    />
+
+    <!-- BOUTON ENVOYER CODE -->
+    <input type="submit" value="Envoyer code" />
+  </form>
+</div>
+{% endblock %}
