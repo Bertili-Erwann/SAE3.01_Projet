@@ -42,7 +42,7 @@ class Personne(UserMixin, db.Model):
     nom_personne = db.Column(db.String(64))
     prenom_personne = db.Column(db.String(64))
     email_personne = db.Column(db.String(64))
-    telephone = db.column(db.String(64))
+    telephone = db.Column(db.String(20), nullable=True)
     sexe = db.Column(db.String(1))
     adresse = db.Column(db.String(64))
     date_naissance = db.Column(db.Date)
@@ -68,9 +68,10 @@ class Personne(UserMixin, db.Model):
         """
         match value:
             case "membre" | "responsable":
-                if self.etudiant is None or self.arme_principale is None or self.niveau is None:
-                    raise ValueError(
-                        f"Le  '{value}' n'a pas rempli un des champs requis")
+            # TOUS les champs requis doivent être remplis
+                if (self.etudiant is None or self.arme_principale is None or self.niveau is None or 
+                    self.sexe is None or self.adresse is None or self.date_naissance is None):
+                    raise ValueError(f"Le  '{value}' n'a pas rempli un des champs requis")
             case "personne" | "admin":
                 if self.etudiant is not None or self.arme_principale is not None or self.niveau is not None:
                     raise ValueError(f"'{value}' a des informations en trop")

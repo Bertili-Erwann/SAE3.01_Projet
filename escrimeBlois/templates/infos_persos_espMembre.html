@@ -1,6 +1,17 @@
 {% extends "nav_membres.html" %}{% block membre %}
 <div id="blank_space"></div>
 <div class="infos-container-v2">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     <div class="section-v2">
         <details open>
             <summary><h2>Informations générales</h2></summary>
@@ -92,16 +103,4 @@
         </div>
     </form>
 </div>
-<script>
-    function togglePassword(inputId, icon) {
-        const input = document.getElementById(inputId);
-        if (input.type === "password") {
-            input.type = "text";
-            icon.textContent = "🔒"; // Icône quand le mdp est visible (pour le recacher)
-        } else {
-            input.type = "password";
-            icon.textContent = "👁️"; // Icône quand le mdp est caché
-        }
-    }
-</script>
 {% endblock %}

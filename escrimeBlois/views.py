@@ -1,6 +1,7 @@
 from flask import flash, redirect, render_template, request, url_for, flash
-from flask_login import login_required, current_user
+from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.security import generate_password_hash
+from hashlib import sha256
 from .app import app,db
 from .models import *
 from datetime import date
@@ -11,9 +12,39 @@ import os
 def index():
         return render_template("index.html")
 
-@app.route('/login/')
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
-        return render_template("login.html")
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        
+        user = Personne.query.filter_by(email_personne=email).first()
+        
+        if user:
+            m = sha256()
+            m.update(password.encode('utf-8'))
+            hashed_password = m.hexdigest()
+            
+            if user.mdp == hashed_password:
+                login_user(user)
+                flash('Connexion réussie !', 'success')
+                if user.role == "membre":
+                    return redirect(url_for('infos_persos'))
+                elif user.role == "responsable":
+                    return redirect(url_for('ajouter_article')) # Exemple de redirection pour responsable
+                else:
+                    return redirect(url_for('index'))
+            else:
+                flash('Mot de passe incorrect.', 'error')
+        else:
+            flash('Email inconnu.', 'error')
+            
+    return render_template("login.html")
+
+@app.route('/logout/')
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 @app.route('/mdp_oublier_envoyer_code/')
 def mdp_oublier_envoyer_code():
@@ -90,6 +121,8 @@ def ajouter_article():
 @app.route('/infos_persos/')
 @login_required
 def infos_persos():
+    if current_user.role != 'membre':
+        return redirect(url_for('index'))
     return render_template('infos_persos_espMembre.html', personne=current_user)
 
 @app.route('/change_password', methods=['POST'])
@@ -117,7 +150,9 @@ def change_password():
     
     try:
         # Hasher le nouveau mot de passe
-        hashed_password = generate_password_hash(new_password)
+        m = sha256()
+        m.update(new_password.encode('utf-8'))
+        hashed_password = m.hexdigest()
         current_user.mdp = hashed_password
         db.session.commit()
         flash('Votre mot de passe a été mis à jour avec succès.', 'success')
