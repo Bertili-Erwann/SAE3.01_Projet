@@ -1,5 +1,6 @@
 from wtforms import Form, StringField, PasswordField, RadioField, DateField, FileField
 from .models import Demande_inscription
+from wtforms.validators import DataRequired
 from flask_wtf import FlaskForm
 from hashlib import sha256
 from email_validator import validate_email, EmailNotValidError, ValidatedEmail
@@ -23,19 +24,19 @@ StoreManager.register('fs',
 
 
 class FormInscription(FlaskForm):
-    nom = StringField('Nom')
-    prenom = StringField('Prenom')
-    mot_de_passe = PasswordField('Mot de passe')
-    conf_mot_de_passe = PasswordField('Confirmer mot de passe')
-    sexe = RadioField('Sexe', choices=[('H', 'Homme'), ('F', 'Femme')])
-    date_naissance = DateField('Date de naissance')
-    num_tel = StringField('Numéro de téléphone')
-    adresse_mail = StringField("Adresse mail")
-    adresse_postale = StringField('Adresse postale')
+    nom = StringField('Nom',validators=[DataRequired()])
+    prenom = StringField('Prenom',validators=[DataRequired()])
+    mot_de_passe = PasswordField('Mot de passe',validators=[DataRequired()])
+    conf_mot_de_passe = PasswordField('Confirmer mot de passe',validators=[DataRequired()])
+    sexe = RadioField('Sexe', choices=[('H', 'Homme'), ('F', 'Femme')],validators=[DataRequired()])
+    date_naissance = DateField('Date de naissance',validators=[DataRequired()])
+    num_tel = StringField('Numéro de téléphone',validators=[DataRequired()])
+    adresse_mail = StringField("Adresse mail",validators=[DataRequired()])
+    adresse_postale = StringField('Adresse postale',validators=[DataRequired()])
     eleve = RadioField('Adresse postale',
-                       choices=[('Oui', 'Oui'), ('Non', 'Non')])
+                       choices=[('Oui', 'Oui'), ('Non', 'Non')],validators=[DataRequired()])
     justificatif = FileField('justificatif')
-
+    
     def max_id() -> int:
         max_id = db.session.query(func.max(
             Demande_inscription.id_inscription)).scalar()
