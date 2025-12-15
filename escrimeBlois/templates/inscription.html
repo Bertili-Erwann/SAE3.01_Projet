@@ -11,6 +11,7 @@
     method="POST"
     name="form-inscrip"
     action="{{ url_for('insert_inscription') }}"
+    enctype="multipart/form-data"
   >
     {{ formInscription.hidden_tag() }}
     <h1>Inscription au cercle</h1>
@@ -102,7 +103,9 @@
       </tr>
       {% endfor %}
     </div>
-    <div id="fichier"></div>
+    <div id="fichier" class="hidden">
+      {{ formInscription.justificatif(class_="form-control")}}
+    </div>
     <div class="btn-wrap">
       <input type="submit" value="Déposer l'inscription" />
     </div>

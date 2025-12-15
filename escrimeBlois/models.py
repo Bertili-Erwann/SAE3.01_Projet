@@ -2,6 +2,8 @@ from .app import db
 from flask_login import UserMixin
 from .app import login_manager
 from sqlalchemy.orm import validates
+from sqlalchemy_media import File
+from sqlalchemy import JSON
 
 
 @login_manager.user_loader
@@ -120,7 +122,7 @@ class Demande_inscription(db.Model):
     adresse_mail = db.Column(db.String(64))
     adresse_postale = db.Column(db.String(64))
     eleve = db.Column(db.Boolean)
-    justificatif = db.Column(db.String(64))
+    justificatif = db.Column(File.as_mutable(JSON))
 
     def __repr__(self) -> str:
         """

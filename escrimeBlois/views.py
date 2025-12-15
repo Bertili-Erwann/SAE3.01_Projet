@@ -23,7 +23,6 @@ def inscription():
 @app.route('/inscription/insert', methods=("POST", ))
 def insert_inscription():
     form = FormInscription()
-    print("dqs=dkQSPDK POSD?")
     if form.validate_on_submit():
         form.commit_inscription()
 

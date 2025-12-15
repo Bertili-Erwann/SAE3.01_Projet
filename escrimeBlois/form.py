@@ -5,6 +5,21 @@ from hashlib import sha256
 from email_validator import validate_email, EmailNotValidError, ValidatedEmail
 from .app import app, db
 from sqlalchemy import func
+from sqlalchemy_media import StoreManager, FileSystemStore, File
+import functools
+import os
+
+# Définir le chemin de stockage local dans le projet
+UPLOAD_PATH = os.path.join(os.path.dirname(__file__), 'uploads')
+
+# Créer le dossier s'il n'existe pas
+os.makedirs(UPLOAD_PATH, exist_ok=True)
+
+# Configurer le stockage local
+StoreManager.register('fs',
+                      functools.partial(FileSystemStore, UPLOAD_PATH,
+                                        'http://localhost:5000/uploads/'),
+                      default=True)
 
 
 class FormInscription(FlaskForm):
@@ -43,17 +58,25 @@ class FormInscription(FlaskForm):
         m = sha256()
         m.update(self.mot_de_passe.data.encode('utf-8'))
         est_scolarisee = True if self.eleve.data == 'Oui' else False
-        db.session.add(
-            Demande_inscription(id_inscription=id,
-                                nom=self.nom.data,
-                                prenom=self.prenom.data,
-                                mot_de_passe=m.hexdigest(),
-                                sexe=self.sexe.data,
-                                date_naissance=self.date_naissance.data,
-                                num_tel=self.num_tel.data,
-                                adresse_mail=mail.normalized,
-                                adresse_postale=self.adresse_postale.data,
-                                eleve=est_scolarisee,
-                                justificatif=self.justificatif.data))
 
-        db.session.commit()
+        justificatif_parsed = None
+        file_data = self.justificatif.data
+
+        with StoreManager(db.session):
+            if file_data and getattr(file_data, "filename", ""):
+                justificatif_parsed = File.create_from(file_data)
+
+            db.session.add(
+                Demande_inscription(id_inscription=id,
+                                    nom=self.nom.data,
+                                    prenom=self.prenom.data,
+                                    mot_de_passe=m.hexdigest(),
+                                    sexe=self.sexe.data,
+                                    date_naissance=self.date_naissance.data,
+                                    num_tel=self.num_tel.data,
+                                    adresse_mail=mail.normalized,
+                                    adresse_postale=self.adresse_postale.data,
+                                    eleve=est_scolarisee,
+                                    justificatif=justificatif_parsed))
+
+            db.session.commit()

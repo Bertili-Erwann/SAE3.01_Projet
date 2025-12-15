@@ -421,3 +421,6 @@ table {
   height: 160px;
   width: 160px;
 }
+.hidden{
+  display: none;
+}

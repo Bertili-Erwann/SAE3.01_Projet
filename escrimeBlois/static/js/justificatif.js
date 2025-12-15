@@ -4,10 +4,8 @@ function afficheFichier() {
     document.getElementById("eleve-0").checked &&
     document.getElementById("eleve-0").value == "Oui"
   ) {
-    divFichier.innerHTML = `
-                <label for="justificatif">Justificatif</label>
-                <input type="file" id="justificatif" accept="image/png, image/jpeg, .pdf" />`;
+    divFichier.classList.remove("hidden");
   } else {
-    divFichier.replaceChildren();
+    divFichier.classList.add("hidden");
   }
-}
+} 
