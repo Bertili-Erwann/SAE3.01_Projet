@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, PasswordField, RadioField, DateField, FileField
+from wtforms import Form, StringField, PasswordField, RadioField, DateField, FileField, SelectField
 from .models import Demande_inscription
 from wtforms.validators import DataRequired
 from flask_wtf import FlaskForm
@@ -24,19 +24,25 @@ StoreManager.register('fs',
 
 
 class FormInscription(FlaskForm):
-    nom = StringField('Nom',validators=[DataRequired()])
-    prenom = StringField('Prenom',validators=[DataRequired()])
-    mot_de_passe = PasswordField('Mot de passe',validators=[DataRequired()])
-    conf_mot_de_passe = PasswordField('Confirmer mot de passe',validators=[DataRequired()])
-    sexe = RadioField('Sexe', choices=[('H', 'Homme'), ('F', 'Femme')],validators=[DataRequired()])
-    date_naissance = DateField('Date de naissance',validators=[DataRequired()])
-    num_tel = StringField('Numéro de téléphone',validators=[DataRequired()])
-    adresse_mail = StringField("Adresse mail",validators=[DataRequired()])
-    adresse_postale = StringField('Adresse postale',validators=[DataRequired()])
+    nom = StringField('Nom', validators=[DataRequired()])
+    prenom = StringField('Prenom', validators=[DataRequired()])
+    mot_de_passe = PasswordField('Mot de passe', validators=[DataRequired()])
+    conf_mot_de_passe = PasswordField('Confirmer mot de passe',
+                                      validators=[DataRequired()])
+    sexe = RadioField('Sexe',
+                      choices=[('H', 'Homme'), ('F', 'Femme')],
+                      validators=[DataRequired()])
+    date_naissance = DateField('Date de naissance',
+                               validators=[DataRequired()])
+    num_tel = StringField('Numéro de téléphone', validators=[DataRequired()])
+    adresse_mail = StringField("Adresse mail", validators=[DataRequired()])
+    adresse_postale = StringField('Adresse postale',
+                                  validators=[DataRequired()])
     eleve = RadioField('Adresse postale',
-                       choices=[('Oui', 'Oui'), ('Non', 'Non')],validators=[DataRequired()])
+                       choices=[('Oui', 'Oui'), ('Non', 'Non')],
+                       validators=[DataRequired()])
     justificatif = FileField('justificatif')
-    
+
     def max_id() -> int:
         max_id = db.session.query(func.max(
             Demande_inscription.id_inscription)).scalar()
@@ -81,3 +87,9 @@ class FormInscription(FlaskForm):
                                     justificatif=justificatif_parsed))
 
             db.session.commit()
+
+
+class FormRechercheArticle(FlaskForm):
+    choix_mois = SelectField("Sélectionner un mois",
+                             validators=[DataRequired()])
+    recherche = StringField("Rechercher", validators=[DataRequired()])

@@ -9,13 +9,13 @@
   />
 </div>
 <div class="main-content" id="actualite">
-  <h1>ACTUALITÉ</h1>
   <div class="carousel-row">
     <button type="button" class="carousel-btn prev" aria-label="Précédent">
       ‹
     </button>
     <div class="articles">
       <article>
+        <h1>ACTUALITÉ</h1> 
         <a href="#" class="image featured"
           ><img src="../static/images/placeholder1.png" alt=""
         /></a>
@@ -121,30 +121,44 @@
       ›
     </button>
   </div>
-</div>
-<div class="inscription">
-  <img src="../static/images/escrimeur.png" />
-  <div class="inscription-wrap">
-    <h1>
-      N'attendez plus et cliquez <a href="{{ url_for('inscription') }}">ICI</a
-      ><img src="../static/images/double_fleche.png" />
-    </h1>
-    <h1>pour vous inscrire</h1>
+  <div>
+    
+    <div class="menu-recherche">
+      <div class="ctn-article">
+        <p class="article-recents">Articles récents</p>
+      </div>
+      <div class="">
+        <p class="recherche">Recherche</p>
+        <form></form>
+      </div>
+    </div>
+
+  </div>
+  <div class="inscription">
+    <img src="../static/images/escrimeur.png" />
+    <div class="inscription-wrap">
+      <h1>
+        N'attendez plus et cliquez <a href="{{ url_for('inscription') }}">ICI</a
+        ><img src="../static/images/double_fleche.png" />
+      </h1>
+      <h1>pour vous inscrire</h1>
+    </div>
+  </div>
+  <div class="partenaire">
+    <h1>Nos partenaires</h1>
+    <div id="partenaire-content">
+      <section>
+        <img src="../static/images/logo_blois.png" />
+        <p>Ville de Blois</p>
+      </section>
+      <section>
+        <img src="../static/images/logo_escrime_centre_val_de_loire.png" />
+        <p>Ligue d'Escrime Centre-Val de Loire</p>
+      </section>
+    </div>
   </div>
 </div>
-<div class="partenaire">
-  <h1>Nos partenaires</h1>
-  <div id="partenaire-content">
-    <section>
-      <img src="../static/images/logo_blois.png" />
-      <p>Ville de Blois</p>
-    </section>
-    <section>
-      <img src="../static/images/logo_escrime_centre_val_de_loire.png" />
-      <p>Ligue d'Escrime Centre-Val de Loire</p>
-    </section>
-  </div>
-</div>
+
 {% endblock %} {% block scripts %}
 <script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
 {% endblock %}

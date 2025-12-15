@@ -104,8 +104,9 @@ body {
   padding: 1rem;
 }
 
+
 .main-content {
-  background-color: var(--cold);
+  /* background-color: var(--cold); */
   text-align: center;
 }
 
@@ -121,6 +122,7 @@ body {
 
 .articles {
   display: flex;
+  background-color: var(--cold);
   flex-direction: row;
   gap: 1rem;
   overflow-x: auto;
