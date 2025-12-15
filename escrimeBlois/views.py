@@ -1,6 +1,6 @@
-from flask import flash, redirect, render_template, request, url_for
+from flask import redirect, render_template, request, url_for
 from .app import app, db
-from escrimeBlois.models import Personne, Demande_inscription
+from escrimeBlois.models import Personne, Demande_inscription, Inscription, Evenement
 
 
 @app.route('/')
@@ -31,11 +31,9 @@ def mdp_oublier_confirmer_mdp():
         newpasswordconfirm = request.form.get('newpasswordconfirm')
 
         if newpassword != newpasswordconfirm:
-            flash("Les mots de passe ne correspondent pas.", "error")
             return render_template('mdp_oublier_confirmer_mdp.html')
 
         # Ici, tu peux ajouter la logique pour mettre à jour le mot de passe en base
-        flash("Mot de passe mis à jour avec succès.", "success")
         return redirect(url_for('login'))  # Ou une autre page
 
     return render_template('mdp_oublier_confirmer_mdp.html')
@@ -71,17 +69,43 @@ def admin_inscription_club_view(id_inscription):
             db.session.add(nouveau_membre)
             db.session.delete(demande)
             db.session.commit()
-            flash('Demande acceptée, membre créé avec succès', 'success')
         
         elif action == 'refuser':
             # Supprimer la demande
             db.session.delete(demande)
             db.session.commit()
-            flash('Demande refusée et supprimée', 'success')
         
         return redirect(url_for('admin_inscription_club'))
     
     return render_template('admin_gestion_inscription_club_view.html', demande=demande)
+
+
+@app.route('/admin/gestion_inscription/evenement')
+def admin_inscription_evenement():
+    # Récupérer toutes les inscriptions
+    inscriptions = Inscription.query.all()
+    return render_template('admin_gestion_inscription_evenement.html', inscriptions=inscriptions)
+
+
+@app.route('/admin/gestion_inscription/evenement/view/<int:id_inscription>', methods=['GET', 'POST'])
+def admin_inscription_evenement_view(id_inscription):
+    inscription = Inscription.query.get_or_404(id_inscription)
+    
+    if request.method == 'POST':
+        action = request.form.get('action')
+        
+        if action == 'accepter':
+            # Valider l'inscription
+            pass
+        
+        elif action == 'refuser':
+            # Supprimer l'inscription
+            db.session.delete(inscription)
+            db.session.commit()
+        
+        return redirect(url_for('admin_inscription_evenement'))
+    
+    return render_template('admin_gestion_inscription_evenement_view.html', inscription=inscription)
 
 
 @app.route('/historique/')

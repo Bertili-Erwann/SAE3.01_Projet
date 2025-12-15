@@ -223,10 +223,17 @@ class Inscription(db.Model):
     Attributs:
         id_inscription (int): Clé primaire.
         id_evenement (int): Clé étrangère vers Evenement.
+        nom (str): Nom de la personne.
+        prenom (str): Prénom de la personne.
     """
     id_inscription = db.Column(db.Integer, primary_key=True)
     id_evenement = db.Column(db.Integer,
                              db.ForeignKey("evenement.id_evenement"))
+    nom = db.Column(db.String(64))
+    prenom = db.Column(db.String(64))
+    
+    # Relations
+    evenement = db.relationship("Evenement", backref=db.backref("inscriptions", lazy="dynamic"))
 
     def __repr__(self) -> str:
         """

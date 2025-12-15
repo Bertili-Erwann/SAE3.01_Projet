@@ -571,9 +571,22 @@ table {
   margin: 0 10px;
 }
 
-#nav_admin > li:hover,
-#nav_inscr > li:hover {
+#nav_admin > li a,
+#nav_inscr > li a {
+  text-decoration: none;
+  color: #333;
+  padding: 12px 20px;
+  display: block;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+#nav_admin > li:hover a,
+#nav_inscr > li:hover a {
   font-weight: bold;
+  color: #357abd;
+  background-color: rgba(74, 144, 226, 0.1);
 }
 
 #blank_space {
@@ -595,7 +608,6 @@ table {
 
 .demande_inscription_item:hover {
   background-color: #e8e8e8;
-  transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
@@ -704,8 +716,7 @@ table {
 
 .inscription_buttons button[value="accepter"]:hover {
   background-color: #45a049;
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+  transform: scale(1.05);
 }
 
 .inscription_buttons button[value="refuser"] {
@@ -715,11 +726,9 @@ table {
 
 .inscription_buttons button[value="refuser"]:hover {
   background-color: #ff1a1a;
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 5px 15px rgba(217, 0, 0, 0.4);
+  transform: scale(1.05);
 }
 
-/* Styles pour les liens dans les détails d'inscription */
 .inscription_details a {
   color: #0066cc;
   text-decoration: none;
@@ -735,7 +744,6 @@ table {
   transform: scale(1.05);
 }
 
-/* Animation pour le titre de la page */
 .inscription_view h2 {
   transition: all 0.3s ease;
 }
