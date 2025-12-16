@@ -287,4 +287,55 @@ def update_arme():
     
     return redirect(url_for('infos_persos'))
 
+@app.route('/nav_event')
+def nav_event():
+    return render_template ('nav_event.html')
+
+@app.route('/calendrier_event')
+def calendrier():
+    # --- 1. Récupération des filtres ---
+    # Checkboxes: retourne une liste ['competition', 'entrainement'] par exemple
+    types_selectionnes = request.args.getlist('type') 
+    
+    ville_recherche = request.args.get('ville')
+    date_debut = request.args.get('date_debut')
+    date_fin = request.args.get('date_fin')
+    categorie = request.args.get('categorie')
+    niveau = request.args.get('niveau')
+    query = Evenement.query
+
+    # Filtre Type
+    if types_selectionnes:
+        query = query.filter(Evenement.type_evenement.in_(types_selectionnes))
+
+    # Filtre Ville
+    if ville_recherche:
+        query = query.filter(Evenement.lieu.ilike(f'%{ville_recherche}%'))
+
+    # Filtres Dates
+    if date_debut:
+        query = query.filter(Evenement.date >= date_debut)
+    if date_fin:
+        query = query.filter(Evenement.date <= date_fin)
+
+    # Filtres Catégorie
+    if categorie and categorie != "Toutes catégories":
+        query = query.filter(Evenement.categorie == categorie)
+        
+    # Filtres Niveau
+    if niveau and niveau != "Niveaux":
+        query = query.filter(Evenement.niveau == niveau)
+
+    # Tri par date croissante
+    query = query.order_by(Evenement.date.asc())
+    evenements = query.all()
+
+    # --- 3. Rendu ---
+    return render_template(
+        'calendrier_event.html', 
+        evenements=evenements,
+        filtres=request.args, 
+        types_selectionnes=types_selectionnes
+    )
+
 

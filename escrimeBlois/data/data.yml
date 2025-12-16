@@ -57,22 +57,152 @@ evenements:
     date: "2025-10-25"
     heure: 14
     type_evenement: "competition"
-    categorie: "Régionale"
+    categorie: "M20"
     lieu: "Salle des sports Blois"
     description: "Compétition régionale d'escrime"
     niveau: "Régional"
     discipline: "Épée"
     cooperative: "Individuel"
-  - id_evenement: 2
-    date: "2025-10-26"
-    heure: 10
-    type_evenement: "inscription"
-    categorie: "Administrative"
-    lieu: "Bureau du club"
-    description: "Session d'inscription pour la saison"
+  - id_evenement: 3
+    date: "2025-11-05"
+    heure: 09
+    type_evenement: "competition"
+    categorie: "M15"
+    lieu: "Gymnase Tours"
+    description: "Compétition M15 Club"
+    niveau: "Club"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+  - id_evenement: 4
+    date: "2025-11-12"
+    heure: 14
+    type_evenement: "competition"
+    categorie: "Séniors"
+    lieu: "Paris Bercy"
+    description: "Grand Prix Séniors"
+    niveau: "International"
+    discipline: "Sabre"
+    cooperative: "Individuel"
+  - id_evenement: 5
+    date: "2025-11-15"
+    heure: 18
+    type_evenement: "reunion"
+    categorie: null
+    lieu: "Salle de réunion Blois"
+    description: "Réunion mensuelle du bureau"
     niveau: null
     discipline: null
     cooperative: null
+  - id_evenement: 6
+    date: "2025-11-20"
+    heure: 17
+    type_evenement: "entrainement"
+    categorie: "M15"
+    lieu: "Salle d'armes Blois"
+    description: "Entraînement intensif M15"
+    niveau: null
+    discipline: null
+    cooperative: null
+  - id_evenement: 7
+    date: "2025-11-22"
+    heure: 10
+    type_evenement: "entrainement"
+    categorie: "Séniors"
+    lieu: "Orléans Sport"
+    description: "Stage découverte Séniors"
+    niveau: null
+    discipline: null
+    cooperative: null
+  - id_evenement: 8
+    date: "2025-12-01"
+    heure: 09
+    type_evenement: "competition"
+    categorie: "M11"
+    lieu: "Gymnase Blois"
+    description: "Tournoi M11 Départemental"
+    niveau: "Départemental"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+  - id_evenement: 9
+    date: "2025-12-05"
+    heure: 14
+    type_evenement: "competition"
+    categorie: "M17"
+    lieu: "Salle d'armes Orléans"
+    description: "Championnat M17 Régional"
+    niveau: "Régional"
+    discipline: "Épée"
+    cooperative: "Individuel"
+  - id_evenement: 10
+    date: "2025-12-10"
+    heure: 10
+    type_evenement: "competition"
+    categorie: "M20"
+    lieu: "Paris"
+    description: "Tournoi National M20"
+    niveau: "National"
+    discipline: "Sabre"
+    cooperative: "Individuel"
+  - id_evenement: 11
+    date: "2025-12-15"
+    heure: 14
+    type_evenement: "competition"
+    categorie: "Vétérans 1"
+    lieu: "Lyon"
+    description: "Circuit National Vétérans 1"
+    niveau: "National"
+    discipline: "Épée"
+    cooperative: "Individuel"
+  - id_evenement: 12
+    date: "2025-12-20"
+    heure: 09
+    type_evenement: "competition"
+    categorie: "Vétérans 2"
+    lieu: "Marseille"
+    description: "Open International Vétérans 2"
+    niveau: "International"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+  - id_evenement: 13
+    date: "2026-01-10"
+    heure: 10
+    type_evenement: "competition"
+    categorie: "Vétérans 3"
+    lieu: "Bordeaux"
+    description: "Rencontre Vétérans 3"
+    niveau: "Régional"
+    discipline: "Sabre"
+    cooperative: "Individuel"
+  - id_evenement: 14
+    date: "2026-01-15"
+    heure: 14
+    type_evenement: "competition"
+    categorie: "Vétérans 4"
+    lieu: "Nantes"
+    description: "Challenge Vétérans 4"
+    niveau: "National"
+    discipline: "Épée"
+    cooperative: "Individuel"
+  - id_evenement: 15
+    date: "2026-02-01"
+    heure: 09
+    type_evenement: "competition"
+    categorie: "M5"
+    lieu: "Blois"
+    description: "Découverte M5"
+    niveau: "Club"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+  - id_evenement: 16
+    date: "2026-01-25"
+    heure: 09
+    type_evenement: "competition"
+    categorie: "M17"
+    lieu: "Paris"
+    description: "Championnat France M17"
+    niveau: "National"
+    discipline: "Sabre"
+    cooperative: "Individuel"
 
 demande_inscriptions:
   - id_inscription: 1
@@ -111,10 +241,6 @@ inscriptions:
     id_evenement: 1
     nom: "Lemoine"
     prenom: "Pierre"
-  - id_inscription: 2
-    id_evenement: 2
-    nom: "Martin"
-    prenom: "Marie"
 
 classers:
   - id_competition: 1  

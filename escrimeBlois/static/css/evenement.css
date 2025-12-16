@@ -1,0 +1,290 @@
+/* ==================== Page des evenements ==================== */
+/* -------------------- Navbar -------------------- */
+#navbar_two{
+ background-color: #cacaca;
+ padding: 10px 0;
+ box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+}
+
+
+#nav_responsable{
+ display: flex;
+ flex-wrap: nowrap;
+ justify-content: center;
+ list-style: none;
+ margin: 0;
+ padding: 0;
+}
+
+
+#nav_responsable > li{
+ flex-basis: 20%;
+ margin: 0 10px;
+}
+
+
+#nav_responsable > li:hover{
+ font-weight: bold;
+}
+
+
+#blank_space{
+ padding:25px;
+}
+
+
+#nav_responsable .nav-link {
+ text-decoration: none;
+ color: #333;
+ text-align: center;
+ margin-right: 20px;
+}
+
+
+#nav_responsable .nav-link:hover {
+ color: #000;
+}
+
+
+
+
+/* -------------------- Calendrier -------------------- */
+
+
+
+/* --- Sous-menu (Onglets) --- */
+.sub-nav {
+    display: flex;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+.sub-nav a {
+    padding: 15px 30px;
+    text-decoration: none;
+    color: black;
+    border-right: 1px solid #eee;
+    font-weight: 500;
+}
+.sub-nav a:first-child { 
+    border-left: 1px solid #eee; 
+}
+.sub-nav a.tab-active {
+    border-bottom: 3px solid black;
+    font-weight: bold;
+}
+
+/* --- Conteneur Principal --- */
+.calendar-container {
+    width: 95%;
+    max-width: 1000px;
+    margin: 0 auto 50px auto;
+    background-color: #dcdcdc; /* Gris clair de fond */
+    padding: 25px;
+    border-radius: 5px;
+}
+
+/* --- Zone de Filtres (Boîte grise foncée) --- */
+.filter-box {
+    background-color: #999; /* Gris moyen de la maquette */
+    padding: 20px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr; /* Colonnes : Types / Ville / Dates */
+    gap: 15px;
+    align-items: center;
+    color: white;
+    margin-bottom: 20px;
+}
+
+/* Checkboxes */
+.filter-label { 
+    font-style: italic; 
+    margin-bottom: 8px; 
+    font-size: 1rem; 
+}
+.checkbox-group { 
+    display: flex; 
+    gap: 15px; 
+    flex-wrap: wrap; 
+}
+.checkbox-group label { 
+    display: flex; 
+    align-items: center; 
+    cursor: pointer; 
+    font-size: 0.9rem; 
+}
+.checkbox-group input { 
+    margin-right: 5px; 
+}
+
+/* Styles des champs (Inputs et Selects) */
+.filter-box input[type="text"], 
+.filter-box input[type="date"], 
+.filter-box select {
+    border-radius: 20px;
+    border: none;
+    padding: 8px 15px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: rgba(255,255,255,0.8);
+    outline: none;
+}
+
+/* Barre de recherche avec loupe */
+.search-wrapper { 
+    position: relative; 
+    width: 90%; 
+}
+.search-wrapper input { 
+    background-color: #666; 
+    color: black; 
+    padding-right: 30px; 
+}
+.search-wrapper input::placeholder { 
+    color: #ccc; 
+}
+.search-icon-input { 
+    position: absolute; 
+    right: 10px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    color: #bbb; 
+    pointer-events: none; 
+}
+
+/* Dates */
+.dates-row { 
+    display: flex; 
+    gap: 10px; 
+}
+
+/* Dropdowns (Ligne du bas) */
+.filter-row-bottom {
+    grid-column: 1 / -1; /* Prend toute la largeur */
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    gap: 20px;
+}
+.filter-row-bottom select { 
+    width: 48%; 
+}
+
+/* Boutons Actions Filtres */
+.filter-actions { 
+    margin-top: 20px; 
+    display: flex; 
+    gap: 15px; 
+}
+.calendar-container .btn { 
+    padding: 8px 25px; 
+    border-radius: 20px; 
+    cursor: pointer; 
+    text-decoration: none; 
+    border: none; 
+    color: white; 
+    display: inline-block; 
+    font-size: 0.9rem;
+    box-shadow: var(--shadow);
+}
+
+.calendar-container .btn-blue { 
+    background-color: #6495ED; 
+}
+.calendar-container .btn-red { 
+    background-color: #B22222; 
+}
+
+/* Bouton PDF */
+.calendar-container .pdf-section { 
+    text-align: right; 
+    margin: 15px 0; 
+}
+.calendar-container .btn-pdf { 
+    background-color: #999; 
+    color: white; 
+    border: none; 
+    padding: 5px 15px; 
+    border-radius: 15px; 
+    cursor: pointer; 
+}
+
+/* --- Tableau des Résultats --- */
+.events-table { 
+    width: 100%; 
+    border-collapse: separate; 
+    border-spacing: 0; 
+    border: 2px solid black; 
+    background-color: #dcdcdc; 
+}
+
+.events-table th {
+    background-color: #dcdcdc;
+    color: white;
+    font-size: 1.3rem;
+    padding: 10px;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    text-align: center;
+    font-weight: normal;
+    text-shadow: 1px 1px 2px #555;
+}
+.events-table th:last-child { 
+    border-right: none; 
+}
+
+.events-table td {
+    background-color: #e6e6e6;
+    padding: 15px;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    vertical-align: middle;
+}
+.events-table td:last-child { 
+    border-right: none; 
+}
+.events-table tr:last-child td { 
+    border-bottom: none; 
+}
+
+/* Contenu Tableau */
+.event-desc { 
+    font-weight: bold; 
+    font-size: 1.1rem; 
+}
+.event-meta { 
+    font-size: 0.9rem; 
+    color: #555; 
+    margin-top: 5px; 
+}
+.col-center { 
+    text-align: center; 
+    font-size: 1.1rem; 
+}
+
+/* Boutons Tableau */
+.action-buttons-wrapper {
+    display: flex; 
+    gap: 10px; 
+    justify-content: center; 
+}
+.calendar-container .btn-action {
+    padding: 8px 15px; 
+    border-radius: 15px; 
+    cursor: pointer; 
+    border: none; 
+    font-weight: bold; 
+}
+.calendar-container .btn-consult { 
+    background-color: #999; 
+    color: black; 
+}
+.calendar-container .btn-register { 
+    background-color: #ffc107; 
+    color: black; 
+}
+/* -------------------- Consulter evenement -------------------- */
+
