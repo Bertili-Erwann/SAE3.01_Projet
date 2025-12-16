@@ -34,7 +34,7 @@ class Personne(UserMixin, db.Model):
         sexe (str): Sexe (1 caractère).
         adresse (str): Adresse postale.
         date_naissance (Date): Date de naissance.
-        etudiant (bool): Indique si la personne est étudiante.
+        eleve (bool): Indique si la personne est étudiante.
         arme_principale (str): Arme principale (épée, fleuret, sabre).
         niveau (str): Niveau de compétence.
         role (str): Rôle ('personne', 'membre', 'responsable', 'admin').
@@ -72,7 +72,7 @@ class Personne(UserMixin, db.Model):
         match value:
             case "membre" | "responsable":
             # TOUS les champs requis doivent être remplis
-                if (self.etudiant is None or self.arme_principale is None or self.niveau is None or 
+                if (self.eleve is None or self.arme_principale is None or self.niveau is None or 
                     self.sexe is None or self.adresse is None or self.date_naissance is None):
                     raise ValueError(f"Le  '{value}' n'a pas rempli un des champs requis")
             case "personne" | "admin":
@@ -117,7 +117,7 @@ class Demande_inscription(db.Model):
         adresse_mail (str): Adresse email.
         adresse_postale (str): Adresse postale.
         scolarisee (bool): Indique si la personne est scolarisée.
-        etudiant (bool): Indique si la personne est étudiante.
+        eleve (bool): Indique si la personne est étudiante.
         justificatif (str): Justificatif fourni.
     """
     id_inscription = db.Column(db.Integer, primary_key=True)
