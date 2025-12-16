@@ -9,7 +9,7 @@
     <div id="article-{{ ar.id_article }}" class="art">
       <h2 class="titre-art">{{ ar.titre }} </h2>
       <p class="date-art">{{ ar.date_publication}} </p>
-      <p class="auteur-art">{{ ar.responsable_id}}</p>
+      <p class="auteur-art">{{ ar.responsable.nom_personne }} {{ ar.responsable.prenom_personne }} </p>
     </div>
     </a>
     {% endfor %} {% else %}
