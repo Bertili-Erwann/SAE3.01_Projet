@@ -1,0 +1,104 @@
+/* ==================== Page Historique ==================== */
+
+/* -------------------- En-tête -------------------- */
+.historique-content h1 {
+  margin-top: 55px;
+  margin-bottom: -30px;
+  text-align: center;
+  letter-spacing: 3px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.historique-content img {
+  width: 150px;
+  height: 150px;
+  margin-left: 50px;
+}
+
+/* -------------------- Conteneur -------------------- */
+.limiter {
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -20px;
+}
+
+.container-table100 {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 20px;
+}
+
+.wrap-table100 {
+  width: 1170px;
+}
+
+/* -------------------- Table -------------------- */
+table {
+  width: 100%;
+}
+
+.date {
+  font-weight: bold;
+  width: 1%;
+  padding-left: 20px;
+}
+
+.evenm {
+  width: 10%;
+}
+
+.table100-head th {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+.table100-body td {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.table100 {
+  position: relative;
+  padding-top: 60px;
+  border-radius: 10px;
+  overflow: scroll;
+  box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+  -o-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+  -ms-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+}
+
+.table100-head {
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.table100-body {
+  max-height: 585px;
+}
+
+.table100 th {
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.4;
+  background-color: #353536;
+}
+
+.table100 td {
+  font-family: Lato-Regular;
+  font-size: 15px;
+  color: #575656;
+  line-height: 1.4;
+}
+
+.table100 .table100-body tr:nth-child(even) {
+  background-color: #f8f6ff;
+}

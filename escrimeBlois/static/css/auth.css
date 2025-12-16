@@ -1,0 +1,96 @@
+/* ==================== Authentification (Login & Mot de passe oublié) ==================== */
+
+/* -------------------- Fenêtres communes -------------------- */
+.fenetre-login,
+.fenetre-mdp-oublier,
+.fenetre-mdp-oublier-code-envoyer,
+.fenetre-mdp-confirmer_mdp {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #e6e6e6;
+  border-radius: 5%;
+}
+
+/* -------------------- Logo & Texte -------------------- */
+.logo-texte {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-texte img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+  margin-top: 70px;
+}
+
+.logo-texte p {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* -------------------- Titres -------------------- */
+.fenetre-login h2,
+.fenetre-mdp-oublier h2,
+.fenetre-mdp-confirmer_mdp h2 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #000000;
+}
+
+/* -------------------- Champs de saisie -------------------- */
+.fenetre-login input[type="email"],
+.fenetre-login input[type="password"],
+.fenetre-mdp-oublier input[type="email"],
+.fenetre-mdp-oublier-code-envoyer input[type="text"],
+.fenetre-mdp-confirmer_mdp input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* -------------------- Boutons de soumission -------------------- */
+.fenetre-login input[type="submit"],
+.fenetre-mdp-oublier input[type="submit"],
+.fenetre-mdp-oublier-code-envoyer input[type="submit"],
+.fenetre-mdp-confirmer_mdp input[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  background-color: #6691ff;
+  color: #000000;
+}
+
+.fenetre-login input[type="submit"]:hover,
+.fenetre-mdp-oublier input[type="submit"]:hover,
+.fenetre-mdp-oublier-code-envoyer input[type="submit"]:hover,
+.fenetre-mdp-confirmer_mdp input[type="submit"]:hover {
+  background-color: #5273cc;
+}
+
+/* -------------------- Lien mot de passe oublié -------------------- */
+.fenetre-login #passwrd-oublie {
+  align-self: flex-start;
+  margin-top: 10px;
+  color: #2a4088;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.fenetre-login #passwrd-oublie:hover {
+  text-decoration: underline;
+}
+
+/* -------------------- Message code envoyé -------------------- */
+.fenetre-mdp-oublier-code-envoyer > form[method="POST"] > p {
+  text-align: center;
+  font-size: 1rem;
+}
