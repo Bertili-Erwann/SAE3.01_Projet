@@ -1,50 +1,54 @@
 personnes:
   - id_personne: 1
-    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"  # hashed 'password'
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
     role: "admin"
     nom_personne: "Dupont"
     prenom_personne: "Jean"
     email_personne: "jean.dupont@example.com"
+    telephone: "0601020304"
     sexe: "M"
     adresse: "123 Rue de la Paix, Blois"
     date_naissance: "1990-01-01"
-    etudiant: null
+    eleve: null
     arme_principale: null
     niveau: null
   - id_personne: 2
-    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"  # hashed 'password'
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
     role: "responsable"
     nom_personne: "Martin"
     prenom_personne: "Marie"
     email_personne: "marie.martin@example.com"
+    telephone: "0605060708"
     sexe: "F"
     adresse: "456 Avenue des Sports, Blois"
     date_naissance: "1985-05-15"
-    etudiant: true
+    eleve: true
     arme_principale: "Épée"
     niveau: "Régional"
   - id_personne: 3
-    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"  # hashed 'password'
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
     role: "membre"
     nom_personne: "Lemoine"
     prenom_personne: "Pierre"
     email_personne: "pierre.lemoine@example.com"
+    telephone: "0609101112"
     sexe: "M"
     adresse: "789 Boulevard de l'Escrime, Blois"
     date_naissance: "2000-03-20"
-    etudiant: false
+    eleve: false
     arme_principale: "Fleuret"
     niveau: "Débutant"
   - id_personne: 4
-    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"  # hashed 'password'
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
     role: "personne"
     nom_personne: "Durand"
     prenom_personne: "Alice"
     email_personne: "alice.durand@example.com"
+    telephone: "0613141516"
     sexe: "F"
     adresse: "101 Rue des Formulaires, Blois"
     date_naissance: "1995-07-10"
-    etudiant: null
+    eleve: null
     arme_principale: null
     niveau: null
 
@@ -81,7 +85,6 @@ demande_inscriptions:
     adresse_mail: "sophie.bernard@example.com"
     adresse_postale: "25 Rue des Roses, Blois"
     eleve: true
-    justificatif: "certificat_scolarite_sophie.pdf"
   - id_inscription: 2
     nom: "Petit"
     prenom: "Lucas"
@@ -92,7 +95,6 @@ demande_inscriptions:
     adresse_mail: "lucas.petit@example.com"
     adresse_postale: "48 Avenue de la Loire, Blois"
     eleve: true
-    justificatif: "certificat_scolarite_lucas.pdf"
   - id_inscription: 3
     nom: "Moreau"
     prenom: "Camille"
@@ -103,13 +105,16 @@ demande_inscriptions:
     adresse_mail: "camille.moreau@example.com"
     adresse_postale: "12 Rue Victor Hugo, Blois"
     eleve: false
-    justificatif: null
 
 inscriptions:
   - id_inscription: 1
     id_evenement: 1
+    nom: "Lemoine"
+    prenom: "Pierre"
   - id_inscription: 2
     id_evenement: 2
+    nom: "Martin"
+    prenom: "Marie"
 
 classers:
   - id_competition: 1  
@@ -172,7 +177,6 @@ formulaires:
     objet: "Demande d'information"
     message: "Bonjour, je souhaite m'inscrire au club."
 
-
 repondre:
   - id_responsable: 2
     id_formulaire: 1
@@ -192,7 +196,6 @@ repondre:
     id_formulaire: 8
   - id_responsable: 2
     id_formulaire: 9
-
 
 articles:
   - id_article: 1
@@ -220,4 +223,3 @@ gerer:
     id_inscription: 2
   - id_admin: 1
     id_inscription: 3
- 

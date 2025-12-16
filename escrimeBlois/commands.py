@@ -120,17 +120,26 @@ def loaddb(filename: str) -> None:
         date_naissance_dem = None
         if dem.get('date_naissance'):
             date_naissance_dem = datetime.date.fromisoformat(dem['date_naissance'])
-        demande = Demande_inscription(id_inscription=dem['id_inscription'],
-                                      nom=dem['nom'],
-                                      prenom=dem['prenom'],
-                                      mot_de_passe=dem['mot_de_passe'],
-                                      sexe=dem.get('sexe'),
-                                      date_naissance=date_naissance_dem,
-                                      num_tel=dem.get('num_tel'),
-                                      adresse_mail=dem['adresse_mail'],
-                                      adresse_postale=dem.get('adresse_postale'),
-                                      eleve=dem.get('eleve'),
-                                      justificatif=dem.get('justificatif'))
+        
+        # Préparer les valeur sans justificatif
+        demande_args = {
+            'id_inscription': dem['id_inscription'],
+            'nom': dem['nom'],
+            'prenom': dem['prenom'],
+            'mot_de_passe': dem['mot_de_passe'],
+            'sexe': dem.get('sexe'),
+            'date_naissance': date_naissance_dem,
+            'num_tel': dem.get('num_tel'),
+            'adresse_mail': dem['adresse_mail'],
+            'adresse_postale': dem.get('adresse_postale'),
+            'eleve': dem.get('eleve')
+        }
+        
+        # Ajouter justificatif seulement s'il existe dans les yml
+        if 'justificatif' in dem:
+            demande_args['justificatif'] = dem['justificatif']
+        
+        demande = Demande_inscription(**demande_args)
         db.session.add(demande)
         db.session.commit()
 
@@ -171,12 +180,12 @@ def maxutilisateur() -> int:
 @click.argument('sexe')
 @click.argument('adresse')
 @click.argument('date_naissance')
-@click.argument('etudiant', type=click.BOOL) # Pour accepter True ou False
+@click.argument('eleve', type=click.BOOL) # Pour accepter True ou False
 @click.argument('arme_principale')
 @click.argument('niveau')
 def nouvpers(nom: str, prenom: str, role_user: str, pwd: str, mail: str,
              telephone: str, sexe: str, adresse: str, date_naissance: str,
-             etudiant: bool, arme_principale: str, niveau: str) -> None:
+             eleve: bool, arme_principale: str, niveau: str) -> None:
 
     if Personne.query.filter_by(email_personne=mail).first():
         lg.warning('User %s existe déjà', mail)
@@ -195,21 +204,37 @@ def nouvpers(nom: str, prenom: str, role_user: str, pwd: str, mail: str,
         lg.error(f"Format de date invalide: {date_naissance}. Utilisez AAAA-MM-JJ.")
         return
 
-    pers = Personne(
-        id_personne=maxutilisateur(),
-        mdp=m.hexdigest(),
-        nom_personne=nom,
-        prenom_personne=prenom,
-        email_personne=mail,
-        telephone=telephone,
-        sexe=sexe,
-        adresse=adresse,
-        date_naissance=date_obj,
-        etudiant=etudiant,
-        arme_principale=arme_principale,
-        niveau=niveau,
-        role=role_user
-    )
+    # Pour les rôles 'admin' et 'personne', les champs spécifiques doivent être None
+    if role_user in ['admin', 'personne']:
+        pers = Personne(
+            id_personne=maxutilisateur(),
+            mdp=m.hexdigest(),
+            nom_personne=nom,
+            prenom_personne=prenom,
+            email_personne=mail,
+            telephone=telephone,
+            sexe=sexe,
+            adresse=adresse,
+            date_naissance=date_obj,
+            role=role_user
+        )
+    else:
+        # Pour les rôles 'membre' et 'responsable', tous les champs sont requis
+        pers = Personne(
+            id_personne=maxutilisateur(),
+            mdp=m.hexdigest(),
+            nom_personne=nom,
+            prenom_personne=prenom,
+            email_personne=mail,
+            telephone=telephone,
+            sexe=sexe,
+            adresse=adresse,
+            date_naissance=date_obj,
+            eleve=eleve,
+            arme_principale=arme_principale,
+            niveau=niveau,
+            role=role_user
+        )
 
     db.session.add(pers)
     db.session.commit()

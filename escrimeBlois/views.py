@@ -14,11 +14,6 @@ import os
 def index():
     return render_template("index.html")
 
-@app.route('/historique/')
-def historique():
-    return render_template('historique.html')
-
-
 @app.route('/inscription/', )
 def inscription():
     form = FormInscription(request.form)
@@ -117,6 +112,8 @@ def admin_inscription_club_view(id_inscription):
                 adresse=demande.adresse_postale,
                 date_naissance=demande.date_naissance,
                 eleve=demande.eleve,
+                arme_principale='Non défini',
+                niveau='Débutant',
                 role='membre'
             )
             db.session.add(nouveau_membre)
