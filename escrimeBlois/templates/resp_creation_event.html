@@ -1,0 +1,66 @@
+{% extends "nav_responsable.html" %}
+
+{% block section_resp %}
+<main>
+    <form action=""></form>
+        <h1 id="event_creation_title">Création d'un événement</h1>
+        <div id="event_creation_global_container">
+            <section class="event_creation_area">
+                <div class="event_container">
+                    <p class="creation_event_text">Nom</p>
+                    <input type="text" class="creation_event_info_required_area" name="name_create_event" placeholder="Nom de l'événement">
+                </div>
+                <div class="event_container">
+                    <p class="creation_event_text">Catégorie</p>
+                    <select name="categories_create_event" class="creation_event_info_required_area" id="categories_create_event">
+                        <option value="default">--Choisissez une catégorie--</option>
+                        <option value="M5">M5</option>
+                        <option value="M7">M7</option>
+                        <option value="M9">M9</option>
+                        <option value="M11">M11</option>
+                        <option value="M13">M13</option>
+                        <option value="M15">M15</option>
+                        <option value="M17">M17</option>
+                        <option value="M20">M20</option>
+                        <option value="Séniors">Séniors</option>
+                        <option value="Vétérans 1">Vétérans 1</option>
+                        <option value="Vétérans 2">Vétérans 2</option>
+                        <option value="Vétérans 3">Vétérans 3</option>
+                        <option value="Vétérans 4">Vétérans 4</option>
+                        <option value="Toutes">Toutes</option>
+                    </select>
+                </div>
+            </section>
+            <section class="event_creation_area">
+                <div class="event_container">
+                    <p class="creation_event_text">Date</p>
+                    <input type="date" class="creation_event_info_required_area" name="date_create_event">
+                </div>
+                <div class="event_container" id="hour_create_event_div">
+                    <p class="creation_event_text">Heure</p>
+                    <input type="time" class="creation_event_info_required_area" name="hour_create_event">
+                </div>
+                <div class="event_container">
+                    <p class="creation_event_text">Lieu</p>
+                    <input type="text" class="creation_event_info_required_area" name="location_create_event" placeholder="Lieu de l'événement">
+                </div>
+            </section>
+            <section class="event_creation_area">
+                <div id="type_create_event_div">
+                    <p class="creation_event_text">Type</p>
+                    <select name="types_create_event" class="creation_event_info_required_area">
+                        <option value="default">--Choisissez un type d'événements--</option>
+                        <option value="Entraînement">Entraînement</option>
+                        <option value="Réunion">Réunion</option>
+                    </select>
+                </div>
+            </section>
+            <section id="event_creation__bottom_area">
+                <p>Description</p>
+                <textarea name="bottom_create_event" placeholder="Décrivez le contenu de l'entraînement." rows="11" style="width: 100%;"></textarea>
+                <input type="submit" id="create_event_save" value="Enregistrer"/>
+            </section>
+        </div>
+    </form>
+</main>
+{% endblock %}

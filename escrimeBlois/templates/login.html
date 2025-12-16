@@ -9,7 +9,16 @@
   <p>Connexion au cercle d'escrime de Blois</p>
 </div>
 <div class="fenetre-login">
-  <form method="POST" onsubmit="return false;">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        {% if category == 'error' %}
+          <p class="error-message">{{ message }}</p>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  <form method="POST" action="{{ url_for('login') }}">
     <!-- EMAIL -->
     <h2>Adresse e-mail</h2>
     <input
@@ -21,12 +30,16 @@
 
     <!-- MOT DE PASSE -->
     <h2>Mot de passe</h2>
-    <input
-      type="password"
-      name="password"
-      placeholder="Entrez votre mot de passe"
-      required
-    />
+    <div class="password-wrapper">
+        <input
+          type="password"
+          name="password"
+          id="new_password"
+          placeholder="Entrez votre mot de passe"
+          required
+        />
+        <span class="toggle-password-log" onclick="togglePassword('new_password', this)">👁️</span>
+    </div>
     <a href="#" id="passwrd-oublie">Mot de passe oublié ?</a>
 
     <!-- BOUTON LOGIN -->

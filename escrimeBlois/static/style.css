@@ -1,1 +1,31 @@
-@import url(./css/miseajour_membre_admin.css);
+/* ==================== Fichier principal CSS ==================== */
+
+/* Variables et configuration globale */
+@import url('css/variables.css');
+
+/* Styles de base */
+@import url('css/global.css');
+
+/* navbar */
+@import url('css/navbar.css');
+
+/* Pages */
+@import url('css/membre.css');
+@import url('css/index.css');
+@import url('css/auth.css');
+@import url('css/historique.css');
+@import url('css/inscription.css');
+@import url('css/renseignement.css');
+
+/* Sections communes */
+@import url('css/footer.css');
+
+/* RESPONSABLE */
+@import url('css/responsable.css');
+
+/* ADMIN */
+/* Gestion inscriptions */
+@import url('css/inscriptions.css');
+/* mise a jour membre */
+@import url('/miseajour_membre_admin.css');
+

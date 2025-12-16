@@ -139,6 +139,8 @@ body {
     rgba(0, 0, 0, 0.22) 0px 10px 10px;
   border-radius: 10px;
   margin: 15px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px;
+  padding-top: 15px;
   margin-bottom: 50px;
 }
 
@@ -296,6 +298,7 @@ body {
 
 .fenetre-login input[type="email"],
 .fenetre-login input[type="password"],
+.fenetre-login input[type="text"],
 .fenetre-mdp-oublier input[type="email"],
 .fenetre-mdp-oublier-code-envoyer input[type="text"],
 .fenetre-mdp-confirmer_mdp input[type="password"] {
@@ -413,6 +416,7 @@ table {
   -webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
   -o-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
   -ms-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+  -ms-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);  
 }
 
 .table100-head {
@@ -446,6 +450,202 @@ table {
 }
 
 /* CSS partie footer ---------------------------------------*/
+/*//////////////////////////////////////////////////////////////////
+[ Fiche d'inscription ]*/
+
+.block-inscription {
+  padding-left: 25%;
+  padding-right: 25%;
+  padding-top: 5%;
+}
+.block-inscription img {
+  margin-left: 40%;
+}
+.form-inscription {
+  flex-direction: column;
+  margin: 5%;
+  padding: 2%;
+  background-color: #d9d9d9;
+  border-radius: 15px;
+}
+.form-control {
+  width: 30%;
+}
+.full-space {
+  width: 63%;
+}
+#sexe, #eleve{
+  background-color: inherit;
+  list-style-type: none;
+  border: inherit;
+}
+.form-inscription > div {
+  margin: 5px;
+  padding-left: 15%;
+}
+
+.form-inscription h1 {
+  font-size: larger;
+  text-align: center;
+  font-weight: bold;
+}
+.form-inscription label {
+  font-weight: 600;
+}
+#obligatoire {
+  color: red;
+}
+.form-inscription input[type="submit"] {
+  padding: 12px;
+  width: 70%;
+  border: none;
+  border-radius: 5px;
+  background-color: #6691ff;
+  color: #000000;
+}
+.form-inscription input[type="submit"]:hover {
+  background-color: #5273cc;
+}
+
+.two-tf {
+  display: block;
+}
+.form-group {
+  display: flex;
+}
+.two-tf input {
+  margin-inline: 5px;
+}
+.block-inscription img {
+  height: 160px;
+  width: 160px;
+}
+.hidden{
+  display: none;
+}
+
+/*/////////////////Page Renseignement///////////////////////*/
+
+.rens{
+    border-radius: 20px;
+    background-color: #cccccc;
+    margin: 1%;
+    border-collapse: collapse;
+    color: #000000
+}
+
+
+.TRens{
+    background-color: #666666;
+    border-collapse: collapse;
+    border-radius: 20px;
+    text-indent : 20px;
+    display: block;
+    padding: 0.8em;
+    font-style: italic;
+    font: small-caps bold 24px/1 sans-serif;
+    color: #e6e6e6;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.indentL {
+    text-indent : 15px;
+    color: #000000
+}
+
+.indentP {
+    text-indent : 10px;
+    color: #000000
+}
+
+.deux-colonnes {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px; /* espace horizontal entre les colonnes */
+  margin: 20px;
+}
+
+.deux-colonnes {
+  display: flex;
+  justify-content: space-between;
+  background-color: #aaaaaa;
+  border-radius: 20px;
+  padding: 20px;
+  gap: 30px;
+  position: relative;
+}
+
+.colonne {
+  flex: 1;
+  padding: 15px;
+  background-color: transparent; 
+}
+
+/* Trait vertical fin centré entre les colonnes */
+.deux-colonnes::after {
+  content: "";
+  position: absolute;
+  top: 25%;   /* commence à 25% de la hauteur de la section */
+  bottom: 25%; /* finit à 25% de la hauteur */
+  left: 50%;  /* centré horizontalement */
+  width: 1px;
+  background-color: #cccccc;
+  transform: translateX(-50%);
+}
+
+.tab{
+  border: 3px solid #e6e6e6;
+  margin: 1px;
+  text-decoration: solid;
+  text-decoration-color: #cccccc;
+  text-align: center;
+}
+
+.firstbloc{
+  margin-top: 2cm;
+}
+
+.toggle {
+  display: none;
+}
+
+
+.TRens:hover {
+  background-color: #888888;
+}
+
+.contenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.3s ease;
+  padding: 0 1em;
+}
+
+/* Quand on coche → le bloc s’ouvre */
+.toggle:checked ~ .contenu {
+  max-height: 2000px;
+  padding: 1em;
+}
+
+/* Animation de la flèche ▼ */
+.TRens::after {
+  content: "▶";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+}
+
+.toggle:checked + .TRens::after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+
+
+/* -------------------- footer.html --------------------*/
 
 #footer {
   background-color: #484848;
@@ -558,6 +758,386 @@ table {
 
 #nav_admin {
   display: flex;
+/* ==================== navbar_admin ==================== */
+#navbar_admin,
+#navbar_inscription {
+  background-color: #cacaca;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+
+#nav_admin,
+#nav_inscr {
+  display: flex;
+/* ==================== Responsable - Ajouter un article ==================== */
+
+.longbloc{
+  margin: 3cm;
+}
+.container-article {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.container-article h1 {
+    display: none; 
+}
+
+.article-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #e9e9e9;
+}
+
+.textarea-large {
+    height: 150px;
+    resize: vertical;
+}
+
+.file-upload-area {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.drop-zone {
+    flex: 1;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    background-color: #e9e9e9;
+    color: #888;
+    position: relative;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.drop-zone .icon-upload {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-upload-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-select-files {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    background-color: #dcdcdc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.compteur-fichiers {
+    font-size: 0.9em;
+}
+
+.liste-fichiers {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+}
+
+.liste-fichiers li {
+    background-color: #f9f9f9;
+    padding: 5px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.form-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.bouton {
+    padding: 10px 30px;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.bouton-annuler {
+    background-color: #dc3545;
+}
+
+.bouton-publier {
+    background-color: #28a745;
+}
+/* ==================== Navbar Membres ==================== */
+#nav_membre{
+display: flex;
+flex-wrap: nowrap;
+background-color:#DEDEDE;
+float: none;
+margin: 0 auto;
+display: block;
+text-align: center;
+}
+
+
+#nav_membre > li{
+list-style-type: none;
+flex-basis: 15%;
+margin-left: 10%;
+margin-right: 10%;
+margin-top: 10px;
+margin-bottom: 10px;
+border: 5px;
+display: inline-block;
+float: none;
+}
+
+#nav_membre > li:hover{
+font-weight: bold;
+}
+
+/* ==================== Informations Personnelles ==================== */
+.infos-container-v2 {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-width: 1200px;
+    margin: 2rem auto;
+}
+
+.section-v2 {
+    background-color: white;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+}
+
+.section-v2 h2 {
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-columns-v2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.form-col-v2 {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-field-v2 {
+    margin-bottom: 1rem;
+}
+
+.form-field-v2 label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-field-v2 input,
+.form-field-v2 select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-field-v2 input:disabled {
+    background-color: #eee;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.submit-btn-v2 {
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.green-btn-v2 {
+    background-color: #4CAF50;
+}
+
+.green-btn-v2:hover {
+    background-color: #45a049;
+}
+
+.non-modifiable-v2 {
+    color: #888;
+}
+
+.modifiable-v2 {
+    color: #4CAF50;
+}
+
+span.non-modifiable-v2,
+span.modifiable-v2 {
+    margin-left: 0.25rem;
+}
+
+#blank_space{
+  padding: 1cm;
+}
+
+/* ==================== Infos Persos - Détails/Sommaire ==================== */
+summary {
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary::after,.ic::after {
+    content: '▶';
+    font-size: 1em;
+    transition: transform 0.3s ease;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+details[open] summary::after{
+    transform: rotate(90deg);
+}
+
+summary h2 {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+/* Supprimer la marge inférieure par défaut du h2 dans le summary */
+.section-v2 summary h2 {
+    margin-bottom: 0;
+}
+
+/* Ajouter un espacement après le résumé lorsqu'il est ouvert */
+details[open] summary {
+    margin-bottom: 1.5rem;
+}
+
+/* ==================== Voir MDP ==================== */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    padding-right: 40px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.2em;
+    padding: 5px;
+}
+
+.toggle-password-log {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.2em;
+    padding: 5px;
+    padding-bottom: 25px;
+}
+
+.login-password-wrapper {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.login-password-wrapper input {
+    margin-bottom: 0;
+/* -------------------- nav_responsable.html --------------------*/
+
+#resp_navbar{
+  background-color: #cacaca;
+  padding: 10px 0;
+  box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+}
+
+#nav_responsable{
+  display: flex;
+  flex-wrap: nowrap;
   justify-content: center;
   list-style: none;
   margin: 0;
@@ -576,6 +1156,29 @@ table {
   background-color: rgba(0, 0, 0, 0.1);
   transform: scale(1.05);
   border-radius: 5px;
+#nav_admin > li,
+#nav_inscr > li
+#nav_responsable > li{
+  flex-basis: 20%;
+  margin: 0 10px;
+}
+
+#nav_admin > li a,
+#nav_inscr > li a {
+  text-decoration: none;
+  color: #333;
+  padding: 12px 20px;
+  display: block;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+#nav_admin > li:hover a,
+#nav_inscr > li:hover a {
+  font-weight: bold;
+  color: #357abd;
+  background-color: rgba(74, 144, 226, 0.1);
 }
 
 #blank_space {
@@ -664,4 +1267,387 @@ table {
 .wrap-table100_admin {
   overflow-x: auto;
   white-space: nowrap;
+.demande_inscription_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin: 10px auto;
+  max-width: 600px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.demande_inscription_item:hover {
+  background-color: #e8e8e8;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.inscription_liste h1 {
+  text-align: center;
+  color: #333;
+  font-size: 32px;
+  margin: 30px 0;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.demande_inscription_item button {
+  background-color: #949494;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.demande_inscription_item button:hover {
+  background-color: #d3d3d3;
+  transform: scale(1.05);
+}
+
+.inscription_view {
+  max-width: 600px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.inscription_view h2 {
+  color: #333;
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.inscription_view > a button {
+  background-color: #d90000;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.inscription_view > a button:hover {
+  background-color: #ff5d5d;
+  transform: scale(1.05);
+}
+
+.inscription_details {
+  background-color: #f0f0f0;
+  padding: 30px;
+  border-radius: 10px;
+  margin-top: 20px;
+  text-align: left;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.inscription_details:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.inscription_details p {
+  margin: 15px 0;
+  padding: 8px;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+}
+
+.inscription_details p:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+  transform: translateX(5px);
+}
+
+.inscription_buttons {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.inscription_buttons button {
+  padding: 10px 30px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.inscription_buttons button[value="accepter"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.inscription_buttons button[value="accepter"]:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.inscription_buttons button[value="refuser"] {
+  background-color: #d90000;
+  color: white;
+}
+
+.inscription_buttons button[value="refuser"]:hover {
+  background-color: #ff1a1a;
+  transform: scale(1.05);
+}
+
+.inscription_details a {
+  color: #0066cc;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+.inscription_details a:hover {
+  color: #0052a3;
+  background-color: rgba(0, 102, 204, 0.1);
+  text-decoration: underline;
+  transform: scale(1.05);
+}
+
+.inscription_view h2 {
+  transition: all 0.3s ease;
+}
+
+.inscription_view h2:hover {
+  color: #555;
+  transform: scale(1.02);
+#nav_responsable > li:hover{
+  font-weight: bold;
+}
+
+#blank_space{
+  padding:25px;
+}
+
+#nav_responsable .nav-link {
+  text-decoration: none;
+  color: #333;
+  text-align: center;
+  margin-right: 20px;
+}
+
+#nav_responsable .nav-link:hover {
+  color: #000;
+}
+
+/* -------------------- gestion_formulaire.html --------------------*/
+
+#gest_form {
+  margin: 1%;
+  align-content: center;
+
+}
+
+.text_form {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#table_form {
+  position: relative;
+  padding-top: 60px;
+  border-radius: 10px;
+  overflow: scroll;
+}
+
+#container_table_form {
+  margin-left: 10%;
+  width: 80%;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  background-color: #ffffff;
+}
+
+#formulaire {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 90%;
+  margin-top: -40px;
+  margin-bottom: 60px;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-style: solid;
+  border-width: 2px;
+  align-items: center;
+}
+
+#formulaire_infos,
+#formulaire_options {
+  flex-basis: 44%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 3%;
+  margin-right: 3%;
+}
+
+#formulaire_options {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.gest_form_button_container {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+#form_consulter,
+#form_supprimer {
+  border-radius: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 100%;
+  border-style: solid;
+  border-color: #000;
+}
+
+#form_consulter {
+  background-color: #949494;
+}
+
+#form_consulter:hover {
+  background-color: #d3d3d3;
+}
+
+#form_supprimer {
+  background-color: #D90000;
+}
+
+#form_supprimer:hover {
+  background-color: #ff5d5d;
+}
+
+/* -------------------- nav_creation_event.html --------------------*/
+
+#blank_space_2 {
+  padding:2px;
+}
+
+/* -------------------- creation_entrainement.html --------------------*/
+
+
+.event_creation_area {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 5px;
+}
+
+#event_creation__bottom_area {
+  margin-bottom: 10px;
+}
+
+.event_container {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  flex-grow: 1;
+}
+
+#event_creation_global_container {
+  width: 50%;
+  padding: 10px;
+  margin-left: 25%;
+  margin-top: 30px;
+  border-radius: 15px;
+  background-color: #d3d3d3;
+  margin-bottom: 20px;
+  box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+}
+
+#event_creation_title {
+  text-align: center;
+  margin: 20px;
+}
+
+.creation_event_info_required_area {
+  margin-left: 5%;
+  margin-right: 3%;
+  flex-basis: 80%;
+}
+
+.creation_event_text {
+  margin-left: 2%;
+  flex-basis: 10%;
+}
+
+#type_create_event_div {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+}
+
+#create_event_save {
+  border-radius: 5px;
+  margin-left: 40%;
+  margin-top: 20px;
+  width: 20%;
+  background-color: #1ECC2A;
+}
+/* -------------------- consultation_form.html --------------------*/
+
+#consult_form {
+  margin: 20px;
+}
+
+#info_form_area {
+  text-align: center;
+}
+
+.data_form {
+  margin-left: 5px;
+}
+
+.form_area {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+#reponse_form_area {
+  margin-bottom: 20px;
+}
+
+#form_button_area {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 50%;
+  margin-left: 25%;
+}
+
+.form_button_container {
+  width: 30%;
+
+}
+
+#form_bouton_back,
+#form_bouton_rep {
+  border-radius: 5px;
+  margin-left: 25%;
+  width: 50%;
+}
+
+#form_bouton_back {
+  background-color: #D90000;
+}
+
+#form_bouton_rep {
+  background-color: #6691FF;
 }

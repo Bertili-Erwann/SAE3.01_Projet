@@ -2,6 +2,8 @@ from .app import db
 from flask_login import UserMixin
 from .app import login_manager
 from sqlalchemy.orm import validates
+from sqlalchemy_media import File
+from sqlalchemy import JSON
 
 
 @login_manager.user_loader
@@ -28,23 +30,25 @@ class Personne(UserMixin, db.Model):
         nom_personne (str): Nom de famille.
         prenom_personne (str): Prénom.
         email_personne (str): Adresse email.
+        telephone (str): Numéro de telephone
         sexe (str): Sexe (1 caractère).
         adresse (str): Adresse postale.
         date_naissance (Date): Date de naissance.
-        etudiant (bool): Indique si la personne est étudiante.
+        eleve (bool): Indique si la personne est étudiante.
         arme_principale (str): Arme principale (épée, fleuret, sabre).
         niveau (str): Niveau de compétence.
         role (str): Rôle ('personne', 'membre', 'responsable', 'admin').
+        telephone (str): Numéro de téléphone.
     """
     id_personne = db.Column(db.Integer, primary_key=True)
     mdp = db.Column(db.String(64))
     nom_personne = db.Column(db.String(64))
     prenom_personne = db.Column(db.String(64))
     email_personne = db.Column(db.String(64))
+    telephone = db.Column(db.String(64))
     sexe = db.Column(db.String(1))
     adresse = db.Column(db.String(64))
     date_naissance = db.Column(db.Date)
-    numero_telephone = db.Column(db.String(20))
     eleve = db.Column(db.Boolean)
     arme_principale = db.Column(db.String(30))
     niveau = db.Column(db.String(20))
@@ -66,6 +70,11 @@ class Personne(UserMixin, db.Model):
             ValueError: Si les champs requis ne sont pas remplis ou si des champs en trop sont présents.
         """
         match value:
+            case "membre" | "responsable":
+            # TOUS les champs requis doivent être remplis
+                if (self.eleve is None or self.arme_principale is None or self.niveau is None or 
+                    self.sexe is None or self.adresse is None or self.date_naissance is None):
+                    raise ValueError(f"Le  '{value}' n'a pas rempli un des champs requis")
             case "personne" | "admin":
                 if self.eleve is not None or self.arme_principale is not None or self.niveau is not None:
                     raise ValueError(f"'{value}' a des informations en trop")
@@ -108,7 +117,7 @@ class Demande_inscription(db.Model):
         adresse_mail (str): Adresse email.
         adresse_postale (str): Adresse postale.
         scolarisee (bool): Indique si la personne est scolarisée.
-        etudiant (bool): Indique si la personne est étudiante.
+        eleve (bool): Indique si la personne est étudiante.
         justificatif (str): Justificatif fourni.
     """
     id_inscription = db.Column(db.Integer, primary_key=True)
@@ -121,7 +130,7 @@ class Demande_inscription(db.Model):
     adresse_mail = db.Column(db.String(64))
     adresse_postale = db.Column(db.String(64))
     eleve = db.Column(db.Boolean)
-    justificatif = db.Column(db.String(64))
+    justificatif = db.Column(File.as_mutable(JSON))
 
     def __repr__(self) -> str:
         """
@@ -222,10 +231,17 @@ class Inscription(db.Model):
     Attributs:
         id_inscription (int): Clé primaire.
         id_evenement (int): Clé étrangère vers Evenement.
+        nom (str): Nom de la personne.
+        prenom (str): Prénom de la personne.
     """
     id_inscription = db.Column(db.Integer, primary_key=True)
     id_evenement = db.Column(db.Integer,
                              db.ForeignKey("evenement.id_evenement"))
+    nom = db.Column(db.String(64))
+    prenom = db.Column(db.String(64))
+    
+    # Relations
+    evenement = db.relationship("Evenement", backref=db.backref("inscriptions", lazy="dynamic"))
 
     def __repr__(self) -> str:
         """
