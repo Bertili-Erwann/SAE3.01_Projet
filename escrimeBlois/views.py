@@ -86,6 +86,32 @@ def mdp_oublier_confirmer_mdp():
 
     return render_template('mdp_oublier_confirmer_mdp.html')
 
+@app.route('/admin/miseajour/membres')
+def admin_miseajour_membres():
+        les_responsables = []
+        les_membres = []
+        personne = Personne.query.all()
+        for e in personne:
+                if e.role == "responsable":
+                        les_responsables.append(e)
+                elif e.role == "membre":
+                        les_membres.append(e)
+        return render_template('admin_miseajour_membres.html',  membres = les_membres, responsables = les_responsables)
+
+@app.route('/admin/supprimer/membre/<int:id_personne>', methods=['POST'])
+def supprimer_membre(id_personne):
+        try:
+                personne = Personne.query.get(id_personne)
+                if personne:
+                        db.session.delete(personne)
+                        db.session.commit()
+                        flash('Membre supprimé avec succès', 'success')
+                else:
+                        flash('Membre non trouvé', 'error')
+        except Exception as e:
+                db.session.rollback()
+                flash('Erreur lors de la suppression', 'error')
+        return redirect(url_for('admin_miseajour_membres'))
 
 @app.route('/admin/gestion_inscription/club')
 def admin_inscription_club():
