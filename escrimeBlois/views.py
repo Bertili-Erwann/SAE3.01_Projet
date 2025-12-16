@@ -3,13 +3,14 @@ from .app import app,db
 from .models import Article
 from datetime import date
 from escrimeBlois.models import Formulaire
-from escrimeBlois.form import FormInscription
+from escrimeBlois.form import FormInscription, FormRechercheArticle
 import os
 
 @app.route('/')
 @app.route('/index/')
 def index():
-    return render_template("index.html")
+    formRech = FormRechercheArticle()
+    return render_template("index.html",formRech=formRech)
 
 @app.route('/inscription/', )
 def inscription():

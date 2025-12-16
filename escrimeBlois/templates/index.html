@@ -1,21 +1,38 @@
 {% extends "base.html" %} {% block main %}
-<div class="header">
-  <div class="header-content">
-    <h1>Cercle d'Escrime de Blois</h1>
-  </div>
-  <img
-    src="../static/images/logo_cercle_escrime_blois.png"
-    alt="Logo du cercle d'éscrime de Blois"
-  />
-</div>
 <div class="main-content" id="actualite">
-  <div class="carousel-row">
+  <div class="header">
+    <div class="header-content">
+      <h1>Cercle d'Escrime de Blois</h1>
+    </div>
+    <img
+      src="../static/images/logo_cercle_escrime_blois.png"
+      alt="Logo du cercle d'éscrime de Blois"
+    />
+  </div>
+  <aside class="menu-recherche">
+    <button type="button" class="aside-slide" onclick="slider()"> > </button>
+    <div class="ctn-article">
+    </div>
+    <form role="form" method="POST">
+      <p class="article-recents">Articles récents</p>
+      <p class="recherche">Recherche</p>
+    <div class="ctn-rech">
+      {{ formRech.choix_mois(class_="form-control") }}
+      <div class="ctn-valider-rech">
+        {{ formRech.recherche(class_="form-control") }}
+        <input class="btn-rech-ar" type="submit" value="Rechercher">
+    </div>
+    </form>
+  </div>
+  </aside>
+  <button type="button" id="btn-entrant" class="aside-slide hidden" onclick="sliderEntrant()"> < </button>
+   <div class="carousel-row">
     <button type="button" class="carousel-btn prev" aria-label="Précédent">
       ‹
     </button>
+    <h1> ACTUALITÉ</h1>
     <div class="articles">
       <article>
-        <h1>ACTUALITÉ</h1> 
         <a href="#" class="image featured"
           ><img src="../static/images/placeholder1.png" alt=""
         /></a>
@@ -121,19 +138,6 @@
       ›
     </button>
   </div>
-  <div>
-    
-    <div class="menu-recherche">
-      <div class="ctn-article">
-        <p class="article-recents">Articles récents</p>
-      </div>
-      <div class="">
-        <p class="recherche">Recherche</p>
-        <form></form>
-      </div>
-    </div>
-
-  </div>
   <div class="inscription">
     <img src="../static/images/escrimeur.png" />
     <div class="inscription-wrap">
@@ -161,4 +165,6 @@
 
 {% endblock %} {% block scripts %}
 <script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src= "{{ url_for('static',filename='js/slider.js')}}" ></script>
 {% endblock %}

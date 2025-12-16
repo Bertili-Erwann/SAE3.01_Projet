@@ -91,5 +91,11 @@ class FormInscription(FlaskForm):
 
 class FormRechercheArticle(FlaskForm):
     choix_mois = SelectField("Sélectionner un mois",
-                             validators=[DataRequired()])
+                             validators=[DataRequired()],
+                             description="Sélectionner un mois",
+                             render_kw={"placeholder": "Choisir un mois"},
+                             choices=[('Janvier'), ('Février'), ("Mars"),
+                                      ('Avril'), ('Mai'), ('Juin'),
+                                      ('Juillet'), ('Août'), ('Septembre'),
+                                      ('Octobre'), ('Novembre'), ('Decembre')])
     recherche = StringField("Rechercher", validators=[DataRequired()])
