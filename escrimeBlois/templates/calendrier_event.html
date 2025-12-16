@@ -110,7 +110,7 @@
                 
                 <td class="col-actions">
                     <div class="action-buttons-wrapper">
-                        <button class="btn-action btn-consult">Consulter</button>
+                        <a href="{{ url_for('consulter_evenement', id_evenement=event.id_evenement) }}" class="btn-action btn-consult">Consulter</a>
                         {% if event.type_evenement != 'reunion' %}
                             <button class="btn-action btn-register">S'inscrire</button>
                         {% endif %}

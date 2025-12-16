@@ -287,11 +287,11 @@ def update_arme():
     
     return redirect(url_for('infos_persos'))
 
-@app.route('/nav_event')
+@app.route('/événement/nav_event')
 def nav_event():
     return render_template ('nav_event.html')
 
-@app.route('/calendrier_event')
+@app.route('/événement/calendrier')
 def calendrier():
     # --- 1. Récupération des filtres ---
     # Checkboxes: retourne une liste ['competition', 'entrainement'] par exemple
@@ -337,5 +337,10 @@ def calendrier():
         filtres=request.args, 
         types_selectionnes=types_selectionnes
     )
+    
+@app.route('/événement/calendrier/consulter/<int:id_evenement>')
+def consulter_evenement(id_evenement):
+    evenement = Evenement.query.get_or_404(id_evenement)
+    return render_template('consulter_evenement.html', evenement=evenement)
 
 
