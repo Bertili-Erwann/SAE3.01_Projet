@@ -176,6 +176,8 @@ class Inscription(db.Model):
         id_evenement (int): Clé étrangère vers Evenement.
     """
     id_inscription = db.Column(db.Integer, primary_key=True)
+    nom_inscrit = db.Column(db.String(64))
+    prenom_inscrit = db.Column(db.String(64))
     id_evenement = db.Column(db.Integer,
                              db.ForeignKey("evenement.id_evenement"))
 
@@ -213,7 +215,7 @@ class Classer(db.Model):
     id_inscription = db.Column(db.Integer,
                                db.ForeignKey("evenement.id_evenement"),
                                primary_key=True)
-    point = db.Column(db.Integer)
+    points = db.Column(db.Integer)
 
     @validates('id_competition')
     def validate_evenement_type(self, key: str, value: int) -> int:

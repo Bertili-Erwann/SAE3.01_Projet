@@ -53,7 +53,7 @@ evenements:
     date: "2025-10-25"
     heure: 14
     type_evenement: "competition"
-    categorie: "Régionale"
+    categorie: "Séniors"
     lieu: "Salle des sports Blois"
     description: "Compétition régionale d'escrime"
     niveau: "Régional"
@@ -62,24 +62,103 @@ evenements:
   - id_evenement: 2
     date: "2025-10-26"
     heure: 10
-    type_evenement: "inscription"
+    type_evenement: "reunion"
     categorie: "Administrative"
     lieu: "Bureau du club"
-    description: "Session d'inscription pour la saison"
+    description: "Réunion de rentrée"
     niveau: null
     discipline: null
     cooperative: null
+  - id_evenement: 3
+    date: "2024-11-10"
+    heure: 09
+    type_evenement: "competition"
+    categorie: "M15"
+    lieu: "Gymnase A"
+    description: "Tournoi départemental - Fleuret"
+    niveau: "Départemental"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+  - id_evenement: 4
+    date: "2025-12-05"
+    heure: 16
+    type_evenement: "competition"
+    categorie: "Séniors"
+    lieu: "Salle omnisports"
+    description: "Grand tournoi - Sabre équipe"
+    niveau: "National"
+    discipline: "Sabre"
+    cooperative: "En équipe"
+  - id_evenement: 5
+    date: "2023-03-01"
+    heure: 11
+    type_evenement: "competition"
+    categorie: "M11"
+    lieu: "Dojo local"
+    description: "Compétition interne - Fleuret"
+    niveau: "Club"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
 
 inscriptions:
   - id_inscription: 1
+    nom_inscrit: "Danzin"
+    prenom_inscrit: "Titouan"
     id_evenement: 1
   - id_inscription: 2
-    id_evenement: 2
+    nom_inscrit: "Bertili"
+    prenom_inscrit: "Erwann"
+    id_evenement: 1
+  - id_inscription: 3
+    nom_inscrit: "Dupont"
+    prenom_inscrit: "Jean"
+    id_evenement: 3
+  - id_inscription: 4
+    nom_inscrit: "Martin"
+    prenom_inscrit: "Marie"
+    id_evenement: 3
+  - id_inscription: 5
+    nom_inscrit: "Lemoine"
+    prenom_inscrit: "Pierre"
+    id_evenement: 4
+  - id_inscription: 6
+    nom_inscrit: "Durand"
+    prenom_inscrit: "Alice"
+    id_evenement: 4
+  - id_inscription: 7
+    nom_inscrit: "Petit"
+    prenom_inscrit: "Luc"
+    id_evenement: 5
+  - id_inscription: 8
+    nom_inscrit: "Moreau"
+    prenom_inscrit: "Sophie"
+    id_evenement: 5
 
 classers:
   - id_competition: 1  
     id_inscription: 1 
-    point: 100
+    points: 100
+  - id_competition: 1
+    id_inscription: 2
+    points: 90
+  - id_competition: 3
+    id_inscription: 3
+    points: 85
+  - id_competition: 3
+    id_inscription: 4
+    points: 95
+  - id_competition: 4
+    id_inscription: 5
+    points: 120
+  - id_competition: 4
+    id_inscription: 6
+    points: 110
+  - id_competition: 5
+    id_inscription: 7
+    points: 60
+  - id_competition: 5
+    id_inscription: 8
+    points: 70
 
 formulaires:
   - id_formulaire: 1

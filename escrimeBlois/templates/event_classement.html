@@ -1,0 +1,136 @@
+{% extends "nav_event.html" %} 
+
+{% block section_event %}
+<main class="event_classement_global">
+    <form action="{{ url_for('event_classment') }}" method="GET" class="event_classment_section_1">
+        <section id="event_classment_section_1">
+            <div class="event_classment_div">
+                <div class="event_div_1_childs" id="event_classment_discip">
+                    <p>Discipline</p>
+                    <div id="event_classment_div_2">
+                        <input type="checkbox" id="classment_epee" name="discipline_classment[]" value="Épée" {% if disciplines is defined and ('Épée' in disciplines) %}checked{% endif %}>
+                        <label for="classment_epee">Épée</label><br>
+                        <input type="checkbox" id="classment_fleuret" name="discipline_classment[]" value="Fleuret" {% if disciplines is defined and ('Fleuret' in disciplines) %}checked{% endif %}>
+                        <label for="classment_fleuret">Fleuret</label><br>
+                        <input type="checkbox" id="classment_sabre" name="discipline_classment[]" value="Sabre" {% if disciplines is defined and ('Sabre' in disciplines) %}checked{% endif %}>
+                        <label for="classment_sabre">Sabre</label><br>
+                    </div>
+                    
+                </div>
+                <div class="event_class_div_1_childs" id="event_classment_coop">
+                    <p class="checkbox_name">Jeu</p>
+                    <div>
+                        <input type="checkbox" id="classment_ind" name="coop_classment[]" value="Individuel" {% if coops is defined and ('Individuel' in coops) %}checked{% endif %}>
+                        <label for="classment_ind">Individuel</label><br>
+                        <input type="checkbox" id="classment_equipe" name="coop_classment[]" value="En équipe" {% if coops is defined and ('En équipe' in coops) %}checked{% endif %}>
+                        <label for="classment_equipe">En équipe</label><br>
+                    </div>
+                </div>
+                <div class="event_class_div_1_childs" id="event_classment_sexe">
+                    <p class="checkbox_name">Genre</p>
+                    <div>
+                        <input type="checkbox" id="classment_homme" name="sexe_classment[]" value="Homme" {% if sexes is defined and ('Homme' in sexes) %}checked{% endif %}>
+                        <label for="classment_homme">Homme</label><br>
+                        <input type="checkbox" id="classment_femme" name="sexe_classment[]" value="Femme" {% if sexes is defined and ('Femme' in sexes) %}checked{% endif %}>
+                        <label for="classment_femme">Femme</label><br>
+                    </div>
+                </div>
+            </div>
+            <div class="event_classment_div">
+                <div class="event_container">
+                    <p class="creation_event_text">Catégorie</p>
+                    <select name="categorie_event" class="creation_event_info_required_area" id="categories_create_event">
+                        <option value="Toutes">Toutes</option>
+                        <option value="M5" {% if categorie and (categorie == 'M5') %}selected{% endif %}>M5</option>
+                        <option value="M7" {% if categorie and (categorie == 'M7') %}selected{% endif %}>M7</option>
+                        <option value="M9" {% if categorie and (categorie == 'M9') %}selected{% endif %}>M9</option>
+                        <option value="M11" {% if categorie and (categorie == 'M11') %}selected{% endif %}>M11</option>
+                        <option value="M13" {% if categorie and (categorie == 'M13') %}selected{% endif %}>M13</option>
+                        <option value="M15" {% if categorie and (categorie == 'M15') %}selected{% endif %}>M15</option>
+                        <option value="M17" {% if categorie and (categorie == 'M17') %}selected{% endif %}>M17</option>
+                        <option value="M20" {% if categorie and (categorie == 'M20') %}selected{% endif %}>M20</option>
+                        <option value="Séniors" {% if categorie and (categorie == 'Séniors') %}selected{% endif %}>Séniors</option>
+                        <option value="Vétérans 1" {% if categorie and (categorie == 'Vétérans 1') %}selected{% endif %}>Vétérans 1</option>
+                        <option value="Vétérans 2" {% if categorie and (categorie == 'Vétérans 2') %}selected{% endif %}>Vétérans 2</option>
+                        <option value="Vétérans 3" {% if categorie and (categorie == 'Vétérans 3') %}selected{% endif %}>Vétérans 3</option>
+                        <option value="Vétérans 4" {% if categorie and (categorie == 'Vétérans 4') %}selected{% endif %}>Vétérans 4</option>
+                    </select>
+                </div>
+                <div class="event_container">
+                    <p class="creation_event_text">Saison</p>
+                    <select name="saison_event" class="creation_event_info_required_area" id="saisons_create_event">
+                        <option value="">Toutes</option>
+                        {% if saisons is defined and saisons|length > 0 %}
+                            {% for y in saisons %}
+                                <option value="{{ y }}" {% if saison and (saison == y|string) %}selected{% endif %}>{{ y }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="event_container">
+                    <p class="creation_event_text">Niveau</p>
+                    <select name="niveau_event" class="creation_event_info_required_area" id="niveaux_create_event">
+                        <option value="Tous" {% if niveau and (niveau == 'Tous') %}selected{% endif %}>Tous</option>
+                        <option value="International" {% if niveau and (niveau == 'International') %}selected{% endif %}>International</option>
+                        <option value="National" {% if niveau and (niveau == 'National') %}selected{% endif %}>National</option>
+                        <option value="Zone" {% if niveau and (niveau == 'Zone') %}selected{% endif %}>Zone</option>
+                        <option value="Régional" {% if niveau and (niveau == 'Régional') %}selected{% endif %}>Régional</option>
+                        <option value="Départemental" {% if niveau and (niveau == 'Départemental') %}selected{% endif %}>Départemental</option>
+                        <option value="Club" {% if niveau and (niveau == 'Club') %}selected{% endif %}>Club</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+        <section id="event_classment_section_2">
+            <input type="submit" id="button_search_classment" value="Rechercher"/>
+        </section>
+    </form>
+    <form action="" method="POST" class="event_classment_section_2">
+        <section>
+            {% if inscrits|length == 0 %}
+            <h1 class="text_form">Aucun résultat correspondant</h1>
+            {% else %}
+            <p style="text-align:center; font-weight:600; margin-bottom:10px;">Compétitions prises en compte : {{ event_count }}</p>
+            {% endif %}
+            {% if inscrits|length != 0 %}
+            <div class="limiter">
+                <div class="container-table100">
+                    <div class="wrap-table100">
+                        <div class="table100">
+                            <div class="table100-head">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="insc_rangH">Rang</th>
+                                            <th class="nom_inscH">Nom</th>
+                                            <th class="prenom_inscH">Prénom</th>
+                                            <th class="est_membreH">Membre</th>
+                                            <th class="points_compH">Points</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="table100-body js-pscroll">
+                                <table>
+                                    <tbody>
+                                        {% for insc in inscrits %}
+                                        <tr>
+                                            <td id="insc_rang">{{ loop.index }}</td>
+                                            <td id="nom_insc">{{ insc.nom_inscrit }}</td>
+                                            <td id="prenom_insc">{{ insc.prenom_inscrit }}</td>
+                                            <td id="est_membre">Non</td>
+                                            <td id="points_comp">{{ insc.points }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </section>
+    </form>
+</main>
+{% endblock %}

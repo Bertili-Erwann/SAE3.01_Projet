@@ -65,6 +65,8 @@ def loaddb(filename: str) -> None:
 
     for insc in data.get("inscriptions", []):
         inscription = Inscription(id_inscription=insc['id_inscription'],
+                                  nom_inscrit=insc['nom_inscrit'],
+                                  prenom_inscrit=insc['prenom_inscrit'],
                                   id_evenement=insc['id_evenement'])
         db.session.add(inscription)
         db.session.commit()
@@ -72,7 +74,7 @@ def loaddb(filename: str) -> None:
     for clas in data["classers"]:
         classer = Classer(id_competition=clas['id_competition'],
                           id_inscription=clas['id_inscription'],
-                          point=clas.get('point'))
+                          points=clas.get('points'))
         db.session.add(classer)
         db.session.commit()
 
