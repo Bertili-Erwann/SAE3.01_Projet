@@ -1,0 +1,43 @@
+/* ==================== Navigation - Base.html ==================== */
+
+/* -------------------- Navbar principale -------------------- */
+.navbar-nav {
+  float: none;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+
+.navbar-nav > li {
+  display: inline-block;
+  float: none;
+}
+
+.navbar {
+  background-color: #000000;
+  opacity: 0.5;
+}
+
+.nav-link.accueil {
+  font-weight: bold;
+}
+
+/* -------------------- Loupe Recherche -------------------- */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.form-image {
+  margin-right: 5px;
+}
+
+.hidden-form {
+  display: none;
+}
+
+.show-form {
+  display: inline !important;
+  height: 30px;
+}

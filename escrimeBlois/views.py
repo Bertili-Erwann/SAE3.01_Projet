@@ -2,7 +2,8 @@ from flask import flash, redirect, render_template, request, url_for, flash
 from .app import app,db
 from .models import Article
 from datetime import date
-from escrimeBlois.models import Formulaire, FormInscription
+from escrimeBlois.models import Formulaire
+from escrimeBlois.form import FormInscription
 import os
 
 @app.route('/')
@@ -57,10 +58,6 @@ def mdp_oublier_confirmer_mdp():
         return redirect(url_for('login'))  # Ou une autre page
     
     return render_template('mdp_oublier_confirmer_mdp.html')
-
-@app.route('/historique/')
-def historique():
-        return render_template('historique.html')
 
 @app.route('/renseignement/')
 def renseignement():
