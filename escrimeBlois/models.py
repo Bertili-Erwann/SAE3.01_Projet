@@ -30,6 +30,7 @@ class Personne(UserMixin, db.Model):
         nom_personne (str): Nom de famille.
         prenom_personne (str): Prénom.
         email_personne (str): Adresse email.
+        telephone (str): Numéro de telephone
         sexe (str): Sexe (1 caractère).
         adresse (str): Adresse postale.
         date_naissance (Date): Date de naissance.
@@ -69,6 +70,11 @@ class Personne(UserMixin, db.Model):
             ValueError: Si les champs requis ne sont pas remplis ou si des champs en trop sont présents.
         """
         match value:
+            case "membre" | "responsable":
+            # TOUS les champs requis doivent être remplis
+                if (self.etudiant is None or self.arme_principale is None or self.niveau is None or 
+                    self.sexe is None or self.adresse is None or self.date_naissance is None):
+                    raise ValueError(f"Le  '{value}' n'a pas rempli un des champs requis")
             case "personne" | "admin":
                 if self.eleve is not None or self.arme_principale is not None or self.niveau is not None:
                     raise ValueError(f"'{value}' a des informations en trop")

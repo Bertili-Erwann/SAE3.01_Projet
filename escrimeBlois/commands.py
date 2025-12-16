@@ -167,33 +167,50 @@ def maxutilisateur() -> int:
 @click.argument('role_user')
 @click.argument('pwd')
 @click.argument('mail')
-def nouvpers(nom: str, prenom: str, role_user: str, pwd: str,
-             mail: str) -> None:
-    """
-    Ajoute un nouvel utilisateur dans la base de données.
-    
-    Args:
-        nom (str): Nom de famille.
-        prenom (str): Prénom.
-        role_user (str): Rôle de l'utilisateur.
-        pwd (str): Mot de passe en clair (sera haché).
-        mail (str): Adresse email.
-    """
+@click.argument('telephone')
+@click.argument('sexe')
+@click.argument('adresse')
+@click.argument('date_naissance')
+@click.argument('etudiant', type=click.BOOL) # Pour accepter True ou False
+@click.argument('arme_principale')
+@click.argument('niveau')
+def nouvpers(nom: str, prenom: str, role_user: str, pwd: str, mail: str,
+             telephone: str, sexe: str, adresse: str, date_naissance: str,
+             etudiant: bool, arme_principale: str, niveau: str) -> None:
 
     if Personne.query.filter_by(email_personne=mail).first():
         lg.warning('User %s existe déjà', mail)
         return
+    
     m = sha256()
     m.update(pwd.encode('utf-8'))
 
-    pers = Personne(id_personne=maxutilisateur(),
-                    mdp=m.hexdigest(),
-                    role=role_user,
-                    nom_personne=nom,
-                    prenom_personne=prenom,
-                    email_personne=mail)
+    # Conversion de date (si db.Column est db.Date)
+    # Assurez-vous que date_naissance est au format 'AAAA-MM-JJ'
+    try:
+        from datetime import date as date_type
+        # Tentative de conversion de la chaîne 'AAAA-MM-JJ' en objet date
+        date_obj = date_type.fromisoformat(date_naissance) 
+    except ValueError:
+        lg.error(f"Format de date invalide: {date_naissance}. Utilisez AAAA-MM-JJ.")
+        return
+
+    pers = Personne(
+        id_personne=maxutilisateur(),
+        mdp=m.hexdigest(),
+        nom_personne=nom,
+        prenom_personne=prenom,
+        email_personne=mail,
+        telephone=telephone,
+        sexe=sexe,
+        adresse=adresse,
+        date_naissance=date_obj,
+        etudiant=etudiant,
+        arme_principale=arme_principale,
+        niveau=niveau,
+        role=role_user
+    )
 
     db.session.add(pers)
     db.session.commit()
-
     lg.info('Utilisateur %s crée', prenom)

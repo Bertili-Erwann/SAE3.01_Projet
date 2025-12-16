@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block main %}
+<p id="blank_space"></p>
+<nav>
+    <div>
+        <ul id="nav_membre">
+            <!-- SECTION INFORMATIONS PERSONNELLES -->
+            <li id="nav-item">
+                <a class="nav-link" href="{{ url_for('infos_persos') }}">Informations Personnelles</a>
+            </li>
+
+            <!-- SECTION RESULTATS PASSES -->
+            <li id="nav-item">
+                <a class="nav-link" href="">Résultats Passés</a>
+            </li>
+
+            <!-- SECTION EVENEMENTS INSCRITS  -->
+            <li id="nav-item">
+                <a class="nav-link" href="">Évènements Inscrits</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+    <section id="membre" role="membre" class="container-fluid p-0">
+      {% block membre %}{% endblock %}
+    </section>
+    {% endblock %}

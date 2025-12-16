@@ -1,3 +1,4 @@
+
 /* ==================== Authentification (Login & Mot de passe oublié) ==================== */
 
 /* -------------------- Fenêtres communes -------------------- */
@@ -43,6 +44,7 @@
 }
 
 /* -------------------- Champs de saisie -------------------- */
+.fenetre-login input[type="text"],
 .fenetre-login input[type="email"],
 .fenetre-login input[type="password"],
 .fenetre-mdp-oublier input[type="email"],
@@ -55,6 +57,36 @@
   font-size: 1rem;
 }
 
+
+/* -------------------- Voir MDP -------------------- */
+
+.toggle-password-log {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.2em;
+    padding: 5px;
+    padding-bottom: 25px;
+}
+
+.login-password-wrapper {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.login-password-wrapper input {
+    margin-bottom: 0;
+}
 /* -------------------- Boutons de soumission -------------------- */
 .fenetre-login input[type="submit"],
 .fenetre-mdp-oublier input[type="submit"],
