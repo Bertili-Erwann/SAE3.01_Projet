@@ -37,12 +37,14 @@ class Personne(UserMixin, db.Model):
         arme_principale (str): Arme principale (épée, fleuret, sabre).
         niveau (str): Niveau de compétence.
         role (str): Rôle ('personne', 'membre', 'responsable', 'admin').
+        telephone (str): Numéro de téléphone.
     """
     id_personne = db.Column(db.Integer, primary_key=True)
     mdp = db.Column(db.String(64))
     nom_personne = db.Column(db.String(64))
     prenom_personne = db.Column(db.String(64))
     email_personne = db.Column(db.String(64))
+    telephone = db.Column(db.String(64))
     sexe = db.Column(db.String(1))
     adresse = db.Column(db.String(64))
     date_naissance = db.Column(db.Date)
@@ -223,10 +225,17 @@ class Inscription(db.Model):
     Attributs:
         id_inscription (int): Clé primaire.
         id_evenement (int): Clé étrangère vers Evenement.
+        nom (str): Nom de la personne.
+        prenom (str): Prénom de la personne.
     """
     id_inscription = db.Column(db.Integer, primary_key=True)
     id_evenement = db.Column(db.Integer,
                              db.ForeignKey("evenement.id_evenement"))
+    nom = db.Column(db.String(64))
+    prenom = db.Column(db.String(64))
+    
+    # Relations
+    evenement = db.relationship("Evenement", backref=db.backref("inscriptions", lazy="dynamic"))
 
     def __repr__(self) -> str:
         """

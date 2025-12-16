@@ -70,6 +70,41 @@ evenements:
     discipline: null
     cooperative: null
 
+demande_inscriptions:
+  - id_inscription: 1
+    nom: "Bernard"
+    prenom: "Sophie"
+    mot_de_passe: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    sexe: "F"
+    date_naissance: "2005-03-15"
+    num_tel: "0612345678"
+    adresse_mail: "sophie.bernard@example.com"
+    adresse_postale: "25 Rue des Roses, Blois"
+    eleve: true
+    justificatif: "certificat_scolarite_sophie.pdf"
+  - id_inscription: 2
+    nom: "Petit"
+    prenom: "Lucas"
+    mot_de_passe: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    sexe: "M"
+    date_naissance: "2008-11-22"
+    num_tel: "0623456789"
+    adresse_mail: "lucas.petit@example.com"
+    adresse_postale: "48 Avenue de la Loire, Blois"
+    eleve: true
+    justificatif: "certificat_scolarite_lucas.pdf"
+  - id_inscription: 3
+    nom: "Moreau"
+    prenom: "Camille"
+    mot_de_passe: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    sexe: "F"
+    date_naissance: "1998-07-08"
+    num_tel: "0634567890"
+    adresse_mail: "camille.moreau@example.com"
+    adresse_postale: "12 Rue Victor Hugo, Blois"
+    eleve: false
+    justificatif: null
+
 inscriptions:
   - id_inscription: 1
     id_evenement: 1
@@ -177,4 +212,12 @@ posseder:
   - id_image: 1
     id_article: 1
     miniature: true
+
+gerer:
+  - id_admin: 1
+    id_inscription: 1
+  - id_admin: 1
+    id_inscription: 2
+  - id_admin: 1
+    id_inscription: 3
  

@@ -23,7 +23,7 @@ def loaddb(filename: str) -> None:
     db.create_all()
 
     import yaml
-    from .models import Personne, Evenement, Classer, Formulaire, Repondre, Article, Inscription, Image, Posseder
+    from .models import Personne, Evenement, Classer, Formulaire, Repondre, Article, Inscription, Image, Posseder, Demande_inscription, Gerer
 
     with open(filename, 'r', encoding='utf-8') as file:
         data = yaml.safe_load(file) or []
@@ -41,7 +41,7 @@ def loaddb(filename: str) -> None:
                             sexe=pers.get('sexe'),
                             adresse=pers.get('adresse'),
                             date_naissance=date_naissance,
-                            etudiant=pers.get('etudiant'),
+                            eleve=pers.get('eleve'),
                             arme_principale=pers.get('arme_principale'),
                             niveau=pers.get('niveau'),
                             role=pers['role'])
@@ -114,6 +114,30 @@ def loaddb(filename: str) -> None:
                             id_article=poss['id_article'],
                             miniature=poss['miniature'])
         db.session.add(posseder)
+        db.session.commit()
+
+    for dem in data.get("demande_inscriptions", []):
+        date_naissance_dem = None
+        if dem.get('date_naissance'):
+            date_naissance_dem = datetime.date.fromisoformat(dem['date_naissance'])
+        demande = Demande_inscription(id_inscription=dem['id_inscription'],
+                                      nom=dem['nom'],
+                                      prenom=dem['prenom'],
+                                      mot_de_passe=dem['mot_de_passe'],
+                                      sexe=dem.get('sexe'),
+                                      date_naissance=date_naissance_dem,
+                                      num_tel=dem.get('num_tel'),
+                                      adresse_mail=dem['adresse_mail'],
+                                      adresse_postale=dem.get('adresse_postale'),
+                                      eleve=dem.get('eleve'),
+                                      justificatif=dem.get('justificatif'))
+        db.session.add(demande)
+        db.session.commit()
+
+    for ger in data.get("gerer", []):
+        gerer = Gerer(id_admin=ger['id_admin'],
+                      id_inscription=ger['id_inscription'])
+        db.session.add(gerer)
         db.session.commit()
 
 

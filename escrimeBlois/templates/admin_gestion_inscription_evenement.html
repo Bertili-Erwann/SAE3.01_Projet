@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block main %}
+<main id="admin_nav" role="admin_nav" class="container-fluid p-0">
+  {% include "admin_nav_inscription.html" %} {% include "admin_nav_bar.html" %}
+</main>
+<div class="inscription_liste">
+  <h1>Liste des inscriptions aux événements en attente</h1>
+
+  {% if inscriptions|length == 0 %}
+  <p>Aucune inscription aux événements en attente</p>
+  {% else %}
+  <div>
+    {% for inscription in inscriptions %}
+    <div class="demande_inscription_item">
+      <span>{{ inscription.nom }} {{ inscription.prenom }} - {{ inscription.evenement.type_evenement }}</span>
+      <a href="{{ url_for('admin_inscription_evenement_view', id_inscription=inscription.id_inscription) }}">
+        <button type="button">Inspecter</button>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

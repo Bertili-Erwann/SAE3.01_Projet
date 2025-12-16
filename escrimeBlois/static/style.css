@@ -1,5 +1,4 @@
 /* ==================== Fichier principal CSS ==================== */
-/* Ce fichier importe tous les modules CSS du projet */
 
 /* Variables et configuration globale */
 @import url('css/variables.css');
@@ -7,7 +6,7 @@
 /* Styles de base */
 @import url('css/global.css');
 
-/* Composants de navigation */
+/* navbar */
 @import url('css/navbar.css');
 
 /* Pages */
@@ -20,5 +19,10 @@
 /* Sections communes */
 @import url('css/footer.css');
 
-/* Pages responsable */
+/* RESPONSABLE */
 @import url('css/responsable.css');
+
+/* ADMIN */
+/* Gestion inscriptions */
+@import url('css/inscriptions.css');
+
