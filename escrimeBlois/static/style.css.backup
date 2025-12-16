@@ -1,0 +1,754 @@
+:root {
+  --cold: #c3c2f4;
+}
+
+/* ==================== Global ====================*/
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+/* ==================== Base.html - Navbar ====================*/
+.navbar-nav {
+  float: none;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+
+.navbar-nav > li {
+  display: inline-block;
+  float: none;
+}
+
+.navbar {
+  background-color: #000000;
+  opacity: 0.5;
+}
+
+.nav-link.accueil {
+  font-weight: bold;
+}
+
+/* -------------------- Base.html - Loupe Recherche --------------------*/
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+.form-image {
+  margin-right: 5px;
+}
+.hidden-form {
+  display: none;
+}
+.show-form {
+  display: inline !important;
+  height: 30px;
+}
+
+/* ==================== Index.html - Main ==================== */
+#main {
+  margin-top: 0;
+  position: relative;
+}
+
+.header {
+  background-image: url("images/haut_page_escrime.png");
+  width: 100%;
+  height: 100vh;
+  min-height: 320px;
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: white;
+  margin-top: 0;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.header-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 1rem;
+}
+
+.header-content h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 4rem);
+  /* taille responsive */
+  font-weight: 700;
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.835);
+}
+
+.header img {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 1rem;
+}
+
+.main-content {
+  background-color: var(--cold);
+  text-align: center;
+}
+
+.main-content > h1 {
+  letter-spacing: 5px;
+  font-weight: 600;
+}
+
+/* -------------------- Index.html - Carousel --------------------*/
+.carousel-row {
+  position: relative;
+}
+
+.articles {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 0 3rem;
+}
+
+.articles > article {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+  background-color: #c7c3f4;
+  padding: 2em;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  border-radius: 10px;
+  margin: 15px;
+  margin-bottom: 50px;
+}
+
+.articles img {
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 200px;
+  max-height: 200px;
+}
+
+.articles h3 {
+  font-weight: 650;
+  font-size: 20px;
+}
+
+.articles::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.carousel-btn.prev {
+  left: 0.5rem;
+}
+
+.carousel-btn.next {
+  right: 0.5rem;
+}
+
+/* -------------------- Index.html - Inscription --------------------*/
+.inscription {
+  display: flex;
+  background-color: var(--cold);
+  margin: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 40px;
+  width: 60%;
+  border-radius: 10px;
+  color: #fff;
+  -webkit-text-stroke: 1px #ffffff;
+  text-shadow: 0 1px 0 #000, 1px 0 0 #000, -1px 0 0 #000, 0 -1px 0 #000,
+    1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000,
+    0 2px 0 #000, 2px 0 0 #000, -2px 0 0 #000, 0 -2px 0 #000, 2px 2px 0 #000,
+    -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
+}
+
+.inscription > img {
+  width: 40vh;
+  height: 30vh;
+  margin: -40px;
+}
+
+.inscription-wrap {
+  margin-top: 50px;
+}
+.inscription-wrap h1 {
+  margin-top: -5px;
+  margin-left: 50px;
+}
+
+.inscription-wrap a {
+  text-decoration: none;
+  color: rgb(255, 130, 130);
+  -webkit-text-stroke: 1px rgb(255, 130, 130);
+  letter-spacing: 2px;
+}
+
+.inscription-wrap img {
+  width: 50px;
+  height: 70px;
+}
+
+/* -------------------- Index.html - Partenaires --------------------*/
+.partenaire {
+  text-align: center;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+#partenaire-content {
+  display: flex;
+  justify-content: center;
+}
+
+#partenaire-content section {
+  margin-inline: 10%;
+}
+
+#partenaire-content p {
+  font-size: large;
+  padding: 5%;
+}
+
+.partenaire img {
+  width: 250px;
+  height: 200px;
+}
+
+/* ==================== Toute les fenetre de login et mdp oublier ==================== */
+.fenetre-login,
+.fenetre-mdp-oublier,
+.fenetre-mdp-oublier-code-envoyer,
+.fenetre-mdp-confirmer_mdp {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #e6e6e6;
+  border-radius: 5%;
+}
+
+.logo-texte {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-texte img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+  margin-top: 70px;
+}
+
+.logo-texte p {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.fenetre-login h2,
+.fenetre-mdp-oublier h2,
+.fenetre-mdp-confirmer_mdp h2 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #000000;
+}
+
+.fenetre-login input[type="email"],
+.fenetre-login input[type="password"],
+.fenetre-mdp-oublier input[type="email"],
+.fenetre-mdp-oublier-code-envoyer input[type="text"],
+.fenetre-mdp-confirmer_mdp input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.fenetre-login input[type="submit"],
+.fenetre-mdp-oublier input[type="submit"],
+.fenetre-mdp-oublier-code-envoyer input[type="submit"],
+.fenetre-mdp-confirmer_mdp input[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  background-color: #6691ff;
+  color: #000000;
+}
+
+.fenetre-login input[type="submit"]:hover,
+.fenetre-mdp-oublier input[type="submit"]:hover,
+.fenetre-mdp-oublier-code-envoyer input[type="submit"]:hover,
+.fenetre-mdp-confirmer_mdp input[type="submit"]:hover {
+  background-color: #5273cc;
+}
+
+.fenetre-login #passwrd-oublie {
+  align-self: flex-start;
+  margin-top: 10px;
+  color: #2a4088;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.fenetre-login #passwrd-oublie:hover {
+  text-decoration: underline;
+}
+
+.fenetre-mdp-oublier-code-envoyer > form[method="POST"] > p {
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* ==================== Historique.html ==================== */
+
+.historique-content h1 {
+  margin-top: 55px;
+  margin-bottom: -30px;
+  text-align: center;
+  letter-spacing: 3px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.historique-content img {
+  width: 150px;
+  height: 150px;
+  margin-left: 50px;
+}
+
+.limiter {
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -20px;
+}
+
+.container-table100 {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 20px;
+}
+
+.wrap-table100 {
+  width: 1170px;
+}
+
+table {
+  width: 100%;
+}
+
+.date {
+  font-weight: bold;
+  width: 1%;
+  padding-left: 20px;
+}
+
+.evenm {
+  width: 10%;
+}
+
+.table100-head th {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+.table100-body td {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.table100 {
+  position: relative;
+  padding-top: 60px;
+  border-radius: 10px;
+  overflow: scroll;
+  box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+  -o-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+  -ms-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+}
+
+.table100-head {
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.table100-body {
+  max-height: 585px;
+}
+
+.table100 th {
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.4;
+  background-color: #353536;
+}
+
+.table100 td {
+  font-family: Lato-Regular;
+  font-size: 15px;
+  color: #575656;
+  line-height: 1.4;
+}
+
+.table100 .table100-body tr:nth-child(even) {
+  background-color: #f8f6ff;
+}
+
+/* CSS partie footer ---------------------------------------*/
+
+#footer {
+  background-color: #484848;
+}
+
+#foot_title {
+  text-align: center;
+  color: #ffffff;
+  padding: 2%;
+}
+
+#foot_section_1 {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+#foot_section_2 {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 60%;
+}
+
+#name_formulaire,
+#email_formulaire,
+#foot_bouton_robot,
+#foot_bouton_envoi {
+  flex-basis: 42%;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 2%;
+}
+
+#object_formulaire,
+#message_formulaire {
+  flex-basis: 92%;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 2%;
+}
+
+#message_formulaire {
+  height: 50%;
+  text-align: left;
+}
+
+#foot_bouton_envoi {
+  background-color: #c96666;
+}
+
+#foot_logo_CEB {
+  width: 90px;
+  height: 90px;
+  margin-top: 2%;
+  margin-left: 4%;
+}
+
+#foot_last_line {
+  flex-basis: 35%;
+  margin-top: 4%;
+  color: #ffffff;
+}
+
+#foot_section_2_bis {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 40%;
+  margin-bottom: 5%;
+}
+
+#foot_div_1,
+#foot_div_2,
+#foot_div_3 {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-basis: 60%;
+  margin-right: 38%;
+  margin-left: 2%;
+  margin-top: 2%;
+}
+
+#foot_image_email,
+#foot_image_tel,
+#foot_image_geo {
+  margin-right: 2%;
+  width: 30px;
+  height: 30px;
+}
+
+#foot_adresse_email,
+#foot_num_tel,
+#foot_adresse_postale {
+  color: #ffffff;
+}
+
+#foot_adresse_postale:hover {
+  color: #166fff;
+}
+
+#foot_map {
+  margin-left: 2%;
+}
+
+/* ==================== navbar_admin ==================== */
+#navbar_admin,
+#navbar_inscription {
+  background-color: #cacaca;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+
+#nav_admin,
+#nav_inscr {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#nav_admin > li,
+#nav_inscr > li {
+  flex-basis: 20%;
+  margin: 0 10px;
+}
+
+#nav_admin > li a,
+#nav_inscr > li a {
+  text-decoration: none;
+  color: #333;
+  padding: 12px 20px;
+  display: block;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+#nav_admin > li:hover a,
+#nav_inscr > li:hover a {
+  font-weight: bold;
+  color: #357abd;
+  background-color: rgba(74, 144, 226, 0.1);
+}
+
+#blank_space {
+  padding-top: 60px;
+}
+
+.demande_inscription_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin: 10px auto;
+  max-width: 600px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.demande_inscription_item:hover {
+  background-color: #e8e8e8;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.inscription_liste h1 {
+  text-align: center;
+  color: #333;
+  font-size: 32px;
+  margin: 30px 0;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.demande_inscription_item button {
+  background-color: #949494;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.demande_inscription_item button:hover {
+  background-color: #d3d3d3;
+  transform: scale(1.05);
+}
+
+.inscription_view {
+  max-width: 600px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.inscription_view h2 {
+  color: #333;
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.inscription_view > a button {
+  background-color: #d90000;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.inscription_view > a button:hover {
+  background-color: #ff5d5d;
+  transform: scale(1.05);
+}
+
+.inscription_details {
+  background-color: #f0f0f0;
+  padding: 30px;
+  border-radius: 10px;
+  margin-top: 20px;
+  text-align: left;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.inscription_details:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.inscription_details p {
+  margin: 15px 0;
+  padding: 8px;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+}
+
+.inscription_details p:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+  transform: translateX(5px);
+}
+
+.inscription_buttons {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.inscription_buttons button {
+  padding: 10px 30px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.inscription_buttons button[value="accepter"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.inscription_buttons button[value="accepter"]:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.inscription_buttons button[value="refuser"] {
+  background-color: #d90000;
+  color: white;
+}
+
+.inscription_buttons button[value="refuser"]:hover {
+  background-color: #ff1a1a;
+  transform: scale(1.05);
+}
+
+.inscription_details a {
+  color: #0066cc;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+.inscription_details a:hover {
+  color: #0052a3;
+  background-color: rgba(0, 102, 204, 0.1);
+  text-decoration: underline;
+  transform: scale(1.05);
+}
+
+.inscription_view h2 {
+  transition: all 0.3s ease;
+}
+
+.inscription_view h2:hover {
+  color: #555;
+  transform: scale(1.02);
+}
