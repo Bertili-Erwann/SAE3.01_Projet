@@ -1,0 +1,44 @@
+/* -------------------- Champs de saisie -------------------- */
+.fenetre-login input[type="email"],
+.fenetre-login input[type="password"],
+.fenetre-login input[type="text"],
+.fenetre-mdp-oublier input[type="email"],
+.fenetre-mdp-oublier-code-envoyer input[type="text"],
+.fenetre-mdp-confirmer_mdp input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+
+/* -------------------- Voir MDP -------------------- */
+
+.toggle-password-log {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.2em;
+    padding: 5px;
+    padding-bottom: 25px;
+}
+
+.login-password-wrapper {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.login-password-wrapper input {
+    margin-bottom: 0;
+}
