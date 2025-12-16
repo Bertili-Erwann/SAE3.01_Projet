@@ -1,0 +1,117 @@
+{% extends "base.html" %} {% block main %}
+<div class="block-inscription">
+  <img
+    src="../static/images/logo_cercle_escrime_blois.png"
+    id="logo-fiche"
+    required
+  />
+  <form
+    role="form"
+    class="form-inscription"
+    method="POST"
+    name="form-inscrip"
+    action="{{ url_for('insert_inscription') }}"
+    enctype="multipart/form-data"
+  >
+    {{ formInscription.hidden_tag() }}
+    <h1>Inscription au cercle</h1>
+    <div class="two-tf">
+      <label for="nom"> 1. Nom complet <span id="obligatoire">*</span> </label>
+      <div
+        {%
+        if
+        formInscription.nom.errors
+        %}class="form-group has-error"
+        {%
+        else
+        %}class="form-group mb-3"
+        {%
+        endif
+        %}
+      >
+        {{ formInscription.nom(size=10, class_="form-control")}} {{
+        formInscription.prenom(size=10, class_="form-control")}}
+      </div>
+    </div>
+    <div class="mot-de-passe base-block two-tf">
+      <label for="mot-de-passe">
+        2. Mot de passe <span id="obligatoire">*</span>
+      </label>
+      <div
+        {%
+        if
+        formInscription.nom.errors
+        %}class="form-group has-error"
+        {%
+        else
+        %}class="form-group mb-3"
+        {%
+        endif
+        %}
+      >
+        {{ formInscription.mot_de_passe(size=10, class_="form-control")}} {{
+        formInscription.conf_mot_de_passe(size=10, class_="form-control")}}
+      </div>
+    </div>
+    <div class="sexe">
+      <label for="sexe"> 3. Sexe <span id="obligatoire">*</span> </label>
+      <div>{{ formInscription.sexe(size=10, class_="form-control")}}</div>
+    </div>
+    <div class="ddn">
+      <label for="date-naissance"
+        >4. Date de naissance <span id="obligatoire">*</span></label
+      >
+      <div>
+        {{ formInscription.date_naissance(size=10, class_="form-control") }}
+      </div>
+    </div>
+    <div class="num base-block">
+      <label for="num">
+        5. Numéro de téléphone <span id="obligatoire">*</span>
+      </label>
+      <div>
+        {{ formInscription.num_tel(size=10, class_="form-control full-space") }}
+      </div>
+    </div>
+    <div class="mail base-block">
+      <label for="mail">
+        6. Adresse email <span id="obligatoire">*</span></label
+      >
+      <div>
+        {{ formInscription.adresse_mail(size=10, class_="form-control
+        full-space") }}
+      </div>
+    </div>
+    <div class="adresse-postale base-block">
+      <label for="adresse-postale">
+        7. Adresse postale <span id="obligatoire">*</span>
+      </label>
+      <div>
+        {{ formInscription.adresse_postale(size=10, class_="form-control
+        full-space") }}
+      </div>
+    </div>
+    <div>
+      <label for="etudiant eleve">
+        8. Êtes-vous étudiant(e)/élève ? <span id="obligatoire">*</span>
+      </label>
+      {% for rep in formInscription.eleve %}
+      <tr>
+        <br />
+        <td>{{ rep(onclick="afficheFichier()") }}</td>
+        <td>{{ rep.label }}</td>
+      </tr>
+      {% endfor %}
+    </div>
+    <div id="fichier" class="hidden">
+      {{ formInscription.justificatif(class_="form-control")}}
+    </div>
+    <div class="btn-wrap">
+      <input type="submit" value="Déposer l'inscription" />
+    </div>
+  </form>
+</div>
+{% endblock %}{% block scripts %}
+<script src="{{ url_for('static', filename='js/justificatif.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+{% endblock %}

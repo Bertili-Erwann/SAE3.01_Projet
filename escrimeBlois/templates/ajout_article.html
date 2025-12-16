@@ -1,0 +1,96 @@
+{% extends "nav_responsable.html" %} {% block section_resp %}
+
+<div class="longbloc"></div>
+
+<div class="container-article">
+    <h1>Ajouter un article</h1>
+
+    <form method="POST" enctype="multipart/form-data" class="article-form">
+
+        <div class="form-group">
+            <label for="titre">Titre de l'article :</label>
+            <input type="text" id="titre" name="titre"
+                class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="theme">Thème de l'article :</label>
+            <select id="theme" name="theme" class="form-control"
+                required>
+                <option value>Sélectionner un thème</option>
+                <option value="résumé">résumé</option>
+                <option value="compétition">compétition</option>
+                <option value="interview">interview</option>
+                <option value="annonces">annonces</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Fichiers (placer dans l'ordre) :</label>
+            <div class="file-upload-area">
+                <div class="drop-zone">
+                    <i class="icon-upload"></i>
+                    <p>Glisser-déposer vos fichiers ici</p>
+                    <input type="file" id="fichiers" name="fichiers"
+                        multiple class="file-input">
+                </div>
+                <button type="button"
+                    class="btn-select-files">Sélectionner des
+                    fichiers</button>
+            </div>
+            <p class="compteur-fichiers">Aucun fichier sélectionné ❌</p>
+            <ul class="liste-fichiers"></ul>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description de l'article :</label>
+            <textarea id="description" name="description"
+                class="form-control textarea-large"
+                placeholder="Écrivez ici la description de l'article..." required></textarea>
+        </div>
+
+        <div class="form-row">
+            <input type="checkbox" id="commentable" name="commentable">
+            <label for="commentable">Activer les commentaires</label>
+        </div>
+
+        <div class="actions">
+            <button type="reset" class=" bouton bouton-annuler">Annuler</button>
+            <button type="submit" class=" bouton bouton-publier">Publier</button>
+        </div>
+
+    </form>
+</div>
+
+<!-- SCRIPT GENERER PAR IA (A CHANGER PLUS TARD) -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const input = document.getElementById("fichiers");
+        const bouton = document.querySelector(".btn-select-files");
+        const compteur = document.querySelector(".compteur-fichiers");
+        const liste = document.querySelector(".liste-fichiers");
+
+        let fichiersAjoutes = [];
+
+        bouton.addEventListener("click", () => input.click());
+
+        input.addEventListener("change", () => {
+            const nouveauxFichiers = Array.from(input.files);
+            fichiersAjoutes = fichiersAjoutes.concat(nouveauxFichiers);
+
+            // Mise à jour du compteur
+            const nb = fichiersAjoutes.length;
+            compteur.textContent = nb === 0 ? "Aucun fichier sélectionné ❌" :
+            nb === 1 ? "1 fichier sélectionné 📁" :`${nb} fichiers sélectionnés 📂`;
+
+            // Liste des fichiers
+            liste.innerHTML = "";
+            fichiersAjoutes.forEach(fichier => {
+                const li = document.createElement("li");
+                li.innerHTML = `<i class="icon-upload">📄</i> <span>${fichier.name}</span>`;
+                liste.appendChild(li);
+            });
+        });
+    });
+</script>
+{% endblock %}

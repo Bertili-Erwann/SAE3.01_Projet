@@ -1,0 +1,202 @@
+/* ==================== Page d'accueil - Index.html ==================== */
+
+/* -------------------- Main & Header -------------------- */
+#main {
+  margin-top: 0;
+  position: relative;
+}
+
+.header {
+  background-image: url("../images/haut_page_escrime.png");
+  width: 100%;
+  height: 100vh;
+  min-height: 320px;
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: white;
+  margin-top: 0;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.header-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 1rem;
+}
+
+.header-content h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 4rem);
+  /* taille responsive */
+  font-weight: 700;
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.835);
+}
+
+.header img {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 1rem;
+}
+
+.main-content {
+  background-color: var(--cold);
+  text-align: center;
+}
+
+.main-content > h1 {
+  letter-spacing: 5px;
+  font-weight: 600;
+}
+
+/* -------------------- Carousel -------------------- */
+.carousel-row {
+  position: relative;
+}
+
+.articles {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 0 3rem;
+}
+
+.articles > article {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+  background-color: #c7c3f4;
+  padding: 2em;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px;
+  padding-top: 15px;
+  margin-bottom: 50px;
+}
+
+.articles img {
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 200px;
+  max-height: 200px;
+}
+
+.articles h3 {
+  font-weight: 650;
+  font-size: 20px;
+}
+
+.articles::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.carousel-btn.prev {
+  left: 0.5rem;
+}
+
+.carousel-btn.next {
+  right: 0.5rem;
+}
+
+/* -------------------- Inscription -------------------- */
+.inscription {
+  display: flex;
+  background-color: var(--cold);
+  margin: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 40px;
+  width: 60%;
+  border-radius: 10px;
+  color: #fff;
+  -webkit-text-stroke: 1px #ffffff;
+  text-shadow: 0 1px 0 #000, 1px 0 0 #000, -1px 0 0 #000, 0 -1px 0 #000,
+    1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000,
+    0 2px 0 #000, 2px 0 0 #000, -2px 0 0 #000, 0 -2px 0 #000, 2px 2px 0 #000,
+    -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
+}
+
+.inscription > img {
+  width: 40vh;
+  height: 30vh;
+  margin: -40px;
+}
+
+.inscription-wrap {
+  margin-top: 50px;
+}
+
+.inscription-wrap h1 {
+  margin-top: -5px;
+  margin-left: 50px;
+}
+
+.inscription-wrap a {
+  text-decoration: none;
+  color: rgb(255, 130, 130);
+  -webkit-text-stroke: 1px rgb(255, 130, 130);
+  letter-spacing: 2px;
+}
+
+.inscription-wrap img {
+  width: 50px;
+  height: 70px;
+}
+
+/* -------------------- Partenaires -------------------- */
+.partenaire {
+  text-align: center;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+#partenaire-content {
+  display: flex;
+  justify-content: center;
+}
+
+#partenaire-content section {
+  margin-inline: 10%;
+}
+
+#partenaire-content p {
+  font-size: large;
+  padding: 5%;
+}
+
+.partenaire img {
+  width: 250px;
+  height: 200px;
+}

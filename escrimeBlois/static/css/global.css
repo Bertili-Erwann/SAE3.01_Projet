@@ -1,0 +1,14 @@
+/* ==================== Styles Globaux ==================== */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.hidden {
+  display: none;
+}
