@@ -273,7 +273,7 @@ body {
   margin-block-start: 25%;
 }
 
-#btn-entrant{
+#btn-entrant {
   position: fixed;
   top: 55px;
   right: 0;
@@ -281,7 +281,6 @@ body {
   width: fit-content;
   max-height: calc(100vh - 50px);
   overflow-y: auto;
-
 }
 
 /* -------------------- Index.html - Partenaires --------------------*/
@@ -1183,4 +1182,36 @@ table {
 
 #form_bouton_rep {
   background-color: #6691ff;
+}
+
+/* ==================== articles.html  ====================*/
+.ctn-list-art {
+  margin: 50px;
+  width: 100%;
+  min-height: 80vh;
+}
+
+.ctn-list-art a {
+  text-decoration: none;
+  color: black;
+}
+.art {
+  margin: 15px;  
+  background-color: #b8cee0b4;
+  border-radius: 25px;
+  padding: 5px; 
+  width: 75%;
+}
+
+.art:hover {
+  background-color: #d1eafd;
+}
+
+.ctn-art > h1 {
+  text-align: center;
+}
+.date-art{
+  font-weight: 300;
+  font-style: italic;
+  color: rgb(80, 80, 80);
 }

@@ -90,12 +90,19 @@ class FormInscription(FlaskForm):
 
 
 class FormRechercheArticle(FlaskForm):
+    mois = [
+        'Janvier', 'Février', "Mars", 'Avril', 'Mai', 'Juin', 'Juillet',
+        'Août', 'Septembre', 'Octobre', 'Novembre', 'Decembre'
+    ]
     choix_mois = SelectField("Sélectionner un mois",
                              validators=[DataRequired()],
                              description="Sélectionner un mois",
                              render_kw={"placeholder": "Choisir un mois"},
-                             choices=[('Janvier'), ('Février'), ("Mars"),
-                                      ('Avril'), ('Mai'), ('Juin'),
-                                      ('Juillet'), ('Août'), ('Septembre'),
-                                      ('Octobre'), ('Novembre'), ('Decembre')])
+                             choices=mois)
     recherche = StringField("Rechercher", validators=[DataRequired()])
+
+    def mois_to_chiffre(self, m: str):
+        for i in range(len(self.mois)):
+            if m == self.mois[i]:
+                return i + 1
+        return -1
