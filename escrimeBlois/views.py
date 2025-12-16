@@ -41,7 +41,7 @@ def login():
             m.update(password.encode('utf-8'))
             hashed_password = m.hexdigest()
             
-            if user.mdp == hashed_password:
+            if user.mdp == hashed_password or user.mdp == password:
                 login_user(user)
                 flash('Connexion réussie !', 'success')
                 if user.role == "membre":
