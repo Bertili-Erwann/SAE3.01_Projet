@@ -81,7 +81,7 @@ demande_inscriptions:
     adresse_mail: "sophie.bernard@example.com"
     adresse_postale: "25 Rue des Roses, Blois"
     eleve: true
-    justificatif: "certificat_scolarite_sophie.pdf"
+    justificatif: null
   - id_inscription: 2
     nom: "Petit"
     prenom: "Lucas"
@@ -92,7 +92,7 @@ demande_inscriptions:
     adresse_mail: "lucas.petit@example.com"
     adresse_postale: "48 Avenue de la Loire, Blois"
     eleve: true
-    justificatif: "certificat_scolarite_lucas.pdf"
+    justificatif: null
   - id_inscription: 3
     nom: "Moreau"
     prenom: "Camille"
