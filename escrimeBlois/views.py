@@ -61,7 +61,3 @@ def supprimer_membre(id_personne):
                 db.session.rollback()
                 flash('Erreur lors de la suppression', 'error')
         return redirect(url_for('admin_miseajour_membres'))
-
-@app.route('/historique/')
-def historique():
-        return render_template('historique.html')
