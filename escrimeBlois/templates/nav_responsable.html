@@ -1,11 +1,13 @@
-{% extends "gestion_formulaire.html" %} {% block nav_resp %}
+{% extends "base.html" %}
+
+{% block main %}
 <p id="blank_space"></p>
 <nav>
     <div id="resp_navbar">
         <ul id="nav_responsable">
             <!-- SECTION GESTION FORMULAIRE -->
             <li id="rnav_gestion_form">
-                <a class="nav-link" href="">Gestion formulaire</a>
+                <a class="nav-link" href="{{ url_for('gest_form') }}">Gestion formulaire</a>
             </li>
 
             <!-- SECTION AJOUTER ARTICLE -->
@@ -15,7 +17,7 @@
 
             <!-- SECTION CREATION EVENEMENTS  -->
             <li id="rnav_crea_event">
-                <a class="nav-link" href="">Création évènements</a>
+                <a class="nav-link" href="{{ url_for('create_event') }}">Création événements</a>
             </li>
 
             <!-- SECTION INFORMATIONS PERSONNELLES  -->
@@ -30,9 +32,12 @@
 
             <!-- SECTION EVENEMENTS INSCRITS  -->
             <li id="rnav_event_inscrits">
-                <a class="nav-link" href="">Évènements inscrits</a>
+                <a class="nav-link" href="">Événements inscrits</a>
             </li>
         </ul>
     </div>
 </nav>
+<section id="section_resp" role="section_responsable">
+    {% block section_resp %}{% endblock %}
+</section>
 {% endblock %}
