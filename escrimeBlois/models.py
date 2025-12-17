@@ -243,7 +243,6 @@ class Inscription(db.Model):
     email = db.Column(db.String(64))
     date_naissance = db.Column(db.Date)
     sexe = db.Column(db.String(1))
-    categorie = db.Column(db.String(30))
     justificatif = db.Column(db.String(255))
     
     # Relations

@@ -89,5 +89,4 @@ class FormInscriptionEvent(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     date_naissance = DateField('Date de naissance', validators=[DataRequired()])
     sexe = RadioField('Sexe', choices=[('H', 'Homme'), ('F', 'Femme')], validators=[DataRequired()])
-    categorie = StringField('Catégorie', validators=[DataRequired()])
     justificatif = FileField('Justificatif de catégorie')

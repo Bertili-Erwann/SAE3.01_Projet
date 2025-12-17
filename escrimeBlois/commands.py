@@ -76,7 +76,6 @@ def loaddb(filename: str) -> None:
                                   email=insc.get('email'),
                                   date_naissance=date_naissance,
                                   sexe=insc.get('sexe'),
-                                  categorie=insc.get('categorie'),
                                   justificatif=insc.get('justificatif'))
         db.session.add(inscription)
         db.session.commit()

@@ -439,10 +439,6 @@ def inscription_event(id_evenement):
     # Cas visiteur
     form = FormInscriptionEvent()
     
-    # Pré-remplir la catégorie avec celle de l'événement
-    if request.method == 'GET' and evenement.categorie:
-        form.categorie.data = evenement.categorie
-
     if form.validate_on_submit():
         filename = None
         if form.justificatif.data:
@@ -457,7 +453,6 @@ def inscription_event(id_evenement):
             email=form.email.data,
             date_naissance=form.date_naissance.data,
             sexe=form.sexe.data,
-            categorie=form.categorie.data, # Utilise la valeur du formulaire (qui sera celle pré-remplie)
             justificatif=filename
         )
         db.session.add(inscription)
