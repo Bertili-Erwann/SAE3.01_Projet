@@ -4,7 +4,7 @@ from .app import app, db
 from .models import Article
 from datetime import date
 from escrimeBlois.models import Formulaire
-from escrimeBlois.form import FormInscription, FormRechercheArticle
+from escrimeBlois.form import FormInscription, FormRechercheArticle, FormCommentaire
 import os
 
 
@@ -155,3 +155,20 @@ def ajouter_article():
         return redirect(url_for('ajouter_article'))
 
     return render_template('ajout_article.html')
+
+
+@app.route('/article/<ida>/view')
+def view_article(ida):
+    art = Article.query.get(ida)
+    form = FormCommentaire()
+    return render_template('article_view.html', article=art, formCom=form)
+
+
+@app.route('/article/<ida>/comment', methods=["POST"])
+def insert_commentaire(ida):
+    art = Article.query.get(ida)
+    form = FormCommentaire()
+    if form.is_submitted():
+        form.envoyer_commentaire(ida)
+        return redirect(url_for('view_article', ida=ida))
+    return render_template('article_view.html', article=art, formCom=form)

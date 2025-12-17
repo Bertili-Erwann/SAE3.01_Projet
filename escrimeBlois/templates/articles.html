@@ -4,8 +4,8 @@
   <div class="list-art ctn-art">
     {% if articles is defined and articles|length > 0 %}
     <h1>Les articles pour "{{ recherche }}"</h1>
-    {% for ar in articles%}
-    <a href="#">
+    {% for ar in articles %}
+    <a href="{{ url_for('view_article', ida=ar.id_article) }}">
     <div id="article-{{ ar.id_article }}" class="art">
       <h2 class="titre-art">{{ ar.titre }} </h2>
       <p class="date-art">{{ ar.date_publication}} </p>

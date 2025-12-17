@@ -540,3 +540,14 @@ class Gerer(db.Model):
                 f"La personne {value} doit être de type 'admin' vous avez le type {pers.role}"
             )
         return value
+
+
+class Commentaire(db.Model):
+    id_commentaire = db.Column(db.Integer, primary_key=True)
+    id_article = db.Column(db.Integer, db.ForeignKey("article.id_article"))
+    nom_aut = db.Column(db.String(30))
+    email_aut = db.Column(db.String(60))
+    message_com = db.Column(db.String(280))
+    article = db.relationship("Article",
+                              backref=db.backref("commentaires",
+                                                 lazy="dynamic"))

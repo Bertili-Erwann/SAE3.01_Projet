@@ -1,5 +1,5 @@
-from wtforms import Form, StringField, PasswordField, RadioField, DateField, FileField, SelectField
-from .models import Demande_inscription
+from wtforms import Form, StringField, PasswordField, RadioField, DateField, FileField, SelectField, TextAreaField
+from .models import Demande_inscription, Commentaire
 from wtforms.validators import DataRequired
 from flask_wtf import FlaskForm
 from hashlib import sha256
@@ -104,3 +104,33 @@ class FormRechercheArticle(FlaskForm):
             if m == self.mois[i]:
                 return i + 1
         return -1
+
+
+class FormCommentaire(FlaskForm):
+    nom_aut = StringField("Nom : ", validators=[DataRequired()])
+    email_aut = StringField("Email : ", validators=[DataRequired()])
+    message = TextAreaField("Message : ", validators=[DataRequired()])
+
+    def max_id() -> int:
+        max_id = db.session.query(func.max(
+            Commentaire.id_commentaire)).scalar()
+        return (int(max_id) + 1) if max_id is not None else 1
+
+    def format_mail(self) -> ValidatedEmail:
+        try:
+            return validate_email(self.email_aut.data,
+                                  check_deliverability=False)
+        except EmailNotValidError as e:
+            print(str(e))
+
+    def envoyer_commentaire(self, ida):
+        self.format_mail()
+        id = FormCommentaire.max_id()
+        mail = self.format_mail()
+        db.session.add(
+            Commentaire(id_commentaire=id,
+                        nom_aut=self.nom_aut.data,
+                        email_aut=mail.normalized,
+                        id_article=ida,
+                        message_com=self.message.data))
+        db.session.commit()
