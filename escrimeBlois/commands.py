@@ -38,7 +38,7 @@ def loaddb(filename: str) -> None:
                             nom_personne=pers['nom_personne'],
                             prenom_personne=pers['prenom_personne'],
                             email_personne=pers['email_personne'],
-                            numero_telephone=pers.get('numero_telephone'),
+                            telephone=pers.get('telephone'),
                             sexe=pers.get('sexe'),
                             adresse=pers.get('adresse'),
                             date_naissance=date_naissance,

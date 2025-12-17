@@ -1,4 +1,4 @@
-/* ==================== ADMIN ==================== */
+/* ==================== ADMIN - Mise à jour membres ==================== */
 #blank_space {
   padding-top: 60px;
 }
@@ -6,29 +6,72 @@
 #banniere_responsable,
 #banniere_membre {
   text-align: center;
-  margin: 20px 0;
+  margin: 20px 15px;
+  padding: 10px;
   border-radius: 2px;
   background-color: #797979;
-  margin-left: 15px;
-  margin-right: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+#banniere_responsable p,
+#banniere_membre p {
+  margin: 0;
+  font-weight: bold;
+  font-size: 18px;
+  color: #fff;
+}
+
+#banniere_responsable + h1,
+#banniere_membre + h1 {
+  margin: 20px auto;
+}
+
+#banniere_responsable ~ .limiter,
+#banniere_membre ~ .limiter {
+  max-width: 1000px !important;
+  margin: 10px auto !important;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  padding: 0 15px !important;
+  width: auto !important;
+}
+
+#table_form {
+  margin: 0;
+  padding: 0;
+}
+
 #table_form table {
-  min-width: 600px; /* Ajustez selon le contenu minimal */
+  min-width: 600px;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+#table_personne {
+  background: none !important;
+}
+
+#table_personne td {
+  padding: 0 !important;
 }
 
 #personne {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 3px;
-  border-width: 2px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  min-width: 500px;
-  flex-wrap: nowrap;
+  padding: 20px;
+  margin: 10px auto;
+  max-width: 600px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#personne:hover {
+  background-color: #e8e8e8;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 #personne_infos {
@@ -45,27 +88,23 @@
 }
 
 #personne_options {
-  display: flex;
   gap: 10px;
-  flex-shrink: 0;
-  white-space: nowrap;
+  margin: 10px;
 }
 
 #membre_modifier,
 #membre_supprimer,
 .membre_supprimer {
+  background-color: #949494;
+  color: white;
+  padding: 8px 20px;
+  border: none;
   border-radius: 20px;
-  padding: 5px 15px;
-  border-style: solid;
-  border-color: #000;
+  cursor: pointer;
   font-size: 14px;
-  white-space: nowrap;
   transition: all 0.3s;
 }
 
-#membre_modifier {
-  background-color: #949494;
-}
 
 #membre_modifier:hover {
   background-color: #d3d3d3;
@@ -85,4 +124,44 @@
 .wrap-table100_admin {
   overflow-x: auto;
   white-space: nowrap;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+.wrap-table100_admin .table100-body {
+  max-height: none;
+  overflow: visible;
+}
+
+#container_table_form {
+  padding: 0 !important;
+  min-height: auto !important;
+  display: block !important;
+}
+
+/* Neutraliser complètement les styles de historique.css */
+#banniere_responsable ~ .limiter .container-table100,
+#banniere_membre ~ .limiter .container-table100 {
+  min-height: auto !important;
+  padding-top: 0 !important;
+  margin: 0 !important;
+}
+
+#titre_maj_membre{
+  text-align: center;
+  color: #333;
+  font-size: 32px;
+  margin: 30px 0;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+#personne_non_trouve{
+  text-align: center;
+  color: #333;
+  font-size: 32px;
+  margin: 30px 0;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
