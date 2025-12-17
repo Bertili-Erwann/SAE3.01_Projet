@@ -162,18 +162,20 @@ class Evenement(db.Model):
         categorie (str): Catégorie de l'événement.
         lieu (str): Lieu de l'événement.
         description (str): Description de l'événement.
+        sexe (str): Sexe requis (pour compétitions).
         niveau (str): Niveau requis (pour compétitions).
         discipline (str): Discipline (pour compétitions).
         cooperative (str): Partenaire coopératif (pour compétitions).
         type_evenement (str): Type ('competition' ou autre).
     """
     id_evenement = db.Column(db.Integer, primary_key=True)
+    nom = db.Column(db.String(64))
     date = db.Column(db.Date)
     heure = db.Column(db.Integer)
     categorie = db.Column(db.String(30))
     lieu = db.Column(db.String(64))
     description = db.Column(db.String(255))
-
+    sexe = db.Column(db.String(1))
     niveau = db.Column(db.String(10))
     discipline = db.Column(db.String(60))
     cooperative = db.Column(db.String(60))
