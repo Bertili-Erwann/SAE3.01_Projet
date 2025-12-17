@@ -16,6 +16,7 @@ from escrimeBlois.models import (
 from escrimeBlois.form import FormInscription, FormInscriptionEvent, FormFormulaire
 import os
 
+
 # ======================================== GESTION FOOTER (Accessible partout) ========================================
 @app.route('/insert_formulaire', methods=['POST'])
 def insert_formulaire():
@@ -85,6 +86,11 @@ def logout():
     return redirect(url_for("login"))
 
 
+@app.route("/logout/mdp_oublier")
+def mdp_oublier_etape_1():
+    return render_template("mdp_oublier_etape_1.html", form=FormFormulaire())
+
+
 @app.route("/inscription/", )
 def inscription():
     form = FormInscription(request.form)
@@ -106,7 +112,8 @@ def insert_inscription():
 
 @app.route("/mdp_oublier_envoyer_code/")
 def mdp_oublier_envoyer_code():
-    return render_template("mdp_oublier_envoyer_code.html", form=FormFormulaire())
+    return render_template("mdp_oublier_envoyer_code.html",
+                           form=FormFormulaire())
 
 
 @app.route("/mdp_oublier_code/")
@@ -127,7 +134,8 @@ def mdp_oublier_confirmer_mdp():
         # Ici, tu peux ajouter la logique pour mettre à jour le mot de passe en base
         return redirect(url_for("login"))  # Ou une autre page
 
-    return render_template("mdp_oublier_confirmer_mdp.html", form=FormFormulaire())
+    return render_template("mdp_oublier_confirmer_mdp.html",
+                           form=FormFormulaire())
 
 
 @app.route('/evenement/résultats')
