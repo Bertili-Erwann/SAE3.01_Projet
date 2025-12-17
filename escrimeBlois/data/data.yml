@@ -40,7 +40,7 @@ personnes:
     niveau: "Débutant"
   - id_personne: 4
     mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
-    role: "personne"
+    role: "admin"
     nom_personne: "Durand"
     prenom_personne: "Alice"
     email_personne: "alice.durand@example.com"
@@ -54,25 +54,53 @@ personnes:
 
 evenements:
   - id_evenement: 1
+    nom: "Compétition Régionale Épée"
     date: "2025-10-25"
     heure: 14
-    type_evenement: "competition"
     categorie: "Régionale"
     lieu: "Salle des sports Blois"
     description: "Compétition régionale d'escrime"
+    sexe: "M"
     niveau: "Régional"
     discipline: "Épée"
     cooperative: "Individuel"
+    type_evenement: "competition"
   - id_evenement: 2
+    nom: "Session d'Inscription"
     date: "2025-10-26"
     heure: 10
-    type_evenement: "inscription"
     categorie: "Administrative"
     lieu: "Bureau du club"
     description: "Session d'inscription pour la saison"
+    sexe: null
     niveau: null
     discipline: null
     cooperative: null
+    type_evenement: "inscription"
+  - id_evenement: 3
+    nom: "Compétition Club Fleuret"
+    date: "2025-11-05"
+    heure: 16
+    categorie: "Club"
+    lieu: "Salle d'escrime Blois"
+    description: "Compétition interne au club de fleuret"
+    sexe: "M"
+    niveau: "Club"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+    type_evenement: "competition"
+  - id_evenement: 4
+    nom: "Entraînement Hebdomadaire"
+    date: "2025-11-10"
+    heure: 18
+    categorie: "Entraînement"
+    lieu: "Salle d'escrime Blois"
+    description: "Séance d'entraînement hebdomadaire"
+    sexe: null
+    niveau: null
+    discipline: null
+    cooperative: null
+    type_evenement: "entrainement"
 
 demande_inscriptions:
   - id_inscription: 1
@@ -111,10 +139,38 @@ inscriptions:
     id_evenement: 1
     nom: "Lemoine"
     prenom: "Pierre"
+    email: "pierre.lemoine@example.com"
+    sexe: "M"
+    date_naissance: "2000-03-20"
+    justificatif: null
+    id_personne: 3
   - id_inscription: 2
     id_evenement: 2
     nom: "Martin"
     prenom: "Marie"
+    email: "marie.martin@example.com"
+    sexe: "F"
+    date_naissance: "1985-05-15"
+    justificatif: null
+    id_personne: 2
+  - id_inscription: 3
+    id_evenement: 3
+    nom: "Lemoine"
+    prenom: "Pierre"
+    email: "pierre.lemoine@example.com"
+    sexe: "M"
+    date_naissance: "2000-03-20"
+    justificatif: null
+    id_personne: 3
+  - id_inscription: 4
+    id_evenement: 4
+    nom: "Lemoine"
+    prenom: "Pierre"
+    email: "pierre.lemoine@example.com"
+    sexe: "M"
+    date_naissance: "2000-03-20"
+    justificatif: null
+    id_personne: 3
 
 classers:
   - id_competition: 1  

@@ -52,11 +52,13 @@ def loaddb(filename: str) -> None:
     for ev in data["evenements"]:
         date_evenement = datetime.date.fromisoformat(ev['date'])
         evenement = Evenement(id_evenement=ev['id_evenement'],
+                              nom=ev.get('nom'),
                               date=date_evenement,
                               heure=ev['heure'],
                               categorie=ev.get('categorie'),
                               lieu=ev['lieu'],
                               description=ev['description'],
+                              sexe=ev.get('sexe'),
                               niveau=ev.get('niveau'),
                               discipline=ev.get('discipline'),
                               cooperative=ev.get('cooperative'),
@@ -65,8 +67,27 @@ def loaddb(filename: str) -> None:
         db.session.commit()
 
     for insc in data.get("inscriptions", []):
-        inscription = Inscription(id_inscription=insc['id_inscription'],
-                                  id_evenement=insc['id_evenement'])
+        date_naissance_insc = None
+        if insc.get('date_naissance'):
+            date_naissance_insc = datetime.date.fromisoformat(insc['date_naissance'])
+        
+        # Préparer les valeurs sans justificatif
+        inscription_args = {
+            'id_inscription': insc['id_inscription'],
+            'id_evenement': insc['id_evenement'],
+            'nom': insc.get('nom'),
+            'prenom': insc.get('prenom'),
+            'email': insc.get('email'),
+            'sexe': insc.get('sexe'),
+            'date_naissance': date_naissance_insc,
+            'id_personne': insc.get('id_personne')
+        }
+        
+        # Ajouter justificatif seulement s'il existe dans les yml
+        if 'justificatif' in insc and insc['justificatif'] is not None:
+            inscription_args['justificatif'] = insc['justificatif']
+        
+        inscription = Inscription(**inscription_args)
         db.session.add(inscription)
         db.session.commit()
 

@@ -181,6 +181,7 @@ class Evenement(db.Model):
     cooperative = db.Column(db.String(60))
 
     type_evenement = db.Column(db.String(64))
+    inscriptions = db.relationship("Inscription", backref=db.backref("evenement"))
 
     @validates('type_evenement')
     def validate_attributs_evenement(self, key: str, value: str) -> str:
@@ -235,15 +236,18 @@ class Inscription(db.Model):
         id_evenement (int): Clé étrangère vers Evenement.
         nom (str): Nom de la personne.
         prenom (str): Prénom de la personne.
+        id_personne (int): Clé étrangère vers Personne (nullable, pour indiquer si c'est un membre inscrit).
     """
     id_inscription = db.Column(db.Integer, primary_key=True)
     id_evenement = db.Column(db.Integer,
                              db.ForeignKey("evenement.id_evenement"))
     nom = db.Column(db.String(64))
     prenom = db.Column(db.String(64))
-    
-    # Relations
-    evenement = db.relationship("Evenement", backref=db.backref("inscriptions", lazy="dynamic"))
+    email = db.Column(db.String(64))
+    sexe = db.Column(db.String(1))
+    date_naissance = db.Column(db.Date)
+    justificatif = db.Column(File.as_mutable(JSON))
+    id_personne = db.Column(db.Integer, db.ForeignKey("personne.id_personne"), nullable=True)
 
     def __repr__(self) -> str:
         """

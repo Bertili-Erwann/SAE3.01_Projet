@@ -223,9 +223,7 @@ def admin_comp():
         
         flash('Compétition créée avec succès !', 'success')
         return redirect(url_for('admin_comp'))
-    
     return render_template('admin_crea_comp.html')
-
 
 @app.route('/historique/')
 def historique():
@@ -296,12 +294,29 @@ def ajouter_article():
 
     return render_template('ajout_article.html')
 
-@app.route('/infos_persos/')
+@app.route('/membre/')
+@app.route('/membre/infos_persos/')
 @login_required
 def infos_persos():
     if current_user.role != 'membre':
         return redirect(url_for('index'))
     return render_template('infos_persos_espMembre.html', personne=current_user)
+
+@app.route('/membre/event_inscrits/')
+@login_required
+def event_inscrits():
+    if current_user.role != 'membre':
+        return redirect(url_for('index'))
+    # Récupérer les inscriptions du membre
+    inscriptions = Inscription.query.filter_by(id_personne=current_user.id_personne).all()
+    evenements_inscrits = [insc.evenement for insc in inscriptions]
+    return render_template('event_inscrits.html', evenements=evenements_inscrits)
+
+@app.route('/consult_event/<int:id_event>/', methods=['GET', 'POST'])
+@login_required
+def consult_event(id_event):
+    event = Evenement.query.get_or_404(id_event)
+    return render_template('consult_event.html', event=event)
 
 @app.route('/change_password', methods=['POST'])
 @login_required
