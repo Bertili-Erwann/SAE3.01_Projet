@@ -1,29 +1,32 @@
 /* ==================== Navbar Membres ==================== */
 #nav_membre{
-display: flex;
-flex-wrap: nowrap;
-background-color:#DEDEDE;
-float: none;
-margin: 0 auto;
-display: block;
-text-align: center;
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+  background-color: #cacaca;
 }
-
 
 #nav_membre > li{
-list-style-type: none;
-flex-basis: 15%;
-margin-left: 10%;
-margin-right: 10%;
-margin-top: 10px;
-margin-bottom: 10px;
-border: 5px;
-display: inline-block;
-float: none;
+  flex-basis: 20%;
+  margin: 0 10px;
 }
 
-#nav_membre > li:hover{
-font-weight: bold;
+#nav_membre > li a {
+  text-decoration: none;
+  color: #333;
+  padding: 12px 20px;
+  display: block;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+#nav_membre > li:hover a {
+  font-weight: bold;
+  color: #357abd;
+  background-color: rgba(74, 144, 226, 0.1);
 }
 
 /* ==================== Informations Personnelles ==================== */

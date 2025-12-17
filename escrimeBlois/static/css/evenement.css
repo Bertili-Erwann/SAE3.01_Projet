@@ -1,48 +1,42 @@
 /* ==================== Page des evenements ==================== */
 /* -------------------- Navbar -------------------- */
 #navbar_two{
- background-color: #cacaca;
- padding: 10px 0;
- box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+  background-color: #cacaca;
+  padding: 2px 0;
+  margin-bottom: 10px;
 }
-
 
 #nav_responsable{
- display: flex;
- flex-wrap: nowrap;
- justify-content: center;
- list-style: none;
- margin: 0;
- padding: 0;
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-
 
 #nav_responsable > li{
- flex-basis: 20%;
- margin: 0 10px;
+  flex-basis: 20%;
+  margin: 0 10px;
 }
 
-
-#nav_responsable > li:hover{
- font-weight: bold;
+#nav_responsable > li a {
+  text-decoration: none;
+  color: #333;
+  padding: 12px 20px;
+  display: block;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-align: center;
 }
 
+#nav_responsable > li:hover a {
+  font-weight: bold;
+  color: #357abd;
+  background-color: rgba(74, 144, 226, 0.1);
+}
 
 #blank_space{
- padding:25px;
-}
-
-
-#nav_responsable .nav-link {
- text-decoration: none;
- color: #333;
- text-align: center;
- margin-right: 20px;
-}
-
-
-#nav_responsable .nav-link:hover {
- color: #000;
+  padding:25px;
 }
 
 

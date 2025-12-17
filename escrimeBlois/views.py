@@ -1,3 +1,4 @@
+from fileinput import filename
 from flask import redirect, render_template, request, url_for, flash
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.security import generate_password_hash
@@ -249,6 +250,7 @@ def inscription_event(id_evenement):
 # -------------------- Gestion des inscriptions --------------------
 @app.route("/admin/")
 @app.route("/admin/gestion_inscription/club")
+@login_required
 def admin_inscription_club():
     demandes = Demande_inscription.query.all()
     return render_template("admin_gestion_inscription_club.html", demandes=demandes)
@@ -257,6 +259,7 @@ def admin_inscription_club():
 @app.route(
     "/admin/gestion_inscription/club/view/<int:id_inscription>", methods=["GET", "POST"]
 )
+@login_required
 def admin_inscription_club_view(id_inscription):
     demande = Demande_inscription.query.get_or_404(id_inscription)
 
@@ -294,6 +297,7 @@ def admin_inscription_club_view(id_inscription):
 
 
 @app.route("/admin/gestion_inscription/evenement")
+@login_required
 def admin_inscription_evenement():
     # Récupérer toutes les inscriptions
     inscriptions = Inscription.query.all()
@@ -306,6 +310,7 @@ def admin_inscription_evenement():
     "/admin/gestion_inscription/evenement/view/<int:id_inscription>",
     methods=["GET", "POST"],
 )
+@login_required
 def admin_inscription_evenement_view(id_inscription):
     inscription = Inscription.query.get_or_404(id_inscription)
 
@@ -329,6 +334,7 @@ def admin_inscription_evenement_view(id_inscription):
 
 
 @app.route("/admin/miseajour/membres")
+@login_required
 def admin_miseajour_membres():
     les_responsables = []
     les_membres = []
@@ -346,6 +352,7 @@ def admin_miseajour_membres():
 
 
 @app.route("/admin/supprimer/membre/<int:id_personne>", methods=["POST"])
+@login_required
 def supprimer_membre(id_personne):
     try:
         personne = Personne.query.get(id_personne)
@@ -366,6 +373,7 @@ def supprimer_membre(id_personne):
 # -------------------- Création des compétition --------------------
 
 @app.route('/admin/creation_competition', methods=['GET', 'POST'])
+@login_required
 def admin_comp():
     # Récupération des informations du formulaire
     if request.method == 'POST':
@@ -414,11 +422,13 @@ def admin_comp():
 # -------------------- Gestion formulaires --------------------
 @app.route("/responsable/")
 @app.route("/responsable/gestion_formulaire/")
+@login_required
 def gest_form():
     lesFormulaires = Formulaire.query.all()
     return render_template("gestion_formulaire.html", formulaires=lesFormulaires)
 
 @app.route("/responsable/consultation_formulaire/<id_formulaire>/")
+@login_required
 def consult_form(id_formulaire):
     unForm = Formulaire.query.get(id_formulaire)
     return render_template("consultation_form.html", selectedFormulaire=unForm)
@@ -428,6 +438,7 @@ def consult_form(id_formulaire):
 
 
 @app.route("/responsable/ajouter_article/", methods=["GET", "POST"])
+@login_required
 def ajouter_article():
     if request.method == "POST":
         # Récupération des champs du formulaire
@@ -464,8 +475,8 @@ def ajouter_article():
                 
                 # Création de l'image dans la BD
                 image = Image(
-                    nom_image=filename[:15], # Tronquer si nécessaire car String(15)
-                    url_image=filename[:60]  # Tronquer si nécessaire car String(60)
+                    nom_image=fichier.filename[:15], # Tronquer si nécessaire car String(15)
+                    url_image=fichier.filename[:60]  # Tronquer si nécessaire car String(60)
                 )
                 db.session.add(image)
                 db.session.commit()
@@ -489,6 +500,7 @@ def ajouter_article():
 
 # -------------------- Création d'un evenement --------------------
 @app.route("/responsable/creer_evenement/", methods=['GET', 'POST'])
+@login_required
 def create_event():
     # Récupération des informations du formulaire
     if request.method == 'POST':
