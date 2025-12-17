@@ -44,7 +44,6 @@ def login():
             
             if user.mdp == hashed_password or user.mdp == password:
                 login_user(user)
-                flash('Connexion réussie !', 'success')
                 return redirect(url_for('index')) 
             else:
                 flash('Mot de passe incorrect.', 'error')
@@ -56,7 +55,7 @@ def login():
 @app.route('/logout/')
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('index'))
 
 @app.route('/mdp_oublier_envoyer_code/')
 def mdp_oublier_envoyer_code():
