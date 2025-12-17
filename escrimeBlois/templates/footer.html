@@ -16,17 +16,27 @@
     />
   </head>
   <body>
-    <h4 id="foot_title">Des questions ou des remarques ? <strong>Contactez-nous :</strong></h3>
+    <h4 id="foot_title">Des questions ou des remarques ? <strong>Contactez-nous :</strong></h4>
     <section id="foot_section_1">
         <section id="foot_section_2">
-            <input type="text" id="name_formulaire" name="name_formulaire" placeholder="Nom">
-            <input type="email" id="email_formulaire" name="email_formulaire" placeholder="Email">  
-            <textarea id="object_formulaire" name="object_formulaire" placeholder="Objet (80 caractères maximum)" maxlength="80"></textarea>
-            <textarea id="message_formulaire" name="message_formulaire" placeholder="Message (1200 caractères maximum)" maxlength="1200"></textarea>
-            <button type="button" id="foot_bouton_robot">I'm not a robot.</button>
-            <button type="button" id="foot_bouton_envoi"><img src="{{ url_for('static', filename='images/logo_envoi.png') }}" alt="Icône envoi">Envoyer</button>
-            <img src="{{ url_for('static', filename='images/logo_cercle_escrime_blois.png') }}" id="foot_logo_CEB" alt="Logo du Cercle d'Escrime de Blois" >
+          <form method="post" action="{{url_for('insert_formulaire')}}" >
+            {{ form.hidden_tag() }}
+            <div class="form-row-footer">
+              {{ form.nom(placeholder="Nom", class_="form-control")}}
+              {{ form.email(placeholder="Email", class_="form-control")}}
+            </div>
+            {{ form.objet(placeholder="Objet (80 caractères maximum)", class_="form-control", rows="3")}}
+            {{ form.message(placeholder="Message (1200 caractères maximum)", class_="form-control", rows="8")}}
+            <div class="form-row-footer">
+              <button type="button" id="foot_bouton_robot">I'm not a robot.</button>
+              <button type="submit" id="foot_bouton_envoi">
+                <img src="{{ url_for('static', filename='images/logo_envoi.png') }}" alt="Icône envoi">
+                Envoyer
+              </button>
+            </div>
+            <img src="{{ url_for('static', filename='images/logo_cercle_escrime_blois.png') }}" id="foot_logo_CEB" alt="Logo du Cercle d'Escrime de Blois">
             <p id="foot_last_line">Copyright© 2025</p>
+          </form>
         </section>
         <section id="foot_section_2_bis">
             <div id="foot_div_1">

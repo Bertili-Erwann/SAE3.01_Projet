@@ -15,12 +15,19 @@
 #foot_section_1 {
   display: flex;
   flex-wrap: nowrap;
+  padding: 20px;
 }
 
 #foot_section_2 {
+  flex: 1;
+  max-width: 60%;
+  padding-right: 20px;
+}
+
+#foot_section_2 form {
   display: flex;
-  flex-wrap: wrap;
-  flex-basis: 60%;
+  flex-direction: column;
+  gap: 15px;
 }
 
 #foot_section_2_bis {
@@ -31,45 +38,83 @@
 }
 
 /* -------------------- Champs formulaire -------------------- */
-#name_formulaire,
-#email_formulaire,
-#foot_bouton_robot,
+.form-row-footer {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+}
+
+.form-row-footer .form-control {
+  flex: 1;
+}
+
+#foot_section_2 .form-control {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #f5f5f5;
+  resize: vertical;
+}
+
+#foot_section_2 .form-control:focus {
+  outline: none;
+  border-color: #666;
+  background-color: #fff;
+}
+
+#foot_bouton_robot {
+  flex: 1;
+  padding: 12px 20px;
+  background-color: #e8e8e8;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#foot_bouton_robot:hover {
+  background-color: #d8d8d8;
+}
+
 #foot_bouton_envoi {
-  flex-basis: 42%;
-  margin-left: 4%;
-  margin-right: 4%;
-  margin-top: 2%;
-}
-
-#object_formulaire,
-#message_formulaire {
-  flex-basis: 92%;
-  margin-left: 4%;
-  margin-right: 4%;
-  margin-top: 2%;
-}
-
-#message_formulaire {
-  height: 50%;
-  text-align: left;
-}
-
-#foot_bouton_envoi {
+  flex: 1;
+  padding: 12px 20px;
   background-color: #c96666;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#foot_bouton_envoi:hover {
+  background-color: #b85555;
+}
+
+#foot_bouton_envoi img {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) invert(1);
 }
 
 /* -------------------- Logo & texte -------------------- */
 #foot_logo_CEB {
-  width: 90px;
-  height: 90px;
-  margin-top: 2%;
-  margin-left: 4%;
+  width: 60px;
+  height: 60px;
+  margin-top: 15px;
+  display: block;
 }
 
 #foot_last_line {
-  flex-basis: 35%;
-  margin-top: 4%;
   color: #ffffff;
+  margin-top: 10px;
+  font-size: 14px;
 }
 
 /* -------------------- Informations de contact -------------------- */
