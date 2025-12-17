@@ -71,10 +71,13 @@ class Personne(UserMixin, db.Model):
         """
         match value:
             case "membre" | "responsable":
-            # TOUS les champs requis doivent être remplis
-                if (self.eleve is None or self.arme_principale is None or self.niveau is None or 
-                    self.sexe is None or self.adresse is None or self.date_naissance is None):
-                    raise ValueError(f"Le  '{value}' n'a pas rempli un des champs requis")
+                # TOUS les champs requis doivent être remplis
+                if (self.eleve is None or self.arme_principale is None
+                        or self.niveau is None or self.sexe is None
+                        or self.adresse is None
+                        or self.date_naissance is None):
+                    raise ValueError(
+                        f"Le  '{value}' n'a pas rempli un des champs requis")
             case "personne" | "admin":
                 if self.eleve is not None or self.arme_principale is not None or self.niveau is not None:
                     raise ValueError(f"'{value}' a des informations en trop")
@@ -246,9 +249,11 @@ class Inscription(db.Model):
     sexe = db.Column(db.String(1))
     categorie = db.Column(db.String(30))
     justificatif = db.Column(db.String(255))
-    
+
     # Relations
-    evenement = db.relationship("Evenement", backref=db.backref("inscriptions", lazy="dynamic"))
+    evenement = db.relationship("Evenement",
+                                backref=db.backref("inscriptions",
+                                                   lazy="dynamic"))
 
     def __repr__(self) -> str:
         """
@@ -342,7 +347,6 @@ class Formulaire(db.Model):
     """
     id_formulaire = db.Column(db.Integer, primary_key=True)
     nom_auteur = db.Column(db.String(64))
-    prenom_auteur = db.Column(db.String(64))
     email_auteur = db.Column(db.String(64))
     objet = db.Column(db.String(100))
     message = db.Column(db.String(500))

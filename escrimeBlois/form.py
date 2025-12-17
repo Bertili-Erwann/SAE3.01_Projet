@@ -1,6 +1,6 @@
-from wtforms import Form, StringField, PasswordField, RadioField, DateField, FileField
-from .models import Demande_inscription
-from wtforms.validators import DataRequired
+from wtforms import StringField, PasswordField, RadioField, DateField, FileField, TextAreaField
+from .models import Demande_inscription, Formulaire
+from wtforms.validators import DataRequired, Length
 from flask_wtf import FlaskForm
 from hashlib import sha256
 from email_validator import validate_email, EmailNotValidError, ValidatedEmail
@@ -24,19 +24,25 @@ StoreManager.register('fs',
 
 
 class FormInscription(FlaskForm):
-    nom = StringField('Nom',validators=[DataRequired()])
-    prenom = StringField('Prenom',validators=[DataRequired()])
-    mot_de_passe = PasswordField('Mot de passe',validators=[DataRequired()])
-    conf_mot_de_passe = PasswordField('Confirmer mot de passe',validators=[DataRequired()])
-    sexe = RadioField('Sexe', choices=[('H', 'Homme'), ('F', 'Femme')],validators=[DataRequired()])
-    date_naissance = DateField('Date de naissance',validators=[DataRequired()])
-    num_tel = StringField('Numéro de téléphone',validators=[DataRequired()])
-    adresse_mail = StringField("Adresse mail",validators=[DataRequired()])
-    adresse_postale = StringField('Adresse postale',validators=[DataRequired()])
+    nom = StringField('Nom', validators=[DataRequired()])
+    prenom = StringField('Prenom', validators=[DataRequired()])
+    mot_de_passe = PasswordField('Mot de passe', validators=[DataRequired()])
+    conf_mot_de_passe = PasswordField('Confirmer mot de passe',
+                                      validators=[DataRequired()])
+    sexe = RadioField('Sexe',
+                      choices=[('H', 'Homme'), ('F', 'Femme')],
+                      validators=[DataRequired()])
+    date_naissance = DateField('Date de naissance',
+                               validators=[DataRequired()])
+    num_tel = StringField('Numéro de téléphone', validators=[DataRequired()])
+    adresse_mail = StringField("Adresse mail", validators=[DataRequired()])
+    adresse_postale = StringField('Adresse postale',
+                                  validators=[DataRequired()])
     eleve = RadioField('Adresse postale',
-                       choices=[('Oui', 'Oui'), ('Non', 'Non')],validators=[DataRequired()])
+                       choices=[('Oui', 'Oui'), ('Non', 'Non')],
+                       validators=[DataRequired()])
     justificatif = FileField('justificatif')
-    
+
     def max_id() -> int:
         max_id = db.session.query(func.max(
             Demande_inscription.id_inscription)).scalar()
@@ -87,7 +93,50 @@ class FormInscriptionEvent(FlaskForm):
     nom = StringField('Nom', validators=[DataRequired()])
     prenom = StringField('Prenom', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
-    date_naissance = DateField('Date de naissance', validators=[DataRequired()])
-    sexe = RadioField('Sexe', choices=[('H', 'Homme'), ('F', 'Femme')], validators=[DataRequired()])
+    date_naissance = DateField('Date de naissance',
+                               validators=[DataRequired()])
+    sexe = RadioField('Sexe',
+                      choices=[('H', 'Homme'), ('F', 'Femme')],
+                      validators=[DataRequired()])
     categorie = StringField('Catégorie', validators=[DataRequired()])
     justificatif = FileField('Justificatif de catégorie')
+
+
+class FormFormulaire(FlaskForm):
+    nom = StringField('Nom', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired()])
+    objet = TextAreaField('Objet',
+                          validators=[
+                              DataRequired(),
+                              Length(min=1,
+                                     max=80,
+                                     message="Trop long, maximum 80 caractère")
+                          ])
+    message = TextAreaField(
+        'Message',
+        validators=[
+            DataRequired(),
+            Length(min=1,
+                   max=1200,
+                   message="Trop long, maximum 1200 caractère")
+        ])
+
+    def max_id() -> int:
+        max_id = db.session.query(func.max(Formulaire.id_formulaire)).scalar()
+        return (int(max_id) + 1) if max_id is not None else 1
+
+    def format_mail(self) -> ValidatedEmail:
+        try:
+            return validate_email(self.email.data, check_deliverability=False)
+        except EmailNotValidError as e:
+            print(str(e))
+
+    def commit_formulaire(self):
+        id = FormFormulaire.max_id()
+        mail = self.format_mail()
+        db.session.add(
+            Formulaire(id_formulaire=id,
+                       nom_auteur=self.nom.data,
+                       email_auteur=mail.normalized,
+                       objet=self.objet.data))
+        db.session.commit()
