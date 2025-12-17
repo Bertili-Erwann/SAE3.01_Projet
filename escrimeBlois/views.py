@@ -113,6 +113,7 @@ def supprimer_membre(id_personne):
                 flash('Erreur lors de la suppression', 'error')
         return redirect(url_for('admin_miseajour_membres'))
 
+@app.route('/admin/')
 @app.route('/admin/gestion_inscription/club')
 def admin_inscription_club():
     demandes = Demande_inscription.query.all()
