@@ -313,10 +313,27 @@ def update_arme():
 def nav_event():
     return render_template ('nav_event.html')
 
+@app.route('/événement/résultats')
+def resultat():
+    competitions = Evenement.query.filter_by(type_evenement='competition').all()
+    
+    selected_competition_id = request.args.get('competition')
+    classements = []
+    
+    if selected_competition_id:
+        classements = db.session.query(Classer, Inscription, Personne).join(
+            Inscription, Classer.id_competition == Inscription.id_inscription
+        ).outerjoin(
+            Personne, Inscription.email == Personne.email_personne
+        ).filter(
+            Classer.id_inscription == selected_competition_id
+        ).order_by(Classer.point.desc()).all()
+        
+    return render_template("resultat.html", competitions=competitions, classements=classements, selected_id=selected_competition_id)
+
 @app.route('/événement/calendrier')
 def calendrier():
-    # --- 1. Récupération des filtres ---
-    # Checkboxes: retourne une liste ['competition', 'entrainement'] par exemple
+    # ---  Récupération des filtres ---
     types_selectionnes = request.args.getlist('type') 
     
     ville_recherche = request.args.get('ville')
@@ -352,7 +369,6 @@ def calendrier():
     query = query.order_by(Evenement.date.asc())
     evenements = query.all()
 
-    # --- 3. Rendu ---
     return render_template(
         'calendrier_event.html', 
         evenements=evenements,

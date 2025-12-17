@@ -285,13 +285,13 @@ class Classer(db.Model):
                                primary_key=True)
     point = db.Column(db.Integer)
 
-    @validates('id_competition')
+    @validates('id_inscription')
     def validate_evenement_type(self, key: str, value: int) -> int:
         """
         Valide que l'événement est une compétition.
         
         Args:
-            key (str): Le nom de l'attribut ('id_competition').
+            key (str): Le nom de l'attribut ('id_inscription').
             value (int): L'ID de l'événement.
         
         Returns:

@@ -51,8 +51,6 @@
 /* -------------------- Calendrier -------------------- */
 
 
-
-/* --- Sous-menu (Onglets) --- */
 .sub-nav {
     display: flex;
     background-color: white;
@@ -60,6 +58,7 @@
     margin-bottom: 20px;
     justify-content: center;
 }
+
 .sub-nav a {
     padding: 15px 30px;
     text-decoration: none;
@@ -70,56 +69,57 @@
 .sub-nav a:first-child { 
     border-left: 1px solid #eee; 
 }
+
 .sub-nav a.tab-active {
     border-bottom: 3px solid black;
     font-weight: bold;
 }
 
-/* --- Conteneur Principal --- */
 .calendar-container {
     width: 95%;
     max-width: 1000px;
     margin: 0 auto 50px auto;
-    background-color: #dcdcdc; /* Gris clair de fond */
+    background-color: #dcdcdc;
     padding: 25px;
     border-radius: 5px;
 }
 
-/* --- Zone de Filtres (Boîte grise foncée) --- */
+
 .filter-box {
-    background-color: #999; /* Gris moyen de la maquette */
+    background-color: #999; 
     padding: 20px;
     border-radius: 10px;
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr; /* Colonnes : Types / Ville / Dates */
+    grid-template-columns: 1.5fr 1fr 1fr; 
     gap: 15px;
     align-items: center;
     color: white;
     margin-bottom: 20px;
 }
 
-/* Checkboxes */
 .filter-label { 
     font-style: italic; 
     margin-bottom: 8px; 
     font-size: 1rem; 
 }
+
 .checkbox-group { 
     display: flex; 
     gap: 15px; 
     flex-wrap: wrap; 
 }
+
 .checkbox-group label { 
     display: flex; 
     align-items: center; 
     cursor: pointer; 
     font-size: 0.9rem; 
 }
+
 .checkbox-group input { 
     margin-right: 5px; 
 }
 
-/* Styles des champs (Inputs et Selects) */
 .filter-box input[type="text"], 
 .filter-box input[type="date"], 
 .filter-box select {
@@ -132,19 +132,21 @@
     outline: none;
 }
 
-/* Barre de recherche avec loupe */
 .search-wrapper { 
     position: relative; 
     width: 90%; 
 }
+
 .search-wrapper input { 
     background-color: #666; 
     color: black; 
     padding-right: 30px; 
 }
+
 .search-wrapper input::placeholder { 
     color: #ccc; 
 }
+
 .search-icon-input { 
     position: absolute; 
     right: 10px; 
@@ -154,31 +156,31 @@
     pointer-events: none; 
 }
 
-/* Dates */
+
 .dates-row { 
     display: flex; 
     gap: 10px; 
 }
 
-/* Dropdowns (Ligne du bas) */
 .filter-row-bottom {
-    grid-column: 1 / -1; /* Prend toute la largeur */
+    grid-column: 1 / -1;
     display: flex;
     justify-content: space-between;
     padding-top: 10px;
     border-top: 1px solid rgba(255,255,255,0.2);
     gap: 20px;
 }
+
 .filter-row-bottom select { 
     width: 48%; 
 }
 
-/* Boutons Actions Filtres */
 .filter-actions { 
     margin-top: 20px; 
     display: flex; 
     gap: 15px; 
 }
+
 .calendar-container .btn { 
     padding: 8px 25px; 
     border-radius: 20px; 
@@ -195,12 +197,11 @@
 .calendar-container .btn-blue { 
     background-color: #6495ED; 
 }
+
 .calendar-container .btn-red { 
     background-color: #B22222; 
 }
 
-
-/* --- Tableau des Résultats --- */
 .events-table { 
     width: 100%; 
     border-collapse: separate; 
@@ -220,6 +221,7 @@
     font-weight: normal;
     text-shadow: 1px 1px 2px #555;
 }
+
 .events-table th:last-child { 
     border-right: none; 
 }
@@ -231,34 +233,37 @@
     border-right: 2px solid black;
     vertical-align: middle;
 }
+
 .events-table td:last-child { 
     border-right: none; 
 }
+
 .events-table tr:last-child td { 
     border-bottom: none; 
 }
 
-/* Contenu Tableau */
 .event-desc { 
     font-weight: bold; 
     font-size: 1.1rem; 
 }
+
 .event-meta { 
     font-size: 0.9rem; 
     color: #555; 
     margin-top: 5px; 
 }
+
 .col-center { 
     text-align: center; 
     font-size: 1.1rem; 
 }
 
-/* Boutons Tableau */
 .action-buttons-wrapper {
     display: flex; 
     gap: 10px; 
     justify-content: center; 
 }
+
 .calendar-container .btn-action {
     padding: 8px 15px; 
     border-radius: 15px; 
@@ -267,14 +272,17 @@
     font-weight: bold; 
     text-decoration: none;
 }
+
 .calendar-container .btn-consult { 
     background-color: #007bff; 
     color: white; 
 }
+
 .calendar-container .btn-register { 
     background-color: #ffc107; 
     color: black; 
 }
+
 /* -------------------- Consulter evenement -------------------- */
 
 .consultation-container {
@@ -425,7 +433,6 @@
     font-size: 1rem;
 }
 
-/* Radio buttons styling */
 .radio-group {
     display: flex;
     flex-direction: column;
@@ -506,5 +513,117 @@
     color: white;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+}
+
+/* -------------------- Section Résultats -------------------- */
+
+.result-page-title {
+    background-color: #444;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: fit-content;
+}
+
+.result-page-title h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.result-search-bar {
+    background-color: #b0b0b0;
+    padding: 15px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.result-search-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.result-search-select {
+    width: 250px;
+    border-radius: 20px;
+    border: none;
+    padding: 5px 15px;
+}
+
+.result-search-btn {
+    border-radius: 20px;
+    background-color: #6495ED;
+    border: none;
+    padding: 5px 20px;
+}
+
+.result-search-icon {
+    opacity: 0.6;
+}
+
+.result-pdf-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.result-pdf-btn {
+    border-radius: 20px;
+    background-color: #888;
+    border: none;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.result-table-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #999;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #444;
+}
+
+.result-table-header {
+    background-color: #999;
+    color: white;
+}
+
+.result-table-th {
+    border: 2px solid #444;
+    padding: 10px;
+    text-align: center;
+    font-weight: normal;
+    font-size: 1.2rem;
+}
+
+.result-table-row {
+    background-color: #b0b0b0;
+}
+
+.result-table-td {
+    border: 2px solid #444;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    font-size: 1.1rem;
 }
 
