@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash
 from hashlib import sha256
 from .app import app,db
 from .models import *
-from datetime import date
+from datetime import date, datetime
 from escrimeBlois.models import Formulaire, Personne, Demande_inscription, Inscription, Evenement
 from escrimeBlois.form import FormInscription
 import os
@@ -182,6 +182,48 @@ def admin_inscription_evenement_view(id_inscription):
         return redirect(url_for('admin_inscription_evenement'))
     
     return render_template('admin_gestion_inscription_evenement_view.html', inscription=inscription)
+
+@app.route('/admin_comp/', methods=['GET', 'POST'])
+def admin_comp():
+    # Récupération des informations du formulaire
+    if request.method == 'POST':
+        name = request.form.get('name_create_event')
+        categories = request.form.get('categories_create_event')
+        date_str = request.form.get('date_create_event')
+        hour_str = request.form.get('hour_create_event')
+        location = request.form.get('location_create_event')
+        description = request.form.get('bottom_create_event')
+        discipline = request.form.get('discipline_comp')
+        sexe = request.form.get('sexe_comp')
+        jeu = request.form.get('jeu_comp')
+        niveau = request.form.get('niveau_comp')
+        from datetime import datetime
+        date = datetime.strptime(date_str, '%Y-%m-%d').date()
+        hour = datetime.strptime(hour_str, '%H:%M').time()
+        heure_minutes = hour.hour * 60 + hour.minute
+
+        # Création de la compétition
+        nouvel_evenement = Evenement(
+            nom=name,
+            date=date,
+            heure=heure_minutes,
+            categorie=categories,
+            lieu=location,
+            description=description,
+            sexe=sexe,
+            niveau=niveau,
+            discipline=discipline,
+            cooperative=jeu,
+            type_evenement="competition"
+        )
+        
+        db.session.add(nouvel_evenement)
+        db.session.commit()
+        
+        flash('Compétition créée avec succès !', 'success')
+        return redirect(url_for('admin_comp'))
+    
+    return render_template('admin_crea_comp.html')
 
 
 @app.route('/historique/')

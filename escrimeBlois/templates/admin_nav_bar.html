@@ -1,15 +1,26 @@
-{% block admin_nav %}
+{% block inscription_nav %}
+<p id="blank_space"></p>
 <nav>
-  <div id="navbar_admin">
-    <ul id="nav_admin">
-      <!-- SECTION INSCRIPTION CLUB -->
+  <div id="navbar_inscription">
+    <ul id="nav_inscr">
+      <!-- SECTION GESTION INSCRIPTION -->
       <li id="rnav_gestion_form">
-        <a class="nav-link" href="{{ url_for('admin_inscription_club') }}">Inscriptions au club</a>
+        <a class="nav-link" href="{{ url_for('admin_inscription_club') }}">Gestion des inscriptions</a>
       </li>
 
-      <!-- SECTION INSCRIPTION EVENEMENT -->
+      <!-- SECTION MISE A JOUR DES MEMBRES -->
       <li id="rnav_ajout_art">
-        <a class="nav-link" href="{{ url_for('admin_inscription_evenement') }}">Inscriptions aux évènements</a>
+        <a class="nav-link" href="">Mise à jour des membres</a>
+      </li>
+
+      <!-- SECTION MISE A JOUR RESULTATS  -->
+      <li id="rnav_crea_event">
+        <a class="nav-link" href="">Mise à jour des résultats</a>
+      </li>
+
+      <!-- SECTION CREATION COMPETITION  -->
+      <li id="rnav_infos_persos">
+        <a class="nav-link" href="{{ url_for('admin_comp') }}">Création de compétitions</a>
       </li>
     </ul>
   </div>
