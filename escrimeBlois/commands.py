@@ -52,6 +52,7 @@ def loaddb(filename: str) -> None:
     for ev in data["evenements"]:
         date_evenement = datetime.date.fromisoformat(ev['date'])
         evenement = Evenement(id_evenement=ev['id_evenement'],
+                              nom=ev['nom'],
                               date=date_evenement,
                               heure=ev['heure'],
                               categorie=ev.get('categorie'),
@@ -65,8 +66,19 @@ def loaddb(filename: str) -> None:
         db.session.commit()
 
     for insc in data.get("inscriptions", []):
+        date_naissance = None
+        if insc.get('date_naissance'):
+            date_naissance = datetime.date.fromisoformat(insc['date_naissance'])
+            
         inscription = Inscription(id_inscription=insc['id_inscription'],
-                                  id_evenement=insc['id_evenement'])
+                                  id_evenement=insc['id_evenement'],
+                                  nom=insc.get('nom'),
+                                  prenom=insc.get('prenom'),
+                                  email=insc.get('email'),
+                                  date_naissance=date_naissance,
+                                  sexe=insc.get('sexe'),
+                                  categorie=insc.get('categorie'),
+                                  justificatif=insc.get('justificatif'))
         db.session.add(inscription)
         db.session.commit()
 
@@ -240,3 +252,30 @@ def nouvpers(nom: str, prenom: str, role_user: str, pwd: str, mail: str,
     db.session.add(pers)
     db.session.commit()
     lg.info('Utilisateur %s crée', prenom)
+    
+@app.cli.command()
+def users():
+   """Liste tous les utilisateurs de la base."""
+   users = Personne.query.all()
+   print(f"\n--- {len(users)} utilisateurs trouvés ---\n")
+  
+   for u in users:
+       print(f"ID             : {u.id_personne}")
+       print(f"Nom            : {u.nom_personne}")
+       print(f"Prénom         : {u.prenom_personne}")
+       print(f"Email          : {u.email_personne}")
+       print(f"Rôle           : {u.role}")
+       print(f"Téléphone      : {u.telephone}")
+       print(f"Sexe           : {u.sexe}")
+       print(f"Date naissance : {u.date_naissance}")
+       print(f"Adresse        : {u.adresse}")
+      
+       # Champs spécifiques (peuvent être None selon le rôle)
+       print(f"Élève (statut) : {u.eleve}")
+       print(f"Arme           : {u.arme_principale}")
+       print(f"Niveau         : {u.niveau}")
+      
+       # On affiche le hash du mot de passe pour vérifier qu'il n'est pas vide
+       print(f"Mdp (hash)     : {u.mdp}")
+      
+       print("-" * 40) # Une ligne de séparation pour la lisibilité

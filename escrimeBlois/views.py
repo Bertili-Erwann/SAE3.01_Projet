@@ -1,10 +1,11 @@
 from flask import redirect, render_template, request, url_for, flash
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.security import generate_password_hash
+from werkzeug.utils import secure_filename
 from hashlib import sha256
+from datetime import date, datetime
 from .app import app, db
 from .models import *
-from datetime import date
 from escrimeBlois.models import (
     Formulaire,
     Personne,
@@ -12,7 +13,7 @@ from escrimeBlois.models import (
     Inscription,
     Evenement,
 )
-from escrimeBlois.form import FormInscription
+from escrimeBlois.form import FormInscription, FormInscriptionEvent
 import os
 
 # ======================================== PAGES GLOBAL (Accessible partout) ========================================
@@ -46,8 +47,8 @@ def login():
             m = sha256()
             m.update(password.encode("utf-8"))
             hashed_password = m.hexdigest()
-
-            if user.mdp == hashed_password:
+            
+            if user.mdp == hashed_password or user.mdp == password:
                 login_user(user)
                 flash("Connexion réussie !", "success")
                 if user.role == "membre":
@@ -112,6 +113,134 @@ def mdp_oublier_confirmer_mdp():
         return redirect(url_for("login"))  # Ou une autre page
 
     return render_template("mdp_oublier_confirmer_mdp.html")
+
+@app.route('/evenement/résultats')
+def resultat():
+    competitions = Evenement.query.filter_by(type_evenement='competition').all()
+    
+    selected_competition_id = request.args.get('competition')
+    classements = []
+    
+    if selected_competition_id:
+        classements = db.session.query(Classer, Inscription, Personne).join(
+            Inscription, Classer.id_competition == Inscription.id_inscription
+        ).outerjoin(
+            Personne, Inscription.email == Personne.email_personne
+        ).filter(
+            Classer.id_inscription == selected_competition_id
+        ).order_by(Classer.point.desc()).all()
+        
+    return render_template("resultat.html", competitions=competitions, classements=classements, selected_id=selected_competition_id)
+
+@app.route('/evenement/calendrier')
+def calendrier():
+    # ---  Récupération des filtres ---
+    types_selectionnes = request.args.getlist('type') 
+    
+    ville_recherche = request.args.get('ville')
+    date_debut = request.args.get('date_debut')
+    date_fin = request.args.get('date_fin')
+    categorie = request.args.get('categorie')
+    niveau = request.args.get('niveau')
+    query = Evenement.query
+
+    # Filtre Type
+    if types_selectionnes:
+        query = query.filter(Evenement.type_evenement.in_(types_selectionnes))
+
+    # Filtre Ville
+    if ville_recherche:
+        query = query.filter(Evenement.lieu.ilike(f'%{ville_recherche}%'))
+
+    # Filtres Dates
+    if date_debut:
+        query = query.filter(Evenement.date >= date_debut)
+    if date_fin:
+        query = query.filter(Evenement.date <= date_fin)
+
+    # Filtres Catégorie
+    if categorie and categorie != "Toutes catégories":
+        query = query.filter(Evenement.categorie == categorie)
+        
+    # Filtres Niveau
+    if niveau and niveau != "Niveaux":
+        query = query.filter(Evenement.niveau == niveau)
+
+    # Tri par date croissante
+    query = query.order_by(Evenement.date.asc())
+    evenements = query.all()
+
+    return render_template(
+        'calendrier_event.html', 
+        evenements=evenements,
+        filtres=request.args, 
+        types_selectionnes=types_selectionnes
+    )
+    
+@app.route('/evenement/calendrier/consulter/<int:id_evenement>')
+def consulter_evenement(id_evenement):
+    evenement = Evenement.query.get_or_404(id_evenement)
+    return render_template('consulter_evenement.html', evenement=evenement)
+
+
+@app.route('/evenement/inscription/<int:id_evenement>', methods=['GET', 'POST'])
+def inscription_event(id_evenement):
+    evenement = Evenement.query.get_or_404(id_evenement)
+    
+    if evenement.type_evenement == 'reunion':
+        flash("L'inscription n'est pas disponible pour les réunions.", 'error')
+        return redirect(url_for('consulter_evenement', id_evenement=id_evenement))
+    
+    # Cas utilisateur connecté
+    if current_user.is_authenticated:
+        # Vérifier si déjà inscrit
+        deja_inscrit = Inscription.query.filter_by(id_evenement=id_evenement, nom=current_user.nom_personne, prenom=current_user.prenom_personne).first()
+        if deja_inscrit:
+            flash('Vous êtes déjà inscrit à cet événement.', 'info')
+        else:
+            inscription = Inscription(
+                id_evenement=id_evenement,
+                nom=current_user.nom_personne,
+                prenom=current_user.prenom_personne,
+                email=current_user.email_personne,
+                date_naissance=current_user.date_naissance,
+                sexe=current_user.sexe
+            )
+            db.session.add(inscription)
+            db.session.commit()
+            # flash('Inscription réussie !', 'success')
+        return redirect(url_for('consulter_evenement', id_evenement=id_evenement, inscription_success=True))
+    
+    # Cas visiteur
+    form = FormInscriptionEvent()
+    
+    # Pré-remplir la catégorie avec celle de l'événement
+    if request.method == 'GET' and evenement.categorie:
+        form.categorie.data = evenement.categorie
+
+    if form.validate_on_submit():
+        filename = None
+        if form.justificatif.data:
+            f = form.justificatif.data
+            filename = secure_filename(f.filename)
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        inscription = Inscription(
+            id_evenement=id_evenement,
+            nom=form.nom.data,
+            prenom=form.prenom.data,
+            email=form.email.data,
+            date_naissance=form.date_naissance.data,
+            sexe=form.sexe.data,
+            categorie=form.categorie.data, # Utilise la valeur du formulaire (qui sera celle pré-remplie)
+            justificatif=filename
+        )
+        db.session.add(inscription)
+        db.session.commit()
+        # flash('Inscription réussie !', 'success')
+        return redirect(url_for('consulter_evenement', id_evenement=id_evenement, inscription_success=True))
+
+    return render_template('inscription_event.html', form=form, id_evenement=id_evenement, evenement=evenement)
 
 
 # ======================================== PAGES ADMIN ========================================
@@ -191,14 +320,11 @@ def admin_inscription_evenement_view(id_inscription):
             # Supprimer l'inscription
             db.session.delete(inscription)
             db.session.commit()
-
         return redirect(url_for("admin_inscription_evenement"))
 
     return render_template(
         "admin_gestion_inscription_evenement_view.html", inscription=inscription
     )
-
-
 # -------------------- Mises a jour des membres --------------------
 
 
@@ -239,6 +365,48 @@ def supprimer_membre(id_personne):
 
 # -------------------- Création des compétition --------------------
 
+@app.route('/admin/creation_competition', methods=['GET', 'POST'])
+def admin_comp():
+    # Récupération des informations du formulaire
+    if request.method == 'POST':
+        name = request.form.get('name_create_event')
+        categories = request.form.get('categories_create_event')
+        date_str = request.form.get('date_create_event')
+        hour_str = request.form.get('hour_create_event')
+        location = request.form.get('location_create_event')
+        description = request.form.get('bottom_create_event')
+        discipline = request.form.get('discipline_comp')
+        sexe = request.form.get('sexe_comp')
+        jeu = request.form.get('jeu_comp')
+        niveau = request.form.get('niveau_comp')
+        from datetime import datetime
+        date = datetime.strptime(date_str, '%Y-%m-%d').date()
+        hour = datetime.strptime(hour_str, '%H:%M').time()
+        heure_minutes = hour.hour * 60 + hour.minute
+
+        # Création de la compétition
+        nouvel_evenement = Evenement(
+            nom=name,
+            date=date,
+            heure=heure_minutes,
+            categorie=categories,
+            lieu=location,
+            description=description,
+            sexe=sexe,
+            niveau=niveau,
+            discipline=discipline,
+            cooperative=jeu,
+            type_evenement="competition"
+        )
+        
+        db.session.add(nouvel_evenement)
+        db.session.commit()
+        
+        flash('Compétition créée avec succès !', 'success')
+        return redirect(url_for('admin_comp'))
+    
+    return render_template('admin_crea_comp.html')
+
 
 # ======================================== PAGES RESPONSABLE ========================================
 
@@ -249,7 +417,6 @@ def supprimer_membre(id_personne):
 def gest_form():
     lesFormulaires = Formulaire.query.all()
     return render_template("gestion_formulaire.html", formulaires=lesFormulaires)
-
 
 @app.route("/responsable/consultation_formulaire/<id_formulaire>/")
 def consult_form(id_formulaire):
@@ -287,12 +454,32 @@ def ajouter_article():
         db.session.commit()
 
         # Sauvegarde des fichiers uploadés
+        first_image = True
         for fichier in fichiers:
             if fichier and fichier.filename != "":
                 chemin_fichier = os.path.join(
                     app.config["UPLOAD_FOLDER"], fichier.filename
                 )
                 fichier.save(chemin_fichier)
+                
+                # Création de l'image dans la BD
+                image = Image(
+                    nom_image=filename[:15], # Tronquer si nécessaire car String(15)
+                    url_image=filename[:60]  # Tronquer si nécessaire car String(60)
+                )
+                db.session.add(image)
+                db.session.commit()
+                
+                # Lien entre article et image
+                posseder = Posseder(
+                    id_image=image.id_image,
+                    id_article=article.id_article,
+                    miniature=first_image
+                )
+                db.session.add(posseder)
+                db.session.commit()
+                
+                first_image = False
 
         flash("Article ajouté avec succès ✅", "success")
         return redirect(url_for("ajouter_article"))
@@ -301,11 +488,44 @@ def ajouter_article():
 
 
 # -------------------- Création d'un evenement --------------------
-@app.route("/responsable/creer_evenement/")
+@app.route("/responsable/creer_evenement/", methods=['GET', 'POST'])
 def create_event():
-    return render_template("resp_creation_event.html")
+    # Récupération des informations du formulaire
+    if request.method == 'POST':
+        name = request.form.get('name_create_event')
+        categories = request.form.get('categories_create_event')
+        date_str = request.form.get('date_create_event')
+        hour_str = request.form.get('hour_create_event')
+        location = request.form.get('location_create_event')
+        description = request.form.get('bottom_create_event')
+        type = request.form.get('types_create_event')
+        from datetime import datetime
+        date = datetime.strptime(date_str, '%Y-%m-%d').date()
+        hour = datetime.strptime(hour_str, '%H:%M').time()
+        heure_minutes = hour.hour * 60 + hour.minute
 
-
+        # Création de l'événement
+        nouvel_evenement = Evenement(
+            nom=name,
+            date=date,
+            heure=heure_minutes,
+            categorie=categories,
+            lieu=location,
+            description=description,
+            sexe=None,
+            niveau=None,
+            discipline=None,
+            cooperative=None,
+            type_evenement=type
+        )
+        
+        db.session.add(nouvel_evenement)
+        db.session.commit()
+        
+        flash('Événement créé avec succès !', 'success')
+        return redirect(url_for('create_event'))
+    
+    return render_template('resp_creation_event.html')  
 # Dossier de stockage des fichiers
 UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
 if not os.path.exists(UPLOAD_FOLDER):
@@ -389,5 +609,4 @@ def update_arme():
         db.session.rollback()
         flash("Une erreur est survenue lors de la mise à jour de l'arme.", "error")
         app.logger.error(f"Erreur lors de la mise à jour de l'arme: {str(e)}")
-
-    return redirect(url_for("infos_persos"))
+    return redirect(url_for('infos_persos'))

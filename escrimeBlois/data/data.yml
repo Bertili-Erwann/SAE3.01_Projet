@@ -54,25 +54,170 @@ personnes:
 
 evenements:
   - id_evenement: 1
+    nom: "Compétition régionale d'escrime"
     date: "2025-10-25"
     heure: 14
     type_evenement: "competition"
-    categorie: "Régionale"
+    categorie: "M20"
     lieu: "Salle des sports Blois"
-    description: "Compétition régionale d'escrime"
+    description: "Une grande compétition régionale d'escrime réunissant les meilleurs talents de la région pour une journée intense de duels à l'épée."
     niveau: "Régional"
     discipline: "Épée"
     cooperative: "Individuel"
-  - id_evenement: 2
-    date: "2025-10-26"
-    heure: 10
-    type_evenement: "inscription"
-    categorie: "Administrative"
-    lieu: "Bureau du club"
-    description: "Session d'inscription pour la saison"
+  - id_evenement: 3
+    nom: "Compétition M15 Club"
+    date: "2025-11-05"
+    heure: 09
+    type_evenement: "competition"
+    categorie: "M15"
+    lieu: "Gymnase Tours"
+    description: "Compétition amicale inter-membres pour la catégorie M15, idéale pour s'initier à l'ambiance des tournois dans un cadre bienveillant."
+    niveau: "Club"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+  - id_evenement: 4
+    nom: "Grand Prix Séniors"
+    date: "2025-11-12"
+    heure: 14
+    type_evenement: "competition"
+    categorie: "Séniors"
+    lieu: "Paris Bercy"
+    description: "Le prestigieux Grand Prix Séniors à Paris Bercy, un événement international incontournable pour les passionnés de sabre de haut niveau."
+    niveau: "International"
+    discipline: "Sabre"
+    cooperative: "Individuel"
+  - id_evenement: 5
+    nom: "Réunion mensuelle du bureau"
+    date: "2025-11-15"
+    heure: 18
+    type_evenement: "reunion"
+    categorie: null
+    lieu: "Salle de réunion Blois"
+    description: "Réunion mensuelle des membres du bureau pour discuter des projets en cours, du budget et de l'organisation des futurs événements du club."
     niveau: null
     discipline: null
     cooperative: null
+  - id_evenement: 6
+    nom: "Entraînement intensif M15"
+    date: "2025-11-20"
+    heure: 17
+    type_evenement: "entrainement"
+    categorie: "M15"
+    lieu: "Salle d'armes Blois"
+    description: "Séance d'entraînement intensif dédiée aux M15, axée sur le perfectionnement technique et la préparation physique avant les compétitions."
+    niveau: null
+    discipline: null
+    cooperative: null
+  - id_evenement: 7
+    nom: "Stage découverte Séniors"
+    date: "2025-11-22"
+    heure: 10
+    type_evenement: "entrainement"
+    categorie: "Séniors"
+    lieu: "Orléans Sport"
+    description: "Stage d'initiation et de découverte pour les Séniors souhaitant s'essayer à l'escrime ou reprendre la pratique dans une ambiance conviviale."
+    niveau: null
+    discipline: null
+    cooperative: null
+  - id_evenement: 8
+    nom: "Tournoi M11 Départemental"
+    date: "2025-12-01"
+    heure: 09
+    type_evenement: "competition"
+    categorie: "M11"
+    lieu: "Gymnase Blois"
+    description: "Tournoi départemental pour les jeunes escrimeurs M11, une excellente occasion de rencontrer d'autres clubs et de progresser au fleuret."
+    niveau: "Départemental"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+  - id_evenement: 9
+    nom: "Championnat M17 Régional"
+    date: "2025-12-05"
+    heure: 14
+    type_evenement: "competition"
+    categorie: "M17"
+    lieu: "Salle d'armes Orléans"
+    description: "Championnat régional M17 qualificatif, où les jeunes épéistes s'affronteront pour décrocher leur place aux épreuves nationales."
+    niveau: "Régional"
+    discipline: "Épée"
+    cooperative: "Individuel"
+  - id_evenement: 10
+    nom: "Tournoi National M20"
+    date: "2025-12-10"
+    heure: 10
+    type_evenement: "competition"
+    categorie: "M20"
+    lieu: "Paris"
+    description: "Grand tournoi national M20 rassemblant l'élite de la catégorie pour des assauts spectaculaires au sabre."
+    niveau: "National"
+    discipline: "Sabre"
+    cooperative: "Individuel"
+  - id_evenement: 11
+    nom: "Circuit National Vétérans 1"
+    date: "2025-12-15"
+    heure: 14
+    type_evenement: "competition"
+    categorie: "Vétérans 1"
+    lieu: "Lyon"
+    description: "Première étape du Circuit National Vétérans, une compétition d'épée relevée comptant pour le classement national."
+    niveau: "National"
+    discipline: "Épée"
+    cooperative: "Individuel"
+  - id_evenement: 12
+    nom: "Open International Vétérans 2"
+    date: "2025-12-20"
+    heure: 09
+    type_evenement: "competition"
+    categorie: "Vétérans 2"
+    lieu: "Marseille"
+    description: "Open International Vétérans, accueillant des tireurs de toute l'Europe pour un tournoi de fleuret de haut standing."
+    niveau: "International"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+  - id_evenement: 13
+    nom: "Rencontre Vétérans 3"
+    date: "2026-01-10"
+    heure: 10
+    type_evenement: "competition"
+    categorie: "Vétérans 3"
+    lieu: "Bordeaux"
+    description: "Rencontre régionale Vétérans, un moment de partage et de compétition sportive pour les sabreurs expérimentés."
+    niveau: "Régional"
+    discipline: "Sabre"
+    cooperative: "Individuel"
+  - id_evenement: 14
+    nom: "Challenge Vétérans 4"
+    date: "2026-01-15"
+    heure: 14
+    type_evenement: "competition"
+    categorie: "Vétérans 4"
+    lieu: "Nantes"
+    description: "Challenge national Vétérans à l'épée, une épreuve technique et tactique pour les compétiteurs aguerris."
+    niveau: "National"
+    discipline: "Épée"
+    cooperative: "Individuel"
+  - id_evenement: 15
+    nom: "Découverte M5"
+    date: "2026-02-01"
+    heure: 09
+    type_evenement: "competition"
+    categorie: "M5"
+    lieu: "Blois"
+    description: "Séance de découverte ludique de l'escrime pour les tout-petits (M5), avec des jeux et des ateliers adaptés au fleuret en mousse."
+    niveau: "Club"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+  - id_evenement: 16
+    nom: "Championnat France M17"
+    date: "2026-01-25"
+    heure: 09
+    type_evenement: "competition"
+    categorie: "M17"
+    lieu: "Paris"
+    description: "Le sommet de la saison : Championnat de France M17 au sabre, où se joueront les titres nationaux tant convoités."
+    niveau: "National"
+    discipline: "Sabre"
+    cooperative: "Individuel"
 
 demande_inscriptions:
   - id_inscription: 1
@@ -111,15 +256,116 @@ inscriptions:
     id_evenement: 1
     nom: "Lemoine"
     prenom: "Pierre"
+    email: "pierre.lemoine@example.com"
   - id_inscription: 2
-    id_evenement: 2
+    id_evenement: 1
     nom: "Martin"
     prenom: "Marie"
+    email: "marie.martin@example.com"
+  - id_inscription: 3
+    id_evenement: 1
+    nom: "Dupont"
+    prenom: "Jean"
+    email: "jean.dupont@example.com"
+  - id_inscription: 4
+    id_evenement: 1
+    nom: "Durand"
+    prenom: "Alice"
+    email: "alice.durand@example.com"
+  - id_inscription: 5
+    id_evenement: 3
+    nom: "Petit"
+    prenom: "Lucas"
+    email: "lucas.petit@example.com"
+  - id_inscription: 6
+    id_evenement: 3
+    nom: "Bernard"
+    prenom: "Sophie"
+    email: "sophie.bernard@example.com"
+  - id_inscription: 7
+    id_evenement: 4
+    nom: "Lemoine"
+    prenom: "Pierre"
+    email: "pierre.lemoine@example.com"
+  - id_inscription: 8
+    id_evenement: 4
+    nom: "Martin"
+    prenom: "Marie"
+    email: "marie.martin@example.com"
+  - id_inscription: 9
+    id_evenement: 16
+    nom: "Moreau"
+    prenom: "Camille"
+    email: "camille.moreau@example.com"
+  - id_inscription: 10
+    id_evenement: 16
+    nom: "Dubois"
+    prenom: "Thomas"
+    email: "thomas.dubois@example.com"
+  - id_inscription: 11
+    id_evenement: 16
+    nom: "Leroy"
+    prenom: "Emma"
+    email: "emma.leroy@example.com"
+  - id_inscription: 12
+    id_evenement: 15
+    nom: "Petit"
+    prenom: "Lucas"
+    email: "lucas.petit@example.com"
+  - id_inscription: 13
+    id_evenement: 15
+    nom: "Roux"
+    prenom: "Gabriel"
+    email: "gabriel.roux@example.com"
+  - id_inscription: 14
+    id_evenement: 3
+    nom: "Fournier"
+    prenom: "Louis"
+    email: "louis.fournier@example.com"
 
 classers:
   - id_competition: 1  
     id_inscription: 1 
     point: 100
+  - id_competition: 2
+    id_inscription: 1
+    point: 90
+  - id_competition: 3
+    id_inscription: 1
+    point: 85
+  - id_competition: 4
+    id_inscription: 1
+    point: 70
+  - id_competition: 5
+    id_inscription: 3
+    point: 15
+  - id_competition: 6
+    id_inscription: 3
+    point: 12
+  - id_competition: 7
+    id_inscription: 4
+    point: 200
+  - id_competition: 8
+    id_inscription: 4
+    point: 180
+  - id_competition: 9
+    id_inscription: 16
+    point: 50
+  - id_competition: 10
+    id_inscription: 16
+    point: 45
+  - id_competition: 11
+    id_inscription: 16
+    point: 40
+  - id_competition: 12
+    id_inscription: 15
+    point: 10
+  - id_competition: 13
+    id_inscription: 15
+    point: 8
+  - id_competition: 14
+    id_inscription: 3
+    point: 10
 
 formulaires:
   - id_formulaire: 1
@@ -201,7 +447,7 @@ articles:
   - id_article: 1
     titre: "Nouvelles du club"
     date_publication: "2025-10-20"
-    description: "Bienvenue à tous les membres pour la nouvelle saison d'escrime à Blois."
+    description: "Nous sommes ravis d'accueillir tous nos membres, anciens et nouveaux, pour cette nouvelle saison d'escrime à Blois qui s'annonce riche en émotions et en événements sportifs."
     categorie: "Actualités"
     commentable: true
     responsable_id: 2
