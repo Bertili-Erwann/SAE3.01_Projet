@@ -1,9 +1,9 @@
-from flask import redirect, render_template, request, url_for, flash
+from flask import flash, redirect, render_template, request, url_for
 from flask_login import login_required, current_user, login_user, logout_user
-from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 from hashlib import sha256
 from datetime import date, datetime
+from sqlalchemy import extract
 from .app import app, db
 from .models import *
 from escrimeBlois.models import (
@@ -12,8 +12,17 @@ from escrimeBlois.models import (
     Demande_inscription,
     Inscription,
     Evenement,
+    Article,      # Ajouté pour les nouvelles routes articles
+    Image,        # Ajouté pour la gestion des images dans ajouter_article
+    Posseder,     # Ajouté pour le lien article ↔ image
 )
-from escrimeBlois.form import FormInscription, FormInscriptionEvent, FormFormulaire
+from escrimeBlois.form import (
+    FormInscription,
+    FormInscriptionEvent,
+    FormFormulaire,
+    FormRechercheArticle,   # Ajouté pour la recherche sur l'index
+    FormCommentaire,        # Ajouté pour les commentaires
+)
 import os
 
 # ======================================== GESTION FOOTER (Accessible partout) ========================================
@@ -27,14 +36,31 @@ def insert_formulaire():
         flash("Erreur lors de l'envoi du formulaire.", "error")
     return redirect(request.referrer or url_for('index'))
 
-
 # ======================================== PAGES GLOBAL (Accessible partout) ========================================
-@app.route("/")
-@app.route("/index/")
+
+@app.route('/', )
+@app.route('/index/')
 def index():
-    return render_template("index.html", form=FormFormulaire())
+    return render_template("index.html", formRech=FormRechercheArticle())
+  
+@app.route('/demande_article', methods=['GET'])
+def demande_article():
+    formRech = FormRechercheArticle()
+    if request.method == 'GET':
+        laRecherche = request.args["recherche"]
+        mois = formRech.mois_to_chiffre(request.args["choix_mois"])
 
+        listarticle = list(
+            Article.query.filter(
+                extract('month', Article.date_publication) == mois).filter(
+                    laRecherche == Article.titre))
 
+        return render_template('articles.html',
+                               articles=listarticle,
+                               recherche=laRecherche)
+    else:
+        return render_template("index.html", formRech=formRech())
+      
 @app.route("/historique/")
 def historique():
     return render_template("historique.html", form=FormFormulaire())
@@ -75,7 +101,6 @@ def login():
                 flash("Mot de passe incorrect.", "error")
         else:
             flash("Email inconnu.", "error")
-
     return render_template("login.html", form=FormFormulaire())
 
 
@@ -129,6 +154,23 @@ def mdp_oublier_confirmer_mdp():
 
     return render_template("mdp_oublier_confirmer_mdp.html", form=FormFormulaire())
 
+
+@app.route('/article/<ida>/view')
+def view_article(ida):
+    art = Article.query.get(ida)
+    form = FormCommentaire()
+    return render_template('article_view.html', article=art, formCom=form)
+
+
+@app.route('/article/<ida>/comment', methods=["POST"])
+def insert_commentaire(ida):
+    art = Article.query.get(ida)
+    form = FormCommentaire()
+    if form.is_submitted():
+        form.envoyer_commentaire(ida)
+        return redirect(url_for('view_article', ida=ida))
+    return render_template('article_view.html', article=art, formCom=form)
+  
 
 @app.route('/evenement/résultats')
 def resultat():

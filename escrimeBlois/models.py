@@ -2,8 +2,6 @@ from .app import db
 from flask_login import UserMixin
 from .app import login_manager
 from sqlalchemy.orm import validates
-from sqlalchemy_media import File
-from sqlalchemy import JSON
 
 
 @login_manager.user_loader
@@ -133,7 +131,7 @@ class Demande_inscription(db.Model):
     adresse_mail = db.Column(db.String(64))
     adresse_postale = db.Column(db.String(64))
     eleve = db.Column(db.Boolean)
-    justificatif = db.Column(File.as_mutable(JSON))
+    justificatif = db.Column(db.String(255))
 
     def __repr__(self) -> str:
         """
@@ -568,3 +566,14 @@ class Gerer(db.Model):
                 f"La personne {value} doit être de type 'admin' vous avez le type {pers.role}"
             )
         return value
+
+
+class Commentaire(db.Model):
+    id_commentaire = db.Column(db.Integer, primary_key=True)
+    id_article = db.Column(db.Integer, db.ForeignKey("article.id_article"))
+    nom_aut = db.Column(db.String(30))
+    email_aut = db.Column(db.String(60))
+    message_com = db.Column(db.String(280))
+    article = db.relationship("Article",
+                              backref=db.backref("commentaires",
+                                                 lazy="dynamic"))
