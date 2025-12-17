@@ -226,7 +226,6 @@ def admin_comp():
     
     return render_template('admin_crea_comp.html')
 
-
 @app.route('/historique/')
 def historique():
     return render_template('historique.html')
@@ -244,9 +243,44 @@ def gest_form():
         lesFormulaires = Formulaire.query.all()
         return render_template('gestion_formulaire.html', formulaires = lesFormulaires)
 
-@app.route('/create_event/')
+@app.route('/create_event/', methods=['GET', 'POST'])
 def create_event():
-        return render_template('resp_creation_event.html')
+    # Récupération des informations du formulaire
+    if request.method == 'POST':
+        name = request.form.get('name_create_event')
+        categories = request.form.get('categories_create_event')
+        date_str = request.form.get('date_create_event')
+        hour_str = request.form.get('hour_create_event')
+        location = request.form.get('location_create_event')
+        description = request.form.get('bottom_create_event')
+        type = request.form.get('types_create_event')
+        from datetime import datetime
+        date = datetime.strptime(date_str, '%Y-%m-%d').date()
+        hour = datetime.strptime(hour_str, '%H:%M').time()
+        heure_minutes = hour.hour * 60 + hour.minute
+
+        # Création de l'événement
+        nouvel_evenement = Evenement(
+            nom=name,
+            date=date,
+            heure=heure_minutes,
+            categorie=categories,
+            lieu=location,
+            description=description,
+            sexe=None,
+            niveau=None,
+            discipline=None,
+            cooperative=None,
+            type_evenement=type
+        )
+        
+        db.session.add(nouvel_evenement)
+        db.session.commit()
+        
+        flash('Événement créé avec succès !', 'success')
+        return redirect(url_for('create_event'))
+    
+    return render_template('resp_creation_event.html')
 
 @app.route('/consultation_form/<id_formulaire>/')
 def consult_form(id_formulaire):
