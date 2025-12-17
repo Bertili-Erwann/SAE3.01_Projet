@@ -468,3 +468,45 @@ def inscription_event(id_evenement):
     return render_template('inscription_event.html', form=form, id_evenement=id_evenement, evenement=evenement)
 
 
+@app.route('/admin/resultats', methods=['GET'])
+def admin_resultat():
+    competitions = Evenement.query.filter_by(type_evenement='competition').all()
+    
+    selected_competition_id = request.args.get('competition')
+    classements = []
+    
+    if selected_competition_id:
+        classements = db.session.query(Classer, Inscription, Personne).join(
+            Inscription, Classer.id_competition == Inscription.id_inscription
+        ).outerjoin(
+            Personne, Inscription.email == Personne.email_personne
+        ).filter(
+            Classer.id_inscription == selected_competition_id
+        ).order_by(Classer.point.desc()).all()
+        
+    return render_template("admin_maj_res.html", competitions=competitions, classements=classements, selected_id=selected_competition_id)
+
+
+@app.route('/admin/resultats/update', methods=['POST'])
+def update_points():
+    competition_id = request.form.get('competition_id')
+    
+    for key, value in request.form.items():
+        if key.startswith('points_'):
+            try:
+                _, id_event, id_insc = key.split('_')
+                points = value
+                
+                if points:
+                    classer = Classer.query.filter_by(id_inscription=id_event, id_competition=id_insc).first()
+                    if classer:
+                        classer.point = points
+            except ValueError:
+                continue
+                
+    db.session.commit()
+    flash('Points mis à jour avec succès', 'success')
+        
+    return redirect(url_for('admin_resultat', competition=competition_id))
+
+
