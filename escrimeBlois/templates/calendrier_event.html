@@ -90,7 +90,7 @@
             {% for event in evenements %}
             <tr>
                 <td class="col-event">
-                    <div class="event-desc">{{ event.description }}</div>
+                    <div class="event-desc">{{ event.nom }}</div>
                     <div class="event-meta">
                         {{ event.date.strftime('%d/%m/%Y') }} - {{ event.lieu }}
                     </div>
@@ -111,9 +111,6 @@
                 <td class="col-actions">
                     <div class="action-buttons-wrapper">
                         <a href="{{ url_for('consulter_evenement', id_evenement=event.id_evenement) }}" class="btn-action btn-consult">Consulter</a>
-                        {% if event.type_evenement != 'reunion' %}
-                            <button class="btn-action btn-register">S'inscrire</button>
-                        {% endif %}
                     </div>
                 </td>
             </tr>

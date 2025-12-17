@@ -81,3 +81,13 @@ class FormInscription(FlaskForm):
                                     justificatif=justificatif_parsed))
 
             db.session.commit()
+
+
+class FormInscriptionEvent(FlaskForm):
+    nom = StringField('Nom', validators=[DataRequired()])
+    prenom = StringField('Prenom', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired()])
+    date_naissance = DateField('Date de naissance', validators=[DataRequired()])
+    sexe = RadioField('Sexe', choices=[('H', 'Homme'), ('F', 'Femme')], validators=[DataRequired()])
+    categorie = StringField('Catégorie', validators=[DataRequired()])
+    justificatif = FileField('Justificatif de catégorie')

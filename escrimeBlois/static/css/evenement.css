@@ -189,6 +189,7 @@
     display: inline-block; 
     font-size: 0.9rem;
     box-shadow: var(--shadow);
+    text-decoration: none;
 }
 
 .calendar-container .btn-blue { 
@@ -198,19 +199,6 @@
     background-color: #B22222; 
 }
 
-/* Bouton PDF */
-.calendar-container .pdf-section { 
-    text-align: right; 
-    margin: 15px 0; 
-}
-.calendar-container .btn-pdf { 
-    background-color: #999; 
-    color: white; 
-    border: none; 
-    padding: 5px 15px; 
-    border-radius: 15px; 
-    cursor: pointer; 
-}
 
 /* --- Tableau des Résultats --- */
 .events-table { 
@@ -280,8 +268,8 @@
     text-decoration: none;
 }
 .calendar-container .btn-consult { 
-    background-color: #999; 
-    color: black; 
+    background-color: #007bff; 
+    color: white; 
 }
 .calendar-container .btn-register { 
     background-color: #ffc107; 
@@ -372,7 +360,9 @@
 
 .consultation-actions {
     margin-top: 20px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
 
 .btn-retour {
@@ -390,3 +380,131 @@
     background-color: #5a6268;
     color: white;
 }
+
+.btn-action {
+    padding: 8px 15px; 
+    border-radius: 15px; 
+    cursor: pointer; 
+    border: none; 
+    font-weight: bold; 
+    text-decoration: none;
+}
+
+.btn-register { 
+    background-color: #ffc107; 
+    color: black; 
+}
+
+/* -------------------- Inscription Visiteur -------------------- */
+
+
+
+.inscription-form {
+    display: block;
+    max-width: 100%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+/* Radio buttons styling */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.radio-item input[type="radio"] {
+    transform: scale(1.2);
+    margin: 0;
+}
+
+.radio-item label {
+    margin-bottom: 0; 
+    font-weight: normal;
+}
+.file-input-wrapper {
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.inscription-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.btn-confirm {
+    background-color: #00c853;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.btn-confirm:hover {
+    background-color: #009624;
+}
+
+.btn-cancel {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-cancel:hover {
+    background-color: #cc0000;
+}
+
+/* -------------------- Pop-ups -------------------- */
+
+.modal-content-custom {
+    background-color: #e0e0e0;
+    border: none;
+}
+
+.modal-header-custom {
+    background-color: #444;
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+

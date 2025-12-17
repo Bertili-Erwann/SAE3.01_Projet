@@ -168,6 +168,7 @@ class Evenement(db.Model):
         type_evenement (str): Type ('competition' ou autre).
     """
     id_evenement = db.Column(db.Integer, primary_key=True)
+    nom = db.Column(db.String(64))
     date = db.Column(db.Date)
     heure = db.Column(db.Integer)
     categorie = db.Column(db.String(30))
@@ -239,6 +240,11 @@ class Inscription(db.Model):
                              db.ForeignKey("evenement.id_evenement"))
     nom = db.Column(db.String(64))
     prenom = db.Column(db.String(64))
+    email = db.Column(db.String(64))
+    date_naissance = db.Column(db.Date)
+    sexe = db.Column(db.String(1))
+    categorie = db.Column(db.String(30))
+    justificatif = db.Column(db.String(255))
     
     # Relations
     evenement = db.relationship("Evenement", backref=db.backref("inscriptions", lazy="dynamic"))

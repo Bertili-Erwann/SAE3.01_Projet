@@ -51,6 +51,7 @@ def loaddb(filename: str) -> None:
     for ev in data["evenements"]:
         date_evenement = datetime.date.fromisoformat(ev['date'])
         evenement = Evenement(id_evenement=ev['id_evenement'],
+                              nom=ev['nom'],
                               date=date_evenement,
                               heure=ev['heure'],
                               categorie=ev.get('categorie'),
@@ -64,8 +65,19 @@ def loaddb(filename: str) -> None:
         db.session.commit()
 
     for insc in data.get("inscriptions", []):
+        date_naissance = None
+        if insc.get('date_naissance'):
+            date_naissance = datetime.date.fromisoformat(insc['date_naissance'])
+            
         inscription = Inscription(id_inscription=insc['id_inscription'],
-                                  id_evenement=insc['id_evenement'])
+                                  id_evenement=insc['id_evenement'],
+                                  nom=insc.get('nom'),
+                                  prenom=insc.get('prenom'),
+                                  email=insc.get('email'),
+                                  date_naissance=date_naissance,
+                                  sexe=insc.get('sexe'),
+                                  categorie=insc.get('categorie'),
+                                  justificatif=insc.get('justificatif'))
         db.session.add(inscription)
         db.session.commit()
 

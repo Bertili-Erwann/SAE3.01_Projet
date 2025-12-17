@@ -13,7 +13,7 @@
         <div class="consultation-grid">
             <div class="consultation-item">
                 <span class="consultation-label">Nom Événement</span>
-                <span class="consultation-value">{{ evenement.description }}</span>
+                <span class="consultation-value">{{ evenement.nom }}</span>
             </div>
             <div class="consultation-item">
                 <span class="consultation-label">Date</span>
@@ -42,9 +42,9 @@
         </div>
     </div>
 
-    <!-- Informations Compétition -->
+    <!-- Informations Supplémentaires -->
     <div class="consultation-section">
-        <h3>Informations Compétition</h3>
+        <h3>Informations Supplémentaires</h3>
         <div class="consultation-grid">
             <div class="consultation-item">
                 <span class="consultation-label">Discipline</span>
@@ -59,10 +59,6 @@
                 <span class="consultation-value">{{ evenement.cooperative if evenement.cooperative else '-' }}</span>
             </div>
             <div class="consultation-item">
-                <span class="consultation-label">Catégorie</span>
-                <span class="consultation-value">{{ evenement.categorie if evenement.categorie else '-' }}</span>
-            </div>
-            <div class="consultation-item">
                 <span class="consultation-label">Niveau</span>
                 <span class="consultation-value">{{ evenement.niveau if evenement.niveau else '-' }}</span>
             </div>
@@ -70,8 +66,25 @@
     </div>
 
     <div class="consultation-actions">
-        <a href="{{ url_for('calendrier') }}" class="btn-retour">Retour</a>
+        <a href="{{ url_for('calendrier') }}" class="btn-action btn-retour">Retour</a>
+        {% if evenement.type_evenement != 'reunion' %}
+            {% if current_user.is_authenticated %}
+                <button type="button" class="btn-action btn-register" data-bs-toggle="modal" data-bs-target="#confirmInscriptionModal">
+                    S'inscrire
+                </button>
+            {% else %}
+                <a href="{{ url_for('inscription_event', id_evenement=evenement.id_evenement) }}" class="btn-action btn-register">S'inscrire</a>
+            {% endif %}
+        {% endif %}
     </div>
 
 </div>
+
+{% include "confirmation_insc_event.html" %}
+{% include "succes_insc_event.html" %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/inscription_event.js') }}"></script>
 {% endblock %}
