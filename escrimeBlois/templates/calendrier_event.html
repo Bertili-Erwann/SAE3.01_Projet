@@ -79,51 +79,53 @@
     </form>
     <div id="blank_space"></div>
 
-    <table class="events-table">
-        <thead>
-            <tr>
-                <th>Événement</th>
-                <th>Type</th>
-                <th>Catégorie</th>
-                <th>Niveau</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for event in evenements %}
-            <tr>
-                <td class="col-event">
-                    <div class="event-desc">{{ event.nom }}</div>
-                    <div class="event-meta">
-                        {{ event.date.strftime('%d/%m/%Y') }} - {{ event.lieu }}
-                    </div>
-                </td>
-                
-                <td class="col-center">
-                    {{ event.type_evenement | capitalize }}
-                </td>
-                
-                <td class="col-center">
-                    {{ event.categorie if event.categorie else '-' }}
-                </td>
+    <div class="table-scroll-container">
+        <table class="events-table" >
+            <thead>
+                <tr>
+                    <th>Événement</th>
+                    <th>Type</th>
+                    <th>Catégorie</th>
+                    <th>Niveau</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in evenements %}
+                <tr>
+                    <td class="col-event">
+                        <div class="event-desc">{{ event.nom }}</div>
+                        <div class="event-meta">
+                            {{ event.date.strftime('%d/%m/%Y') }} - {{ event.lieu }}
+                        </div>
+                    </td>
+                    
+                    <td class="col-center">
+                        {{ event.type_evenement | capitalize }}
+                    </td>
+                    
+                    <td class="col-center">
+                        {{ event.categorie if event.categorie else '-' }}
+                    </td>
 
-                <td class="col-center">
-                    {{ event.niveau if event.niveau else '-' }}
-                </td>
-                
-                <td class="col-actions">
-                    <div class="action-buttons-wrapper">
-                        <a href="{{ url_for('consulter_evenement', id_evenement=event.id_evenement) }}" class="btn-action btn-consult">Consulter</a>
-                    </div>
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="4">Aucun événement ne correspond à vos filtres.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    <td class="col-center">
+                        {{ event.niveau if event.niveau else '-' }}
+                    </td>
+                    
+                    <td class="col-actions">
+                        <div class="action-buttons-wrapper">
+                            <a href="{{ url_for('consulter_evenement', id_evenement=event.id_evenement) }}" class="btn-action btn-consult">Consulter</a>
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4">Aucun événement ne correspond à vos filtres.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 {% endblock %}

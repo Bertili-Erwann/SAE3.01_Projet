@@ -11,15 +11,15 @@ import functools
 import os
 
 # Définir le chemin de stockage local dans le projet
-UPLOAD_PATH = os.path.join(os.path.dirname(__file__), 'uploads')
+JUSTIFICATIFS_PATH = os.path.join(os.path.dirname(__file__), 'justificatifs')
 
 # Créer le dossier s'il n'existe pas
-os.makedirs(UPLOAD_PATH, exist_ok=True)
+os.makedirs(JUSTIFICATIFS_PATH, exist_ok=True)
 
 # Configurer le stockage local
 StoreManager.register('fs',
-                      functools.partial(FileSystemStore, UPLOAD_PATH,
-                                        'http://localhost:5000/uploads/'),
+                      functools.partial(FileSystemStore, JUSTIFICATIFS_PATH,
+                                        'http://localhost:5000/justificatifs/'),
                       default=True)
 
 
@@ -89,4 +89,4 @@ class FormInscriptionEvent(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     date_naissance = DateField('Date de naissance', validators=[DataRequired()])
     sexe = RadioField('Sexe', choices=[('H', 'Homme'), ('F', 'Femme')], validators=[DataRequired()])
-    justificatif = FileField('Justificatif de catégorie')
+    justificatif = FileField('Justificatif de catégorie', validators=[DataRequired()])

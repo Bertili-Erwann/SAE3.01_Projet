@@ -184,7 +184,12 @@ UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
+JUSTIFICATIF_FOLDER = os.path.join(os.getcwd(), 'escrimeBlois', 'justificatifs')
+if not os.path.exists(JUSTIFICATIF_FOLDER):
+    os.makedirs(JUSTIFICATIF_FOLDER)
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['JUSTIFICATIF_FOLDER'] = JUSTIFICATIF_FOLDER
 
 
 @app.route('/ajouter_article', methods=['GET', 'POST'])
@@ -444,7 +449,7 @@ def inscription_event(id_evenement):
         if form.justificatif.data:
             f = form.justificatif.data
             filename = secure_filename(f.filename)
-            f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            f.save(os.path.join(app.config['JUSTIFICATIF_FOLDER'], filename))
 
         inscription = Inscription(
             id_evenement=id_evenement,
