@@ -45,12 +45,7 @@ def login():
             if user.mdp == hashed_password or user.mdp == password:
                 login_user(user)
                 flash('Connexion réussie !', 'success')
-                if user.role == "membre":
-                    return redirect(url_for('infos_persos'))
-                elif user.role == "responsable":
-                    return redirect(url_for('ajouter_article')) # Exemple de redirection pour responsable
-                else:
-                    return redirect(url_for('index'))
+                return redirect(url_for('index')) 
             else:
                 flash('Mot de passe incorrect.', 'error')
         else:
@@ -249,12 +244,44 @@ def ajouter_article():
 
     return render_template('ajout_article.html')
 
-@app.route('/infos_persos/')
+@app.route('/membre/infos_persos/')
 @login_required
 def infos_persos():
-    if current_user.role != 'membre':
+    if current_user.role != 'membre' and current_user.role != 'responsable':
         return redirect(url_for('index'))
     return render_template('infos_persos_espMembre.html', personne=current_user)
+
+@app.route('/membre/resultats_passes/')
+@login_required
+def resultats_passes():
+    if current_user.role != 'membre' and current_user.role != 'responsable':
+        return redirect(url_for('index'))
+    resultats = db.session.query(Evenement, Classer).join(
+        Inscription, Inscription.id_evenement == Evenement.id_evenement
+    ).join(
+        Classer, Classer.id_competition == Inscription.id_inscription
+    ).filter(
+        Inscription.email == current_user.email_personne
+    ).order_by(Evenement.date.desc()).all()
+    resultats_finaux = []
+    for evenement, classement_utilisateur in resultats:
+        tous_les_scores = db.session.query(Classer).filter(
+            Classer.id_inscription == evenement.id_evenement
+        ).order_by(Classer.point.desc()).all()
+        
+        rang = 1
+        for score in tous_les_scores:
+            if score.id_competition == classement_utilisateur.id_competition:
+                break
+            rang += 1
+            
+        resultats_finaux.append({
+            'competition': evenement,
+            'points': classement_utilisateur.point,
+            'rang': rang
+        })
+
+    return render_template('res_passe_membre.html', resultats=resultats_finaux)
 
 @app.route('/change_password', methods=['POST'])
 @login_required

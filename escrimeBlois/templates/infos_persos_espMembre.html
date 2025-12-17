@@ -1,4 +1,14 @@
-{% extends "nav_membres.html" %}{% block membre %}
+{% extends "nav_membres.html" if current_user.role == 'membre' else "nav_responsable.html" %}
+
+{% block membre %}
+    {{ self.page_content() }}
+{% endblock %}
+
+{% block section_resp %}
+    {{ self.page_content() }}
+{% endblock %}
+
+{% block page_content %}
 <div id="blank_space"></div>
 <div class="infos-container-v2">
     {% with messages = get_flashed_messages(with_categories=true) %}
