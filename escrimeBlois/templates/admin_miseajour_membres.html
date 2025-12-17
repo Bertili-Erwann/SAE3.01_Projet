@@ -1,16 +1,15 @@
 {% extends "base.html" %} {% block main %}
-<main id="admin_nav" role="admin_nav" class="container-fluid p-0">
-  {% include "admin_nav_bar.html" %}
-</main>
+{% include "admin_nav_bar.html" %} 
+
 <div>
-  <h1>Liste des membres du club</h1>
+  <h1 id="titre_maj_membre" >Liste des membres du club</h1>
 
   <!-- RESPONSABLES -->
   <div id="banniere_responsable">
     <p>Responsables</p>
   </div>
   {% if responsables|length == 0 %}
-  <h1>Aucun responsable trouvé</h1>
+  <h1 id="personne_non_trouve">Aucun responsable trouvé</h1>
   {% else %}
   <div class="limiter">
     <div id="container_table_form">
@@ -41,15 +40,15 @@
         </div>
       </div>
     </div>
-    {% endif %}
   </div>
+  {% endif %}
 
   <!-- MEMBRES -->
   <div id="banniere_membre">
     <p>Membres</p>
   </div>
   {% if membres|length == 0 %}
-  <h1>Aucun membre trouvé</h1>
+  <h1 id="personne_non_trouve">Aucun membre trouvé</h1>
   {% else %}
   <div class="limiter">
     <div id="container_table_form">
@@ -80,7 +79,7 @@
         </div>
       </div>
     </div>
-    {% endif %}
   </div>
+  {% endif %}
 
 {% endblock %}
