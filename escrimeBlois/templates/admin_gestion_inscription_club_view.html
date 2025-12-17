@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block main %}
+<main id="admin_nav" role="admin_nav" class="container-fluid p-0">
+  {% include "admin_nav_bar.html" %}{% include "admin_nav_inscription.html" %} 
+</main>
+<div class="inscription_view">
+  <h2>Inscription de {{ demande.nom }} {{ demande.prenom }}</h2>
+  <a href="{{ url_for('admin_inscription_club') }}">
+    <button type="button">Retour</button>
+  </a>
+
+  <div class="inscription_details">
+    <p><strong>Nom :</strong> {{ demande.nom }}</p>
+    <p><strong>Prénom :</strong> {{ demande.prenom }}</p>
+    <p><strong>Numéro de téléphone :</strong> {{ demande.num_tel }}</p>
+    <p><strong>Adresse :</strong> {{ demande.adresse_postale }}</p>
+    <p><strong>Email :</strong> {{ demande.adresse_mail }}</p>
+    <p><strong>Date de naissance :</strong> {{ demande.date_naissance }}</p>
+    <p><strong>Sexe :</strong> {{ demande.sexe }}</p>
+    <p><strong>Scolarisé/Étudiant :</strong> {% if demande.eleve %}Oui{% else %}Non{% endif %}</p>
+    {% if demande.justificatif %}
+    <p><strong>Justificatif :</strong> <a href="#">{{ demande.justificatif }}</a></p>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('admin_inscription_club_view', id_inscription=demande.id_inscription) }}" class="inscription_buttons">
+      <button type="submit" name="action" value="accepter" onclick="return confirm('Voulez-vous vraiment accepter cette demande et créer un nouveau membre ?');">Accepter</button>
+      <button type="submit" name="action" value="refuser" onclick="return confirm('Voulez-vous vraiment refuser et supprimer cette demande ?');">Refuser</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

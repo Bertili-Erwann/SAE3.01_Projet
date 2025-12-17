@@ -28,19 +28,22 @@ class Personne(UserMixin, db.Model):
         nom_personne (str): Nom de famille.
         prenom_personne (str): Prénom.
         email_personne (str): Adresse email.
+        telephone (str): Numéro de telephone
         sexe (str): Sexe (1 caractère).
         adresse (str): Adresse postale.
         date_naissance (Date): Date de naissance.
-        etudiant (bool): Indique si la personne est étudiante.
+        eleve (bool): Indique si la personne est étudiante.
         arme_principale (str): Arme principale (épée, fleuret, sabre).
         niveau (str): Niveau de compétence.
         role (str): Rôle ('personne', 'membre', 'responsable', 'admin').
+        telephone (str): Numéro de téléphone.
     """
     id_personne = db.Column(db.Integer, primary_key=True)
     mdp = db.Column(db.String(64))
     nom_personne = db.Column(db.String(64))
     prenom_personne = db.Column(db.String(64))
     email_personne = db.Column(db.String(64))
+    telephone = db.Column(db.String(64))
     sexe = db.Column(db.String(1))
     adresse = db.Column(db.String(64))
     date_naissance = db.Column(db.Date)
@@ -65,6 +68,14 @@ class Personne(UserMixin, db.Model):
             ValueError: Si les champs requis ne sont pas remplis ou si des champs en trop sont présents.
         """
         match value:
+            case "membre" | "responsable":
+                # TOUS les champs requis doivent être remplis
+                if (self.eleve is None or self.arme_principale is None
+                        or self.niveau is None or self.sexe is None
+                        or self.adresse is None
+                        or self.date_naissance is None):
+                    raise ValueError(
+                        f"Le  '{value}' n'a pas rempli un des champs requis")
             case "personne" | "admin":
                 if self.eleve is not None or self.arme_principale is not None or self.niveau is not None:
                     raise ValueError(f"'{value}' a des informations en trop")
@@ -107,7 +118,7 @@ class Demande_inscription(db.Model):
         adresse_mail (str): Adresse email.
         adresse_postale (str): Adresse postale.
         scolarisee (bool): Indique si la personne est scolarisée.
-        etudiant (bool): Indique si la personne est étudiante.
+        eleve (bool): Indique si la personne est étudiante.
         justificatif (str): Justificatif fourni.
     """
     id_inscription = db.Column(db.Integer, primary_key=True)
@@ -152,18 +163,20 @@ class Evenement(db.Model):
         categorie (str): Catégorie de l'événement.
         lieu (str): Lieu de l'événement.
         description (str): Description de l'événement.
+        sexe (str): Sexe requis (pour compétitions).
         niveau (str): Niveau requis (pour compétitions).
         discipline (str): Discipline (pour compétitions).
         cooperative (str): Partenaire coopératif (pour compétitions).
         type_evenement (str): Type ('competition' ou autre).
     """
     id_evenement = db.Column(db.Integer, primary_key=True)
+    nom = db.Column(db.String(64))
     date = db.Column(db.Date)
     heure = db.Column(db.Integer)
     categorie = db.Column(db.String(30))
     lieu = db.Column(db.String(64))
     description = db.Column(db.String(255))
-
+    sexe = db.Column(db.String(1))
     niveau = db.Column(db.String(10))
     discipline = db.Column(db.String(60))
     cooperative = db.Column(db.String(60))
@@ -221,10 +234,24 @@ class Inscription(db.Model):
     Attributs:
         id_inscription (int): Clé primaire.
         id_evenement (int): Clé étrangère vers Evenement.
+        nom (str): Nom de la personne.
+        prenom (str): Prénom de la personne.
     """
     id_inscription = db.Column(db.Integer, primary_key=True)
     id_evenement = db.Column(db.Integer,
                              db.ForeignKey("evenement.id_evenement"))
+    nom = db.Column(db.String(64))
+    prenom = db.Column(db.String(64))
+    email = db.Column(db.String(64))
+    date_naissance = db.Column(db.Date)
+    sexe = db.Column(db.String(1))
+    categorie = db.Column(db.String(30))
+    justificatif = db.Column(db.String(255))
+
+    # Relations
+    evenement = db.relationship("Evenement",
+                                backref=db.backref("inscriptions",
+                                                   lazy="dynamic"))
 
     def __repr__(self) -> str:
         """
@@ -262,13 +289,13 @@ class Classer(db.Model):
                                primary_key=True)
     point = db.Column(db.Integer)
 
-    @validates('id_competition')
+    @validates('id_inscription')
     def validate_evenement_type(self, key: str, value: int) -> int:
         """
         Valide que l'événement est une compétition.
         
         Args:
-            key (str): Le nom de l'attribut ('id_competition').
+            key (str): Le nom de l'attribut ('id_inscription').
             value (int): L'ID de l'événement.
         
         Returns:
@@ -318,7 +345,6 @@ class Formulaire(db.Model):
     """
     id_formulaire = db.Column(db.Integer, primary_key=True)
     nom_auteur = db.Column(db.String(64))
-    prenom_auteur = db.Column(db.String(64))
     email_auteur = db.Column(db.String(64))
     objet = db.Column(db.String(100))
     message = db.Column(db.String(500))

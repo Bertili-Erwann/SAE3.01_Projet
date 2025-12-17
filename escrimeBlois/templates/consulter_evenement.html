@@ -1,0 +1,90 @@
+{% extends "nav_event.html" %}
+
+{% block section_event %}
+<div class="consultation-container">
+    
+    <div class="page-title-box">
+        <h2>Évènement - Calendrier - Consultation</h2>
+    </div>
+
+    <!-- Informations Événement -->
+    <div class="consultation-section">
+        <h3>Informations Événement</h3>
+        <div class="consultation-grid">
+            <div class="consultation-item">
+                <span class="consultation-label">Nom Événement</span>
+                <span class="consultation-value">{{ evenement.nom }}</span>
+            </div>
+            <div class="consultation-item">
+                <span class="consultation-label">Date</span>
+                <span class="consultation-value">{{ evenement.date }}</span>
+            </div>
+            <div class="consultation-item">
+                <span class="consultation-label">Heure</span>
+                <span class="consultation-value">{{ evenement.heure }}</span>
+            </div>
+            <div class="consultation-item">
+                <span class="consultation-label">Catégorie</span>
+                <span class="consultation-value">{{ evenement.categorie if evenement.categorie else '-' }}</span>
+            </div>
+            <div class="consultation-item">
+                <span class="consultation-label">Lieu</span>
+                <span class="consultation-value">{{ evenement.lieu }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Description Événement -->
+    <div class="consultation-section">
+        <h3>Description Événement</h3>
+        <div class="consultation-description">
+            <p>{{ evenement.description }}</p>
+        </div>
+    </div>
+
+    <!-- Informations Supplémentaires -->
+    <div class="consultation-section">
+        <h3>Informations Supplémentaires</h3>
+        <div class="consultation-grid">
+            <div class="consultation-item">
+                <span class="consultation-label">Discipline</span>
+                <span class="consultation-value">{{ evenement.discipline if evenement.discipline else '-' }}</span>
+            </div>
+            <div class="consultation-item">
+                <span class="consultation-label">Sexe</span>
+                <span class="consultation-value">Mixte</span>
+            </div>
+            <div class="consultation-item">
+                <span class="consultation-label">Jeu</span>
+                <span class="consultation-value">{{ evenement.cooperative if evenement.cooperative else '-' }}</span>
+            </div>
+            <div class="consultation-item">
+                <span class="consultation-label">Niveau</span>
+                <span class="consultation-value">{{ evenement.niveau if evenement.niveau else '-' }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="consultation-actions">
+        <a href="{{ url_for('calendrier') }}" class="btn-action btn-retour">Retour</a>
+        {% if evenement.type_evenement != 'reunion' %}
+            {% if current_user.is_authenticated %}
+                <button type="button" class="btn-action btn-register" data-bs-toggle="modal" data-bs-target="#confirmInscriptionModal">
+                    S'inscrire
+                </button>
+            {% else %}
+                <a href="{{ url_for('inscription_event', id_evenement=evenement.id_evenement) }}" class="btn-action btn-register">S'inscrire</a>
+            {% endif %}
+        {% endif %}
+    </div>
+
+</div>
+
+{% include "confirmation_insc_event.html" %}
+{% include "succes_insc_event.html" %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/inscription_event.js') }}"></script>
+{% endblock %}

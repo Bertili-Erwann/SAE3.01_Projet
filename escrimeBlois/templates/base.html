@@ -6,7 +6,8 @@
     <title>{% block title %}{% endblock %}</title>
     <!-- Initialisation JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../static/js/loupe_recherche.js"></script>
+    <script src="{{ url_for('static', filename='js/loupe_recherche.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/password_toggle.js') }}"></script>
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -30,7 +31,7 @@
 
           <!-- BOUTON EVENEMENT -->
           <li class="nav-item">
-            <a class="nav-link" href="">Événement</a>
+            <a class="nav-link" href="{{ url_for ('calendrier')}}">Événement</a>
           </li>
 
           <!-- BOUTON RENSEIGNEMENT  -->
@@ -40,12 +41,16 @@
 
           <!-- BOUTON HISTORIQUE  -->
           <li class="nav-item">
-            <a class="nav-link" href="">Historique</a>
+            <a class="nav-link" href="{{url_for ('historique')}}">Historique</a>
           </li>
 
           <!-- BOUTON SE CONNECTER  -->
           <li class="nav-item">
-            <a class="nav-link" href="">Se connecter</a>
+            {% if current_user.is_authenticated %}
+            <a class="nav-link" href="{{ url_for ('logout')}}">Se déconnecter</a>
+            {% else %}
+            <a class="nav-link" href="{{ url_for ('login')}}">Se connecter</a>
+            {% endif %}
           </li>
         </ul>
       </div>
@@ -54,7 +59,7 @@
         <input
           class="form-image"
           type="image"
-          src="../static/images/loupe_recherche.png"
+          src="{{ url_for('static', filename='images/loupe_recherche.png') }}"
           width="20"
           height="20"
           name="loupe"
