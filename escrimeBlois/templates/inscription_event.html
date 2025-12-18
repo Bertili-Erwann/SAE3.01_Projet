@@ -1,0 +1,65 @@
+{% extends "nav_event.html" %}
+
+{% block section_event %}
+<div class="consultation-container">
+    <div class="page-title-box">
+        <h2>Événement - Calendrier - Inscription d'un visiteur</h2>
+    </div>
+
+    <div class="consultation-section">
+        <h3>Information a entrer</h3>
+        <form method="POST" enctype="multipart/form-data" class="inscription-form">
+            {{ formInsc.hidden_tag() }}
+            
+            <div class="form-group">
+                <label for="nom">Nom</label>
+                {{ formInsc.nom(class="form-control", placeholder=" Veuillez entrer votre nom ") }}
+            </div>
+
+            <div class="form-group">
+                <label for="prenom">Prenom</label>
+                {{ formInsc.prenom(class="form-control", placeholder=" Veuillez entrer votre prenom ") }}
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                {{ formInsc.email(class="form-control", placeholder=" Veuillez entrer votre email") }}
+            </div>
+
+            <div class="form-group">
+                <label for="date_naissance">Date de naissance</label>
+                {{ formInsc.date_naissance(class="form-control", placeholder="jj/mm/aaaa") }}
+            </div>
+
+            <div class="form-group">
+                <label>Sexe</label>
+                <div class="radio-group">
+                    {% for subfield in form.sexe %}
+                        <div class="radio-item">
+                            {{ subfield }}
+                            {{ subfield.label }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="categorie">Catégorie</label>
+                {{ formInsc.categorie(class="form-control", readonly=True) }}
+            </div>
+
+            <div class="form-group">
+                <label for="justificatif">Justificatif de catégorie</label>
+                <div class="file-input-wrapper">
+                    {{ formInsc.justificatif(class="form-control") }}
+                </div>
+            </div>
+
+            <div class="inscription-actions">
+                <a href="{{ url_for('consulter_evenement', id_evenement=id_evenement) }}" class="btn-cancel">Retour</a>
+                <button type="submit" class="btn-confirm">Confirmer</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -52,7 +52,7 @@ def loaddb(filename: str) -> None:
     for ev in data["evenements"]:
         date_evenement = datetime.date.fromisoformat(ev['date'])
         evenement = Evenement(id_evenement=ev['id_evenement'],
-                              nom=ev.get('nom'),
+                              nom=ev['nom'],
                               date=date_evenement,
                               heure=ev['heure'],
                               categorie=ev.get('categorie'),
@@ -101,7 +101,6 @@ def loaddb(filename: str) -> None:
     for form in data["formulaires"]:
         formul = Formulaire(id_formulaire=form['id_formulaire'],
                             nom_auteur=form['nom_auteur'],
-                            prenom_auteur=form['prenom_auteur'],
                             email_auteur=form['email_auteur'],
                             objet=form['objet'],
                             message=form['message'])
@@ -261,3 +260,30 @@ def nouvpers(nom: str, prenom: str, role_user: str, pwd: str, mail: str,
     db.session.add(pers)
     db.session.commit()
     lg.info('Utilisateur %s crée', prenom)
+    
+@app.cli.command()
+def users():
+   """Liste tous les utilisateurs de la base."""
+   users = Personne.query.all()
+   print(f"\n--- {len(users)} utilisateurs trouvés ---\n")
+  
+   for u in users:
+       print(f"ID             : {u.id_personne}")
+       print(f"Nom            : {u.nom_personne}")
+       print(f"Prénom         : {u.prenom_personne}")
+       print(f"Email          : {u.email_personne}")
+       print(f"Rôle           : {u.role}")
+       print(f"Téléphone      : {u.telephone}")
+       print(f"Sexe           : {u.sexe}")
+       print(f"Date naissance : {u.date_naissance}")
+       print(f"Adresse        : {u.adresse}")
+      
+       # Champs spécifiques (peuvent être None selon le rôle)
+       print(f"Élève (statut) : {u.eleve}")
+       print(f"Arme           : {u.arme_principale}")
+       print(f"Niveau         : {u.niveau}")
+      
+       # On affiche le hash du mot de passe pour vérifier qu'il n'est pas vide
+       print(f"Mdp (hash)     : {u.mdp}")
+      
+       print("-" * 40) # Une ligne de séparation pour la lisibilité

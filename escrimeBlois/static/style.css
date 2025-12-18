@@ -16,9 +16,12 @@
 @import url('css/historique.css');
 @import url('css/inscription.css');
 @import url('css/renseignement.css');
+@import url('css/evenement.css');
 
 /* Sections communes */
 @import url('css/footer.css');
+@import url('css/articles.css');
+
 
 /* RESPONSABLE */
 @import url('css/responsable.css');
@@ -28,4 +31,3 @@
 @import url('css/inscriptions.css');
 /* mise a jour membre */
 @import url('css/miseajour_membre_admin.css');
-

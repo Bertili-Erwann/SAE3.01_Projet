@@ -2,8 +2,6 @@ from .app import db
 from flask_login import UserMixin
 from .app import login_manager
 from sqlalchemy.orm import validates
-from sqlalchemy_media import File
-from sqlalchemy import JSON
 
 
 @login_manager.user_loader
@@ -71,10 +69,13 @@ class Personne(UserMixin, db.Model):
         """
         match value:
             case "membre" | "responsable":
-            # TOUS les champs requis doivent être remplis
-                if (self.eleve is None or self.arme_principale is None or self.niveau is None or 
-                    self.sexe is None or self.adresse is None or self.date_naissance is None):
-                    raise ValueError(f"Le  '{value}' n'a pas rempli un des champs requis")
+                # TOUS les champs requis doivent être remplis
+                if (self.eleve is None or self.arme_principale is None
+                        or self.niveau is None or self.sexe is None
+                        or self.adresse is None
+                        or self.date_naissance is None):
+                    raise ValueError(
+                        f"Le  '{value}' n'a pas rempli un des champs requis")
             case "personne" | "admin":
                 if self.eleve is not None or self.arme_principale is not None or self.niveau is not None:
                     raise ValueError(f"'{value}' a des informations en trop")
@@ -130,7 +131,7 @@ class Demande_inscription(db.Model):
     adresse_mail = db.Column(db.String(64))
     adresse_postale = db.Column(db.String(64))
     eleve = db.Column(db.Boolean)
-    justificatif = db.Column(File.as_mutable(JSON))
+    justificatif = db.Column(db.String(255))
 
     def __repr__(self) -> str:
         """
@@ -285,13 +286,13 @@ class Classer(db.Model):
                                primary_key=True)
     point = db.Column(db.Integer)
 
-    @validates('id_competition')
+    @validates('id_inscription')
     def validate_evenement_type(self, key: str, value: int) -> int:
         """
         Valide que l'événement est une compétition.
         
         Args:
-            key (str): Le nom de l'attribut ('id_competition').
+            key (str): Le nom de l'attribut ('id_inscription').
             value (int): L'ID de l'événement.
         
         Returns:
@@ -341,7 +342,6 @@ class Formulaire(db.Model):
     """
     id_formulaire = db.Column(db.Integer, primary_key=True)
     nom_auteur = db.Column(db.String(64))
-    prenom_auteur = db.Column(db.String(64))
     email_auteur = db.Column(db.String(64))
     objet = db.Column(db.String(100))
     message = db.Column(db.String(500))
@@ -563,3 +563,14 @@ class Gerer(db.Model):
                 f"La personne {value} doit être de type 'admin' vous avez le type {pers.role}"
             )
         return value
+
+
+class Commentaire(db.Model):
+    id_commentaire = db.Column(db.Integer, primary_key=True)
+    id_article = db.Column(db.Integer, db.ForeignKey("article.id_article"))
+    nom_aut = db.Column(db.String(30))
+    email_aut = db.Column(db.String(60))
+    message_com = db.Column(db.String(280))
+    article = db.relationship("Article",
+                              backref=db.backref("commentaires",
+                                                 lazy="dynamic"))
