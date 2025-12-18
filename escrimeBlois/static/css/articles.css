@@ -1,7 +1,7 @@
 /* ==================== articles.html  ====================*/
 .ctn-list-art {
-  margin: 50px;
-  width: 100%;
+  margin: 50px auto;
+  max-width: 1200px;
   min-height: 80vh;
 }
 
@@ -9,12 +9,14 @@
   text-decoration: none;
   color: black;
 }
+
 .art {
-  margin: 15px;
+  margin: 15px auto;
   background-color: #b8cee0b4;
   border-radius: 25px;
-  padding: 5px;
+  padding: 15px;
   width: 75%;
+  max-width: 900px;
 }
 
 .art:hover {
