@@ -16,18 +16,18 @@
     <p class="error-message">{{ message }}</p>
     {% endif %} {% endfor %} {% endif %} {% endwith %}
     <form method="POST" action="{{ url_for('login') }}">
+      {{ formAuth.hidden_tag() }}
+
       <!-- EMAIL -->
       <h2>Adresse e-mail</h2>
-      {{ formAuth.mail(size=10, class_="form-control",placeholder="Entrez votre
-      e-mail") }}
+      {{ formAuth.email(size=10, class_="form-control",placeholder="Entrez votre e-mail") }}
       <!-- MOT DE PASSE -->
       <h2>Mot de passe</h2>
       <div class="password-wrapper">
-        {{ formAuth.mail(size=10, class_="form-control",placeholder="Entrez
-        votre mot de passe") }}
+        {{ formAuth.mdp(size=10, class_="form-control",placeholder="Entrez votre mot de passe") }}
         <span
           class="toggle-password-log"
-          onclick="togglePassword('new_password', this)"
+          onclick="togglePassword('mdp', this)"
           >👁️</span
         >
       </div>

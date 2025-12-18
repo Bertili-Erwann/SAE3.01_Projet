@@ -140,7 +140,49 @@ class FormFormulaire(FlaskForm):
                        email_auteur=mail.normalized,
                        objet=self.objet.data))
         db.session.commit()
+
+
 class FormGestionLogin(FlaskForm):
     email = StringField('email', validators=[DataRequired()])
     mdp = PasswordField('Password', validators=[DataRequired()])
-    
+    email_etape_1 = StringField('email', validators=[DataRequired()])
+
+    def authenticate_user(self):
+        """
+        Authentifie l'utilisateur et retourne un tuple (user, error_message).
+        Si l'authentification réussit, retourne (user, None).
+        Sinon, retourne (None, error_message).
+        """
+        from .models import Personne
+
+        user = Personne.query.filter_by(email_personne=self.email.data).first()
+
+        if not user:
+            return None, "Email inconnu."
+
+        # Vérifier le mot de passe
+        m = sha256()
+        m.update(self.mdp.data.encode("utf-8"))
+        hashed_password = m.hexdigest()
+
+        if user.mdp == hashed_password or user.mdp == self.mdp.data:
+            return user, None
+        else:
+            return None, "Mot de passe incorrect."
+
+    def etape_1(self):
+        from .models import Personne
+        from flask_mail import Message
+        from .app import mail
+
+        user = Personne.query.filter_by(
+            email_personne=self.email_etape_1.data).first()
+        if not user:
+            return None, "Email inconnu."
+        # Envoyer un email de test
+        msg = Message('Test Email - Mot de passe oublié',
+                      recipients=[self.email_etape_1.data])
+        msg.body = 'Ceci est un email de test envoyé depuis l\'application Escrime Blois.'
+        mail.send(msg)
+
+        return user, None

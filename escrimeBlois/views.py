@@ -13,7 +13,7 @@ from escrimeBlois.models import (
     Inscription,
     Evenement,
 )
-from escrimeBlois.form import FormInscription, FormInscriptionEvent, FormFormulaire,FormGestionLogin
+from escrimeBlois.form import FormInscription, FormInscriptionEvent, FormFormulaire, FormGestionLogin
 import os
 
 
@@ -50,34 +50,25 @@ def renseignement():
 
 @app.route("/login/", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
+    formAuth = FormGestionLogin()
 
-        user = Personne.query.filter_by(email_personne=email).first()
-
+    if formAuth.validate_on_submit():
+        user, error = formAuth.authenticate_user()
         if user:
-            m = sha256()
-            m.update(password.encode("utf-8"))
-            hashed_password = m.hexdigest()
-
-            if user.mdp == hashed_password or user.mdp == password:
-                login_user(user)
-                flash("Connexion réussie !", "success")
-                if user.role == "membre":
-                    return redirect(url_for("infos_persos"))
-                elif user.role == "responsable":
-                    return redirect(
-                        url_for("ajouter_article"
-                                ))  # Exemple de redirection pour responsable
-                else:
-                    return redirect(url_for("index"))
+            login_user(user)
+            flash("Connexion réussie !", "success")
+            if user.role == "membre":
+                return redirect(url_for("infos_persos"))
+            elif user.role == "responsable":
+                return redirect(url_for("ajouter_article"))
             else:
-                flash("Mot de passe incorrect.", "error")
+                return redirect(url_for("index"))
         else:
-            flash("Email inconnu.", "error")
+            flash(error, "error")
 
-    return render_template("login.html", formAuth = FormGestionLogin ,form=FormFormulaire())
+    return render_template("login.html",
+                           formAuth=formAuth,
+                           form=FormFormulaire())
 
 
 @app.route("/logout/")
@@ -86,9 +77,17 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/logout/mdp_oublier")
+@app.route("/login/mdp_oublier", methods=["GET", "POST"])
 def mdp_oublier_etape_1():
-    return render_template("mdp_oublier_etape_1.html", form=FormFormulaire())
+    formAuth = FormGestionLogin()
+    print("q<sdojkqs pdnqspdjnqsd")
+
+    if formAuth.validate_on_submit():   
+        print("q<sdojkqs pdnqspdjnqsd")
+        print(formAuth.etape_1()[0] + "à été ajouter")
+    return render_template("mdp_oublier_etape_1.html",
+                           form=FormFormulaire(),
+                           formAuth=FormGestionLogin())
 
 
 @app.route("/inscription/", )
@@ -104,7 +103,6 @@ def insert_inscription():
     form = FormInscription()
     if form.validate_on_submit():
         form.commit_inscription()
-
     return render_template("inscription.html",
                            formInscription=form,
                            form=FormFormulaire())
