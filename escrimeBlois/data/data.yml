@@ -176,45 +176,12 @@ classers:
   - id_competition: 1  
     id_inscription: 1 
     point: 100
-  - id_competition: 2
-    id_inscription: 1
+  - id_competition: 1
+    id_inscription: 2
     point: 90
   - id_competition: 3
-    id_inscription: 1
+    id_inscription: 3
     point: 85
-  - id_competition: 4
-    id_inscription: 1
-    point: 70
-  - id_competition: 5
-    id_inscription: 3
-    point: 15
-  - id_competition: 6
-    id_inscription: 3
-    point: 12
-  - id_competition: 7
-    id_inscription: 4
-    point: 200
-  - id_competition: 8
-    id_inscription: 4
-    point: 180
-  - id_competition: 9
-    id_inscription: 16
-    point: 50
-  - id_competition: 10
-    id_inscription: 16
-    point: 45
-  - id_competition: 11
-    id_inscription: 16
-    point: 40
-  - id_competition: 12
-    id_inscription: 15
-    point: 10
-  - id_competition: 13
-    id_inscription: 15
-    point: 8
-  - id_competition: 14
-    id_inscription: 3
-    point: 10
 
 formulaires:
   - id_formulaire: 1

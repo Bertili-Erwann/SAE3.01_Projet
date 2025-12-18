@@ -2,6 +2,10 @@ from .app import db
 from flask_login import UserMixin
 from .app import login_manager
 from sqlalchemy.orm import validates
+from sqlalchemy.ext.mutable import MutableDict
+from sqlalchemy import JSON
+
+File = MutableDict
 
 
 @login_manager.user_loader
@@ -274,25 +278,25 @@ class Classer(db.Model):
     Modèle représentant le classement dans une compétition.
     
     Attributs:
-        id_competition (int): Clé étrangère vers Inscription, partie de la clé primaire.
-        id_inscription (int): Clé étrangère vers Evenement, partie de la clé primaire.
+        id_competition (int): Clé étrangère vers Evenement, partie de la clé primaire.
+        id_inscription (int): Clé étrangère vers Inscription, partie de la clé primaire.
         point (int): Points obtenus.
     """
     id_competition = db.Column(db.Integer,
-                               db.ForeignKey("inscription.id_inscription"),
+                               db.ForeignKey("evenement.id_evenement"),
                                primary_key=True)
     id_inscription = db.Column(db.Integer,
-                               db.ForeignKey("evenement.id_evenement"),
+                               db.ForeignKey("inscription.id_inscription"),
                                primary_key=True)
     point = db.Column(db.Integer)
 
-    @validates('id_inscription')
+    @validates('id_competition')
     def validate_evenement_type(self, key: str, value: int) -> int:
         """
         Valide que l'événement est une compétition.
         
         Args:
-            key (str): Le nom de l'attribut ('id_inscription').
+            key (str): Le nom de l'attribut ('id_competition').
             value (int): L'ID de l'événement.
         
         Returns:
