@@ -140,7 +140,7 @@ class FormFormulaire(FlaskForm):
                        email_auteur=mail.normalized,
                        objet=self.objet.data))
         db.session.commit()
-class FormGestionMdp(FlaskForm):
-    mail = StringField('Email', validators=[DataRequired()])
-    nom = PasswordField('Password', validators=[DataRequired()])
+class FormGestionLogin(FlaskForm):
+    email = StringField('email', validators=[DataRequired()])
+    mdp = PasswordField('Password', validators=[DataRequired()])
     

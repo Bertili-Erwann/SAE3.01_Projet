@@ -18,30 +18,22 @@
     <form method="POST" action="{{ url_for('login') }}">
       <!-- EMAIL -->
       <h2>Adresse e-mail</h2>
-      <input
-        type="email"
-        name="email"
-        placeholder="Entrez votre e-mail"
-        required
-      />
-
+      {{ formAuth.mail(size=10, class_="form-control",placeholder="Entrez votre
+      e-mail") }}
       <!-- MOT DE PASSE -->
       <h2>Mot de passe</h2>
       <div class="password-wrapper">
-        <input
-          type="password"
-          name="password"
-          id="new_password"
-          placeholder="Entrez votre mot de passe"
-          required
-        />
+        {{ formAuth.mail(size=10, class_="form-control",placeholder="Entrez
+        votre mot de passe") }}
         <span
           class="toggle-password-log"
           onclick="togglePassword('new_password', this)"
           >👁️</span
         >
       </div>
-      <a href="{{ url_for('mdp_oublier_etape_1') }}" id="passwrd-oublie">Mot de passe oublié ?</a>
+      <a href="{{ url_for('mdp_oublier_etape_1') }}" id="passwrd-oublie"
+        >Mot de passe oublié ?</a
+      >
 
       <!-- BOUTON LOGIN -->
       <input type="submit" value="Se Connecter" />

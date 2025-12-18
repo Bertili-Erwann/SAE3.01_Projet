@@ -13,7 +13,7 @@ from escrimeBlois.models import (
     Inscription,
     Evenement,
 )
-from escrimeBlois.form import FormInscription, FormInscriptionEvent, FormFormulaire
+from escrimeBlois.form import FormInscription, FormInscriptionEvent, FormFormulaire,FormGestionLogin
 import os
 
 
@@ -77,7 +77,7 @@ def login():
         else:
             flash("Email inconnu.", "error")
 
-    return render_template("login.html", form=FormFormulaire())
+    return render_template("login.html", formAuth = FormGestionLogin ,form=FormFormulaire())
 
 
 @app.route("/logout/")

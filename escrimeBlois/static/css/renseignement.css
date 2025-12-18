@@ -3,7 +3,7 @@
 /* -------------------- Blocs principaux -------------------- */
 .rens {
   border-radius: 20px;
-  background-color: #cccccc;
+  background-color: #cccccca8;
   margin: 1%;
   border-collapse: collapse;
   color: #000000;
@@ -62,7 +62,7 @@
 .deux-colonnes {
   display: flex;
   justify-content: space-between;
-  background-color: #aaaaaa;
+  background-color: #aaaaaa75;
   border-radius: 20px;
   padding: 20px;
   gap: 30px;
@@ -115,4 +115,8 @@
 .toggle:checked ~ .contenu {
   max-height: 2000px;
   padding: 1em;
+}
+
+.espaceur {
+  min-height: 80vh;
 }
