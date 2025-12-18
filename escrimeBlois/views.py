@@ -65,13 +65,11 @@ def demande_article():
 def historique():
     return render_template("historique.html", form=FormFormulaire())
 
-
 @app.route("/renseignement/")
 def renseignement():
     return render_template("renseignement.html",
                            title="renseignement",
                            form=FormFormulaire())
-
 
 @app.route("/login/", methods=["GET", "POST"])
 def login():
@@ -92,9 +90,7 @@ def login():
                 if user.role == "membre":
                     return redirect(url_for("infos_persos"))
                 elif user.role == "responsable":
-                    return redirect(
-                        url_for("ajouter_article"
-                                ))  # Exemple de redirection pour responsable
+                    return redirect(url_for("ajouter_article"))
                 else:
                     return redirect(url_for("index"))
             else:
@@ -103,12 +99,10 @@ def login():
             flash("Email inconnu.", "error")
     return render_template("login.html", form=FormFormulaire())
 
-
 @app.route("/logout/")
 def logout():
     logout_user()
     return redirect(url_for("login"))
-
 
 @app.route("/inscription/", )
 def inscription():
@@ -116,7 +110,6 @@ def inscription():
     return render_template("inscription.html",
                            formInscription=form,
                            form=FormFormulaire())
-
 
 @app.route("/inscription/insert", methods=("POST", ))
 def insert_inscription():
@@ -128,16 +121,13 @@ def insert_inscription():
                            formInscription=form,
                            form=FormFormulaire())
 
-
 @app.route("/mdp_oublier_envoyer_code/")
 def mdp_oublier_envoyer_code():
     return render_template("mdp_oublier_envoyer_code.html", form=FormFormulaire())
 
-
 @app.route("/mdp_oublier_code/")
 def mdp_oublier_code():
     return render_template("mdp_oublier_code.html", form=FormFormulaire())
-
 
 @app.route("/mdp_oublier_confirmer_mdp/", methods=["GET", "POST"])
 def mdp_oublier_confirmer_mdp():
@@ -150,17 +140,15 @@ def mdp_oublier_confirmer_mdp():
                                    form=FormFormulaire())
 
         # Ici, tu peux ajouter la logique pour mettre à jour le mot de passe en base
-        return redirect(url_for("login"))  # Ou une autre page
+        return redirect(url_for("login"))
 
     return render_template("mdp_oublier_confirmer_mdp.html", form=FormFormulaire())
-
 
 @app.route('/article/<ida>/view')
 def view_article(ida):
     art = Article.query.get(ida)
     form = FormCommentaire()
     return render_template('article_view.html', article=art, formCom=form)
-
 
 @app.route('/article/<ida>/comment', methods=["POST"])
 def insert_commentaire(ida):
@@ -195,12 +183,9 @@ def resultat():
                            selected_id=selected_competition_id,
                            form=FormFormulaire())
 
-
 @app.route('/evenement/calendrier')
 def calendrier():
-    # ---  Récupération des filtres ---
     types_selectionnes = request.args.getlist('type')
-
     ville_recherche = request.args.get('ville')
     date_debut = request.args.get('date_debut')
     date_fin = request.args.get('date_fin')
@@ -208,29 +193,19 @@ def calendrier():
     niveau = request.args.get('niveau')
     query = Evenement.query
 
-    # Filtre Type
     if types_selectionnes:
         query = query.filter(Evenement.type_evenement.in_(types_selectionnes))
-
-    # Filtre Ville
     if ville_recherche:
         query = query.filter(Evenement.lieu.ilike(f'%{ville_recherche}%'))
-
-    # Filtres Dates
     if date_debut:
         query = query.filter(Evenement.date >= date_debut)
     if date_fin:
         query = query.filter(Evenement.date <= date_fin)
-
-    # Filtres Catégorie
     if categorie and categorie != "Toutes catégories":
         query = query.filter(Evenement.categorie == categorie)
-
-    # Filtres Niveau
     if niveau and niveau != "Niveaux":
         query = query.filter(Evenement.niveau == niveau)
 
-    # Tri par date croissante
     query = query.order_by(Evenement.date.asc())
     evenements = query.all()
 
@@ -240,14 +215,12 @@ def calendrier():
                            types_selectionnes=types_selectionnes,
                            form=FormFormulaire())
 
-
 @app.route('/evenement/calendrier/consulter/<int:id_evenement>')
 def consulter_evenement(id_evenement):
     evenement = Evenement.query.get_or_404(id_evenement)
     return render_template('consulter_evenement.html',
                            evenement=evenement,
                            form=FormFormulaire())
-
 
 @app.route('/evenement/inscription/<int:id_evenement>',
            methods=['GET', 'POST'])
@@ -256,12 +229,9 @@ def inscription_event(id_evenement):
 
     if evenement.type_evenement == 'reunion':
         flash("L'inscription n'est pas disponible pour les réunions.", 'error')
-        return redirect(
-            url_for('consulter_evenement', id_evenement=id_evenement))
+        return redirect(url_for('consulter_evenement', id_evenement=id_evenement))
 
-    # Cas utilisateur connecté
     if current_user.is_authenticated:
-        # Vérifier si déjà inscrit
         deja_inscrit = Inscription.query.filter_by(
             id_evenement=id_evenement,
             nom=current_user.nom_personne,
@@ -278,16 +248,9 @@ def inscription_event(id_evenement):
                 sexe=current_user.sexe)
             db.session.add(inscription)
             db.session.commit()
-            # flash('Inscription réussie !', 'success')
-        return redirect(
-            url_for('consulter_evenement',
-                    id_evenement=id_evenement,
-                    inscription_success=True))
+        return redirect(url_for('consulter_evenement', id_evenement=id_evenement, inscription_success=True))
 
-    # Cas visiteur
     form = FormInscriptionEvent()
-
-    # Pré-remplir la catégorie avec celle de l'événement
     if request.method == 'GET' and evenement.categorie:
         form.categorie.data = evenement.categorie
 
@@ -305,16 +268,11 @@ def inscription_event(id_evenement):
             email=form.email.data,
             date_naissance=form.date_naissance.data,
             sexe=form.sexe.data,
-            categorie=form.categorie.
-            data,  # Utilise la valeur du formulaire (qui sera celle pré-remplie)
+            categorie=form.categorie.data,
             justificatif=filename)
         db.session.add(inscription)
         db.session.commit()
-        # flash('Inscription réussie !', 'success')
-        return redirect(
-            url_for('consulter_evenement',
-                    id_evenement=id_evenement,
-                    inscription_success=True))
+        return redirect(url_for('consulter_evenement', id_evenement=id_evenement, inscription_success=True))
 
     return render_template('inscription_event.html',
                            formInsc=form,
@@ -322,11 +280,8 @@ def inscription_event(id_evenement):
                            evenement=evenement,
                            form=FormFormulaire())
 
-
 # ======================================== PAGES ADMIN ========================================
 
-
-# -------------------- Gestion des inscriptions --------------------
 @app.route("/admin/")
 @app.route("/admin/gestion_inscription/club")
 def admin_inscription_club():
@@ -335,17 +290,13 @@ def admin_inscription_club():
                            demandes=demandes,
                            form=FormFormulaire())
 
-
 @app.route("/admin/gestion_inscription/club/view/<int:id_inscription>",
            methods=["GET", "POST"])
 def admin_inscription_club_view(id_inscription):
     demande = Demande_inscription.query.get_or_404(id_inscription)
-
     if request.method == "POST":
         action = request.form.get("action")
-
         if action == "accepter":
-            # Créer un nouveau membre avec les infos de la demande
             nouveau_membre = Personne(
                 mdp=demande.mot_de_passe,
                 nom_personne=demande.nom,
@@ -363,55 +314,34 @@ def admin_inscription_club_view(id_inscription):
             db.session.add(nouveau_membre)
             db.session.delete(demande)
             db.session.commit()
-
         elif action == "refuser":
-            # Supprimer la demande
             db.session.delete(demande)
             db.session.commit()
-
         return redirect(url_for("admin_inscription_club"))
-
     return render_template("admin_gestion_inscription_club_view.html",
                            demande=demande,
                            form=FormFormulaire())
 
-
 @app.route("/admin/gestion_inscription/evenement")
 def admin_inscription_evenement():
-    # Récupérer toutes les inscriptions
     inscriptions = Inscription.query.all()
     return render_template("admin_gestion_inscription_evenement.html",
                            inscriptions=inscriptions,
                            form=FormFormulaire())
 
-
-@app.route(
-    "/admin/gestion_inscription/evenement/view/<int:id_inscription>",
-    methods=["GET", "POST"],
-)
+@app.route("/admin/gestion_inscription/evenement/view/<int:id_inscription>",
+           methods=["GET", "POST"])
 def admin_inscription_evenement_view(id_inscription):
     inscription = Inscription.query.get_or_404(id_inscription)
-
     if request.method == "POST":
         action = request.form.get("action")
-
-        if action == "accepter":
-            # Valider l'inscription
-            pass
-
-        elif action == "refuser":
-            # Supprimer l'inscription
+        if action == "refuser":
             db.session.delete(inscription)
             db.session.commit()
         return redirect(url_for("admin_inscription_evenement"))
-
     return render_template("admin_gestion_inscription_evenement_view.html",
                            inscription=inscription,
                            form=FormFormulaire())
-
-
-# -------------------- Mises a jour des membres --------------------
-
 
 @app.route("/admin/miseajour/membres")
 def admin_miseajour_membres():
@@ -428,7 +358,6 @@ def admin_miseajour_membres():
                            responsables=les_responsables,
                            form=FormFormulaire())
 
-
 @app.route("/admin/supprimer/membre/<int:id_personne>", methods=["POST"])
 def supprimer_membre(id_personne):
     try:
@@ -444,15 +373,8 @@ def supprimer_membre(id_personne):
         flash("Erreur lors de la suppression", "error")
     return redirect(url_for("admin_miseajour_membres"))
 
-
-# -------------------- Mise a jour des résultat --------------------
-
-# -------------------- Création des compétition --------------------
-
-
 @app.route('/admin/creation_competition', methods=['GET', 'POST'])
 def admin_comp():
-    # Récupération des informations du formulaire
     if request.method == 'POST':
         name = request.form.get('name_create_event')
         categories = request.form.get('categories_create_event')
@@ -464,12 +386,10 @@ def admin_comp():
         sexe = request.form.get('sexe_comp')
         jeu = request.form.get('jeu_comp')
         niveau = request.form.get('niveau_comp')
-        from datetime import datetime
         date = datetime.strptime(date_str, '%Y-%m-%d').date()
         hour = datetime.strptime(hour_str, '%H:%M').time()
         heure_minutes = hour.hour * 60 + hour.minute
 
-        # Création de la compétition
         nouvel_evenement = Evenement(nom=name,
                                      date=date,
                                      heure=heure_minutes,
@@ -484,17 +404,13 @@ def admin_comp():
 
         db.session.add(nouvel_evenement)
         db.session.commit()
-
         flash('Compétition créée avec succès !', 'success')
         return redirect(url_for('admin_comp'))
 
     return render_template('admin_crea_comp.html', form=FormFormulaire())
 
-
 # ======================================== PAGES RESPONSABLE ========================================
 
-
-# -------------------- Gestion formulaires --------------------
 @app.route("/responsable/")
 @app.route("/responsable/gestion_formulaire/")
 def gest_form():
@@ -503,7 +419,6 @@ def gest_form():
                            formulaires=lesFormulaires,
                            form=FormFormulaire())
 
-
 @app.route("/responsable/consultation_formulaire/<id_formulaire>/")
 def consult_form(id_formulaire):
     unForm = Formulaire.query.get(id_formulaire)
@@ -511,25 +426,16 @@ def consult_form(id_formulaire):
                            selectedFormulaire=unForm,
                            form=FormFormulaire())
 
-
-# -------------------- Ajouter un article --------------------
-
-
 @app.route("/responsable/ajouter_article/", methods=["GET", "POST"])
 def ajouter_article():
     if request.method == "POST":
-        # Récupération des champs du formulaire
         titre = request.form.get("titre")
         description = request.form.get("description")
-        theme = request.form.get("theme")  # correspond à "thème de l'article"
-        commentable = True if request.form.get(
-            "commentable") == "on" else False
-        responsable_id = (
-            1  # exemple : à remplacer par current_user.id si tu utilises Flask-Login
-        )
+        theme = request.form.get("theme")
+        commentable = True if request.form.get("commentable") == "on" else False
+        responsable_id = 1  # À remplacer par current_user.id_personne si besoin
         fichiers = request.files.getlist("fichiers")
 
-        # Création de l'article
         article = Article(
             titre=titre,
             description=description,
@@ -538,35 +444,27 @@ def ajouter_article():
             responsable_id=responsable_id,
             date_publication=date.today(),
         )
-
         db.session.add(article)
         db.session.commit()
 
-        # Sauvegarde des fichiers uploadés
         first_image = True
         for fichier in fichiers:
             if fichier and fichier.filename != "":
-                chemin_fichier = os.path.join(app.config["UPLOAD_FOLDER"],
-                                              fichier.filename)
+                chemin_fichier = os.path.join(app.config["UPLOAD_FOLDER"], fichier.filename)
                 fichier.save(chemin_fichier)
 
-                # Création de l'image dans la BD
                 image = Image(
-                    nom_image=fichier.
-                    filename[:15],  # Tronquer si nécessaire car String(15)
-                    url_image=fichier.
-                    filename[:60]  # Tronquer si nécessaire car String(60)
+                    nom_image=fichier.filename[:15],
+                    url_image=fichier.filename[:60]
                 )
                 db.session.add(image)
                 db.session.commit()
 
-                # Lien entre article et image
                 posseder = Posseder(id_image=image.id_image,
                                     id_article=article.id_article,
                                     miniature=first_image)
                 db.session.add(posseder)
                 db.session.commit()
-
                 first_image = False
 
         flash("Article ajouté avec succès ✅", "success")
@@ -574,11 +472,8 @@ def ajouter_article():
 
     return render_template("ajout_article.html", form=FormFormulaire())
 
-
-# -------------------- Création d'un evenement --------------------
 @app.route("/responsable/creer_evenement/", methods=['GET', 'POST'])
 def create_event():
-    # Récupération des informations du formulaire
     if request.method == 'POST':
         name = request.form.get('name_create_event')
         categories = request.form.get('categories_create_event')
@@ -587,12 +482,10 @@ def create_event():
         location = request.form.get('location_create_event')
         description = request.form.get('bottom_create_event')
         type = request.form.get('types_create_event')
-        from datetime import datetime
         date = datetime.strptime(date_str, '%Y-%m-%d').date()
         hour = datetime.strptime(hour_str, '%H:%M').time()
         heure_minutes = hour.hour * 60 + hour.minute
 
-        # Création de l'événement
         nouvel_evenement = Evenement(nom=name,
                                      date=date,
                                      heure=heure_minutes,
@@ -607,26 +500,18 @@ def create_event():
 
         db.session.add(nouvel_evenement)
         db.session.commit()
-
         flash('Événement créé avec succès !', 'success')
         return redirect(url_for('create_event'))
 
     return render_template('resp_creation_event.html', form=FormFormulaire())
 
-
+# Configuration du dossier d'upload (placée ici comme dans develop)
 UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
-
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# -------------------- Information personnel --------------------
-# -------------------- Événements inscrits --------------------
-
 # ======================================== PAGES MEMBRES ========================================
-
-# -------------------- Information personnel --------------------
-
 
 @app.route("/membre/")
 @app.route("/membre/information_personnel/")
@@ -638,6 +523,31 @@ def infos_persos():
                            personne=current_user,
                            form=FormFormulaire())
 
+# Nouvelle route : événements auxquels le membre est inscrit
+@app.route('/membre/event_inscrits/')
+@login_required
+def event_inscrits():
+    if current_user.role != 'membre':
+        return redirect(url_for('index'))
+    
+    inscriptions = Inscription.query.filter_by(
+        nom=current_user.nom_personne,
+        prenom=current_user.prenom_personne
+    ).all()
+    
+    evenements_inscrits = [insc.evenement for insc in inscriptions if insc.evenement]
+    
+    return render_template('event_inscrits.html', evenements=evenements_inscrits, form=FormFormulaire())
+
+# Nouvelle route : consultation détaillée d'un événement depuis l'espace membre
+@app.route('/consult_event/<int:id_event>/')
+@login_required
+def consult_event(id_event):
+    if current_user.role != 'membre':
+        return redirect(url_for('index'))
+    
+    event = Evenement.query.get_or_404(id_event)
+    return render_template('consult_event.html', event=event, form=FormFormulaire())
 
 @app.route("/membre/information_personnel/changer_mdp/", methods=["POST"])
 @login_required
@@ -653,21 +563,15 @@ def change_password():
         flash("Les mots de passe ne correspondent pas.", "error")
         return redirect(url_for("infos_persos"))
 
-    # Vérification de la complexité du mot de passe
     if len(new_password) < 8:
         flash("Le mot de passe doit contenir au moins 8 caractères.", "error")
         return redirect(url_for("infos_persos"))
 
-    if not any(c.isalpha()
-               for c in new_password) or not any(c.isdigit()
-                                                 for c in new_password):
-        flash(
-            "Le mot de passe doit contenir au moins une lettre et un chiffre.",
-            "error")
+    if not any(c.isalpha() for c in new_password) or not any(c.isdigit() for c in new_password):
+        flash("Le mot de passe doit contenir au moins une lettre et un chiffre.", "error")
         return redirect(url_for("infos_persos"))
 
     try:
-        # Hasher le nouveau mot de passe
         m = sha256()
         m.update(new_password.encode("utf-8"))
         hashed_password = m.hexdigest()
@@ -676,28 +580,21 @@ def change_password():
         flash("Votre mot de passe a été mis à jour avec succès.", "success")
     except Exception as e:
         db.session.rollback()
-        flash(
-            "Une erreur est survenue lors de la mise à jour du mot de passe.",
-            "error")
-        app.logger.error(
-            f"Erreur lors du changement de mot de passe: {str(e)}")
+        flash("Une erreur est survenue lors de la mise à jour du mot de passe.", "error")
+        app.logger.error(f"Erreur lors du changement de mot de passe: {str(e)}")
 
     return redirect(url_for("infos_persos"))
 
-
-@app.route("/membre/information_personnel/updt_arme_principale",
-           methods=["POST"])
+@app.route("/membre/information_personnel/updt_arme_principale", methods=["POST"])
 @login_required
 def update_arme():
     arme = request.form.get("arme_principale")
     try:
         current_user.arme_principale = arme
         db.session.commit()
-        flash("Votre arme principale a été mise à jour avec succès.",
-              "success")
+        flash("Votre arme principale a été mise à jour avec succès.", "success")
     except Exception as e:
         db.session.rollback()
-        flash("Une erreur est survenue lors de la mise à jour de l'arme.",
-              "error")
+        flash("Une erreur est survenue lors de la mise à jour de l'arme.", "error")
         app.logger.error(f"Erreur lors de la mise à jour de l'arme: {str(e)}")
     return redirect(url_for('infos_persos'))

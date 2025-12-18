@@ -1,0 +1,45 @@
+{% extends "nav_membres.html" %} 
+
+{% block membre %}
+<main id="gest_form">
+    {% if evenements|length == 0 %}
+    <h1 class="text_form">Aucun événement inscrit</h1>
+    {% else %}
+    <h1 class="text_form">Événements inscrits</h1>
+    <div class="limiter">
+        <div id="container_table_event_inscrits">
+            <div class="wrap-table100">
+                <div id="table_form">
+                    <div class="table100-body js-pscroll">
+                        <table class="event-table">
+                            <thead>
+                                <tr>
+                                    <th class="table-th">Événement</th>
+                                    <th class="table-th">Date</th>
+                                    <th class="table-th">Type</th>
+                                    <th class="table-th">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for event in evenements %}
+                                    <tr>
+                                        <td class="table-td">{{ event.nom }}</td>
+                                        <td class="table-td">{{ event.date }}</td>
+                                        <td class="table-td">{{ event.type_evenement }}</td>
+                                        <td class="table-td">
+                                            <form action="{{ url_for('consult_event', id_event=event.id_evenement) }}" method="post">
+                                                <button type="submit" value="Consulter" class="event_buttons">Consulter</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    </div>
+</main>
+{% endblock %}
