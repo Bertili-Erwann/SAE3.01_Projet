@@ -243,8 +243,7 @@ def ajouter_article():
                 
                 first_image = False
 
-        flash("Article ajouté avec succès ✅", "success")
-        return redirect(url_for('ajouter_article'))
+        return render_template('ajout_article.html', success=True)
 
     return render_template('ajout_article.html')
 
