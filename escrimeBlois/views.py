@@ -12,16 +12,17 @@ from escrimeBlois.models import (
     Demande_inscription,
     Inscription,
     Evenement,
-    Article,  # Ajouté pour les nouvelles routes articles
-    Image,  # Ajouté pour la gestion des images dans ajouter_article
-    Posseder,  # Ajouté pour le lien article ↔ image
+    Article,
+    Image,
+    Posseder,
+    Classer,
 )
 from escrimeBlois.form import (
     FormInscription,
     FormInscriptionEvent,
     FormFormulaire,
-    FormRechercheArticle,  # Ajouté pour la recherche sur l'index
-    FormCommentaire,  # Ajouté pour les commentaires
+    FormRechercheArticle,
+    FormCommentaire,
 )
 import os
 
@@ -444,6 +445,46 @@ def admin_comp():
         return redirect(url_for('admin_comp'))
 
     return render_template('admin_crea_comp.html', form=FormFormulaire())
+  @app.route('/admin/resultats', methods=['GET'])
+def admin_resultat():
+    competitions = Evenement.query.filter_by(type_evenement='competition').all()
+    
+    selected_competition_id = request.args.get('competition')
+    classements = []
+    
+    if selected_competition_id:
+        classements = db.session.query(Classer, Inscription, Personne).join(
+            Inscription, Classer.id_competition == Inscription.id_inscription
+        ).outerjoin(
+            Personne, Inscription.email == Personne.email_personne
+        ).filter(
+            Classer.id_inscription == selected_competition_id
+        ).order_by(Classer.point.desc()).all()
+        
+    return render_template("admin_maj_res.html", competitions=competitions, classements=classements, selected_id=selected_competition_id)
+
+
+@app.route('/admin/resultats/update', methods=['POST'])
+def update_points():
+    competition_id = request.form.get('competition_id')
+    
+    for key, value in request.form.items():
+        if key.startswith('points_'):
+            try:
+                _, id_event, id_insc = key.split('_')
+                points = value
+                
+                if points:
+                    classer = Classer.query.filter_by(id_inscription=id_event, id_competition=id_insc).first()
+                    if classer:
+                        classer.point = points
+            except ValueError:
+                continue
+                
+    db.session.commit()
+    flash('Points mis à jour avec succès', 'success')
+        
+    return redirect(url_for('admin_resultat', competition=competition_id))
 
 
 # ======================================== PAGES RESPONSABLE ========================================
@@ -468,19 +509,22 @@ def consult_form(id_formulaire):
 
 @app.route("/responsable/ajouter_article/", methods=["GET", "POST"])
 def ajouter_article():
-    if request.method == "POST":
-        titre = request.form.get("titre")
-        description = request.form.get("description")
-        theme = request.form.get("theme")
-        commentable = True if request.form.get(
-            "commentable") == "on" else False
-        responsable_id = 1  # À remplacer par current_user.id_personne si besoin
-        fichiers = request.files.getlist("fichiers")
+    if request.method == 'POST':
+        # Récupération des champs du formulaire
+        titre = request.form.get('titre')
+        description = request.form.get('description')
+        theme = request.form.get('theme')
+        lien = request.form.get('lien')
+        commentable = True if request.form.get('commentable') == 'on' else False
+        responsable_id = current_user.id_personne
+        fichiers = request.files.getlist('fichiers')
 
+        # Création de l'article
         article = Article(
             titre=titre,
             description=description,
             categorie=theme,
+            lien=lien,
             commentable=commentable,
             responsable_id=responsable_id,
             date_publication=date.today(),
@@ -546,12 +590,17 @@ def create_event():
 
     return render_template('resp_creation_event.html', form=FormFormulaire())
 
-
-# Configuration du dossier d'upload (placée ici comme dans develop)
+# Configuration unique des dossiers d'upload (inclut JUSTIFICATIF_FOLDER)
 UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
+JUSTIFICATIF_FOLDER = os.path.join(os.getcwd(), 'escrimeBlois', 'justificatifs')
+
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
+if not os.path.exists(JUSTIFICATIF_FOLDER):
+    os.makedirs(JUSTIFICATIF_FOLDER)
+
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+app.config["JUSTIFICATIF_FOLDER"] = JUSTIFICATIF_FOLDER
 
 # ======================================== PAGES MEMBRES ========================================
 
@@ -566,8 +615,7 @@ def infos_persos():
                            personne=current_user,
                            form=FormFormulaire())
 
-
-# Nouvelle route : événements auxquels le membre est inscrit
+# Événements auxquels le membre est inscrit
 @app.route('/membre/event_inscrits/')
 @login_required
 def event_inscrits():
@@ -587,18 +635,49 @@ def event_inscrits():
                            form=FormFormulaire())
 
 
-# Nouvelle route : consultation détaillée d'un événement depuis l'espace membre
-@app.route('/consult_event/<int:id_event>/')
+@app.route('/membre/consult_event/<int:id_event>/')
 @login_required
-def consult_event(id_event):
+def membre_consult_event(id_event):
     if current_user.role != 'membre':
         return redirect(url_for('index'))
 
     event = Evenement.query.get_or_404(id_event)
-    return render_template('consult_event.html',
-                           event=event,
-                           form=FormFormulaire())
+    return render_template('membre_consult_event.html', evenement=event, form=FormFormulaire())
 
+# Résultats passés du membre
+@app.route('/membre/resultats_passes/')
+@login_required
+def resultats_passes():
+    if current_user.role != 'membre' and current_user.role != 'responsable':
+        return redirect(url_for('index'))
+    
+    resultats = db.session.query(Evenement, Classer).join(
+        Inscription, Inscription.id_evenement == Evenement.id_evenement
+    ).join(
+        Classer, Classer.id_competition == Inscription.id_inscription
+    ).filter(
+        Inscription.email == current_user.email_personne
+    ).order_by(Evenement.date.desc()).all()
+    
+    resultats_finaux = []
+    for evenement, classement_utilisateur in resultats:
+        tous_les_scores = db.session.query(Classer).filter(
+            Classer.id_inscription == evenement.id_evenement
+        ).order_by(Classer.point.desc()).all()
+        
+        rang = 1
+        for score in tous_les_scores:
+            if score.id_competition == classement_utilisateur.id_competition:
+                break
+            rang += 1
+            
+        resultats_finaux.append({
+            'competition': evenement,
+            'points': classement_utilisateur.point,
+            'rang': rang
+        })
+
+    return render_template('res_passe_membre.html', resultats=resultats_finaux, form=FormFormulaire())
 
 @app.route("/membre/information_personnel/changer_mdp/", methods=["POST"])
 @login_required

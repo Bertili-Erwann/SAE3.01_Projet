@@ -64,7 +64,7 @@ evenements:
     niveau: "Régional"
     discipline: "Épée"
     cooperative: "Individuel"
-    type_evenement: "competition"
+    type_evenement: "Compétition"
   - id_evenement: 2
     nom: "Session d'Inscription"
     date: "2025-10-26"
@@ -88,7 +88,7 @@ evenements:
     niveau: "Club"
     discipline: "Fleuret"
     cooperative: "Individuel"
-    type_evenement: "competition"
+    type_evenement: "Compétition"
   - id_evenement: 4
     nom: "Entraînement Hebdomadaire"
     date: "2025-11-10"
@@ -256,6 +256,7 @@ articles:
     date_publication: "2025-10-20"
     description: "Nous sommes ravis d'accueillir tous nos membres, anciens et nouveaux, pour cette nouvelle saison d'escrime à Blois qui s'annonce riche en émotions et en événements sportifs."
     categorie: "Actualités"
+    lien: null
     commentable: true
     responsable_id: 2
 

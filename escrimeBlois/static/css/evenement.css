@@ -27,12 +27,6 @@
  font-weight: bold;
 }
 
-
-#blank_space{
- padding:25px;
-}
-
-
 #nav_responsable .nav-link {
  text-decoration: none;
  color: #333;
@@ -202,15 +196,24 @@
     background-color: #B22222; 
 }
 
+.table-scroll-container {
+    max-height: 600px;
+    overflow-y: auto;
+    border: 2px solid black;
+}
+
 .events-table { 
     width: 100%; 
     border-collapse: separate; 
     border-spacing: 0; 
-    border: 2px solid black; 
     background-color: #dcdcdc; 
+    border: none;
 }
 
 .events-table th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
     background-color: #dcdcdc;
     color: white;
     font-size: 1.3rem;
