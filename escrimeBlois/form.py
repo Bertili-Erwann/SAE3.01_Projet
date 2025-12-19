@@ -96,13 +96,9 @@ class FormInscriptionEvent(FlaskForm):
     prenom = StringField('Prénom', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
     date_naissance = DateField('Date de naissance', validators=[DataRequired()])
-    sexe = RadioField('Sexe',
-                      choices=[('H', 'Homme'), ('F', 'Femme')],
-                      validators=[DataRequired()])
-    categorie = StringField('Catégorie', validators=[DataRequired()])
-    justificatif = FileField('Justificatif de catégorie')
-
-
+    sexe = RadioField('Sexe', choices=[('H', 'Homme'), ('F', 'Femme')], validators=[DataRequired()])
+    justificatif = FileField('Justificatif de catégorie', validators=[DataRequired()])
+   
 class FormFormulaire(FlaskForm):
     nom = StringField('Nom', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
@@ -143,8 +139,7 @@ class FormFormulaire(FlaskForm):
             )
         )
         db.session.commit()
-
-
+        
 class FormRechercheArticle(FlaskForm):
     mois = [
         'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',

@@ -253,6 +253,9 @@ class Inscription(db.Model):
     date_naissance = db.Column(db.Date)
     justificatif = db.Column(File.as_mutable(JSON))
     id_personne = db.Column(db.Integer, db.ForeignKey("personne.id_personne"), nullable=True)
+    
+    # Relations
+    evenement = db.relationship("Evenement", backref=db.backref("inscriptions", lazy="dynamic"))
 
     def __repr__(self) -> str:
         """

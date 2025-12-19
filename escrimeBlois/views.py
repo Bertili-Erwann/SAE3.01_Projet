@@ -12,16 +12,17 @@ from escrimeBlois.models import (
     Demande_inscription,
     Inscription,
     Evenement,
-    Article,      # Ajouté pour les nouvelles routes articles
-    Image,        # Ajouté pour la gestion des images dans ajouter_article
-    Posseder,     # Ajouté pour le lien article ↔ image
+    Article,
+    Image,
+    Posseder,
+    Classer,  # Ajouté pour les résultats passés
 )
 from escrimeBlois.form import (
     FormInscription,
     FormInscriptionEvent,
     FormFormulaire,
-    FormRechercheArticle,   # Ajouté pour la recherche sur l'index
-    FormCommentaire,        # Ajouté pour les commentaires
+    FormRechercheArticle,
+    FormCommentaire,
 )
 import os
 
@@ -505,11 +506,17 @@ def create_event():
 
     return render_template('resp_creation_event.html', form=FormFormulaire())
 
-# Configuration du dossier d'upload (placée ici comme dans develop)
+# Configuration unique des dossiers d'upload (inclut JUSTIFICATIF_FOLDER)
 UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
+JUSTIFICATIF_FOLDER = os.path.join(os.getcwd(), 'escrimeBlois', 'justificatifs')
+
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
+if not os.path.exists(JUSTIFICATIF_FOLDER):
+    os.makedirs(JUSTIFICATIF_FOLDER)
+
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+app.config["JUSTIFICATIF_FOLDER"] = JUSTIFICATIF_FOLDER
 
 # ======================================== PAGES MEMBRES ========================================
 
@@ -523,7 +530,7 @@ def infos_persos():
                            personne=current_user,
                            form=FormFormulaire())
 
-# Nouvelle route : événements auxquels le membre est inscrit
+# Événements auxquels le membre est inscrit
 @app.route('/membre/event_inscrits/')
 @login_required
 def event_inscrits():
@@ -539,7 +546,7 @@ def event_inscrits():
     
     return render_template('event_inscrits.html', evenements=evenements_inscrits, form=FormFormulaire())
 
-# Nouvelle route : consultation détaillée d'un événement depuis l'espace membre
+# Consultation détaillée d'un événement depuis l'espace membre
 @app.route('/consult_event/<int:id_event>/')
 @login_required
 def consult_event(id_event):
@@ -548,6 +555,41 @@ def consult_event(id_event):
     
     event = Evenement.query.get_or_404(id_event)
     return render_template('consult_event.html', event=event, form=FormFormulaire())
+
+# Résultats passés du membre
+@app.route('/membre/resultats_passes/')
+@login_required
+def resultats_passes():
+    if current_user.role != 'membre' and current_user.role != 'responsable':
+        return redirect(url_for('index'))
+    
+    resultats = db.session.query(Evenement, Classer).join(
+        Inscription, Inscription.id_evenement == Evenement.id_evenement
+    ).join(
+        Classer, Classer.id_competition == Inscription.id_inscription
+    ).filter(
+        Inscription.email == current_user.email_personne
+    ).order_by(Evenement.date.desc()).all()
+    
+    resultats_finaux = []
+    for evenement, classement_utilisateur in resultats:
+        tous_les_scores = db.session.query(Classer).filter(
+            Classer.id_inscription == evenement.id_evenement
+        ).order_by(Classer.point.desc()).all()
+        
+        rang = 1
+        for score in tous_les_scores:
+            if score.id_competition == classement_utilisateur.id_competition:
+                break
+            rang += 1
+            
+        resultats_finaux.append({
+            'competition': evenement,
+            'points': classement_utilisateur.point,
+            'rang': rang
+        })
+
+    return render_template('res_passe_membre.html', resultats=resultats_finaux, form=FormFormulaire())
 
 @app.route("/membre/information_personnel/changer_mdp/", methods=["POST"])
 @login_required
