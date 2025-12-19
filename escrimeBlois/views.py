@@ -539,15 +539,14 @@ def event_inscrits():
     
     return render_template('event_inscrits.html', evenements=evenements_inscrits, form=FormFormulaire())
 
-# Nouvelle route : consultation détaillée d'un événement depuis l'espace membre
-@app.route('/consult_event/<int:id_event>/')
+@app.route('/membre/consult_event/<int:id_event>/')
 @login_required
-def consult_event(id_event):
+def membre_consult_event(id_event):
     if current_user.role != 'membre':
         return redirect(url_for('index'))
     
     event = Evenement.query.get_or_404(id_event)
-    return render_template('consult_event.html', event=event, form=FormFormulaire())
+    return render_template('membre_consult_event.html', evenement=event, form=FormFormulaire())
 
 @app.route("/membre/information_personnel/changer_mdp/", methods=["POST"])
 @login_required

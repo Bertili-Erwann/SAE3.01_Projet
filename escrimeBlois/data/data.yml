@@ -64,7 +64,7 @@ evenements:
     niveau: "Régional"
     discipline: "Épée"
     cooperative: "Individuel"
-    type_evenement: "competition"
+    type_evenement: "Compétition"
   - id_evenement: 2
     nom: "Session d'Inscription"
     date: "2025-10-26"
@@ -88,7 +88,7 @@ evenements:
     niveau: "Club"
     discipline: "Fleuret"
     cooperative: "Individuel"
-    type_evenement: "competition"
+    type_evenement: "Compétition"
   - id_evenement: 4
     nom: "Entraînement Hebdomadaire"
     date: "2025-11-10"
