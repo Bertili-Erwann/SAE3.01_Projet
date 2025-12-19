@@ -120,10 +120,6 @@ span.modifiable-v2 {
     margin-left: 0.25rem;
 }
 
-#blank_space{
-  padding: 1cm;
-}
-
 /* ==================== Infos Persos - Détails/Sommaire ==================== */
 summary {
     cursor: pointer;
