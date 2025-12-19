@@ -1,0 +1,109 @@
+{% extends "base.html" %} {% block main %}
+<main id="admin_nav" role="admin_nav" class="container-fluid p-0">
+  {% include "admin_nav_bar.html" %}
+</main>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="container mt-3">
+{% for category, message in messages %}
+<div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+{{ message }}
+<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+<div>
+    <form action="{{ url_for('admin_comp') }}" method="POST">
+        <h1 id="event_creation_title">Création d'une compétition</h1>
+        <div id="event_creation_global_container">
+            <section class="event_creation_area">
+                <div class="event_container">
+                    <p class="creation_event_text">Nom</p>
+                    <input type="text" class="creation_event_info_required_area" name="name_create_event" placeholder="Nom de l'événement" required>
+                </div>
+                <div class="event_container">
+                    <p class="creation_event_text">Catégorie</p>
+                    <select name="categories_create_event" class="creation_event_info_required_area" id="categories_create_event" required>
+                        <option value="">--Choisissez une catégorie--</option>
+                        <option value="M5">M5</option>
+                        <option value="M7">M7</option>
+                        <option value="M9">M9</option>
+                        <option value="M11">M11</option>
+                        <option value="M13">M13</option>
+                        <option value="M15">M15</option>
+                        <option value="M17">M17</option>
+                        <option value="M20">M20</option>
+                        <option value="Séniors">Séniors</option>
+                        <option value="Vétérans 1">Vétérans 1</option>
+                        <option value="Vétérans 2">Vétérans 2</option>
+                        <option value="Vétérans 3">Vétérans 3</option>
+                        <option value="Vétérans 4">Vétérans 4</option>
+                        <option value="Toutes">Toutes</option>
+                    </select>
+                </div>
+            </section>
+            <section class="event_creation_area">
+                <div class="event_container">
+                    <p class="creation_event_text">Date</p>
+                    <input type="date" class="creation_event_info_required_area" name="date_create_event" required>
+                </div>
+                <div class="event_container" id="hour_create_event_div">
+                    <p class="creation_event_text">Heure</p>
+                    <input type="time" class="creation_event_info_required_area" name="hour_create_event" required>
+                </div>
+                <div class="event_container">
+                    <p class="creation_event_text">Lieu</p>
+                    <input type="text" class="creation_event_info_required_area" name="location_create_event" placeholder="Lieu de l'événement" required>
+                </div>
+            </section>
+            <section id="event_creation__bottom_area">
+                <p>Description</p>
+                <textarea name="bottom_create_event" placeholder="Décrivez le contenu de l'entraînement." rows="11" style="width: 100%;" required></textarea>
+            </section>
+            <section class="event_creation_area">
+                <div class="event_container">
+                    <p class="creation_event_text">Discipline</p>
+                    <select name="discipline_comp" class="creation_event_info_required_area" id="discipline_comp" required>
+                        <option value="">--Choisissez une discipline--</option>
+                        <option value="epee">Épée</option>
+                        <option value="fleuret">Fleuret</option>
+                        <option value="sabre">Sabre</option>
+                    </select>
+                </div>
+                <div class="event_container">
+                    <p class="creation_event_text">Sexe</p>
+                    <select name="sexe_comp" class="creation_event_info_required_area" id="sexe_comp" required>
+                        <option value="">--Choisissez un sexe--</option>
+                        <option value="M">Homme</option>
+                        <option value="F">Femme</option>
+                    </select>
+                </div>
+            </section>
+            <section class="event_creation_area">
+                <div class="event_container">
+                    <p class="creation_event_text">Jeu</p>
+                    <select name="jeu_comp" class="creation_event_info_required_area" id="jeu_comp" required>
+                        <option value="">--Choisissez un style de jeu--</option>
+                        <option value="Individuel">Individuel</option>
+                        <option value="En équipe">En équipe</option>
+                    </select>
+                </div>
+                <div class="event_container">
+                    <p class="creation_event_text">Niveau</p>
+                    <select name="niveau_comp" class="creation_event_info_required_area" id="niveau_comp" required>
+                        <option value="">--Choisissez un niveau--</option>
+                        <option value="International">International</option>
+                        <option value="National">National</option>
+                        <option value="Régional">Régional</option>
+                        <option value="Départemental">Départemental</option>
+                        <option value="Club">Club</option>
+                    </select>
+                </div>
+            </section>
+            <input type="submit" id="create_event_save" value="Enregistrer"/>
+        </div>
+    </form>
+</div>
+{% endblock %}
