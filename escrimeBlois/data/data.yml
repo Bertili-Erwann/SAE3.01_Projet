@@ -449,6 +449,7 @@ articles:
     date_publication: "2025-10-20"
     description: "Nous sommes ravis d'accueillir tous nos membres, anciens et nouveaux, pour cette nouvelle saison d'escrime à Blois qui s'annonce riche en émotions et en événements sportifs."
     categorie: "Actualités"
+    lien: null
     commentable: true
     responsable_id: 2
 
