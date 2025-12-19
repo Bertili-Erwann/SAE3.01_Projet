@@ -1,5 +1,5 @@
 from wtforms import StringField, PasswordField, RadioField, DateField, FileField, TextAreaField, SelectField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, Length, Optional
 from flask_wtf import FlaskForm
 from hashlib import sha256
 from email_validator import validate_email, EmailNotValidError, ValidatedEmail
@@ -17,25 +17,27 @@ UPLOAD_PATH = os.path.join(os.path.dirname(__file__), 'uploads')
 os.makedirs(UPLOAD_PATH, exist_ok=True)
 
 # Configurer le stockage local avec sqlalchemy-media (meilleure pratique)
-StoreManager.register(
-    'fs',
-    functools.partial(FileSystemStore, UPLOAD_PATH, 'http://localhost:5000/uploads/'),
-    default=True
-)
+StoreManager.register('fs',
+                      functools.partial(FileSystemStore, UPLOAD_PATH,
+                                        'http://localhost:5000/uploads/'),
+                      default=True)
 
 
 class FormInscription(FlaskForm):
     nom = StringField('Nom', validators=[DataRequired()])
     prenom = StringField('Prénom', validators=[DataRequired()])
     mot_de_passe = PasswordField('Mot de passe', validators=[DataRequired()])
-    conf_mot_de_passe = PasswordField('Confirmer mot de passe', validators=[DataRequired()])
+    conf_mot_de_passe = PasswordField('Confirmer mot de passe',
+                                      validators=[DataRequired()])
     sexe = RadioField('Sexe',
                       choices=[('H', 'Homme'), ('F', 'Femme')],
                       validators=[DataRequired()])
-    date_naissance = DateField('Date de naissance', validators=[DataRequired()])
+    date_naissance = DateField('Date de naissance',
+                               validators=[DataRequired()])
     num_tel = StringField('Numéro de téléphone', validators=[DataRequired()])
     adresse_mail = StringField("Adresse mail", validators=[DataRequired()])
-    adresse_postale = StringField('Adresse postale', validators=[DataRequired()])
+    adresse_postale = StringField('Adresse postale',
+                                  validators=[DataRequired()])
     eleve = RadioField('Élève / Scolarisé',
                        choices=[('Oui', 'Oui'), ('Non', 'Non')],
                        validators=[DataRequired()])
@@ -43,7 +45,8 @@ class FormInscription(FlaskForm):
 
     @staticmethod
     def max_id() -> int:
-        max_id = db.session.query(func.max(Demande_inscription.id_inscription)).scalar()
+        max_id = db.session.query(func.max(
+            Demande_inscription.id_inscription)).scalar()
         return (int(max_id) + 1) if max_id is not None else 1
 
     def bon_mdp(self) -> bool:
@@ -51,7 +54,8 @@ class FormInscription(FlaskForm):
 
     def format_mail(self) -> ValidatedEmail:
         try:
-            return validate_email(self.adresse_mail.data, check_deliverability=False)
+            return validate_email(self.adresse_mail.data,
+                                  check_deliverability=False)
         except EmailNotValidError as e:
             print(str(e))
             raise
@@ -74,20 +78,17 @@ class FormInscription(FlaskForm):
                 justificatif_parsed = File.create_from(file_data)
 
             db.session.add(
-                Demande_inscription(
-                    id_inscription=id_inscription,
-                    nom=self.nom.data,
-                    prenom=self.prenom.data,
-                    mot_de_passe=m.hexdigest(),
-                    sexe=self.sexe.data,
-                    date_naissance=self.date_naissance.data,
-                    num_tel=self.num_tel.data,
-                    adresse_mail=mail.normalized,
-                    adresse_postale=self.adresse_postale.data,
-                    eleve=est_scolarise,
-                    justificatif=justificatif_parsed
-                )
-            )
+                Demande_inscription(id_inscription=id_inscription,
+                                    nom=self.nom.data,
+                                    prenom=self.prenom.data,
+                                    mot_de_passe=m.hexdigest(),
+                                    sexe=self.sexe.data,
+                                    date_naissance=self.date_naissance.data,
+                                    num_tel=self.num_tel.data,
+                                    adresse_mail=mail.normalized,
+                                    adresse_postale=self.adresse_postale.data,
+                                    eleve=est_scolarise,
+                                    justificatif=justificatif_parsed))
             db.session.commit()
 
 
@@ -95,7 +96,8 @@ class FormInscriptionEvent(FlaskForm):
     nom = StringField('Nom', validators=[DataRequired()])
     prenom = StringField('Prénom', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
-    date_naissance = DateField('Date de naissance', validators=[DataRequired()])
+    date_naissance = DateField('Date de naissance',
+                               validators=[DataRequired()])
     sexe = RadioField('Sexe',
                       choices=[('H', 'Homme'), ('F', 'Femme')],
                       validators=[DataRequired()])
@@ -109,13 +111,18 @@ class FormFormulaire(FlaskForm):
     objet = TextAreaField('Objet',
                           validators=[
                               DataRequired(),
-                              Length(min=1, max=80, message="Trop long, maximum 80 caractères")
+                              Length(
+                                  min=1,
+                                  max=80,
+                                  message="Trop long, maximum 80 caractères")
                           ])
     message = TextAreaField(
         'Message',
         validators=[
             DataRequired(),
-            Length(min=1, max=1200, message="Trop long, maximum 1200 caractères")
+            Length(min=1,
+                   max=1200,
+                   message="Trop long, maximum 1200 caractères")
         ])
 
     @staticmethod
@@ -139,29 +146,34 @@ class FormFormulaire(FlaskForm):
                 nom_auteur=self.nom.data,
                 email_auteur=mail.normalized,
                 objet=self.objet.data,
-                message=self.message.data  # Ajout du message (manquant dans develop original ?)
-            )
-        )
+                message=self.message.
+                data  # Ajout du message (manquant dans develop original ?)
+            ))
         db.session.commit()
 
 
 class FormRechercheArticle(FlaskForm):
-    mois = [
-        'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
-        'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
-    ]
-    choix_mois = SelectField(
-        "Sélectionner un mois",
-        choices=[(m, m) for m in mois],  # Format correct : (value, label)
-        validators=[DataRequired()]
-    )
-    recherche = StringField("Rechercher un article", validators=[DataRequired()])
 
-    def mois_to_chiffre(self, m: str) -> int:
-        for i, mois_name in enumerate(self.mois):
-            if m == mois_name:
-                return i + 1
-        return -1  # Retourner -1 si non trouvé (à gérer côté route)
+    def choix_article():
+        from .models import Article
+        from sqlalchemy import extract
+        with app.app_context():
+            lesArticles = db.session.query(
+                extract('year', Article.date_publication).label('year'),
+                extract('month', Article.date_publication).label('month'),
+                func.count().label('count')).group_by(
+                    'year', 'month').order_by('year', 'month').all()
+            res = []
+            for ar in lesArticles:
+                value = f"{ar.month}-{ar.year}"
+                label = f"{ar.month}-{ar.year} ({ar.count})"
+                res.append((value, label))
+            return res
+
+    choix_year = SelectField("Sélectionner un mois",
+                             choices=choix_article(),
+                             validators=[DataRequired()])
+    recherche = StringField("Rechercher un article", validators=[Optional()])
 
 
 class FormCommentaire(FlaskForm):
@@ -171,12 +183,14 @@ class FormCommentaire(FlaskForm):
 
     @staticmethod
     def max_id() -> int:
-        max_id = db.session.query(func.max(Commentaire.id_commentaire)).scalar()
+        max_id = db.session.query(func.max(
+            Commentaire.id_commentaire)).scalar()
         return (int(max_id) + 1) if max_id is not None else 1
 
     def format_mail(self) -> ValidatedEmail:
         try:
-            return validate_email(self.email_aut.data, check_deliverability=False)
+            return validate_email(self.email_aut.data,
+                                  check_deliverability=False)
         except EmailNotValidError as e:
             print(str(e))
             raise
@@ -186,12 +200,9 @@ class FormCommentaire(FlaskForm):
         id_com = self.max_id()
 
         db.session.add(
-            Commentaire(
-                id_commentaire=id_com,
-                nom_aut=self.nom_aut.data,
-                email_aut=mail.normalized,
-                id_article=id_article,
-                message_com=self.message.data
-            )
-        )
+            Commentaire(id_commentaire=id_com,
+                        nom_aut=self.nom_aut.data,
+                        email_aut=mail.normalized,
+                        id_article=id_article,
+                        message_com=self.message.data))
         db.session.commit()

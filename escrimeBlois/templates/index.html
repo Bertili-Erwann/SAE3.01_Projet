@@ -16,7 +16,7 @@
     <form role="form" method="GET" action="{{ url_for('demande_article') }}">
       <p class="recherche">Recherche d'articles</p>
     <div class="ctn-rech">
-      {{ formRech.choix_mois(class_="form-control") }}
+      {{ formRech.choix_year(class_="form-control") }}
       <div class="ctn-valider-rech">
         {{ formRech.recherche(class_="form-control") }}
         <input class="btn-rech-ar" type="submit" value="Rechercher">
