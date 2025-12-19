@@ -51,18 +51,21 @@ def test_validate_responsable_type_valid(testapp, sample_personne):
                       responsable_id=sample_personne.id_personne)
         sample_personne.role = "responsable"
         db.session.commit()
-        result = art.validate_responsable_type('id_responsable', 2)
-        assert result == 2
+        result = art.validate_responsable_type('id_responsable', sample_personne.id_personne)
+        assert result == sample_personne.id_personne
 
 
 def test_validate_responsable_type_invalid_not_resp(testapp):
     with testapp.app_context():
-        pers = Personne(id_personne=3,
-                        mdp="hash",
+        pers = Personne(mdp="hash",
                         nom_personne="Pontdu",
                         prenom_personne="Naej",
                         email_personne="neah@example.com",
-                        etudiant=True,
+                        telephone="0123456789",
+                        sexe="M",
+                        adresse="123 Rue Test",
+                        date_naissance=datetime.date(1990, 1, 1),
+                        eleve=True,
                         arme_principale="épée",
                         niveau="pro",
                         role="membre")
@@ -77,7 +80,7 @@ def test_validate_responsable_type_invalid_not_resp(testapp):
                       responsable_id=2)
         with pytest.raises(ValueError,
                            match="doit être de type 'responsable'"):
-            art.validate_responsable_type('id_responsable', 3)
+            art.validate_responsable_type('id_responsable', pers.id_personne)
 
 
 def test_validate_responsable_type_invalid_not_found(testapp):
