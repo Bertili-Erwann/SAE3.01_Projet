@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block page_content %}
-<div id="blank_space"></div>
+<h1 class="text_form">Informations personnelles</h1>
 <div class="infos-container-v2">
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -21,7 +21,6 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-
     <div class="section-v2">
         <details open>
             <summary><h2>Informations générales</h2></summary>
