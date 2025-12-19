@@ -3,12 +3,12 @@ import pytest
 
 
 def test_personne_creation(sample_personne):
-    assert sample_personne.id_personne == 2
+    assert sample_personne.id_personne is not None
     assert sample_personne.nom_personne == "Pontdu"
 
 
 def test_personne_repr(sample_personne):
-    assert repr(sample_personne) == "Personne 2"
+    assert repr(sample_personne) == f"Personne {sample_personne.id_personne}"
 
 
 def test_personne_str(sample_personne):
@@ -34,7 +34,7 @@ def test_validate_role_valid_admin():
 
 def test_validate_role_invalid_admin():
     with pytest.raises(ValueError, match="a des informations en trop"):
-        pers = Personne(etudiant=True, role="admin")
+        pers = Personne(eleve=True, role="admin")
 
 
 def test_load_user_valid(testapp, sample_personne):

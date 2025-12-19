@@ -285,3 +285,62 @@ details[open] summary {
     }
 }
 
+/* ==================== Événements inscrits ==================== */
+#container_table_event_inscrits {
+  margin: 0 auto;
+  width: 80%;
+  min-height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  background-color: #ffffff;
+}
+
+.table100-body {
+  max-height: 400px;
+}
+
+.event-table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 2px solid #ddd;
+}
+
+.table-th, .table-td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  vertical-align: middle;
+}
+
+.table-th {
+  background-color: #353536;
+  color: #fff;
+}
+
+.table-td {
+  background-color: #f9f9f9;
+  color: #575656;
+}
+
+.nom_event_insc, .date_event_insc, .type_event_incs, .action_event_insc {
+  text-align: center;
+}
+
+.action_event_insc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.event_buttons {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: left;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.event_buttons:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}

@@ -1,0 +1,85 @@
+{% extends "base.html" %} {% block main %}
+{% include "admin_nav_bar.html" %} 
+
+<div>
+  <h1 id="titre_maj_membre" >Liste des membres du club</h1>
+
+  <!-- RESPONSABLES -->
+  <div id="banniere_responsable">
+    <p>Responsables</p>
+  </div>
+  {% if responsables|length == 0 %}
+  <h1 id="personne_non_trouve">Aucun responsable trouvé</h1>
+  {% else %}
+  <div class="limiter">
+    <div id="container_table_form">
+      <div class="wrap-table100_admin">
+        <div id="table_form">
+          <div class="table100-body js-pscroll">
+            <table>
+              {% for resp in responsables %}
+              <tr id="table_personne">
+                <td id="personne">
+                  <div id="personne_infos">
+                    <p>
+                      {{ resp.nom_personne }} {{ resp.prenom_personne }} | {{
+                      resp.sexe }} | {{ resp.email_personne }}
+                    </p>
+                  </div>
+                  <div id="personne_options">
+                    <button type="button" id="membre_modifier">Modifier</button>
+                    <form method="POST" action="{{ url_for('supprimer_membre', id_personne=resp.id_personne) }}" style="display:inline;" onsubmit="return confirm('Voulez-vous vraiment supprimer {{ resp.prenom_personne }} {{ resp.nom_personne }} ?');">
+                      <button type="submit" class="membre_supprimer">Supprimer</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- MEMBRES -->
+  <div id="banniere_membre">
+    <p>Membres</p>
+  </div>
+  {% if membres|length == 0 %}
+  <h1 id="personne_non_trouve">Aucun membre trouvé</h1>
+  {% else %}
+  <div class="limiter">
+    <div id="container_table_form">
+      <div class="wrap-table100_admin">
+        <div id="table_form">
+          <div class="table100-body js-pscroll">
+            <table>
+              {% for memb in membres %}
+              <tr id="table_personne">
+                <td id="personne">
+                  <div id="personne_infos">
+                    <p>
+                      {{ memb.nom_personne }} {{ memb.prenom_personne }} | {{
+                      memb.sexe }} | {{ memb.email_personne }}
+                    </p>
+                  </div>
+                  <div id="personne_options">
+                    <button type="button" id="membre_modifier">Modifier</button>
+                    <form method="POST" action="{{ url_for('supprimer_membre', id_personne=memb.id_personne) }}" style="display:inline;" onsubmit="return confirm('Voulez-vous vraiment supprimer {{ memb.prenom_personne }} {{ memb.nom_personne }} ?');">
+                      <button type="submit" class="membre_supprimer">Supprimer</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+{% endblock %}

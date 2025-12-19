@@ -31,7 +31,7 @@
 
           <!-- BOUTON EVENEMENT -->
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for ('nav_event')}}">Événement</a>
+            <a class="nav-link" href="{{ url_for ('calendrier')}}">Événement</a>
           </li>
 
           <!-- BOUTON RENSEIGNEMENT  -->
@@ -77,7 +77,7 @@
         <input
           class="form-image"
           type="image"
-          src="../static/images/loupe_recherche.png"
+          src="{{ url_for('static', filename='images/loupe_recherche.png') }}"
           width="20"
           height="20"
           name="loupe"
