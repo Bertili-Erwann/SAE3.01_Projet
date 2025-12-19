@@ -204,7 +204,7 @@ class Evenement(db.Model):
             ValueError: Si les champs requis ne sont pas remplis ou si des champs en trop sont présents.
         """
         match value:
-            case "competition":
+            case "Compétition":
                 if self.niveau is None or self.discipline is None or self.cooperative is None:
                     raise ValueError(
                         f"'{value}' n'a pas rempli un des champs requis")
@@ -303,14 +303,14 @@ class Classer(db.Model):
             int: La valeur validée.
         
         Raises:
-            ValueError: Si l'événement n'existe pas ou n'est pas une compétition.
+            ValueError: Si l'événement n'existe pas ou n'est pas une Compétition.
         """
         ev = Evenement.query.get(value)
         if ev is None:
             raise ValueError(f"Événement {value} introuvable")
-        if ev.type_evenement != 'competition':
+        if ev.type_evenement != 'Compétition':
             raise ValueError(
-                f"L'événement {value} doit être de type competition ")
+                f"L'événement {value} doit être de type Compétition")
         return value
 
     def __repr__(self) -> str:
@@ -446,6 +446,7 @@ class Article(db.Model):
     date_publication = db.Column(db.Date)
     description = db.Column(db.String(1000))
     categorie = db.Column(db.String(20))
+    lien = db.Column(db.String(64))
     commentable = db.Column(db.Boolean)
     responsable_id = db.ForeignKey("personne.id_personne")
     responsable = None

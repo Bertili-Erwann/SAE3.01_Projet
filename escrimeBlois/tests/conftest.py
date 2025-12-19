@@ -60,7 +60,7 @@ def sample_evenement(testapp):
                        niveau="avancé",
                        discipline="épée",
                        cooperative="Club X",
-                       type_evenement="competition")
+                       type_evenement="Compétition")
         db.session.add(ev)
         db.session.commit()
         yield ev

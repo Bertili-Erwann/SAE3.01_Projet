@@ -12,3 +12,7 @@ body {
 .hidden {
   display: none;
 }
+
+#blank_space {
+  padding: 10px;
+}

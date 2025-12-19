@@ -27,7 +27,7 @@
                                         <td class="table-td">{{ event.date }}</td>
                                         <td class="table-td">{{ event.type_evenement }}</td>
                                         <td class="table-td">
-                                            <form action="{{ url_for('consult_event', id_event=event.id_evenement) }}" method="post">
+                                            <form action="{{ url_for('membre_consult_event', id_event=event.id_evenement) }}">
                                                 <button type="submit" value="Consulter" class="event_buttons">Consulter</button>
                                             </form>
                                         </td>
