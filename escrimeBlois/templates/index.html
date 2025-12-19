@@ -3,6 +3,9 @@
   <div class="header-content">
     <h1>Cercle d'Escrime de Blois</h1>
   </div>
+  <button type="button" class="scroll-down-btn" aria-label="Défiler vers le bas" onclick="scrollToContent()">
+    ↓
+  </button>
   <img
     src="{{ url_for('static', filename='images/logo_cercle_escrime_blois.png') }}"
     alt="Logo du cercle d'éscrime de Blois"
@@ -166,4 +169,5 @@
 <script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src= "{{ url_for('static',filename='js/slider.js')}}" ></script>
+<script src= "{{ url_for('static',filename='js/scrollBouton.js')}}" ></script>
 {% endblock %}
