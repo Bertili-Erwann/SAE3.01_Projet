@@ -449,6 +449,7 @@ class Article(db.Model):
     date_publication = db.Column(db.Date)
     description = db.Column(db.String(1000))
     categorie = db.Column(db.String(20))
+    lien = db.Column(db.String(64))
     commentable = db.Column(db.Boolean)
     responsable_id = db.ForeignKey("personne.id_personne")
     responsable = None

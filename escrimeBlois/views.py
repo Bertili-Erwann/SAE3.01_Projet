@@ -469,18 +469,22 @@ def consult_form(id_formulaire):
 
 @app.route("/responsable/ajouter_article/", methods=["GET", "POST"])
 def ajouter_article():
-    if request.method == "POST":
-        titre = request.form.get("titre")
-        description = request.form.get("description")
-        theme = request.form.get("theme")
-        commentable = True if request.form.get("commentable") == "on" else False
-        responsable_id = 1  # À remplacer par current_user.id_personne si besoin
-        fichiers = request.files.getlist("fichiers")
+    if request.method == 'POST':
+        # Récupération des champs du formulaire
+        titre = request.form.get('titre')
+        description = request.form.get('description')
+        theme = request.form.get('theme')
+        lien = request.form.get('lien')
+        commentable = True if request.form.get('commentable') == 'on' else False
+        responsable_id = current_user.id_personne
+        fichiers = request.files.getlist('fichiers')
 
+        # Création de l'article
         article = Article(
             titre=titre,
             description=description,
             categorie=theme,
+            lien=lien,
             commentable=commentable,
             responsable_id=responsable_id,
             date_publication=date.today(),

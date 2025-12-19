@@ -3,6 +3,13 @@
 <div class="longbloc"></div>
 
 <div class="container-article">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <h1>Ajouter un article</h1>
 
     {% if success %}
@@ -55,6 +62,12 @@
                 placeholder="Écrivez ici la description de l'article..." required></textarea>
         </div>
 
+        <div class="form-group">
+            <label for="lien_article">Lien de redirection vers l'article :</label>
+            <input type="url" id="lien" name="lien" placeholder="https://exemple.com/mon-article"
+           class="form-control">
+        </div>
+
         <div class="form-row">
             <input type="checkbox" id="commentable" name="commentable">
             <label for="commentable">Activer les commentaires</label>
@@ -68,35 +81,9 @@
     </form>
 </div>
 
-<!-- SCRIPT GENERER PAR IA (A CHANGER PLUS TARD) -->
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const input = document.getElementById("fichiers");
-        const bouton = document.querySelector(".btn-select-files");
-        const compteur = document.querySelector(".compteur-fichiers");
-        const liste = document.querySelector(".liste-fichiers");
 
-        let fichiersAjoutes = [];
+{% endblock %}
 
-        bouton.addEventListener("click", () => input.click());
-
-        input.addEventListener("change", () => {
-            const nouveauxFichiers = Array.from(input.files);
-            fichiersAjoutes = fichiersAjoutes.concat(nouveauxFichiers);
-
-            // Mise à jour du compteur
-            const nb = fichiersAjoutes.length;
-            compteur.textContent = nb === 0 ? "Aucun fichier sélectionné ❌" :
-            nb === 1 ? "1 fichier sélectionné 📁" :`${nb} fichiers sélectionnés 📂`;
-
-            // Liste des fichiers
-            liste.innerHTML = "";
-            fichiersAjoutes.forEach(fichier => {
-                const li = document.createElement("li");
-                li.innerHTML = `<i class="icon-upload">📄</i> <span>${fichier.name}</span>`;
-                liste.appendChild(li);
-            });
-        });
-    });
-</script>
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/fichiers.js') }}"></script>
 {% endblock %}
