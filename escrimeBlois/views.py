@@ -198,9 +198,10 @@ def ajouter_article():
         # Récupération des champs du formulaire
         titre = request.form.get('titre')
         description = request.form.get('description')
-        theme = request.form.get('theme')  # correspond à "thème de l'article"
+        theme = request.form.get('theme')
+        lien = request.form.get('lien')
         commentable = True if request.form.get('commentable') == 'on' else False
-        responsable_id = 1  # exemple : à remplacer par current_user.id si tu utilises Flask-Login
+        responsable_id = current_user.id_personne
         fichiers = request.files.getlist('fichiers')
 
         # Création de l'article
@@ -208,6 +209,7 @@ def ajouter_article():
             titre=titre,
             description=description,
             categorie=theme,
+            lien=lien,
             commentable=commentable,
             responsable_id=responsable_id,
             date_publication=date.today()
