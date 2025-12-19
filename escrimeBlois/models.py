@@ -171,7 +171,7 @@ class Evenement(db.Model):
         niveau (str): Niveau requis (pour compétitions).
         discipline (str): Discipline (pour compétitions).
         cooperative (str): Partenaire coopératif (pour compétitions).
-        type_evenement (str): Type ('competition' ou autre).
+        type_evenement (str): Type ('Compétition' ou autre).
     """
     id_evenement = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(64))
