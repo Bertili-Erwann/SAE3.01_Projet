@@ -135,7 +135,7 @@ class Demande_inscription(db.Model):
     adresse_mail = db.Column(db.String(64))
     adresse_postale = db.Column(db.String(64))
     eleve = db.Column(db.Boolean)
-    justificatif = db.Column(db.String(255))
+    justificatif = db.Column(File.as_mutable(JSON))
 
     def __repr__(self) -> str:
         """
@@ -253,6 +253,9 @@ class Inscription(db.Model):
     date_naissance = db.Column(db.Date)
     justificatif = db.Column(File.as_mutable(JSON))
     id_personne = db.Column(db.Integer, db.ForeignKey("personne.id_personne"), nullable=True)
+    
+    # Relations
+    evenement = db.relationship("Evenement", backref=db.backref("inscriptions", lazy="dynamic"))
 
     def __repr__(self) -> str:
         """
@@ -446,6 +449,7 @@ class Article(db.Model):
     date_publication = db.Column(db.Date)
     description = db.Column(db.String(1000))
     categorie = db.Column(db.String(20))
+    lien = db.Column(db.String(64))
     commentable = db.Column(db.Boolean)
     responsable_id = db.ForeignKey("personne.id_personne")
     responsable = None

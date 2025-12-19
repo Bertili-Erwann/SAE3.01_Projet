@@ -175,6 +175,65 @@
   height: 70px;
 }
 
+/* -------------------- Aside - Barre latérale de recherche -------------------- */
+.menu-recherche {
+  position: fixed;
+  top: 55px;
+  right: 0;
+  z-index: 5;
+  width: fit-content;
+  max-height: calc(100vh - 50px);
+  overflow-y: auto;
+  background-color: #3a343446;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ctn-rech {
+  margin: 25px;
+}
+
+.ctn-valider-rech {
+  display: flex;
+  margin-block: 10px;
+}
+
+.btn-rech-ar {
+  background-color: #c3c2f4;
+  border-radius: 5px;
+  margin-left: 5px;
+  font-weight: 300;
+}
+
+.menu-recherche p {
+  background-color: #a89d9d85;
+  border-radius: 30px;
+  width: 400px;
+  margin: 20px;
+}
+
+#recherche {
+  border-radius: 25px;
+}
+
+.aside-slide {
+  background-color: #a8a8a8b4;
+  float: left;
+  border-radius: 25px;
+  margin-block-end: 25%;
+  margin-block-start: 25%;
+}
+
+#btn-entrant {
+  position: fixed;
+  top: 55px;
+  right: 0;
+  z-index: 5;
+  width: fit-content;
+  max-height: calc(100vh - 50px);
+  overflow-y: auto;
+}
+
 /* -------------------- Partenaires -------------------- */
 .partenaire {
   text-align: center;
