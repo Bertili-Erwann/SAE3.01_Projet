@@ -59,7 +59,7 @@ def test_validate_evenement_type_invalid_not_competition(testapp):
         insc = Inscription(id_inscription=2, id_evenement=2)
         db.session.add(insc)
         db.session.commit()
-        with pytest.raises(ValueError, match="doit être de type competition"):
+        with pytest.raises(ValueError, match="doit être de type Compétition"):
             clas = Classer(id_competition=2, id_inscription=2, point=10)
 
 

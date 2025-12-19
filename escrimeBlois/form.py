@@ -151,27 +151,31 @@ class FormFormulaire(FlaskForm):
         db.session.commit()
         
 class FormRechercheArticle(FlaskForm):
-
-    def choix_article():
+    choix_year = SelectField("Sélectionner un mois",
+                             choices=[],
+                             validators=[DataRequired()])
+    recherche = StringField("Rechercher un article", validators=[Optional()])
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Charger les choix dynamiquement
         from .models import Article
         from sqlalchemy import extract
-        with app.app_context():
+        try:
             lesArticles = db.session.query(
                 extract('year', Article.date_publication).label('year'),
                 extract('month', Article.date_publication).label('month'),
                 func.count().label('count')).group_by(
                     'year', 'month').order_by('year', 'month').all()
-            res = []
+            choices = []
             for ar in lesArticles:
                 value = f"{ar.month}-{ar.year}"
                 label = f"{ar.month}-{ar.year} ({ar.count})"
-                res.append((value, label))
-            return res
-
-    choix_year = SelectField("Sélectionner un mois",
-                             choices=choix_article(),
-                             validators=[DataRequired()])
-    recherche = StringField("Rechercher un article", validators=[Optional()])
+                choices.append((value, label))
+            self.choix_year.choices = choices
+        except:
+            # Si la table n'existe pas encore (tests), laisser vide
+            self.choix_year.choices = []
 
 
 class FormCommentaire(FlaskForm):

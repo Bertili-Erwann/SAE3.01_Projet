@@ -282,11 +282,22 @@ def inscription_event(id_evenement):
         form.categorie.data = evenement.categorie
 
     if form.validate_on_submit():
-        filename = None
+        justificatif_data = None
         if form.justificatif.data:
             f = form.justificatif.data
             filename = secure_filename(f.filename)
-            f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            # Définir le chemin d'upload
+            upload_folder = os.path.join(os.path.dirname(__file__), 'uploads', 'files')
+            os.makedirs(upload_folder, exist_ok=True)
+            file_path = os.path.join(upload_folder, filename)
+            f.save(file_path)
+            
+            # Stocker les métadonnées en JSON
+            justificatif_data = {
+                'filename': filename,
+                'path': f'uploads/files/{filename}',
+                'original_filename': f.filename
+            }
 
         inscription = Inscription(id_evenement=id_evenement,
                                   nom=form.nom.data,
@@ -295,7 +306,7 @@ def inscription_event(id_evenement):
                                   date_naissance=form.date_naissance.data,
                                   sexe=form.sexe.data,
                                   categorie=form.categorie.data,
-                                  justificatif=filename)
+                                  justificatif=justificatif_data)
         db.session.add(inscription)
         db.session.commit()
         return redirect(
@@ -445,7 +456,8 @@ def admin_comp():
         return redirect(url_for('admin_comp'))
 
     return render_template('admin_crea_comp.html', form=FormFormulaire())
-  @app.route('/admin/resultats', methods=['GET'])
+
+@app.route('/admin/resultats', methods=['GET'])
 def admin_resultat():
     competitions = Evenement.query.filter_by(type_evenement='competition').all()
     
