@@ -1,26 +1,28 @@
-# Framework web Flask
+blinker==1.9.0
+click==8.3.0
+colorama==0.4.6
+coverage==7.13.0
+dnspython==2.8.0
+email-validator==2.3.0
 Flask==3.1.2
 Flask-Login==0.6.3
 Flask-SQLAlchemy==3.1.1
 Flask-WTF==1.2.2
-
-# Base de données
-SQLAlchemy==2.0.44
-
-# Formulaires
-WTForms==3.2.1
-
-# Validation
-email-validator==2.3.0
-
-# Utilitaires
-Werkzeug==3.1.3
-PyYAML==6.0.3
-
-# Tests
+greenlet==3.3.0
+idna==3.11
+iniconfig==2.3.0
+itsdangerous==2.2.0
+Jinja2==3.1.6
+MarkupSafe==3.0.3
+packaging==25.0
+pluggy==1.6.0
+Pygments==2.19.2
 pytest==8.4.2
-pytest-flask==1.3.0
 pytest-cov==7.0.0
-
-# CLI (inclus avec Flask mais spécifié pour clarté)
-click==8.3.0
+pytest-flask==1.3.0
+python-dotenv==1.2.1
+PyYAML==6.0.3
+SQLAlchemy==2.0.44
+typing_extensions==4.15.0
+Werkzeug==3.1.3
+WTForms==3.2.1
