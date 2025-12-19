@@ -748,6 +748,16 @@ table {
   margin-left: 2%;
 }
 
+/* ==================== ADMIN ==================== */
+#navbar_admin {
+  background-color: #cacaca;
+  padding: 10px 0;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#nav_admin {
+  display: flex;
 /* ==================== navbar_admin ==================== */
 #navbar_admin,
 #navbar_inscription {
@@ -1134,6 +1144,18 @@ details[open] summary {
   padding: 0;
 }
 
+#nav_admin > li {
+  flex-basis: 20%;
+  margin: 0 10px;
+  text-align: center;
+  transition: all 0.1s;
+}
+
+#nav_admin > li:hover {
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+  border-radius: 5px;
 #nav_admin > li,
 #nav_inscr > li
 #nav_responsable > li{
@@ -1163,6 +1185,88 @@ details[open] summary {
   padding-top: 60px;
 }
 
+#banniere_responsable,
+#banniere_membre {
+  text-align: center;
+  margin: 20px 0;
+  border-radius: 2px;
+  background-color: #797979;
+  margin-left: 15px;
+  margin-right: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#table_form table {
+  min-width: 600px; /* Ajustez selon le contenu minimal */
+}
+
+#personne {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 3px;
+  border-width: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 500px;
+  flex-wrap: nowrap;
+}
+
+#personne_infos {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+#personne_infos p {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#personne_options {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+#membre_modifier,
+#membre_supprimer,
+.membre_supprimer {
+  border-radius: 20px;
+  padding: 5px 15px;
+  border-style: solid;
+  border-color: #000;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: all 0.3s;
+}
+
+#membre_modifier {
+  background-color: #949494;
+}
+
+#membre_modifier:hover {
+  background-color: #d3d3d3;
+  transform: scale(1.05);
+}
+
+#membre_supprimer,
+.membre_supprimer {
+  background-color: #d90000;
+}
+
+#membre_supprimer:hover,
+.membre_supprimer:hover {
+  background-color: #ff5d5d;
+  transform: scale(1.05);
+}
+.wrap-table100_admin {
+  overflow-x: auto;
+  white-space: nowrap;
 .demande_inscription_item {
   display: flex;
   justify-content: space-between;

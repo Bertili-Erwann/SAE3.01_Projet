@@ -27,12 +27,15 @@ def client(testapp):
 @pytest.fixture
 def sample_personne(testapp):
     with testapp.app_context():
-        resp = Personne(id_personne=2,
-                        mdp="hash",
+        resp = Personne(mdp="hash",
                         nom_personne="Pontdu",
                         prenom_personne="Naej",
                         email_personne="neah@example.com",
-                        etudiant=True,
+                        telephone="0123456789",
+                        sexe="M",
+                        adresse="123 Rue de Test",
+                        date_naissance=datetime.date(1990, 1, 1),
+                        eleve=True,
                         arme_principale="épée",
                         niveau="pro",
                         role="responsable")
@@ -47,10 +50,13 @@ def sample_personne(testapp):
 def sample_evenement(testapp):
     with testapp.app_context():
         ev = Evenement(id_evenement=1,
+                       nom="Compétition Test",
                        date=datetime.date.today(),
                        heure=10,
+                       categorie="Senior",
                        lieu="Blois",
                        description="Test",
+                       sexe="M",
                        niveau="avancé",
                        discipline="épée",
                        cooperative="Club X",

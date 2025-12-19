@@ -38,6 +38,7 @@ def loaddb(filename: str) -> None:
                             nom_personne=pers['nom_personne'],
                             prenom_personne=pers['prenom_personne'],
                             email_personne=pers['email_personne'],
+                            telephone=pers.get('telephone'),
                             sexe=pers.get('sexe'),
                             adresse=pers.get('adresse'),
                             date_naissance=date_naissance,
@@ -57,6 +58,7 @@ def loaddb(filename: str) -> None:
                               categorie=ev.get('categorie'),
                               lieu=ev['lieu'],
                               description=ev['description'],
+                              sexe=ev.get('sexe'),
                               niveau=ev.get('niveau'),
                               discipline=ev.get('discipline'),
                               cooperative=ev.get('cooperative'),
@@ -65,7 +67,7 @@ def loaddb(filename: str) -> None:
         db.session.commit()
 
     for insc in data.get("inscriptions", []):
-        date_naissance = None
+        date_naissance_insc = None
         if insc.get('date_naissance'):
             date_naissance = datetime.date.fromisoformat(insc['date_naissance'])
             
@@ -90,7 +92,6 @@ def loaddb(filename: str) -> None:
     for form in data["formulaires"]:
         formul = Formulaire(id_formulaire=form['id_formulaire'],
                             nom_auteur=form['nom_auteur'],
-                            prenom_auteur=form['prenom_auteur'],
                             email_auteur=form['email_auteur'],
                             objet=form['objet'],
                             message=form['message'])

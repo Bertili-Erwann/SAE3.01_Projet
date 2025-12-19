@@ -194,13 +194,17 @@
 /* ==================== Gestion formulaire ==================== */
 
 #gest_form {
-  margin: 1%;
-  align-content: center;
+  padding-top: 20px;
+  padding-bottom: 40px;
 }
 
 .text_form {
   text-align: center;
-  margin-bottom: 20px;
+  color: #333;
+  font-size: 32px;
+  margin: 30px 0;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 #table_form {
@@ -211,28 +215,31 @@
 }
 
 #container_table_form {
-  margin-left: 10%;
-  width: 80%;
-  min-height: 100vh;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 15px;
   display: flex;
-  flex-wrap: wrap;
-  padding-top: 20px;
-  background-color: #ffffff;
+  flex-direction: column;
 }
 
 #formulaire {
   display: flex;
-  flex-wrap: nowrap;
-  background-color: #ffffff;
-  border-radius: 20px;
-  width: 90%;
-  margin-top: -40px;
-  margin-bottom: 60px;
-  margin-left: 5%;
-  margin-right: 5%;
-  border-style: solid;
-  border-width: 2px;
+  justify-content: space-between;
   align-items: center;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  margin: 0 0 10px 0;
+}
+
+#formulaire:hover{
+  background-color: #e8e8e8;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 #formulaire_infos,
@@ -246,7 +253,9 @@
 
 #formulaire_options {
   display: flex;
-  flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
+  padding-left: 150px;
 }
 
 .gest_form_button_container {
@@ -256,14 +265,16 @@
 
 #form_consulter,
 #form_supprimer {
+  padding: 8px 20px;
+  border: none;
   border-radius: 20px;
-  margin-right: 20px;
-  margin-left: 20px;
-  padding-left: 30px;
-  padding-right: 30px;
-  width: 100%;
-  border-style: solid;
-  border-color: #000;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  width: auto;
+  margin: 0;
 }
 
 #form_consulter {
@@ -272,6 +283,7 @@
 
 #form_consulter:hover {
   background-color: #d3d3d3;
+  transform: scale(1.05);
 }
 
 #form_supprimer {
@@ -280,6 +292,7 @@
 
 #form_supprimer:hover {
   background-color: #ff5d5d;
+  transform: scale(1.05);
 }
 
 /* ==================== Création événement ==================== */
