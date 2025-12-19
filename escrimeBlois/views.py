@@ -277,8 +277,6 @@ def inscription_event(id_evenement):
                     inscription_success=True))
 
     form = FormInscriptionEvent()
-    if request.method == 'GET' and evenement.categorie:
-        form.categorie.data = evenement.categorie
 
     if form.validate_on_submit():
         justificatif_data = None
@@ -325,7 +323,10 @@ def inscription_event(id_evenement):
 
 @app.route("/admin/")
 @app.route("/admin/gestion_inscription/club")
+@login_required
 def admin_inscription_club():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
     demandes = Demande_inscription.query.all()
     return render_template("admin_gestion_inscription_club.html",
                            demandes=demandes,
@@ -334,7 +335,10 @@ def admin_inscription_club():
 
 @app.route("/admin/gestion_inscription/club/view/<int:id_inscription>",
            methods=["GET", "POST"])
+@login_required
 def admin_inscription_club_view(id_inscription):
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
     demande = Demande_inscription.query.get_or_404(id_inscription)
     if request.method == "POST":
         action = request.form.get("action")
@@ -366,7 +370,10 @@ def admin_inscription_club_view(id_inscription):
 
 
 @app.route("/admin/gestion_inscription/evenement")
+@login_required
 def admin_inscription_evenement():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
     inscriptions = Inscription.query.all()
     return render_template("admin_gestion_inscription_evenement.html",
                            inscriptions=inscriptions,
@@ -375,7 +382,10 @@ def admin_inscription_evenement():
 
 @app.route("/admin/gestion_inscription/evenement/view/<int:id_inscription>",
            methods=["GET", "POST"])
+@login_required
 def admin_inscription_evenement_view(id_inscription):
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
     inscription = Inscription.query.get_or_404(id_inscription)
     if request.method == "POST":
         action = request.form.get("action")
@@ -389,7 +399,10 @@ def admin_inscription_evenement_view(id_inscription):
 
 
 @app.route("/admin/miseajour/membres")
+@login_required
 def admin_miseajour_membres():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
     les_responsables = []
     les_membres = []
     personne = Personne.query.all()
@@ -405,7 +418,10 @@ def admin_miseajour_membres():
 
 
 @app.route("/admin/supprimer/membre/<int:id_personne>", methods=["POST"])
+@login_required
 def supprimer_membre(id_personne):
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
     try:
         personne = Personne.query.get(id_personne)
         if personne:
@@ -421,7 +437,10 @@ def supprimer_membre(id_personne):
 
 
 @app.route('/admin/creation_competition', methods=['GET', 'POST'])
+@login_required
 def admin_comp():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
     if request.method == 'POST':
         name = request.form.get('name_create_event')
         categories = request.form.get('categories_create_event')
@@ -457,7 +476,10 @@ def admin_comp():
     return render_template('admin_crea_comp.html', form=FormFormulaire())
 
 @app.route('/admin/resultats', methods=['GET'])
+@login_required
 def admin_resultat():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
     competitions = Evenement.query.filter_by(type_evenement='Compétition').all()
     
     selected_competition_id = request.args.get('Compétition')
@@ -476,7 +498,10 @@ def admin_resultat():
 
 
 @app.route('/admin/resultats/update', methods=['POST'])
+@login_required
 def update_points():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
     competition_id = request.form.get('competition_id')
     
     for key, value in request.form.items():
@@ -503,7 +528,10 @@ def update_points():
 
 @app.route("/responsable/")
 @app.route("/responsable/gestion_formulaire/")
+@login_required
 def gest_form():
+    if current_user.role != "responsable":
+        return redirect(url_for("index"))
     lesFormulaires = Formulaire.query.all()
     return render_template("gestion_formulaire.html",
                            formulaires=lesFormulaires,
@@ -511,7 +539,10 @@ def gest_form():
 
 
 @app.route("/responsable/consultation_formulaire/<id_formulaire>/")
+@login_required
 def consult_form(id_formulaire):
+    if current_user.role != "responsable":
+        return redirect(url_for("index"))
     unForm = Formulaire.query.get(id_formulaire)
     return render_template("consultation_form.html",
                            selectedFormulaire=unForm,
@@ -519,7 +550,10 @@ def consult_form(id_formulaire):
 
 
 @app.route("/responsable/ajouter_article/", methods=["GET", "POST"])
+@login_required
 def ajouter_article():
+    if current_user.role != "responsable":
+        return redirect(url_for("index"))
     if request.method == 'POST':
         # Récupération des champs du formulaire
         titre = request.form.get('titre')
@@ -569,7 +603,10 @@ def ajouter_article():
 
 
 @app.route("/responsable/creer_evenement/", methods=['GET', 'POST'])
+@login_required
 def create_event():
+    if current_user.role != "responsable":
+        return redirect(url_for("index"))
     if request.method == 'POST':
         name = request.form.get('name_create_event')
         categories = request.form.get('categories_create_event')
