@@ -1,6 +1,5 @@
 import os
 
-
 class Config:
     # Database configuration
     basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
@@ -21,7 +20,7 @@ class Config:
     MAIL_DEBUG = True
     MAIL_SUPRESS_SEND = False
 
-    MAIL_PASSWORD = None
+    MAIL_PASSWORD = "djab0603"
     MAIL_DEFAULT_SENDER = ('Flask Mailer', 'm4go83@gmail.com')
     MAIL_MAX_EMAILS = 1000
     # MAIL_SUPPRESS_SEND = app.testing

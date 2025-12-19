@@ -15,12 +15,17 @@
     'error' %}
     <p class="error-message">{{ message }}</p>
     {% endif %} {% endfor %} {% endif %} {% endwith %}
-    <form method="POST" action="{{ url_for('mdp_oublier_etape_1')}}">
+    <form
+      role="form"
+      method="POST"
+      action="{{ url_for('mdp_oublier_etape_1')}}"
+    >
       {{ formAuth.hidden_tag() }}
       <h2>Adresse e-mail</h2>
-      {{ formAuth.email_etape_1(size=10, class_="form-control",
-      placeholder="Entrez votre e-mail") }}
-      <a href="{{ url_for('login') }}" id="passwrd-oublie">Revenir à la page de connexion</a>
+      {{ formAuth.email(size=10, class_="form-control", placeholder="Entrez votre e-mail") }}
+      <a href="{{ url_for('login') }}" id="passwrd-oublie"
+        >Revenir à la page de connexion</a
+      >
       <input type="submit" value="Envoyer code" />
     </form>
   </div>

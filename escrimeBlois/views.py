@@ -13,7 +13,7 @@ from escrimeBlois.models import (
     Inscription,
     Evenement,
 )
-from escrimeBlois.form import FormInscription, FormInscriptionEvent, FormFormulaire, FormGestionLogin
+from escrimeBlois.form import FormInscription, FormInscriptionEvent, FormFormulaire, FormGestionLogin, FormGestionMdpOublier
 import os
 
 
@@ -48,7 +48,7 @@ def renseignement():
                            form=FormFormulaire())
 
 
-@app.route("/login/", methods=["GET", "POST"])
+@app.route("/login/", methods=["POST", "GET"])
 def login():
     formAuth = FormGestionLogin()
 
@@ -71,23 +71,26 @@ def login():
                            form=FormFormulaire())
 
 
+@app.route("/login/mdp_oublier", methods=["POST", "GET"])
+def mdp_oublier_etape_1():
+    formAuth = FormGestionMdpOublier()
+
+    if formAuth.validate_on_submit():
+        user, error = formAuth.etape_1()
+        if user:
+            flash("Un code a été envoyé à votre adresse email.", "success")
+            return redirect(url_for('mdp_oublier_code'))
+        else:
+            flash(error, "error")
+    return render_template("mdp_oublier_etape_1.html",
+                           form=FormFormulaire(),
+                           formAuth=formAuth)
+
+
 @app.route("/logout/")
 def logout():
     logout_user()
     return redirect(url_for("login"))
-
-
-@app.route("/login/mdp_oublier", methods=["GET", "POST"])
-def mdp_oublier_etape_1():
-    formAuth = FormGestionLogin()
-    print("q<sdojkqs pdnqspdjnqsd")
-
-    if formAuth.validate_on_submit():   
-        print("q<sdojkqs pdnqspdjnqsd")
-        print(formAuth.etape_1()[0] + "à été ajouter")
-    return render_template("mdp_oublier_etape_1.html",
-                           form=FormFormulaire(),
-                           formAuth=FormGestionLogin())
 
 
 @app.route("/inscription/", )

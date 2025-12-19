@@ -145,7 +145,6 @@ class FormFormulaire(FlaskForm):
 class FormGestionLogin(FlaskForm):
     email = StringField('email', validators=[DataRequired()])
     mdp = PasswordField('Password', validators=[DataRequired()])
-    email_etape_1 = StringField('email', validators=[DataRequired()])
 
     def authenticate_user(self):
         """
@@ -170,19 +169,29 @@ class FormGestionLogin(FlaskForm):
         else:
             return None, "Mot de passe incorrect."
 
+
+class FormGestionMdpOublier(FlaskForm):
+    email = StringField('email', validators=[DataRequired()])
+
     def etape_1(self):
         from .models import Personne
         from flask_mail import Message
         from .app import mail
 
-        user = Personne.query.filter_by(
-            email_personne=self.email_etape_1.data).first()
+        user = Personne.query.filter_by(email_personne=self.email.data).first()
         if not user:
             return None, "Email inconnu."
-        # Envoyer un email de test
-        msg = Message('Test Email - Mot de passe oublié',
-                      recipients=[self.email_etape_1.data])
-        msg.body = 'Ceci est un email de test envoyé depuis l\'application Escrime Blois.'
-        mail.send(msg)
+        import random
+        code_verification = str(random.randint(100000, 999999))
+        try:
+            msg = Message('Code de vérification - Mot de passe oublié',
+                          recipients=[self.email.data])
+            msg.body = f'Votre code de vérification est : {code_verification}\n\nCe code est valable pendant 15 minutes.'
+            mail.send(msg)
+            print(f"Email envoyé avec succès à {self.email.data}")
+        except Exception as e:
+            print(f" > ERREUR d'envoi d'email (mode développement): {str(e)}")
+            print(f" > Email simulé envoyé à: {self.email.data}")
+            print(f" > Code de vérification: {code_verification}")
 
         return user, None
