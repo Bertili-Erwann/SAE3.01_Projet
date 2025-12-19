@@ -45,7 +45,7 @@ def insert_formulaire():
 @app.route('/', )
 @app.route('/index/')
 def index():
-    return render_template("index.html", formRech=FormRechercheArticle())
+    return render_template("index.html", formRech=FormRechercheArticle(), page_actu = 'home')
 
 
 @app.route('/demande_article', methods=['GET'])
@@ -96,7 +96,6 @@ def login():
 
             if user.mdp == hashed_password or user.mdp == password:
                 login_user(user)
-                flash("Connexion réussie !", "success")
                 if user.role == "membre":
                     return redirect(url_for("infos_persos"))
                 elif user.role == "responsable":
@@ -183,9 +182,9 @@ def insert_commentaire(ida):
 @app.route('/evenement/résultats')
 def resultat():
     competitions = Evenement.query.filter_by(
-        type_evenement='competition').all()
+        type_evenement='Compétition').all()
 
-    selected_competition_id = request.args.get('competition')
+    selected_competition_id = request.args.get('Compétition')
     classements = []
 
     if selected_competition_id:
@@ -448,7 +447,7 @@ def admin_comp():
                                      niveau=niveau,
                                      discipline=discipline,
                                      cooperative=jeu,
-                                     type_evenement="competition")
+                                     type_evenement="Compétition")
 
         db.session.add(nouvel_evenement)
         db.session.commit()
@@ -459,9 +458,9 @@ def admin_comp():
 
 @app.route('/admin/resultats', methods=['GET'])
 def admin_resultat():
-    competitions = Evenement.query.filter_by(type_evenement='competition').all()
+    competitions = Evenement.query.filter_by(type_evenement='Compétition').all()
     
-    selected_competition_id = request.args.get('competition')
+    selected_competition_id = request.args.get('Compétition')
     classements = []
     
     if selected_competition_id:

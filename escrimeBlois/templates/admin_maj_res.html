@@ -1,13 +1,10 @@
 {% extends "base.html" %} {% block main %}
 <main id="admin_nav" role="admin_nav" class="container-fluid p-0">
-  {% include "admin_nav_inscription.html" %} {% include "admin_nav_bar.html" %}
+  {% include "admin_nav_bar.html" %}
 </main>
 <div id='blank_space'></div>
+<h1 class="text_form">Résultats des compétitions</h1>
 <div class="result-page-container">
-    <div class="result-page-title">
-        <h2>Administrateur - Mise à jour des résultats</h2>
-    </div>
-
     <div class="result-search-bar">
         <form method="GET" action="{{ url_for('admin_resultat') }}" class="result-search-form">
             <select name="competition" class="form-control result-search-select">
