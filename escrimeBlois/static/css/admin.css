@@ -15,7 +15,7 @@
 }
 
 .result-search-bar {
-    background-color: #b0b0b0;
+    background-color: var(--gray-500);
     padding: 15px;
     border-radius: 30px;
     display: flex;
@@ -62,8 +62,8 @@
 }
 
 .result-pdf-btn {
-    border-radius: 20px;
-    background-color: #888;
+    border-radius: var(--border-radius-pill);
+    background-color: var(--gray-600);
     border: none;
     font-size: 0.8rem;
     display: flex;
@@ -74,9 +74,9 @@
 .result-table-container {
     max-width: 800px;
     margin: 0 auto;
-    background-color: #999;
+    background-color: var(--gray-600);
     padding: 10px;
-    border-radius: 15px;
+    border-radius: var(--border-radius-lg);
 }
 
 .result-table {
@@ -86,7 +86,7 @@
 }
 
 .result-table-header {
-    background-color: #999;
+    background-color: var(--gray-600);
     color: var(--text-white);
 }
 
@@ -99,7 +99,7 @@
 }
 
 .result-table-row {
-    background-color: #b0b0b0;
+    background-color: var(--gray-500);
 }
 
 .result-table-td {
@@ -118,4 +118,3 @@
 .result-points-input {
     width: 80px;
 }
-

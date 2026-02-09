@@ -1,4 +1,6 @@
 /* ==================== Styles Globaux ==================== */
+
+/* -------------------- Reset & Base -------------------- */
 html,
 body {
   margin: 0;
@@ -6,13 +8,210 @@ body {
 }
 
 body {
-  font-family: sans-serif;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--text-main);
+  background-color: var(--bg-body);
 }
 
+a {
+  color: var(--accent-link);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--accent-link-hover);
+  text-decoration: underline;
+}
+
+/* -------------------- Utilitaires -------------------- */
 .hidden {
   display: none;
 }
 
 #blank_space {
   padding: 10px;
+}
+
+/* -------------------- Classes de Boutons -------------------- */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--border-radius-pill);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: var(--font-size-sm);
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-light);
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--text-white);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  color: var(--text-white);
+  text-decoration: none;
+}
+
+.btn-secondary {
+  background-color: var(--gray-600);
+  color: var(--text-white);
+}
+
+.btn-secondary:hover {
+  background-color: var(--gray-700);
+  color: var(--text-white);
+  text-decoration: none;
+}
+
+.btn-success {
+  background-color: var(--success);
+  color: var(--text-white);
+}
+
+.btn-success:hover {
+  background-color: var(--success-hover);
+  color: var(--text-white);
+  text-decoration: none;
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  color: var(--text-white);
+}
+
+.btn-danger:hover {
+  background-color: var(--danger-hover);
+  color: var(--text-white);
+  text-decoration: none;
+}
+
+.btn-warning {
+  background-color: var(--warning);
+  color: var(--text-black);
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+  color: var(--text-black);
+  text-decoration: none;
+}
+
+/* -------------------- Classes de Cartes -------------------- */
+.card {
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-light);
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  box-shadow: var(--shadow-medium);
+}
+
+/* -------------------- Formulaires -------------------- */
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-base);
+  background-color: var(--text-white);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  background-color: var(--text-white);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* -------------------- Utilitaires de Texte -------------------- */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-muted {
+  color: var(--text-light);
+}
+
+.text-white {
+  color: var(--text-white);
+}
+
+.text-danger {
+  color: var(--danger);
+}
+
+.text-success {
+  color: var(--success);
+}
+
+/* -------------------- Utilitaires de Margin/Padding -------------------- */
+.mt-0 {
+  margin-top: 0;
+}
+
+.mt-1 {
+  margin-top: var(--spacing-sm);
+}
+
+.mt-2 {
+  margin-top: var(--spacing-md);
+}
+
+.mt-3 {
+  margin-top: var(--spacing-lg);
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mb-1 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.mb-2 {
+  margin-bottom: var(--spacing-md);
+}
+
+.mb-3 {
+  margin-bottom: var(--spacing-lg);
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
 }

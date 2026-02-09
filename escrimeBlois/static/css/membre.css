@@ -1,29 +1,29 @@
 /* ==================== Navbar Membres ==================== */
-#nav_membre{
-display: flex;
-flex-wrap: nowrap;
-background-color:#DEDEDE;
-float: none;
-margin: 0 auto;
-display: block;
-text-align: center;
+#nav_membre {
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: var(--gray-300);
+    float: none;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
 }
 
 
-#nav_membre > li{
-list-style-type: none;
-flex-basis: 15%;
-margin-left: 10%;
-margin-right: 10%;
-margin-top: 10px;
-margin-bottom: 10px;
-border: 5px;
-display: inline-block;
-float: none;
+#nav_membre>li {
+    list-style-type: none;
+    flex-basis: 15%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 5px;
+    display: inline-block;
+    float: none;
 }
 
-#nav_membre > li:hover{
-font-weight: bold;
+#nav_membre>li:hover {
+    font-weight: bold;
 }
 
 /* ==================== Informations Personnelles ==================== */
@@ -31,7 +31,7 @@ font-weight: bold;
     background-color: var(--bg-body);
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 1200px;
     margin: 2rem auto;
 }
@@ -76,14 +76,14 @@ font-weight: bold;
 .form-field-v2 select {
     width: 100%;
     padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
     font-size: 14px;
 }
 
 .form-field-v2 input:disabled {
-    background-color: #eee;
-    color: #666;
+    background-color: var(--gray-200);
+    color: var(--gray-600);
     cursor: not-allowed;
 }
 
@@ -108,7 +108,7 @@ font-weight: bold;
 }
 
 .non-modifiable-v2 {
-    color: #888;
+    color: var(--gray-600);
 }
 
 .modifiable-v2 {
@@ -134,7 +134,8 @@ summary::-webkit-details-marker {
     display: none;
 }
 
-summary::after,.ic::after {
+summary::after,
+.ic::after {
     content: '▶';
     font-size: 1em;
     transition: transform 0.3s ease;
@@ -142,7 +143,7 @@ summary::after,.ic::after {
     display: inline-block;
 }
 
-details[open] summary::after{
+details[open] summary::after {
     transform: rotate(90deg);
 }
 
@@ -188,17 +189,17 @@ details[open] summary {
     max-width: 1000px;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: var(--white);
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    background-color: var(--text-white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-light);
 }
 
 .results-container h1 {
-    color: var(--primary-color);
+    color: var(--primary);
     text-align: center;
     margin-bottom: 2rem;
     font-size: 2rem;
-    border-bottom: 2px solid var(--accent-color);
+    border-bottom: 2px solid var(--secondary);
     padding-bottom: 1rem;
 }
 
@@ -212,12 +213,12 @@ details[open] summary {
 .results-table td {
     padding: 1rem;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .results-table th {
-    background-color: var(--primary-color);
-    color: var(--white);
+    background-color: var(--primary);
+    color: var(--text-white);
     font-weight: 600;
     text-transform: uppercase;
     font-size: 0.9rem;
@@ -240,32 +241,32 @@ details[open] summary {
 }
 
 .rank-1 {
-    background-color: #ffd700;
-    color: #000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    background-color: var(--rank-gold);
+    color: var(--text-black);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .rank-2 {
-    background-color: #c0c0c0;
-    color: #000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    background-color: var(--rank-silver);
+    color: var(--text-black);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .rank-3 {
-    background-color: #cd7f32;
-    color: #000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    background-color: var(--rank-bronze);
+    color: var(--text-black);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .rank-other {
-    background-color: #e0e0e0;
-    color: #555;
+    background-color: var(--gray-300);
+    color: var(--text-light);
 }
 
 .empty-state {
     text-align: center;
     padding: 3rem;
-    color: #666;
+    color: var(--gray-600);
     font-style: italic;
 }
 
@@ -274,7 +275,7 @@ details[open] summary {
         display: block;
         overflow-x: auto;
     }
-    
+
     .results-container {
         padding: 1rem;
         margin: 1rem;
@@ -283,60 +284,64 @@ details[open] summary {
 
 /* ==================== Événements inscrits ==================== */
 #container_table_event_inscrits {
-  margin: 0 auto;
-  width: 80%;
-  min-height: auto;
-  display: flex;
-  flex-wrap: wrap;
-  padding-top: 20px;
-  background-color: var(--text-white);
+    margin: 0 auto;
+    width: 80%;
+    min-height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    background-color: var(--text-white);
 }
 
 .table100-body {
-  max-height: 400px;
+    max-height: 400px;
 }
 
 .event-table {
-  border-collapse: collapse;
-  width: 100%;
-  border: 2px solid #ddd;
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid var(--border-color);
 }
 
-.table-th, .table-td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  vertical-align: middle;
+.table-th,
+.table-td {
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    vertical-align: middle;
 }
 
 .table-th {
-  background-color: #353536;
-  color: var(--text-white);
+    background-color: var(--gray-800);
+    color: var(--text-white);
 }
 
 .table-td {
-  background-color: #f9f9f9;
-  color: #575656;
+    background-color: var(--gray-100);
+    color: var(--gray-700);
 }
 
-.nom_event_insc, .date_event_insc, .type_event_incs, .action_event_insc {
-  text-align: center;
+.nom_event_insc,
+.date_event_insc,
+.type_event_incs,
+.action_event_insc {
+    text-align: center;
 }
 
 .action_event_insc {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .event_buttons {
-  background-color: var(--bg-card);
-  padding: 10px;
-  border-radius: 10px;
-  text-align: left;
-  transition: all 0.3s ease;
-  box-shadow: var(--shadow-light);
+    background-color: var(--bg-card);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: left;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-light);
 }
 
 .event_buttons:hover {
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }

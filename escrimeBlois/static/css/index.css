@@ -57,7 +57,7 @@
   text-align: center;
 }
 
-.main-content > h1 {
+.main-content>h1 {
   letter-spacing: 5px;
   font-weight: 600;
 }
@@ -78,10 +78,10 @@
   padding: 0 3rem;
 }
 
-.articles > article {
+.articles>article {
   flex: 0 0 280px;
   scroll-snap-align: start;
-  background-color: #c7c3f4;
+  background-color: var(--cold);
   padding: 2em;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px;
   padding-top: 15px;
@@ -167,7 +167,7 @@
     -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
 }
 
-.inscription > img {
+.inscription>img {
   width: 40vh;
   height: 30vh;
   margin: -40px;
@@ -184,8 +184,8 @@
 
 .inscription-wrap a {
   text-decoration: none;
-  color: rgb(255, 130, 130);
-  -webkit-text-stroke: 1px rgb(255, 130, 130);
+  color: var(--accent-coral);
+  -webkit-text-stroke: 1px var(--accent-coral);
   letter-spacing: 2px;
 }
 
@@ -203,7 +203,7 @@
   width: fit-content;
   max-height: calc(100vh - 50px);
   overflow-y: auto;
-  background-color: #3a343446;
+  background-color: rgba(58, 52, 52, 0.27);
   justify-content: center;
   padding: 20px;
 }
@@ -218,14 +218,14 @@
 }
 
 .btn-rech-ar {
-  background-color: #c3c2f4;
-  border-radius: 5px;
+  background-color: var(--cold);
+  border-radius: var(--border-radius-sm);
   margin-left: 5px;
   font-weight: 300;
 }
 
 .menu-recherche p {
-  background-color: #a89d9d85;
+  background-color: var(--gray-500);
   border-radius: 30px;
   width: 400px;
   margin: 20px;
@@ -236,7 +236,7 @@
 }
 
 .aside-slide {
-  background-color: #a8a8a8b4;
+  background-color: var(--cold-dark);
   float: left;
   border-radius: 25px;
   margin-block-end: 25%;

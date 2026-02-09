@@ -16,7 +16,7 @@
     <h3>Informations de l'événement</h3>
     <p><strong>Type :</strong> {{ inscription.evenement.type_evenement }}</p>
     <p><strong>Date :</strong> {{ inscription.evenement.date }}</p>
-    <p><strong>Heure :</strong> {{ inscription.evenement.heure }}h</p>
+    <p><strong>Heure :</strong> {{ inscription.evenement.heure_formatee }}</p>
     <p><strong>Lieu :</strong> {{ inscription.evenement.lieu }}</p>
     <p><strong>Catégorie :</strong> {{ inscription.evenement.categorie }}</p>
     {% if inscription.evenement.type_evenement == 'Compétition' %}
