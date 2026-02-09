@@ -1,8 +1,8 @@
 /*------------------------ Maj Resultat ---------------------------*/
 
 .result-page-title {
-    background-color: #444;
-    color: white;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
     padding: 10px 20px;
     border-radius: 5px;
     margin-bottom: 20px;
@@ -43,7 +43,7 @@
 
 .result-search-btn {
     border-radius: 20px;
-    background-color: #6495ED;
+    background-color: var(--secondary);
     border: none;
     padding: 5px 20px;
 }
@@ -82,16 +82,16 @@
 .result-table {
     width: 100%;
     border-collapse: collapse;
-    border: 2px solid #444;
+    border: 2px solid var(--bg-dark);
 }
 
 .result-table-header {
     background-color: #999;
-    color: white;
+    color: var(--text-white);
 }
 
 .result-table-th {
-    border: 2px solid #444;
+    border: 2px solid var(--bg-dark);
     padding: 10px;
     text-align: center;
     font-weight: normal;
@@ -103,10 +103,10 @@
 }
 
 .result-table-td {
-    border: 2px solid #444;
+    border: 2px solid var(--bg-dark);
     padding: 10px;
     text-align: center;
-    color: white;
+    color: var(--text-white);
     font-size: 1.1rem;
 }
 

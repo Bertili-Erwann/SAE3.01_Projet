@@ -7,7 +7,7 @@
 
 .ctn-list-art a {
   text-decoration: none;
-  color: black;
+  color: var(--text-black);
 }
 
 .art {
@@ -41,7 +41,7 @@
 }
 
 .view-art {
-  background-color: white;
+  background-color: var(--text-white);
   padding: 30px;
   max-width: 900px;
   margin: 50px auto 30px;
@@ -52,7 +52,7 @@
   font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #333;
+  color: var(--text-main);
 }
 
 .view-art .date-art {
@@ -74,18 +74,18 @@
   max-height: 150px;
   object-fit: cover;
   border-radius: 5px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
 }
 
 .view-art p {
   font-size: 1rem;
   line-height: 1.6;
-  color: #333;
+  color: var(--text-main);
   text-align: justify;
 }
 
 .ctn-comm {
-  background-color: white;
+  background-color: var(--text-white);
   max-width: 900px;
   margin: 0 auto 20px;
   padding: 20px;
@@ -104,18 +104,18 @@
 .comm h3 {
   font-size: 1rem;
   font-weight: bold;
-  color: #333;
+  color: var(--text-main);
   margin-bottom: 5px;
 }
 
 .comm p {
   font-size: 0.95rem;
-  color: #555;
+  color: var(--text-light);
   line-height: 1.5;
 }
 
 .message {
-  background-color: white;
+  background-color: var(--text-white);
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
@@ -123,12 +123,12 @@
 }
 
 .header-commenter {
-  background-color: #f0f0f0;
+  background-color: var(--bg-card);
   padding: 10px;
   font-weight: bold;
   font-size: 1.1rem;
   margin: -20px -20px 20px -20px;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid var(--border-color);
 }
 
 .message form {
@@ -152,7 +152,7 @@
   display: block;
   margin-bottom: 5px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-main);
 }
 
 .ctn-msg {
@@ -163,7 +163,7 @@
 .ctn-msg label {
   margin-bottom: 5px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-main);
 }
 
 .ctn-msg textarea {
@@ -178,8 +178,8 @@
 .message input[type="submit"] {
   align-self: flex-start;
   padding: 10px 30px;
-  background-color: #5273cc;
-  color: white;
+  background-color: var(--primary-hover);
+  color: var(--text-white);
   border: none;
   border-radius: 5px;
   cursor: pointer;

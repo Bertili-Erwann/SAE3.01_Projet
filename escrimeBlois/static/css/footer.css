@@ -2,12 +2,12 @@
 
 /* -------------------- Conteneur principal -------------------- */
 #footer {
-  background-color: #484848;
+  background-color: var(--bg-footer);
 }
 
 #foot_title {
   text-align: center;
-  color: #ffffff;
+  color: var(--text-white);
   padding: 2%;
 }
 
@@ -54,14 +54,14 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
-  background-color: #f5f5f5;
+  background-color: var(--bg-body);
   resize: vertical;
 }
 
 #foot_section_2 .form-control:focus {
   outline: none;
   border-color: #666;
-  background-color: #fff;
+  background-color: var(--text-white);
 }
 
 #foot_bouton_robot {
@@ -112,7 +112,7 @@
 }
 
 #foot_last_line {
-  color: #ffffff;
+  color: var(--text-white);
   margin-top: 10px;
   font-size: 14px;
 }
@@ -140,7 +140,7 @@
 #foot_adresse_email,
 #foot_num_tel,
 #foot_adresse_postale {
-  color: #ffffff;
+  color: var(--text-white);
 }
 
 #foot_adresse_postale:hover {

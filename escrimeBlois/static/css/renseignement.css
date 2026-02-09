@@ -6,7 +6,7 @@
   background-color: #cccccc;
   margin: 1%;
   border-collapse: collapse;
-  color: #000000;
+  color: var(--text-black);
 }
 
 .firstbloc {
@@ -50,12 +50,12 @@
 /* -------------------- Indentation -------------------- */
 .indentL {
   text-indent: 15px;
-  color: #000000;
+  color: var(--text-black);
 }
 
 .indentP {
   text-indent: 10px;
-  color: #000000;
+  color: var(--text-black);
 }
 
 /* -------------------- Deux colonnes -------------------- */
