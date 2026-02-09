@@ -177,14 +177,14 @@ class FormGestionMdpOublier(FlaskForm):
         from .models import Personne
         from flask_mail import Message
         from .app import mail
+        import random
 
         user = Personne.query.filter_by(email_personne=self.email.data).first()
         if not user:
             return None, "Email inconnu."
-        import random
         code_verification = str(random.randint(100000, 999999))
         try:
-            msg = Message('Code de vérification - Mot de passe oublié',
+            msg = Message(subject='Code de vérification - Mot de passe oublié',
                           recipients=[self.email.data])
             msg.body = f'Votre code de vérification est : {code_verification}\n\nCe code est valable pendant 15 minutes.'
             mail.send(msg)
