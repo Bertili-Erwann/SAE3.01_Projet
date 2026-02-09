@@ -10,15 +10,15 @@
   padding: 40px;
   width: 60%;
   border-radius: 10px;
-  color: #fff;
-  -webkit-text-stroke: 1px #ffffff;
+  color: var(--text-white);
+  -webkit-text-stroke: 1px var(--text-white);
   text-shadow: 0 1px 0 #000, 1px 0 0 #000, -1px 0 0 #000, 0 -1px 0 #000,
     1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000,
     0 2px 0 #000, 2px 0 0 #000, -2px 0 0 #000, 0 -2px 0 #000, 2px 2px 0 #000,
     -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
 }
 
-.inscription > img {
+.inscription>img {
   width: 40vh;
   height: 30vh;
   margin: -40px;
@@ -27,6 +27,7 @@
 .inscription-wrap {
   margin-top: 50px;
 }
+
 .inscription-wrap h1 {
   margin-top: -5px;
   margin-left: 50px;
@@ -34,8 +35,8 @@
 
 .inscription-wrap a {
   text-decoration: none;
-  color: rgb(255, 130, 130);
-  -webkit-text-stroke: 1px rgb(255, 130, 130);
+  color: var(--accent-coral);
+  -webkit-text-stroke: 1px var(--accent-coral);
   letter-spacing: 2px;
 }
 
@@ -46,7 +47,7 @@
 
 /* ==================== navbar_admin ==================== */
 #navbar_inscription {
-  background-color: #cacaca;
+  background-color: var(--gray-400);
   padding: 2px 0;
   margin-bottom: 10px;
 }
@@ -59,14 +60,14 @@
   padding: 0;
 }
 
-#nav_inscription > li {
+#nav_inscription>li {
   flex-basis: 20%;
   margin: 0 10px;
 }
 
-#nav_inscription > li a {
+#nav_inscription>li a {
   text-decoration: none;
-  color: #333;
+  color: var(--text-main);
   padding: 12px 20px;
   display: block;
   border-radius: 8px;
@@ -74,15 +75,15 @@
   text-align: center;
 }
 
-#nav_inscription > li:hover a {
+#nav_inscription>li:hover a {
   font-weight: bold;
-  color: #357abd;
+  color: var(--accent-link);
   background-color: rgba(74, 144, 226, 0.1);
 }
 
 /* ==================== navbar_inscription ==================== */
 #navbar_admin {
-  background-color: #cacaca;
+  background-color: var(--gray-400);
   padding: 2px 0;
   margin-bottom: 10px;
 }
@@ -95,14 +96,14 @@
   padding: 0;
 }
 
-#nav_admin > li {
+#nav_admin>li {
   flex-basis: 20%;
   margin: 0 10px;
 }
 
-#nav_admin > li a {
+#nav_admin>li a {
   text-decoration: none;
-  color: #333;
+  color: var(--text-main);
   padding: 12px 20px;
   display: block;
   border-radius: 8px;
@@ -110,9 +111,9 @@
   text-align: center;
 }
 
-#nav_admin > li:hover a {
+#nav_admin>li:hover a {
   font-weight: bold;
-  color: #357abd;
+  color: var(--accent-link);
   background-color: rgba(74, 144, 226, 0.1);
 }
 
@@ -124,20 +125,20 @@
   padding: 20px;
   margin: 10px auto;
   max-width: 600px;
-  background-color: #f0f0f0;
+  background-color: var(--bg-card);
   border-radius: 10px;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-light);
 }
 
 .demande_inscription_item:hover {
-  background-color: #e8e8e8;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  background-color: var(--gray-200);
+  box-shadow: var(--shadow-medium);
 }
 
 .inscription_liste h1 {
   text-align: center;
-  color: #333;
+  color: var(--text-main);
   font-size: 32px;
   margin: 30px 0;
   font-weight: 600;
@@ -145,18 +146,18 @@
 }
 
 .demande_inscription_item button {
-  background-color: #949494;
-  color: white;
+  background-color: var(--gray-600);
+  color: var(--text-white);
   padding: 8px 20px;
   border: none;
-  border-radius: 20px;
+  border-radius: var(--border-radius-pill);
   cursor: pointer;
   font-size: 14px;
   transition: all 0.3s;
 }
 
 .demande_inscription_item button:hover {
-  background-color: #d3d3d3;
+  background-color: var(--gray-400);
   transform: scale(1.05);
 }
 
@@ -168,7 +169,7 @@
 }
 
 .inscription_view h2 {
-  color: #333;
+  color: var(--text-main);
   font-size: 28px;
   margin-bottom: 20px;
   font-weight: 600;
@@ -181,9 +182,9 @@
   transform: scale(1.02);
 }
 
-.inscription_view > a button {
-  background-color: #d90000;
-  color: white;
+.inscription_view>a button {
+  background-color: var(--danger);
+  color: var(--text-white);
   padding: 10px 25px;
   border: none;
   border-radius: 20px;
@@ -192,19 +193,19 @@
   transition: all 0.3s;
 }
 
-.inscription_view > a button:hover {
-  background-color: #ff5d5d;
+.inscription_view>a button:hover {
+  background-color: var(--danger-hover);
   transform: scale(1.05);
 }
 
 .inscription_details {
-  background-color: #f0f0f0;
+  background-color: var(--bg-card);
   padding: 30px;
   border-radius: 10px;
   margin-top: 20px;
   text-align: left;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-light);
 }
 
 .inscription_details:hover {
@@ -224,7 +225,7 @@
 }
 
 .inscription_details a {
-  color: #0066cc;
+  color: var(--accent-link);
   text-decoration: none;
   transition: all 0.3s ease;
   padding: 2px 5px;
@@ -232,7 +233,7 @@
 }
 
 .inscription_details a:hover {
-  color: #0052a3;
+  color: var(--accent-link-hover);
   background-color: rgba(0, 102, 204, 0.1);
   text-decoration: underline;
   transform: scale(1.05);
@@ -256,21 +257,21 @@
 }
 
 .inscription_buttons button[value="accepter"] {
-  background-color: #4CAF50;
-  color: white;
+  background-color: var(--success);
+  color: var(--text-white);
 }
 
 .inscription_buttons button[value="accepter"]:hover {
-  background-color: #45a049;
+  background-color: var(--success-hover);
   transform: scale(1.05);
 }
 
 .inscription_buttons button[value="refuser"] {
-  background-color: #d90000;
-  color: white;
+  background-color: var(--danger);
+  color: var(--text-white);
 }
 
 .inscription_buttons button[value="refuser"]:hover {
-  background-color: #ff1a1a;
+  background-color: var(--danger-hover);
   transform: scale(1.05);
 }

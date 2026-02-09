@@ -188,6 +188,20 @@ class Evenement(db.Model):
     type_evenement = db.Column(db.String(64))
     inscriptions = db.relationship("Inscription", backref=db.backref("evenement"))
 
+    @property
+    def heure_formatee(self):
+        """
+        Retourne l'heure formatée en HH:MM à partir des minutes stockées.
+        
+        Returns:
+            str: L'heure au format HH:MM (ex: "05:00" pour 300 minutes).
+        """
+        if self.heure is None:
+            return "-"
+        heures = self.heure // 60
+        minutes = self.heure % 60
+        return f"{heures:02d}:{minutes:02d}"
+
     @validates('type_evenement')
     def validate_attributs_evenement(self, key: str, value: str) -> str:
         """

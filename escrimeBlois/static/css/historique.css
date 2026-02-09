@@ -92,15 +92,15 @@ table {
 
 .table100 th {
   font-size: 18px;
-  color: #fff;
+  color: var(--text-white);
   line-height: 1.4;
-  background-color: #353536;
+  background-color: var(--gray-800);
 }
 
 .table100 td {
   font-family: Lato-Regular;
   font-size: 15px;
-  color: #575656;
+  color: var(--gray-700);
   line-height: 1.4;
 }
 
@@ -173,6 +173,6 @@ table {
 }
 
 .historique_ajouter:hover {
-  background-color: #575656;
+  background-color: var(--gray-100);
   transform: scale(1.05);
 }
