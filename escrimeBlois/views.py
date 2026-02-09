@@ -3,7 +3,7 @@ from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
 from hashlib import sha256
 from datetime import date, datetime
-from sqlalchemy import extract
+from sqlalchemy import extract, func
 from .app import app, db
 from .models import *
 from escrimeBlois.models import (
@@ -74,7 +74,53 @@ def demande_article():
 
 @app.route("/historique/")
 def historique():
-    return render_template("historique.html", form=FormFormulaire())
+    return render_template("historique.html",
+                           historique = Historique.query.order_by(Historique.id_chronologique),
+                           user = current_user,
+                           form=FormFormulaire())
+
+
+@app.route("/historique/ajouter", methods=["POST"])
+@login_required
+def ajouter_historique():
+
+    date_event = request.form.get("date").strip()
+    description = request.form.get("description").strip()
+
+    if not date_event or not description:
+        flash("La date et la description sont obligatoires", "error")
+        return redirect(url_for("historique"))
+
+    try:
+        max_id = db.session.query(func.max(Historique.id_chronologique)).scalar()
+        next_id = max_id + 1
+        event = Historique(id_chronologique=next_id,
+                           date=date_event,
+                           description=description)
+        db.session.add(event)
+        db.session.commit()
+        flash("Événement ajouté avec succès", "success")
+    except Exception:
+        db.session.rollback()
+        flash("Erreur lors de l'ajout de l'événement", "error")
+
+    return redirect(url_for("historique"))
+
+@app.route("/historique/supprimer/<int:id_chronologique>", methods=["POST"])
+@login_required
+def supprimer_historique(id_chronologique:int):
+    try:
+        event = Historique.query.get(id_chronologique)
+        if event:
+            db.session.delete(event)
+            db.session.commit()
+            flash("Historique mis à jours avec succès", "success")
+        else:
+            flash("Événement de l'historique inexistant", "error")
+    except Exception as e:
+        db.session.rollback()
+        flash("Erreur lors de la suppression", "error")
+    return redirect(url_for("historique"))
 
 
 @app.route("/renseignement/")

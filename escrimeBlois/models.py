@@ -593,3 +593,16 @@ class Commentaire(db.Model):
     article = db.relationship("Article",
                               backref=db.backref("commentaires",
                                                  lazy="dynamic"))
+                                                 
+class Historique(db.Model):
+    """
+    Modèle représentant les différents événements de l'historique du club.
+    
+    Attributs:
+        id_chronologique (int): Clé primaire, id correspondant au placement de l'événement dans le temps. Plus l'événement est récent, plus l'id est grand.
+        date (str): date de l'événement.
+        description (Date): description de l'événement.
+    """
+    id_chronologique = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(30))
+    description = db.Column(db.String(280))
