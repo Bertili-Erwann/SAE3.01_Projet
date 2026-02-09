@@ -66,7 +66,7 @@
 
 #nav_inscription > li a {
   text-decoration: none;
-  color: #333;
+  color: var(--text-main);
   padding: 12px 20px;
   display: block;
   border-radius: 8px;
@@ -102,7 +102,7 @@
 
 #nav_admin > li a {
   text-decoration: none;
-  color: #333;
+  color: var(--text-main);
   padding: 12px 20px;
   display: block;
   border-radius: 8px;
@@ -124,10 +124,10 @@
   padding: 20px;
   margin: 10px auto;
   max-width: 600px;
-  background-color: #f0f0f0;
+  background-color: var(--bg-card);
   border-radius: 10px;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-light);
 }
 
 .demande_inscription_item:hover {
@@ -137,7 +137,7 @@
 
 .inscription_liste h1 {
   text-align: center;
-  color: #333;
+  color: var(--text-main);
   font-size: 32px;
   margin: 30px 0;
   font-weight: 600;
@@ -146,7 +146,7 @@
 
 .demande_inscription_item button {
   background-color: #949494;
-  color: white;
+  color: var(--text-white);
   padding: 8px 20px;
   border: none;
   border-radius: 20px;
@@ -168,7 +168,7 @@
 }
 
 .inscription_view h2 {
-  color: #333;
+  color: var(--text-main);
   font-size: 28px;
   margin-bottom: 20px;
   font-weight: 600;
@@ -182,8 +182,8 @@
 }
 
 .inscription_view > a button {
-  background-color: #d90000;
-  color: white;
+  background-color: var(--danger);
+  color: var(--text-white);
   padding: 10px 25px;
   border: none;
   border-radius: 20px;
@@ -198,13 +198,13 @@
 }
 
 .inscription_details {
-  background-color: #f0f0f0;
+  background-color: var(--bg-card);
   padding: 30px;
   border-radius: 10px;
   margin-top: 20px;
   text-align: left;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-light);
 }
 
 .inscription_details:hover {
@@ -256,18 +256,18 @@
 }
 
 .inscription_buttons button[value="accepter"] {
-  background-color: #4CAF50;
-  color: white;
+  background-color: var(--success);
+  color: var(--text-white);
 }
 
 .inscription_buttons button[value="accepter"]:hover {
-  background-color: #45a049;
+  background-color: var(--success-hover);
   transform: scale(1.05);
 }
 
 .inscription_buttons button[value="refuser"] {
-  background-color: #d90000;
-  color: white;
+  background-color: var(--danger);
+  color: var(--text-white);
 }
 
 .inscription_buttons button[value="refuser"]:hover {

@@ -28,7 +28,7 @@ font-weight: bold;
 
 /* ==================== Informations Personnelles ==================== */
 .infos-container-v2 {
-    background-color: #f5f5f5;
+    background-color: var(--bg-body);
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -37,14 +37,14 @@ font-weight: bold;
 }
 
 .section-v2 {
-    background-color: white;
+    background-color: var(--text-white);
     padding: 1.5rem;
     margin-bottom: 2rem;
     border-radius: 8px;
 }
 
 .section-v2 h2 {
-    color: #333;
+    color: var(--text-main);
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
 }
@@ -68,7 +68,7 @@ font-weight: bold;
 .form-field-v2 label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #333;
+    color: var(--text-main);
     font-weight: 500;
 }
 
@@ -91,7 +91,7 @@ font-weight: bold;
     padding: 0.5rem 2rem;
     border: none;
     border-radius: 4px;
-    color: white;
+    color: var(--text-white);
     cursor: pointer;
     font-weight: bold;
     font-size: 14px;
@@ -100,11 +100,11 @@ font-weight: bold;
 }
 
 .green-btn-v2 {
-    background-color: #4CAF50;
+    background-color: var(--success);
 }
 
 .green-btn-v2:hover {
-    background-color: #45a049;
+    background-color: var(--success-hover);
 }
 
 .non-modifiable-v2 {
@@ -112,7 +112,7 @@ font-weight: bold;
 }
 
 .modifiable-v2 {
-    color: #4CAF50;
+    color: var(--success);
 }
 
 span.non-modifiable-v2,
@@ -289,7 +289,7 @@ details[open] summary {
   display: flex;
   flex-wrap: wrap;
   padding-top: 20px;
-  background-color: #ffffff;
+  background-color: var(--text-white);
 }
 
 .table100-body {
@@ -310,7 +310,7 @@ details[open] summary {
 
 .table-th {
   background-color: #353536;
-  color: #fff;
+  color: var(--text-white);
 }
 
 .table-td {
@@ -329,12 +329,12 @@ details[open] summary {
 }
 
 .event_buttons {
-  background-color: #f0f0f0;
+  background-color: var(--bg-card);
   padding: 10px;
   border-radius: 10px;
   text-align: left;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-light);
 }
 
 .event_buttons:hover {

@@ -29,14 +29,14 @@
 
 #nav_responsable .nav-link {
  text-decoration: none;
- color: #333;
+ color: var(--text-main);
  text-align: center;
  margin-right: 20px;
 }
 
 
 #nav_responsable .nav-link:hover {
- color: #000;
+ color: var(--text-black);
 }
 
 
@@ -47,7 +47,7 @@
 
 .sub-nav {
     display: flex;
-    background-color: white;
+    background-color: var(--text-white);
     border-bottom: 1px solid #ccc;
     margin-bottom: 20px;
     justify-content: center;
@@ -56,7 +56,7 @@
 .sub-nav a {
     padding: 15px 30px;
     text-decoration: none;
-    color: black;
+    color: var(--text-black);
     border-right: 1px solid #eee;
     font-weight: 500;
 }
@@ -65,7 +65,7 @@
 }
 
 .sub-nav a.tab-active {
-    border-bottom: 3px solid black;
+    border-bottom: 3px solid var(--text-black);
     font-weight: bold;
 }
 
@@ -73,7 +73,7 @@
     width: 95%;
     max-width: 1000px;
     margin: 0 auto 50px auto;
-    background-color: #dcdcdc;
+    background-color: var(--bg-medium);
     padding: 25px;
     border-radius: 5px;
 }
@@ -184,29 +184,29 @@
     color: white; 
     display: inline-block; 
     font-size: 0.9rem;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-light);
     text-decoration: none;
 }
 
 .calendar-container .btn-blue { 
-    background-color: #6495ED; 
+    background-color: var(--secondary); 
 }
 
 .calendar-container .btn-red { 
-    background-color: #B22222; 
+    background-color: var(--danger-hover); 
 }
 
 .table-scroll-container {
     max-height: 600px;
     overflow-y: auto;
-    border: 2px solid black;
+    border: 2px solid var(--text-black);
 }
 
 .events-table { 
     width: 100%; 
     border-collapse: separate; 
     border-spacing: 0; 
-    background-color: #dcdcdc; 
+    background-color: var(--bg-medium); 
     border: none;
 }
 
@@ -214,12 +214,12 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color: #dcdcdc;
-    color: white;
+    background-color: var(--bg-medium);
+    color: var(--text-white);
     font-size: 1.3rem;
     padding: 10px;
-    border-bottom: 2px solid black;
-    border-right: 2px solid black;
+    border-bottom: 2px solid var(--text-black);
+    border-right: 2px solid var(--text-black);
     text-align: center;
     font-weight: normal;
     text-shadow: 1px 1px 2px #555;
@@ -232,8 +232,8 @@
 .events-table td {
     background-color: #e6e6e6;
     padding: 15px;
-    border-bottom: 2px solid black;
-    border-right: 2px solid black;
+    border-bottom: 2px solid var(--text-black);
+    border-right: 2px solid var(--text-black);
     vertical-align: middle;
 }
 
@@ -252,7 +252,7 @@
 
 .event-meta { 
     font-size: 0.9rem; 
-    color: #555; 
+    color: var(--text-light); 
     margin-top: 5px; 
 }
 
@@ -282,8 +282,8 @@
 }
 
 .calendar-container .btn-register { 
-    background-color: #ffc107; 
-    color: black; 
+    background-color: var(--warning);
+    color: var(--text-black);
 }
 
 /* -------------------- Consulter evenement -------------------- */
@@ -296,8 +296,8 @@
 }
 
 .page-title-box {
-    background-color: #444;
-    color: white;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
     padding: 10px 20px;
     border-radius: 5px;
     margin-bottom: 20px;
@@ -323,7 +323,7 @@
     margin-bottom: 15px;
     font-size: 1rem;
     font-weight: bold;
-    color: #333;
+    color: var(--text-main);
 }
 
 .consultation-grid {
@@ -343,12 +343,12 @@
 .consultation-label {
     font-weight: bold;
     margin-right: 10px;
-    color: #333;
+    color: var(--text-main);
     font-size: 0.9rem;
 }
 
 .consultation-value {
-    background-color: white;
+    background-color: var(--text-white);
     padding: 5px 15px;
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
@@ -360,7 +360,7 @@
 }
 
 .consultation-description {
-    background-color: white;
+    background-color: var(--text-white);
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
@@ -389,7 +389,7 @@
 
 .btn-retour:hover {
     background-color: #5a6268;
-    color: white;
+    color: var(--text-white);
 }
 
 .btn-action {
@@ -423,7 +423,7 @@
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
-    color: #333;
+    color: var(--text-main);
 }
 
 .form-control {
@@ -459,7 +459,7 @@
     font-weight: normal;
 }
 .file-input-wrapper {
-    background-color: white;
+    background-color: var(--text-white);
     padding: 5px;
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -474,7 +474,7 @@
 
 .btn-confirm {
     background-color: #00c853;
-    color: white;
+    color: var(--text-white);
     border: none;
     padding: 10px 30px;
     border-radius: 20px;
@@ -490,7 +490,7 @@
 
 .btn-cancel {
     background-color: #ff0000;
-    color: white;
+    color: var(--text-white);
     border: none;
     padding: 10px 30px;
     border-radius: 20px;
@@ -512,8 +512,8 @@
 }
 
 .modal-header-custom {
-    background-color: #444;
-    color: white;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
@@ -521,8 +521,8 @@
 /* -------------------- Section Résultats -------------------- */
 
 .result-page-title {
-    background-color: #444;
-    color: white;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
     padding: 10px 20px;
     border-radius: 5px;
     margin-bottom: 20px;
@@ -563,7 +563,7 @@
 
 .result-search-btn {
     border-radius: 20px;
-    background-color: #6495ED;
+    background-color: var(--secondary);
     border: none;
     padding: 5px 20px;
 }
@@ -602,16 +602,16 @@
 .result-table {
     width: 100%;
     border-collapse: collapse;
-    border: 2px solid #444;
+    border: 2px solid var(--bg-dark);
 }
 
 .result-table-header {
     background-color: #999;
-    color: white;
+    color: var(--text-white);
 }
 
 .result-table-th {
-    border: 2px solid #444;
+    border: 2px solid var(--bg-dark);
     padding: 10px;
     text-align: center;
     font-weight: normal;
@@ -623,10 +623,10 @@
 }
 
 .result-table-td {
-    border: 2px solid #444;
+    border: 2px solid var(--bg-dark);
     padding: 10px;
     text-align: center;
-    color: white;
+    color: var(--text-white);
     font-size: 1.1rem;
 }
 

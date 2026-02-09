@@ -1,4 +1,33 @@
-/* ==================== Variables CSS ==================== */
+/* ==================== Variables CSS Globales ==================== */
 :root {
-  --cold: #c3c2f4;
+  /* --- Couleurs Principales (Bleus) --- */
+  --primary: #6691ff;           /* Boutons principaux, liens */
+  --primary-hover: #5273cc;     /* Survol boutons */
+  --secondary: #6495ED;         /* CornflowerBlue - Accents, recherche */
+  --cold: #c3c2f4;              /* Thème existant (froid) */
+  --cold-dark: #a8a8a8;         /* Nuance plus sombre pour contrastes */
+  
+  /* --- Textes --- */
+  --text-main: #333333;         /* Texte standard */
+  --text-light: #555555;        /* Sous-titres, détails */
+  --text-white: #ffffff;
+  --text-black: #000000;
+
+  /* --- Arrière-plans (Backgrounds) --- */
+  --bg-body: #f5f5f5;           /* Fond de page général */
+  --bg-card: #f0f0f0;           /* Fond des formulaires, cartes (anciennement e6e6e6, f0f0f0) */
+  --bg-medium: #dcdcdc;         /* Fond table, zones intermédiaires (anciennement dcdcdc, cccccc) */
+  --bg-dark: #444444;           /* En-têtes, titres sombres */
+  --bg-footer: #484848;         /* Footer spécifique */
+  
+  /* --- Actions & États --- */
+  --success: #4CAF50;           /* Vert standard (anciennement 28a745, 00c853, 4CAF50) */
+  --success-hover: #45a049;
+  --danger: #d90000;            /* Rouge (anciennement dc3545, ff0000, d90000) */
+  --danger-hover: #b22222;
+  --warning: #ffc107;           /* Jaune/Orange */
+
+  /* --- Bordures & Ombres --- */
+  --border-color: #dddddd;
+  --shadow-light: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

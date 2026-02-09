@@ -63,12 +63,12 @@
   width: 70%;
   border: none;
   border-radius: 5px;
-  background-color: #6691ff;
-  color: #000000;
+  background-color: var(--primary);
+  color: var(--text-black);
 }
 
 .form-inscription input[type="submit"]:hover {
-  background-color: #5273cc;
+  background-color: var(--primary-hover);
 }
 
 /* -------------------- Groupes de champs -------------------- */

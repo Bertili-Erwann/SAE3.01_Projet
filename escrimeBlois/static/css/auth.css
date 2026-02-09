@@ -40,7 +40,7 @@
 .fenetre-mdp-confirmer_mdp h2 {
   margin-bottom: 10px;
   font-size: 1.2rem;
-  color: #000000;
+  color: var(--text-black);
 }
 
 /* -------------------- Champs de saisie -------------------- */
@@ -97,15 +97,15 @@
   border: none;
   border-radius: 5px;
   transition: background-color 0.3s;
-  background-color: #6691ff;
-  color: #000000;
+  background-color: var(--primary);
+  color: var(--text-black);
 }
 
 .fenetre-login input[type="submit"]:hover,
 .fenetre-mdp-oublier input[type="submit"]:hover,
 .fenetre-mdp-oublier-code-envoyer input[type="submit"]:hover,
 .fenetre-mdp-confirmer_mdp input[type="submit"]:hover {
-  background-color: #5273cc;
+  background-color: var(--primary-hover);
 }
 
 /* -------------------- Lien mot de passe oublié -------------------- */
