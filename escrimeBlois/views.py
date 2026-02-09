@@ -23,6 +23,7 @@ from escrimeBlois.form import (
     FormFormulaire,
     FormRechercheArticle,
     FormCommentaire,
+    FormModifMembre,
 )
 import os
 
@@ -436,6 +437,50 @@ def supprimer_membre(id_personne):
         db.session.rollback()
         flash("Erreur lors de la suppression", "error")
     return redirect(url_for("admin_miseajour_membres"))
+
+
+@app.route("/admin/modifier/membre/<int:id_personne>", methods=["GET", "POST"])
+@login_required
+def modifier_membre(id_personne):
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    
+    personne = Personne.query.get_or_404(id_personne)
+    
+    if request.method == "POST":
+        from escrimeBlois.form import FormModifMembre
+        form = FormModifMembre()
+        if form.validate_on_submit():
+            try:
+                form.update_membre(personne)
+                flash("Membre modifié avec succès", "success")
+                return redirect(url_for("admin_miseajour_membres"))
+            except Exception as e:
+                db.session.rollback()
+                flash(f"Erreur lors de la modification: {str(e)}", "error")
+        else:
+            flash("Erreur de validation du formulaire", "error")
+    
+    # Pré-remplir le formulaire avec les données existantes
+    from escrimeBlois.form import FormModifMembre
+    form = FormModifMembre(
+        nom=personne.nom_personne,
+        prenom=personne.prenom_personne,
+        email=personne.email_personne,
+        telephone=personne.telephone,
+        sexe=personne.sexe,
+        date_naissance=personne.date_naissance,
+        adresse=personne.adresse,
+        eleve='Oui' if personne.eleve else 'Non',
+        arme_principale=personne.arme_principale,
+        niveau=personne.niveau,
+        role=personne.role
+    )
+    
+    return render_template("admin_modifier_membre.html",
+                         form_modif=form,
+                         personne=personne,
+                         form=FormFormulaire())
 
 
 @app.route('/admin/creation_competition', methods=['GET', 'POST'])
