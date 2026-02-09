@@ -1,6 +1,12 @@
 import os
 
 
+def _env_bool(name: str, default: bool = False) -> bool:
+    raw_value = os.environ.get(name)
+    if raw_value is None:
+        return default
+    return raw_value.strip().lower() in {"1", "true", "yes", "y", "on"}
+
 
 class Config:
     # Database configuration
@@ -12,14 +18,21 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Secret key
-    SECRET_KEY = "b'O?\x02\xdf'"
+    SECRET_KEY = (
+        os.environ.get("SECRET_KEY")
+        or os.environ.get("FLASK_SECRET_KEY")
+        or "dev-secret-key-change-me"
+    )
 
     # Mail configuration
-    MAIL_SERVER = "smtp.gmail.com"
-    MAIL_PORT = 465
-    MAIL_USE_TLS = False
-    MAIL_USE_SSL = True
-    MAIL_USERNAME = "Flask Mailer"
+    MAIL_SERVER = os.environ.get("MAIL_SERVER", "smtp.gmail.com")
+    MAIL_PORT = int(os.environ.get("MAIL_PORT", "465"))
+    MAIL_USE_TLS = _env_bool("MAIL_USE_TLS", False)
+    MAIL_USE_SSL = _env_bool("MAIL_USE_SSL", True)
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
-    MAIL_DEFAULT_SENDER =  os.environ.get("MAIL_DEFAULT_SENDER_EMAIL"),
-    
+
+    _sender_name = os.environ.get("MAIL_DEFAULT_SENDER_NAME", "Flask Mailer")
+    _sender_email = os.environ.get("MAIL_DEFAULT_SENDER_EMAIL", "noreply@escrimeblois.com")
+    MAIL_DEFAULT_SENDER = (_sender_name, _sender_email)
+

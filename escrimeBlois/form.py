@@ -189,9 +189,10 @@ class FormGestionMdpOublier(FlaskForm):
             msg.body = f'Votre code de vérification est : {code_verification}\n\nCe code est valable pendant 15 minutes.'
             mail.send(msg)
             print(f"Email envoyé avec succès à {self.email.data}")
+            return user, None 
         except Exception as e:
             print(f" > ERREUR d'envoi d'email (mode développement): {str(e)}")
             print(f" > Email simulé envoyé à: {self.email.data}")
             print(f" > Code de vérification: {code_verification}")
-
-        return user, None
+            return None, str(e)
+            

@@ -92,7 +92,6 @@ def loaddb(filename: str) -> None:
     for form in data["formulaires"]:
         formul = Formulaire(id_formulaire=form['id_formulaire'],
                             nom_auteur=form['nom_auteur'],
-                            prenom_auteur=form['prenom_auteur'],
                             email_auteur=form['email_auteur'],
                             objet=form['objet'],
                             message=form['message'])
