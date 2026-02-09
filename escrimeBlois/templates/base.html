@@ -13,6 +13,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+  
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
@@ -21,44 +22,44 @@
   </head>
   <body>
     {% block navbar %}
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
       <div class="collapse navbar-collapse" id="mainNavbar">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <!-- BOUTON ACCUEIL -->
           <li class="nav-item">
-            <a class="nav-link accueil" href="{{ url_for('index') }}">Accueil</a>
+            <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="{{ url_for('index') }}">Accueil</a>
           </li>
 
           <!-- BOUTON EVENEMENT -->
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for ('redirection_ffescrime')}}">Événement</a>
+            <a class="nav-link {% if request.endpoint in ['calendrier', 'consulter_evenement', 'inscription_event', 'resultat'] %}active{% endif %}" href="{{ url_for ('redirection_ffescrime')}}">Événement</a>
           </li>
 
           <!-- BOUTON RENSEIGNEMENT  -->
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('renseignement') }}">Renseignement</a>
+            <a class="nav-link {% if request.endpoint == 'renseignement' %}active{% endif %}" href="{{ url_for('renseignement') }}">Renseignement</a>
           </li>
 
           <!-- BOUTON HISTORIQUE  -->
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for ('historique')}}">Historique</a>
+            <a class="nav-link {% if request.endpoint == 'historique' %}active{% endif %}" href="{{url_for ('historique')}}">Historique</a>
           </li>
 
           {% if current_user.is_authenticated and current_user.role == 'membre' %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('infos_persos') }}">Espace Membre</a>
+            <a class="nav-link {% if request.endpoint in ['infos_persos', 'event_inscrits', 'membre_consult_event', 'resultats_passes', 'change_password', 'update_arme'] %}active{% endif %}" href="{{ url_for('infos_persos') }}">Espace Membre</a>
           </li>
           {% endif %}
 
           {% if current_user.is_authenticated and current_user.role == 'responsable' %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('gest_form') }}">Espace Responsable</a>
+            <a class="nav-link {% if request.endpoint in ['gest_form', 'consult_form', 'ajouter_article', 'create_event'] %}active{% endif %}" href="{{ url_for('gest_form') }}">Espace Responsable</a>
           </li>
           {% endif %}
 
           {% if current_user.is_authenticated and current_user.role == 'admin' %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('admin_inscription_club') }}">Espace Administrateur</a>
+            <a class="nav-link {% if request.endpoint in ['admin_inscription_club', 'admin_inscription_club_view', 'admin_inscription_evenement', 'admin_inscription_evenement_view', 'admin_miseajour_membres', 'supprimer_membre', 'admin_comp', 'admin_resultat', 'update_points'] %}active{% endif %}" href="{{ url_for('admin_inscription_club') }}">Espace Administrateur</a>
           </li>
           {% endif %}
 
@@ -67,7 +68,7 @@
             {% if current_user.is_authenticated %}
             <a class="nav-link" href="{{ url_for ('logout')}}">Se déconnecter</a>
             {% else %}
-            <a class="nav-link" href="{{ url_for ('login')}}">Se connecter</a>
+            <a class="nav-link {% if request.endpoint == 'login' %}active{% endif %}" href="{{ url_for ('login')}}">Se connecter</a>
             {% endif %}
           </li>
         </ul>

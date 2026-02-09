@@ -1,5 +1,4 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -16,46 +15,96 @@
     />
   </head>
   <body>
-    <h4 id="foot_title">Des questions ou des remarques ? <strong>Contactez-nous :</strong></h4>
+    <h4 id="foot_title">
+      Des questions ou des remarques ? <strong>Contactez-nous :</strong>
+    </h4>
     <section id="foot_section_1">
-        <section id="foot_section_2">
-          <form method="post" action="{{url_for('insert_formulaire')}}" >
-            {{ form.hidden_tag() }}
-            <div class="form-row-footer">
-              {{ form.nom(placeholder="Nom", class_="form-control")}}
-              {{ form.email(placeholder="Email", class_="form-control")}}
-            </div>
-            {{ form.objet(placeholder="Objet (80 caractères maximum)", class_="form-control", rows="3")}}
-            {{ form.message(placeholder="Message (1200 caractères maximum)", class_="form-control", rows="8")}}
-            <div class="form-row-footer">
-              <button type="button" id="foot_bouton_robot">I'm not a robot.</button>
-              <button type="submit" id="foot_bouton_envoi">
-                <img src="{{ url_for('static', filename='images/logo_envoi.png') }}" alt="Icône envoi">
-                Envoyer
-              </button>
-            </div>
-            <img src="{{ url_for('static', filename='images/logo_cercle_escrime_blois.png') }}" id="foot_logo_CEB" alt="Logo du Cercle d'Escrime de Blois">
-            <p id="foot_last_line">Copyright© 2025</p>
-          </form>
-        </section>
-        <section id="foot_section_2_bis">
-            <div id="foot_div_1">
-                <img src="{{ url_for('static', filename='images/logo_email.png') }}" id="foot_image_email" alt="Icône email">  
-                <p id="foot_adresse_email">contact@blois-escrime.fr</p>
-            </div>
-            <div id="foot_div_2">
-                <img src="{{ url_for('static', filename='images/logo_telephone.png') }}" id="foot_image_tel" alt="Icône téléphone">
-                <div>
-                    <p id="foot_num_tel">Gymnase: 02 54 42 02 12 <br> CEB: 02 54 42 26 46</p>
-                </div>
-            </div>
-            <div id="foot_div_3">
-                <img src="{{ url_for('static', filename='images/logo_position.png') }}" id="foot_image_geo" alt="Icône Localisation">
-                <div>
-                    <p><a id="foot_adresse_postale" href="https://maps.app.goo.gl/VWgxB2uMWQ48DaFs8" style="text-decoration:none">Cercle d’escrime de Blois<br> 20 Guynemer <br>41000 Blois</a></p>
-                </div>
-            </div>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2691.2960367332576!2d1.3114049!3d47.5814837!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e357e8581a5b03%3A0x6c4970194c4a8b7b!2sgymnase%20de%20cabochon!5e0!3m2!1sfr!2sfr!4v1762186731530!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </section>
+      <section id="foot_section_2">
+        <form method="post" action="{{url_for('insert_formulaire')}}">
+          {{ form.hidden_tag() }}
+          <div class="form-row-footer">
+            {{ form.nom(placeholder="Nom", class_="form-control")}} {{
+            form.email(placeholder="Email", class_="form-control")}}
+          </div>
+          {{ form.objet(placeholder="Objet (80 caractères maximum)",
+          class_="form-control", rows="3")}} {{
+          form.message(placeholder="Message (1200 caractères maximum)",
+          class_="form-control", rows="8")}}
+          <div class="form-row-footer">
+            <button type="button" id="foot_bouton_robot">
+              I'm not a robot.
+            </button>
+            <button type="submit" id="foot_bouton_envoi">
+              <img
+                src="{{ url_for('static', filename='images/logo_envoi.png') }}"
+                alt="Icône envoi"
+              />
+              Envoyer
+            </button>
+          </div>
+          <img
+            src="{{ url_for('static', filename='images/logo_cercle_escrime_blois.png') }}"
+            id="foot_logo_CEB"
+            alt="Logo du Cercle d'Escrime de Blois"
+          />
+          <p id="foot_last_line">Copyright© 2025</p>
+        </form>
+      </section>
+      <section id="foot_section_2_bis">
+        <div id="foot_div_1">
+          <img
+            src="{{ url_for('static', filename='images/logo_email.png') }}"
+            id="foot_image_email"
+            alt="Icône email"
+          />
+          <p>
+            <a id="foot_adresse_email" href="mailto:contact@blois-escrime.fr" style="text-decoration: none">
+              contact@blois-escrime.fr
+            </a>
+          </p>
+        </div>
+        <div id="foot_div_2">
+          <img
+            src="{{ url_for('static', filename='images/logo_telephone.png') }}"
+            id="foot_image_tel"
+            alt="Icône téléphone"
+          />
+          <div>
+            <p >
+              Gymnase: <a id="foot_num_tel" href="tel:+33 2 54 42 02 12" style="text-decoration: none"> 02 54 42 02 12 </a>
+              <br />
+              CEB: <a id="foot_num_tel" href="tel:+33 2 54 42 26 46" style="text-decoration: none"> 02 54 42 26 46</a>
+            </p>
+          </div>
+        </div>
+        <div id="foot_div_3">
+          <img
+            src="{{ url_for('static', filename='images/logo_position.png') }}"
+            id="foot_image_geo"
+            alt="Icône Localisation"
+          />
+          <div>
+            <p>
+              <a
+                id="foot_adresse_postale"
+                href="https://maps.app.goo.gl/VWgxB2uMWQ48DaFs8"
+                style="text-decoration: none"
+                >Cercle d’escrime de Blois<br />
+                20 Guynemer <br />41000 Blois</a
+              >
+            </p>
+          </div>
+        </div>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2691.2960367332576!2d1.3114049!3d47.5814837!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e357e8581a5b03%3A0x6c4970194c4a8b7b!2sgymnase%20de%20cabochon!5e0!3m2!1sfr!2sfr!4v1762186731530!5m2!1sfr!2sfr"
+          width="600"
+          height="450"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </section>
     </section>
   </body>
+</html>

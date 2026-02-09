@@ -2,12 +2,12 @@
 
 /* -------------------- Conteneur principal -------------------- */
 #footer {
-  background-color: #484848;
+  background-color: var(--bg-footer);
 }
 
 #foot_title {
   text-align: center;
-  color: #ffffff;
+  color: var(--text-white);
   padding: 2%;
 }
 
@@ -51,40 +51,40 @@
 #foot_section_2 .form-control {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
   font-size: 14px;
-  background-color: #f5f5f5;
+  background-color: var(--bg-body);
   resize: vertical;
 }
 
 #foot_section_2 .form-control:focus {
   outline: none;
-  border-color: #666;
-  background-color: #fff;
+  border-color: var(--gray-600);
+  background-color: var(--text-white);
 }
 
 #foot_bouton_robot {
   flex: 1;
   padding: 12px 20px;
-  background-color: #e8e8e8;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: var(--gray-200);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
   font-size: 14px;
 }
 
 #foot_bouton_robot:hover {
-  background-color: #d8d8d8;
+  background-color: var(--gray-300);
 }
 
 #foot_bouton_envoi {
   flex: 1;
   padding: 12px 20px;
-  background-color: #c96666;
+  background-color: var(--accent-coral);
   border: none;
-  border-radius: 4px;
-  color: white;
+  border-radius: var(--border-radius-sm);
+  color: var(--text-white);
   cursor: pointer;
   font-size: 14px;
   display: flex;
@@ -94,7 +94,7 @@
 }
 
 #foot_bouton_envoi:hover {
-  background-color: #b85555;
+  background-color: var(--danger-hover);
 }
 
 #foot_bouton_envoi img {
@@ -112,7 +112,7 @@
 }
 
 #foot_last_line {
-  color: #ffffff;
+  color: var(--text-white);
   margin-top: 10px;
   font-size: 14px;
 }
@@ -140,11 +140,13 @@
 #foot_adresse_email,
 #foot_num_tel,
 #foot_adresse_postale {
-  color: #ffffff;
+  color: var(--text-white);
 }
 
-#foot_adresse_postale:hover {
-  color: #166fff;
+#foot_adresse_postale:hover,
+#foot_num_tel:hover,
+#foot_adresse_email:hover {
+  color: var(--primary);
 }
 
 #foot_map {
