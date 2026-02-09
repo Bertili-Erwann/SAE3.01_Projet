@@ -84,26 +84,26 @@ def renseignement():
                            form=FormFormulaire())
 
 
-@app.route('/login/', methods=['GET', 'POST'])
+@app.route("/login/", methods=["GET", "POST"])
 def login():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
         
         user = Personne.query.filter_by(email_personne=email).first()
         
         if user:
             m = sha256()
-            m.update(password.encode('utf-8'))
+            m.update(password.encode("utf-8"))
             hashed_password = m.hexdigest()
             
             if user.mdp == hashed_password or user.mdp == password:
                 login_user(user)
                 return redirect(url_for('index')) 
             else:
-                flash('Mot de passe incorrect.', 'error')
+                flash("Mot de passe incorrect.", "error")
         else:
-            flash('Email inconnu.', 'error')
+            flash("Email inconnu.", "error")
     return render_template("login.html", form=FormFormulaire())
 
 
