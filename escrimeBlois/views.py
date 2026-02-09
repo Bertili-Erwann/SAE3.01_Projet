@@ -100,6 +100,8 @@ def login():
                     return redirect(url_for("infos_persos"))
                 elif user.role == "responsable":
                     return redirect(url_for("ajouter_article"))
+                elif user.role == "admin":
+                    return redirect(url_for("admin_inscription_club"))
                 else:
                     return redirect(url_for("index"))
             else:

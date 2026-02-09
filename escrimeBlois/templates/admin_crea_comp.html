@@ -2,18 +2,6 @@
 <main id="admin_nav" role="admin_nav" class="container-fluid p-0">
   {% include "admin_nav_bar.html" %}
 </main>
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-<div class="container mt-3">
-{% for category, message in messages %}
-<div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
-{{ message }}
-<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-{% endfor %}
-</div>
-{% endif %}
-{% endwith %}
 <div>
     <form action="{{ url_for('admin_comp') }}" method="POST">
         <h1 id="event_creation_title">Création d'une compétition</h1>
