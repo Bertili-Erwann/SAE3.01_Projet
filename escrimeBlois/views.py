@@ -84,33 +84,26 @@ def renseignement():
                            form=FormFormulaire())
 
 
-@app.route("/login/", methods=["GET", "POST"])
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
-    if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
-
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        
         user = Personne.query.filter_by(email_personne=email).first()
-
+        
         if user:
             m = sha256()
-            m.update(password.encode("utf-8"))
+            m.update(password.encode('utf-8'))
             hashed_password = m.hexdigest()
-
+            
             if user.mdp == hashed_password or user.mdp == password:
                 login_user(user)
-                if user.role == "membre":
-                    return redirect(url_for("infos_persos"))
-                elif user.role == "responsable":
-                    return redirect(url_for("ajouter_article"))
-                elif user.role == "admin":
-                    return redirect(url_for("admin_inscription_club"))
-                else:
-                    return redirect(url_for("index"))
+                return redirect(url_for('index')) 
             else:
-                flash("Mot de passe incorrect.", "error")
+                flash('Mot de passe incorrect.', 'error')
         else:
-            flash("Email inconnu.", "error")
+            flash('Email inconnu.', 'error')
     return render_template("login.html", form=FormFormulaire())
 
 
@@ -662,7 +655,7 @@ app.config["JUSTIFICATIF_FOLDER"] = JUSTIFICATIF_FOLDER
 @app.route("/membre/information_personnel/")
 @login_required
 def infos_persos():
-    if current_user.role != "membre":
+    if current_user.role != "membre" and current_user.role != "responsable":
         return redirect(url_for("index"))
     return render_template("infos_persos_espMembre.html",
                            personne=current_user,
