@@ -6,8 +6,21 @@
 <div class="admin-edit-container">
     <div class="edit-info-wrap">
       <h2 class="edit-info-title">{{ title }}</h2>
-      <form method="POST">
+      <form method="POST" novalidate>
         {{ info_form.hidden_tag() }}
+
+        {# Affichage des erreurs globales #}
+        {% if info_form.errors %}
+            <div class="alert alert-danger">
+                <ul>
+                {% for field, errors in info_form.errors.items() %}
+                    {% for error in errors %}
+                        <li>{{ field }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
         
         <div class="form-group-info">
            <label class="label-info">{{ info_form.titre.label.text }}</label>

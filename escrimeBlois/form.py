@@ -1,4 +1,4 @@
-from wtforms import StringField, PasswordField, RadioField, DateField, FileField, TextAreaField, SelectField
+from wtforms import StringField, PasswordField, RadioField, DateField, FileField, TextAreaField, SelectField, IntegerField
 from wtforms.validators import DataRequired, Length, Optional
 from flask_wtf import FlaskForm
 from hashlib import sha256
@@ -13,7 +13,7 @@ import os
 class FormInformation(FlaskForm):
     titre = StringField('Titre', validators=[DataRequired()])
     contenu = TextAreaField('Contenu', validators=[DataRequired()])
-    ordre = StringField('Ordre', validators=[DataRequired()])
+    ordre = IntegerField('Ordre', validators=[DataRequired()])
 
 
 class FormInscription(FlaskForm):

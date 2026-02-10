@@ -6,5 +6,10 @@ tinymce.init({
     valid_elements: '*[*]', // Autorise tous les éléments et attributs
     extended_valid_elements: '*[*]',
     verify_html: false, // Désactive le nettoyage HTML
-    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+    setup: function (editor) {
+        editor.on('change', function () {
+            editor.save();
+        });
+    }
 });
