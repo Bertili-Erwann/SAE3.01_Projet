@@ -6,7 +6,7 @@
 <h1 class="text_form">Résultats des compétitions</h1>
 <div class="result-page-container">
     <div class="result-search-bar">
-        <form method="GET" action="{{ url_for('admin_resultat') }}" class="result-search-form">
+        <form method="GET" action="{{ url_for('admin_resultats') }}" class="result-search-form">
             <select name="competition" class="form-control result-search-select">
                 <option value="">Sélectionner une compétition</option>
                 {% for comp in competitions %}
@@ -21,7 +21,7 @@
     </div>
 
     <!-- Tableau -->
-     <form action="{{ url_for('update_points') }}" method="POST">
+     <form action="{{ url_for('admin_update_points') }}" method="POST">
     <div class="result-table-container">
         
             <input type="hidden" name="competition_id" value="{{ selected_id }}">

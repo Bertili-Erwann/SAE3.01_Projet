@@ -66,14 +66,14 @@
     </div>
 
     <div class="consultation-actions">
-        <a href="{{ url_for('calendrier') }}" class="btn-action btn-retour">Retour</a>
+        <a href="{{ url_for('evenement_calendrier') }}" class="btn-action btn-retour">Retour</a>
         {% if evenement.type_evenement != 'reunion' %}
             {% if current_user.is_authenticated %}
                 <button type="button" class="btn-action btn-register" data-bs-toggle="modal" data-bs-target="#confirmInscriptionModal">
                     S'inscrire
                 </button>
             {% else %}
-                <a href="{{ url_for('inscription_event', id_evenement=evenement.id_evenement) }}" class="btn-action btn-register">S'inscrire</a>
+                <a href="{{ url_for('evenement_inscription', id_evenement=evenement.id_evenement) }}" class="btn-action btn-register">S'inscrire</a>
             {% endif %}
         {% endif %}
     </div>

@@ -12,7 +12,7 @@
     {% for inscription in inscriptions %}
     <div class="demande_inscription_item">
       <span>{{ inscription.nom }} {{ inscription.prenom }} - {{ inscription.evenement.type_evenement }}</span>
-      <a href="{{ url_for('admin_inscription_evenement_view', id_inscription=inscription.id_inscription) }}">
+      <a href="{{ url_for('admin_gestion_inscription_evenement_view', id_inscription=inscription.id_inscription) }}">
         <button type="button">Inspecter</button>
       </a>
     </div>

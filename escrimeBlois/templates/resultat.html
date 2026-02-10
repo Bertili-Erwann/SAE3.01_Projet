@@ -7,7 +7,7 @@
 
     <!-- Barre de recherche -->
     <div class="result-search-bar">
-        <form method="GET" action="{{ url_for('resultat') }}" class="result-search-form">
+        <form method="GET" action="{{ url_for('evenement_resultats') }}" class="result-search-form">
             <select name="competition" class="form-control result-search-select">
                 <option value="">Sélectionner une compétition</option>
                 {% for comp in competitions %}
