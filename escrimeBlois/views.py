@@ -236,15 +236,15 @@ def resultat():
     competitions = Evenement.query.filter_by(
         type_evenement='Compétition').all()
 
-    selected_competition_id = request.args.get('Compétition')
+    selected_competition_id = request.args.get('competition')
     classements = []
 
     if selected_competition_id:
         classements = db.session.query(Classer, Inscription, Personne).join(
             Inscription,
-            Classer.id_competition == Inscription.id_inscription).outerjoin(
+            Classer.id_inscription == Inscription.id_inscription).outerjoin(
                 Personne, Inscription.email == Personne.email_personne).filter(
-                    Classer.id_inscription ==
+                    Classer.id_competition ==
                     selected_competition_id).order_by(
                         Classer.point.desc()).all()
 
@@ -492,7 +492,14 @@ def admin_inscription_evenement_view(id_inscription):
         if action == "refuser":
             db.session.delete(inscription)
             db.session.commit()
-        return redirect(url_for("admin_inscription_evenement"))
+            return redirect(url_for("admin_inscription_evenement"))
+        elif action == "accepter":
+            # Si c'est une compétition, rediriger vers la page de mise à jour des résultats
+            if inscription.evenement.type_evenement == "Compétition":
+                return redirect(url_for("admin_resultat", competition=inscription.id_evenement))
+            else:
+                # Pour les autres types d'événements, simplement retourner à la liste
+                return redirect(url_for("admin_inscription_evenement"))
     return render_template("admin_gestion_inscription_evenement_view.html",
                            inscription=inscription,
                            form=FormFormulaire())
@@ -626,19 +633,37 @@ def admin_resultat():
         return redirect(url_for("index"))
     competitions = Evenement.query.filter_by(type_evenement='Compétition').all()
     
-    selected_competition_id = request.args.get('Compétition')
+    selected_competition_id = request.args.get('competition')
+    inscriptions_sans_resultat = []
     classements = []
     
     if selected_competition_id:
+        # Récupérer toutes les inscriptions à cette compétition
+        toutes_inscriptions = db.session.query(Inscription, Personne).outerjoin(
+            Personne, Inscription.email == Personne.email_personne
+        ).filter(
+            Inscription.id_evenement == selected_competition_id
+        ).all()
+        
+        # Récupérer les résultats existants
         classements = db.session.query(Classer, Inscription, Personne).join(
-            Inscription, Classer.id_competition == Inscription.id_inscription
+            Inscription, Classer.id_inscription == Inscription.id_inscription
         ).outerjoin(
             Personne, Inscription.email == Personne.email_personne
         ).filter(
-            Classer.id_inscription == selected_competition_id
+            Classer.id_competition == selected_competition_id
         ).order_by(Classer.point.desc()).all()
         
-    return render_template("admin_maj_res.html", competitions=competitions, classements=classements, selected_id=selected_competition_id)
+        # Identifier les inscriptions sans résultats
+        inscriptions_avec_resultat = [c[1].id_inscription for c in classements]
+        inscriptions_sans_resultat = [(i, p) for i, p in toutes_inscriptions 
+                                      if i.id_inscription not in inscriptions_avec_resultat]
+        
+    return render_template("admin_maj_res.html", 
+                          competitions=competitions, 
+                          classements=classements, 
+                          inscriptions_sans_resultat=inscriptions_sans_resultat,
+                          selected_id=selected_competition_id)
 
 
 @app.route('/admin/resultats/update', methods=['POST'])
@@ -648,21 +673,48 @@ def update_points():
         return redirect(url_for("index"))
     competition_id = request.form.get('competition_id')
     
+    if not competition_id:
+        flash('Erreur: Compétition non spécifiée', 'error')
+        return redirect(url_for('admin_resultat'))
+    
     for key, value in request.form.items():
         if key.startswith('points_'):
             try:
-                _, id_event, id_insc = key.split('_')
-                points = value
+                _, id_insc, id_comp = key.split('_')
+                points = value.strip()
                 
-                if points:
-                    classer = Classer.query.filter_by(id_inscription=id_event, id_competition=id_insc).first()
-                    if classer:
-                        classer.point = points
-            except ValueError:
+                # Vérifier que la valeur est un nombre valide >= 0
+                if points and points.isdigit():
+                    points = int(points)
+                    
+                    # Accepter seulement les valeurs >= 0
+                    if points >= 0:
+                        # Vérifier si le résultat existe déjà
+                        classer = Classer.query.filter_by(
+                            id_inscription=int(id_insc), 
+                            id_competition=int(id_comp)
+                        ).first()
+                        
+                        if classer:
+                            # Mettre à jour le résultat existant
+                            classer.point = points
+                        else:
+                            # Créer un nouveau résultat
+                            nouveau_classer = Classer(
+                                id_inscription=int(id_insc),
+                                id_competition=int(id_comp),
+                                point=points
+                            )
+                            db.session.add(nouveau_classer)
+            except (ValueError, AttributeError) as e:
                 continue
                 
-    db.session.commit()
-    flash('Points mis à jour avec succès', 'success')
+    try:
+        db.session.commit()
+        flash('Points mis à jour avec succès', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Erreur lors de la mise à jour: {str(e)}', 'error')
         
     return redirect(url_for('admin_resultat', competition=competition_id))
 
