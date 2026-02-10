@@ -84,6 +84,8 @@ def historique():
 @app.route("/historique/ajouter", methods=["POST"])
 @login_required
 def ajouter_historique():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
 
     date_event = request.form.get("date").strip()
     description = request.form.get("description").strip()
@@ -110,6 +112,8 @@ def ajouter_historique():
 @app.route("/historique/supprimer/<int:id_chronologique>", methods=["POST"])
 @login_required
 def supprimer_historique(id_chronologique:int):
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
     try:
         event = Historique.query.get(id_chronologique)
         if event:
@@ -347,7 +351,6 @@ def inscription_event(id_evenement):
                                   email=form.email.data,
                                   date_naissance=form.date_naissance.data,
                                   sexe=form.sexe.data,
-                                  categorie=form.categorie.data,
                                   justificatif=justificatif_data)
         db.session.add(inscription)
         db.session.commit()
@@ -424,7 +427,7 @@ def admin_inscription_evenement():
                            inscriptions=inscriptions,
                            form=FormFormulaire())
 
-
+    
 @app.route("/admin/gestion_inscription/evenement/view/<int:id_inscription>",
            methods=["GET", "POST"])
 @login_required
