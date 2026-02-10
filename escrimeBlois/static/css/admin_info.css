@@ -18,7 +18,7 @@
 .btn-ajouter-info {
     display: inline-block;
     padding: 12px 25px;
-    background-color: #4a90e2; /* Utilisation de la variable cold project */
+    background-color: #4a90e2;
     color: white;
     text-decoration: none;
     border-radius: 25px;
@@ -30,7 +30,7 @@
 }
 
 .btn-ajouter-info:hover {
-    background-color: #a09fe0; /* Darker shade of --cold approx */
+    background-color: #a09fe0;
     transform: translateY(-2px);
     box-shadow: 0 6px 8px rgba(0,0,0,0.15);
     color: white;
@@ -233,8 +233,9 @@
     border-radius: 25px;
     transition: all 0.4s;
     text-decoration: none;
+    text-decoration: none;
 }
 
 .btn-cancel:hover {
-    background-color: #666;
+    background-color: #a09fe0;
 }
