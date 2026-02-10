@@ -23,6 +23,7 @@ from escrimeBlois.form import (
     FormFormulaire,
     FormRechercheArticle,
     FormCommentaire,
+    FormInformation,
 )
 import os
 
@@ -79,9 +80,11 @@ def historique():
 
 @app.route("/renseignement/")
 def renseignement():
+    infos = Information.query.order_by(Information.ordre).all()
     return render_template("renseignement.html",
                            title="renseignement",
-                           form=FormFormulaire())
+                           form=FormFormulaire(),
+                           infos=infos)
 
 
 @app.route("/login/", methods=["GET", "POST"])
@@ -324,6 +327,55 @@ def inscription_event(id_evenement):
 
 
 # ======================================== PAGES ADMIN ========================================
+
+@app.route("/admin/gestion_information")
+@login_required
+def admin_gestion_information():
+    if current_user.role != "admin":
+        return redirect(url_for('login'))
+    infos = Information.query.order_by(Information.ordre).all()
+    return render_template("admin_gestion_information.html", infos=infos)
+
+@app.route("/admin/gestion_information/ajouter", methods=["GET", "POST"])
+@login_required
+def admin_ajout_information():
+    if current_user.role != "admin":
+        return redirect(url_for('login'))
+    info_form = FormInformation()
+    if info_form.validate_on_submit():
+        info = Information(titre=info_form.titre.data,
+                           contenu=info_form.contenu.data,
+                           ordre=int(info_form.ordre.data))
+        db.session.add(info)
+        db.session.commit()
+        return redirect(url_for('admin_gestion_information'))
+    return render_template("admin_edit_information.html", form=FormFormulaire(), info_form=info_form, title="Ajouter une information")
+
+@app.route("/admin/gestion_information/modifier/<int:id>", methods=["GET", "POST"])
+@login_required
+def admin_modif_information(id):
+    if current_user.role != "admin":
+        return redirect(url_for('login'))
+    info = Information.query.get_or_404(id)
+    info_form = FormInformation(obj=info)
+    if info_form.validate_on_submit():
+        info.titre = info_form.titre.data
+        info.contenu = info_form.contenu.data
+        info.ordre = int(info_form.ordre.data)
+        db.session.commit()
+        return redirect(url_for('admin_gestion_information'))
+    return render_template("admin_edit_information.html", form=FormFormulaire(), info_form=info_form, title="Modifier une information")
+
+@app.route("/admin/gestion_information/supprimer/<int:id>")
+@login_required
+def admin_suppr_information(id):
+    if current_user.role != "admin":
+        return redirect(url_for('login'))
+    info = Information.query.get_or_404(id)
+    db.session.delete(info)
+    db.session.commit()
+    return redirect(url_for('admin_gestion_information'))
+
 
 
 @app.route("/admin/")

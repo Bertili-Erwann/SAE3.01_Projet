@@ -5,9 +5,15 @@ from hashlib import sha256
 from email_validator import validate_email, EmailNotValidError, ValidatedEmail
 from werkzeug.utils import secure_filename
 from .app import app, db
-from .models import Demande_inscription, Formulaire, Commentaire
+from .models import Demande_inscription, Formulaire, Commentaire, Information
 from sqlalchemy import func
 import os
+
+
+class FormInformation(FlaskForm):
+    titre = StringField('Titre', validators=[DataRequired()])
+    contenu = TextAreaField('Contenu', validators=[DataRequired()])
+    ordre = StringField('Ordre', validators=[DataRequired()])
 
 
 class FormInscription(FlaskForm):
