@@ -15,29 +15,50 @@
 
 .navbar {
   background-color: var(--text-black);
-  opacity: 0.5;
+  opacity: 0.85;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: var(--transition-smooth);
+}
+
+.navbar:hover {
+  opacity: 0.95;
+}
+
+/* -------------------- Liens de navigation -------------------- */
+.nav-link {
+  position: relative;
+  padding: 0.5rem 1rem;
+  transition: var(--transition-smooth);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: var(--transition-smooth);
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+  width: 80%;
+}
+
+.nav-link:hover {
+  color: var(--primary) !important;
+  transform: translateY(-2px);
 }
 
 .nav-link.active {
   font-weight: bold;
+  color: var(--primary) !important;
 }
 
-/* -------------------- Loupe Recherche -------------------- */
-.navbar-brand {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-}
-
-.form-image {
-  margin-right: 5px;
-}
-
-.hidden-form {
-  display: none;
-}
-
-.show-form {
-  display: inline !important;
-  height: 30px;
+.nav-link.active::after {
+  width: 80%;
+  background: var(--accent-coral);
 }

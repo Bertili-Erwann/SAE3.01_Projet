@@ -6,7 +6,6 @@
     <title>{% block title %}{% endblock %}</title>
     <!-- Initialisation JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ url_for('static', filename='js/loupe_recherche.js') }}"></script>
     <script src="{{ url_for('static', filename='js/password_toggle.js') }}"></script>
     <!-- Bootstrap CSS -->
     <link
@@ -73,18 +72,6 @@
           </li>
         </ul>
       </div>
-      <!-- IMAGE LOUPE ET RECHERCHE -->
-      <a class="navbar-brand" href="#">
-        <input
-          class="form-image"
-          type="image"
-          src="{{ url_for('static', filename='images/loupe_recherche.png') }}"
-          width="20"
-          height="20"
-          name="loupe"
-        />
-        <input class="hidden-form" type="text" name="nm" />
-      </a>
     </nav>
     {% endblock %} {% block content %}
     
