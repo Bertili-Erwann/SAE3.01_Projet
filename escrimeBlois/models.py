@@ -593,6 +593,20 @@ class Commentaire(db.Model):
     article = db.relationship("Article",
                               backref=db.backref("commentaires",
                                                  lazy="dynamic"))
+class Information(db.Model):
+    """
+    Modèle représentant une information affichée sur la page 'renseignement'.
+    
+    Attributs:
+        id (int): Clé primaire.
+        titre (str): Titre de la section (ex: Horaires).
+        contenu (str): Contenu HTML de la section.
+        ordre (int): Ordre d'affichage.
+    """
+    id = db.Column(db.Integer, primary_key=True)
+    titre = db.Column(db.String(100))
+    contenu = db.Column(db.Text)
+    ordre = db.Column(db.Integer)
                                                  
 class Historique(db.Model):
     """
