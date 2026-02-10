@@ -51,6 +51,110 @@ personnes:
     eleve: null
     arme_principale: null
     niveau: null
+  - id_personne: 5
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    role: "responsable"
+    nom_personne: "Lefebvre"
+    prenom_personne: "Thomas"
+    email_personne: "thomas.lefebvre@example.com"
+    telephone: "0617181920"
+    sexe: "M"
+    adresse: "202 Rue de la République, Blois"
+    date_naissance: "1988-11-30"
+    eleve: true
+    arme_principale: "Sabre"
+    niveau: "National"
+  - id_personne: 6
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    role: "membre"
+    nom_personne: "Bernard"
+    prenom_personne: "Sophie"
+    email_personne: "sophie.bernard@example.com"
+    telephone: "0621222324"
+    sexe: "F"
+    adresse: "303 Avenue Victor Hugo, Blois"
+    date_naissance: "2002-06-12"
+    eleve: true
+    arme_principale: "Fleuret"
+    niveau: "Club"
+  - id_personne: 7
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    role: "membre"
+    nom_personne: "Rousseau"
+    prenom_personne: "Antoine"
+    email_personne: "antoine.rousseau@example.com"
+    telephone: "0625262728"
+    sexe: "M"
+    adresse: "404 Boulevard Carnot, Blois"
+    date_naissance: "1999-02-28"
+    eleve: false
+    arme_principale: "Épée"
+    niveau: "Régional"
+  - id_personne: 8
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    role: "membre"
+    nom_personne: "Fournier"
+    prenom_personne: "Emma"
+    email_personne: "emma.fournier@example.com"
+    telephone: "0629303132"
+    sexe: "F"
+    adresse: "505 Rue Jean Moulin, Blois"
+    date_naissance: "2004-09-05"
+    eleve: true
+    arme_principale: "Fleuret"
+    niveau: "Débutant"
+  - id_personne: 9
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    role: "membre"
+    nom_personne: "Girard"
+    prenom_personne: "Hugo"
+    email_personne: "hugo.girard@example.com"
+    telephone: "0633343536"
+    sexe: "M"
+    adresse: "606 Place Louis XII, Blois"
+    date_naissance: "2001-12-17"
+    eleve: false
+    arme_principale: "Sabre"
+    niveau: "Club"
+  - id_personne: 10
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    role: "membre"
+    nom_personne: "Bonnet"
+    prenom_personne: "Léa"
+    email_personne: "lea.bonnet@example.com"
+    telephone: "0637383940"
+    sexe: "F"
+    adresse: "707 Rue des Écoles, Blois"
+    date_naissance: "2003-04-22"
+    eleve: true
+    arme_principale: "Épée"
+    niveau: "Club"
+  - id_personne: 11
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    role: "membre"
+    nom_personne: "Lambert"
+    prenom_personne: "Louis"
+    email_personne: "louis.lambert@example.com"
+    telephone: "0641424344"
+    sexe: "M"
+    adresse: "808 Avenue de Verdun, Blois"
+    date_naissance: "1997-08-14"
+    eleve: false
+    arme_principale: "Fleuret"
+    niveau: "National"
+  - id_personne: 12
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    role: "membre"
+    nom_personne: "Fontaine"
+    prenom_personne: "Chloé"
+    email_personne: "chloe.fontaine@example.com"
+    telephone: "0645464748"
+    sexe: "F"
+    adresse: "909 Rue des Tuileries, Blois"
+    date_naissance: "2005-01-09"
+    eleve: true
+    arme_principale: "Épée"
+    niveau: "Débutant"
 
 evenements:
   - id_evenement: 1
@@ -101,6 +205,102 @@ evenements:
     discipline: null
     cooperative: null
     type_evenement: "entrainement"
+  - id_evenement: 5
+    nom: "Championnat National Sabre"
+    date: "2025-11-20"
+    heure: 9
+    categorie: "Nationale"
+    lieu: "Palais des Sports, Paris"
+    description: "Championnat national de sabre - Toutes catégories"
+    sexe: "M"
+    niveau: "National"
+    discipline: "Sabre"
+    cooperative: "Individuel"
+    type_evenement: "Compétition"
+  - id_evenement: 6
+    nom: "Stage Débutants Fleuret"
+    date: "2025-11-15"
+    heure: 14
+    categorie: "Formation"
+    lieu: "Salle d'escrime Blois"
+    description: "Stage d'initiation au fleuret pour les débutants"
+    sexe: null
+    niveau: null
+    discipline: null
+    cooperative: null
+    type_evenement: "entrainement"
+  - id_evenement: 7
+    nom: "Gala d'Escrime de Fin d'Année"
+    date: "2025-12-15"
+    heure: 19
+    categorie: "Événementiel"
+    lieu: "Salle des fêtes de Blois"
+    description: "Soirée de gala avec démonstrations et remise de prix"
+    sexe: null
+    niveau: null
+    discipline: null
+    cooperative: null
+    type_evenement: "entrainement"
+  - id_evenement: 8
+    nom: "Tournoi Mixte Épée et Fleuret"
+    date: "2025-12-08"
+    heure: 10
+    categorie: "Club"
+    lieu: "Gymnase Cabochon"
+    description: "Compétition mixte ouverte à tous les niveaux"
+    sexe: null
+    niveau: "Club"
+    discipline: "Épée"
+    cooperative: "Individuel"
+    type_evenement: "Compétition"
+  - id_evenement: 9
+    nom: "Entraînement Jeunes M11-M15"
+    date: "2025-11-25"
+    heure: 17
+    categorie: "Entraînement"
+    lieu: "Salle d'escrime Blois"
+    description: "Séance spéciale pour les jeunes escrimeurs"
+    sexe: null
+    niveau: null
+    discipline: null
+    cooperative: null
+    type_evenement: "entrainement"
+  - id_evenement: 10
+    nom: "Compétition Régionale Féminine"
+    date: "2026-01-12"
+    heure: 13
+    categorie: "Régionale"
+    lieu: "Salle omnisports Tours"
+    description: "Compétition régionale féminine toutes armes"
+    sexe: "F"
+    niveau: "Régional"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+    type_evenement: "Compétition"
+  - id_evenement: 11
+    nom: "Session Inscription Printemps"
+    date: "2026-02-15"
+    heure: 10
+    categorie: "Administrative"
+    lieu: "Bureau du club"
+    description: "Session d'inscription pour le semestre de printemps"
+    sexe: null
+    niveau: null
+    discipline: null
+    cooperative: null
+    type_evenement: "inscription"
+  - id_evenement: 12
+    nom: "Championnat Départemental Sabre"
+    date: "2026-02-22"
+    heure: 14
+    categorie: "Départementale"
+    lieu: "Salle des sports Blois"
+    description: "Championnat départemental de sabre individuel"
+    sexe: "M"
+    niveau: "Club"
+    discipline: "Sabre"
+    cooperative: "Individuel"
+    type_evenement: "Compétition"
 
 demande_inscriptions:
   - id_inscription: 1
@@ -133,6 +333,26 @@ demande_inscriptions:
     adresse_mail: "camille.moreau@example.com"
     adresse_postale: "12 Rue Victor Hugo, Blois"
     eleve: false
+  - id_inscription: 4
+    nom: "Mercier"
+    prenom: "Alexandre"
+    mot_de_passe: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    sexe: "M"
+    date_naissance: "2006-05-18"
+    num_tel: "0645678901"
+    adresse_mail: "alexandre.mercier@example.com"
+    adresse_postale: "33 Boulevard de la Loire, Blois"
+    eleve: true
+  - id_inscription: 5
+    nom: "Blanchard"
+    prenom: "Julie"
+    mot_de_passe: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    sexe: "F"
+    date_naissance: "2004-09-25"
+    num_tel: "0656789012"
+    adresse_mail: "julie.blanchard@example.com"
+    adresse_postale: "77 Rue des Jacobins, Blois"
+    eleve: true
 
 inscriptions:
   - id_inscription: 1
@@ -171,6 +391,78 @@ inscriptions:
     date_naissance: "2000-03-20"
     justificatif: null
     id_personne: 3
+  - id_inscription: 5
+    id_evenement: 5
+    nom: "Lefebvre"
+    prenom: "Thomas"
+    email: "thomas.lefebvre@example.com"
+    sexe: "M"
+    date_naissance: "1988-11-30"
+    justificatif: null
+    id_personne: 5
+  - id_inscription: 6
+    id_evenement: 5
+    nom: "Girard"
+    prenom: "Hugo"
+    email: "hugo.girard@example.com"
+    sexe: "M"
+    date_naissance: "2001-12-17"
+    justificatif: null
+    id_personne: 9
+  - id_inscription: 7
+    id_evenement: 6
+    nom: "Fournier"
+    prenom: "Emma"
+    email: "emma.fournier@example.com"
+    sexe: "F"
+    date_naissance: "2004-09-05"
+    justificatif: null
+    id_personne: 8
+  - id_inscription: 8
+    id_evenement: 6
+    nom: "Fontaine"
+    prenom: "Chloé"
+    email: "chloe.fontaine@example.com"
+    sexe: "F"
+    date_naissance: "2005-01-09"
+    justificatif: null
+    id_personne: 12
+  - id_inscription: 9
+    id_evenement: 8
+    nom: "Bernard"
+    prenom: "Sophie"
+    email: "sophie.bernard@example.com"
+    sexe: "F"
+    date_naissance: "2002-06-12"
+    justificatif: null
+    id_personne: 6
+  - id_inscription: 10
+    id_evenement: 8
+    nom: "Rousseau"
+    prenom: "Antoine"
+    email: "antoine.rousseau@example.com"
+    sexe: "M"
+    date_naissance: "1999-02-28"
+    justificatif: null
+    id_personne: 7
+  - id_inscription: 11
+    id_evenement: 10
+    nom: "Martin"
+    prenom: "Marie"
+    email: "marie.martin@example.com"
+    sexe: "F"
+    date_naissance: "1985-05-15"
+    justificatif: null
+    id_personne: 2
+  - id_inscription: 12
+    id_evenement: 10
+    nom: "Bonnet"
+    prenom: "Léa"
+    email: "lea.bonnet@example.com"
+    sexe: "F"
+    date_naissance: "2003-04-22"
+    justificatif: null
+    id_personne: 10
 
 classers:
   - id_competition: 1  
@@ -182,6 +474,24 @@ classers:
   - id_competition: 3
     id_inscription: 3
     point: 85
+  - id_competition: 5
+    id_inscription: 5
+    point: 150
+  - id_competition: 5
+    id_inscription: 6
+    point: 125
+  - id_competition: 8
+    id_inscription: 9
+    point: 78
+  - id_competition: 8
+    id_inscription: 10
+    point: 92
+  - id_competition: 10
+    id_inscription: 11
+    point: 110
+  - id_competition: 10
+    id_inscription: 12
+    point: 88
 
 formulaires:
   - id_formulaire: 1
@@ -200,35 +510,45 @@ formulaires:
     objet: "Demande d'information"
     message: "Bonjour, je souhaite m'inscrire au club."
   - id_formulaire: 4
-    nom_auteur: "Durand Alice"
-    email_auteur: "alice.durand@example.com"
-    objet: "Demande d'information"
-    message: "Bonjour, je souhaite m'inscrire au club."
+    nom_auteur: "Leroy Marc"
+    email_auteur: "marc.leroy@example.com"
+    objet: "Question sur les horaires"
+    message: "Bonjour, quels sont les horaires d'entraînement pour les adultes débutants ?"
   - id_formulaire: 5
-    nom_auteur: "Durand Alice"
-    email_auteur: "alice.durand@example.com"
-    objet: "Demande d'information"
-    message: "Bonjour, je souhaite m'inscrire au club."
+    nom_auteur: "Gauthier Sylvie"
+    email_auteur: "sylvie.gauthier@example.com"
+    objet: "Tarifs et inscriptions"
+    message: "Je souhaiterais connaître les tarifs pour l'inscription de mon fils de 10 ans."
   - id_formulaire: 6
-    nom_auteur: "Durand Alice"
-    email_auteur: "alice.durand@example.com"
-    objet: "Demande d'information"
-    message: "Bonjour, je souhaite m'inscrire au club."
+    nom_auteur: "Renard Paul"
+    email_auteur: "paul.renard@example.com"
+    objet: "Matériel nécessaire"
+    message: "Quel équipement faut-il prévoir pour débuter l'escrime ?"
   - id_formulaire: 7
-    nom_auteur: "Durand Alice"
-    email_auteur: "alice.durand@example.com"
-    objet: "Demande d'information"
-    message: "Bonjour, je souhaite m'inscrire au club."
+    nom_auteur: "Chevalier Marion"
+    email_auteur: "marion.chevalier@example.com"
+    objet: "Stage vacances"
+    message: "Proposez-vous des stages pendant les vacances scolaires ?"
   - id_formulaire: 8
-    nom_auteur: "Durand Alice"
-    email_auteur: "alice.durand@example.com"
-    objet: "Demande d'information"
-    message: "Bonjour, je souhaite m'inscrire au club."
+    nom_auteur: "Olivier Bertrand"
+    email_auteur: "bertrand.olivier@example.com"
+    objet: "Compétitions"
+    message: "Comment s'inscrire aux compétitions régionales ?"
   - id_formulaire: 9
-    nom_auteur: "Durand Alice"
-    email_auteur: "alice.durand@example.com"
-    objet: "Demande d'information"
-    message: "Bonjour, je souhaite m'inscrire au club."
+    nom_auteur: "Dumas Isabelle"
+    email_auteur: "isabelle.dumas@example.com"
+    objet: "Cours particuliers"
+    message: "Est-il possible d'avoir des cours particuliers d'épée ?"
+  - id_formulaire: 10
+    nom_auteur: "Fabre Nicolas"
+    email_auteur: "nicolas.fabre@example.com"
+    objet: "Transport"
+    message: "Y a-t-il un covoiturage organisé pour les compétitions à l'extérieur ?"
+  - id_formulaire: 11
+    nom_auteur: "Perrin Céline"
+    email_auteur: "celine.perrin@example.com"
+    objet: "Saison prochaine"
+    message: "Quand commencent les inscriptions pour la saison prochaine ?"
 
 repondre:
   - id_responsable: 2
@@ -243,12 +563,16 @@ repondre:
     id_formulaire: 5
   - id_responsable: 2
     id_formulaire: 6
-  - id_responsable: 2
+  - id_responsable: 5
     id_formulaire: 7
-  - id_responsable: 2
+  - id_responsable: 5
     id_formulaire: 8
   - id_responsable: 2
     id_formulaire: 9
+  - id_responsable: 5
+    id_formulaire: 10
+  - id_responsable: 2
+    id_formulaire: 11
 
 articles:
   - id_article: 1
@@ -259,15 +583,294 @@ articles:
     lien: null
     commentable: true
     responsable_id: 2
+  - id_article: 2
+    titre: "Succès au Championnat Régional"
+    date_publication: "2025-10-25"
+    description: "Nos escrimeurs ont brillé lors du championnat régional d'épée ce week-end. Marie Martin remporte la médaille d'or et Pierre Lemoine décroche une belle 3ème place. Félicitations à tous les participants pour leur combativité !"
+    categorie: "Résultats"
+    lien: null
+    commentable: true
+    responsable_id: 2
+  - id_article: 3
+    titre: "Stage d'Initiation pour Débutants"
+    date_publication: "2025-11-01"
+    description: "Le club organise un stage d'initiation au fleuret pour les débutants le 15 novembre. C'est l'occasion idéale pour découvrir l'escrime dans une ambiance conviviale. Inscription obligatoire avant le 10 novembre."
+    categorie: "Événements"
+    lien: null
+    commentable: true
+    responsable_id: 5
+  - id_article: 4
+    titre: "Nouveaux Horaires d'Entraînement"
+    date_publication: "2025-11-03"
+    description: "À partir du mois de décembre, les horaires d'entraînement du mercredi évoluent pour mieux s'adapter aux emplois du temps de chacun. Consultez le planning mis à jour dans la rubrique Horaires."
+    categorie: "Actualités"
+    lien: null
+    commentable: true
+    responsable_id: 2
+  - id_article: 5
+    titre: "Interview avec Thomas Lefebvre"
+    date_publication: "2025-11-08"
+    description: "Découvrez le parcours de Thomas Lefebvre, notre maître d'armes spécialisé en sabre, qui nous parle de sa passion pour l'escrime et de ses objectifs pour le club cette saison. Une interview inspirante à ne pas manquer !"
+    categorie: "Portraits"
+    lien: null
+    commentable: true
+    responsable_id: 5
+  - id_article: 6
+    titre: "Gala de Fin d'Année 2025"
+    date_publication: "2025-11-12"
+    description: "Réservez votre soirée du 15 décembre pour notre traditionnel gala de fin d'année ! Au programme : démonstrations d'escrime, remise de prix, et buffet convivial. Entrée gratuite pour les membres et leurs familles."
+    categorie: "Événements"
+    lien: null
+    commentable: true
+    responsable_id: 2
+  - id_article: 7
+    titre: "Résultats du Tournoi Club"
+    date_publication: "2025-11-06"
+    description: "Le tournoi interne de fleuret qui s'est déroulé le 5 novembre a été un grand succès. Bravo à Pierre Lemoine pour sa victoire et merci à tous les participants. Rendez-vous le mois prochain pour le tournoi d'épée !"
+    categorie: "Résultats"
+    lien: null
+    commentable: true
+    responsable_id: 2
+  - id_article: 8
+    titre: "L'Escrime : Un Sport pour Tous"
+    date_publication: "2025-11-15"
+    description: "L'escrime est un sport accessible à tous, des plus jeunes aux seniors. Discipline, agilité, réflexes et fair-play sont les maîtres-mots de notre pratique. Rejoignez-nous pour découvrir tous les bienfaits de ce sport olympique !"
+    categorie: "Actualités"
+    lien: "https://www.ffescrime.fr/"
+    commentable: true
+    responsable_id: 5
+  - id_article: 9
+    titre: "Matériel : Bien Choisir son Équipement"
+    date_publication: "2025-11-18"
+    description: "Un guide complet pour vous aider à choisir votre équipement d'escrime : masque, gants, chaussures, armes... Nos conseils pour trouver le matériel adapté à votre niveau et à votre pratique. Location possible au club pour les débutants."
+    categorie: "Conseils"
+    lien: null
+    commentable: true
+    responsable_id: 5
+  - id_article: 10
+    titre: "Retour sur le Championnat National"
+    date_publication: "2025-11-22"
+    description: "Thomas Lefebvre et Hugo Girard ont représenté fièrement notre club au championnat national de sabre à Paris. Malgré une forte concurrence, nos deux escrimeurs ont réalisé de belles performances. Thomas termine 8ème au classement général !"
+    categorie: "Résultats"
+    lien: null
+    commentable: true
+    responsable_id: 2
+  - id_article: 11
+    titre: "L'Histoire de l'Escrime à Blois"
+    date_publication: "2025-11-25"
+    description: "Plongez dans l'histoire du Cercle d'Escrime de Blois, de ses origines en 1883 à aujourd'hui. Une tradition centenaire qui continue de former des champions et de promouvoir les valeurs de l'escrime dans notre région."
+    categorie: "Histoire"
+    lien: null
+    commentable: true
+    responsable_id: 5
+  - id_article: 12
+    titre: "Préparation aux JO 2028"
+    date_publication: "2025-11-28"
+    description: "Plusieurs de nos jeunes talents suivent un programme de préparation olympique. Découvrez les parcours de ces escrimeurs prometteurs qui rêvent de représenter la France aux Jeux Olympiques de Los Angeles en 2028."
+    categorie: "Actualités"
+    lien: null
+    commentable: true
+    responsable_id: 2
+  - id_article: 13
+    titre: "Stages Vacances de Noël"
+    date_publication: "2025-12-01"
+    description: "Profitez des vacances de Noël pour progresser en escrime ! Nous organisons des stages intensifs du 26 au 29 décembre pour tous les niveaux. Inscriptions ouvertes dès maintenant, places limitées."
+    categorie: "Événements"
+    lien: null
+    commentable: true
+    responsable_id: 5
+  - id_article: 14
+    titre: "Les Bienfaits de l'Escrime chez les Jeunes"
+    date_publication: "2025-12-03"
+    description: "L'escrime développe la concentration, la coordination et la confiance en soi chez les enfants et adolescents. Un article détaillé sur les apports pédagogiques et psychologiques de notre discipline pour les jeunes pratiquants."
+    categorie: "Conseils"
+    lien: null
+    commentable: true
+    responsable_id: 5
+  - id_article: 15
+    titre: "Résultats Tournoi Mixte"
+    date_publication: "2025-12-09"
+    description: "Le tournoi mixte épée-fleuret du 8 décembre a rassemblé plus de 30 participants ! Sophie Bernard s'impose en fleuret et Antoine Rousseau remporte l'épée. Une journée festive qui a ravi tous les escrimeurs."
+    categorie: "Résultats"
+    lien: null
+    commentable: true
+    responsable_id: 2
+  - id_article: 16
+    titre: "Portrait : Marie Martin, Notre Championne"
+    date_publication: "2025-12-12"
+    description: "À 40 ans, Marie Martin collectionne les médailles en compétition régionale. Rencontre avec cette épéiste passionnée qui jongle entre son rôle de responsable du club et sa carrière de compétitrice de haut niveau."
+    categorie: "Portraits"
+    lien: null
+    commentable: true
+    responsable_id: 5
+  - id_article: 17
+    titre: "La Technique du Fleuret Expliquée"
+    date_publication: "2025-12-15"
+    description: "Un article technique pour comprendre les fondamentaux du fleuret : la garde, les attaques, les parades et les contre-attaques. Idéal pour les débutants qui souhaitent progresser rapidement."
+    categorie: "Conseils"
+    lien: null
+    commentable: true
+    responsable_id: 5
+  - id_article: 18
+    titre: "Saison 2026 : Nouveaux Projets"
+    date_publication: "2025-12-18"
+    description: "Le comité directeur dévoile les projets pour 2026 : acquisition de nouveau matériel, création d'une section handisport, et participation à davantage de compétitions nationales. Une année ambitieuse qui s'annonce !"
+    categorie: "Actualités"
+    lien: null
+    commentable: true
+    responsable_id: 2
+  - id_article: 19
+    titre: "L'Épée : Arme de Précision"
+    date_publication: "2025-12-22"
+    description: "Découvrez les spécificités de l'épée, arme d'escrime qui demande stratégie et précision. Contrairement au fleuret et au sabre, tout le corps est surface valable. Un guide complet pour les passionnés."
+    categorie: "Conseils"
+    lien: null
+    commentable: true
+    responsable_id: 5
+  - id_article: 20
+    titre: "Bilan du Gala 2025"
+    date_publication: "2025-12-17"
+    description: "Le gala de fin d'année a rassemblé plus de 150 personnes ! Les démonstrations des jeunes escrimeurs ont émerveillé le public. Merci à tous les bénévoles et participants qui ont fait de cette soirée un moment inoubliable."
+    categorie: "Événements"
+    lien: null
+    commentable: true
+    responsable_id: 2
+  - id_article: 21
+    titre: "Escrime et Santé : Les Bienfaits"
+    date_publication: "2026-01-05"
+    description: "Pratique régulière de l'escrime : amélioration cardiovasculaire, renforcement musculaire, développement de la coordination et des réflexes. Découvrez tous les bénéfices de notre sport pour votre santé physique et mentale."
+    categorie: "Conseils"
+    lien: null
+    commentable: true
+    responsable_id: 5
+  - id_article: 22
+    titre: "Inscriptions Semestre Printemps 2026"
+    date_publication: "2026-01-10"
+    description: "Les inscriptions pour le semestre de printemps sont ouvertes ! Que vous soyez débutant ou confirmé, rejoignez-nous pour vivre votre passion de l'escrime. Session d'inscription le 15 février au bureau du club."
+    categorie: "Actualités"
+    lien: null
+    commentable: true
+    responsable_id: 2
+  - id_article: 23
+    titre: "Compétition Régionale Féminine à Venir"
+    date_publication: "2026-01-08"
+    description: "Nos escrimeuses se préparent activement pour la compétition régionale féminine du 12 janvier à Tours. Marie Martin, Léa Bonnet et Sophie Bernard représenteront le club. Venez les encourager !"
+    categorie: "Événements"
+    lien: null
+    commentable: true
+    responsable_id: 2
+  - id_article: 24
+    titre: "Le Sabre : Vitesse et Explosivité"
+    date_publication: "2026-01-15"
+    description: "Le sabre est l'arme la plus dynamique de l'escrime, privilégiant la vitesse et l'explosivité. Découvrez les règles spécifiques, les techniques de taille et d'estoc, et pourquoi cette discipline fascine autant de pratiquants."
+    categorie: "Conseils"
+    lien: null
+    commentable: true
+    responsable_id: 5
+  - id_article: 25
+    titre: "Partenariat avec la Fédération Française"
+    date_publication: "2026-01-20"
+    description: "Le Cercle d'Escrime de Blois renforce son partenariat avec la Fédération Française d'Escrime. Ce rapprochement permettra à nos membres d'accéder à davantage de formations et de ressources pour progresser."
+    categorie: "Actualités"
+    lien: "https://www.ffescrime.fr/"
+    commentable: true
+    responsable_id: 2
 
 image:
   - id_image: 1
     nom_image: "nouveau membre"
     url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e2b30608f3f68caf31d3_94.png"
+  - id_image: 2
+    nom_image: "trophée champion"
+    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e28f7fcc9ca2da09be62_Trophy.png"
+  - id_image: 3
+    nom_image: "épée fleuret"
+    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e0b37fcc9ca2da09bba9_Fencing.png"
+  - id_image: 4
+    nom_image: "calendrier événement"
+    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3dff57fcc9ca2da09bb4f_Calendar.png"
+  - id_image: 5
+    nom_image: "étoile excellence"
+    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e2aaf8ae4b2c1ae79931_Star.png"
+  - id_image: 6
+    nom_image: "celebration fête"
+    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e23c0608f3f68caf31aa_Party%20Popper.png"
+  - id_image: 7
+    nom_image: "formation apprentissage"
+    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e0117fcc9ca2da09bb27_Books.png"
+  - id_image: 8
+    nom_image: "cœur passion"
+    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e1cf7fcc9ca2da09bc8b_Red%20Heart.png"
 
 posseder:
   - id_image: 1
     id_article: 1
+    miniature: true
+  - id_image: 2
+    id_article: 2
+    miniature: true
+  - id_image: 3
+    id_article: 3
+    miniature: true
+  - id_image: 4
+    id_article: 6
+    miniature: true
+  - id_image: 2
+    id_article: 7
+    miniature: true
+  - id_image: 3
+    id_article: 8
+    miniature: true
+  - id_image: 7
+    id_article: 9
+    miniature: true
+  - id_image: 2
+    id_article: 10
+    miniature: true
+  - id_image: 5
+    id_article: 11
+    miniature: true
+  - id_image: 5
+    id_article: 12
+    miniature: true
+  - id_image: 4
+    id_article: 13
+    miniature: true
+  - id_image: 7
+    id_article: 14
+    miniature: true
+  - id_image: 2
+    id_article: 15
+    miniature: true
+  - id_image: 1
+    id_article: 16
+    miniature: true
+  - id_image: 3
+    id_article: 17
+    miniature: true
+  - id_image: 4
+    id_article: 18
+    miniature: true
+  - id_image: 3
+    id_article: 19
+    miniature: true
+  - id_image: 6
+    id_article: 20
+    miniature: true
+  - id_image: 8
+    id_article: 21
+    miniature: true
+  - id_image: 1
+    id_article: 22
+    miniature: true
+  - id_image: 4
+    id_article: 23
+    miniature: true
+  - id_image: 3
+    id_article: 24
+    miniature: true
+  - id_image: 5
+    id_article: 25
     miniature: true
 
 gerer:
@@ -277,6 +880,10 @@ gerer:
     id_inscription: 2
   - id_admin: 1
     id_inscription: 3
+  - id_admin: 4
+    id_inscription: 4
+  - id_admin: 4
+    id_inscription: 5
 
 informations:
   - id: 1
