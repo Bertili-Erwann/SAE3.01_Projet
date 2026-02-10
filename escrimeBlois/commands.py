@@ -23,7 +23,7 @@ def loaddb(filename: str) -> None:
     db.create_all()
 
     import yaml
-    from .models import Personne, Evenement, Classer, Formulaire, Repondre, Article, Inscription, Image, Posseder, Demande_inscription, Gerer, Information
+    from .models import Personne, Evenement, Classer, Formulaire, Repondre, Article, Inscription, Image, Posseder, Demande_inscription, Gerer, Historique, Information
 
     with open(filename, 'r', encoding='utf-8') as file:
         data = yaml.safe_load(file) or []
@@ -126,6 +126,13 @@ def loaddb(filename: str) -> None:
                             id_article=poss['id_article'],
                             miniature=poss['miniature'])
         db.session.add(posseder)
+        db.session.commit()
+
+    for hist in data.get("historique", []):
+        historique = Historique(id_chronologique=hist['id_chronologique'],
+                                date=hist['date'],
+                                description=hist['description'])
+        db.session.add(historique)
         db.session.commit()
 
     for dem in data.get("demande_inscriptions", []):

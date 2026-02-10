@@ -188,6 +188,20 @@ class Evenement(db.Model):
     type_evenement = db.Column(db.String(64))
     inscriptions = db.relationship("Inscription", backref=db.backref("evenement"))
 
+    @property
+    def heure_formatee(self):
+        """
+        Retourne l'heure formatée en HH:MM à partir des minutes stockées.
+        
+        Returns:
+            str: L'heure au format HH:MM (ex: "05:00" pour 300 minutes).
+        """
+        if self.heure is None:
+            return "-"
+        heures = self.heure // 60
+        minutes = self.heure % 60
+        return f"{heures:02d}:{minutes:02d}"
+
     @validates('type_evenement')
     def validate_attributs_evenement(self, key: str, value: str) -> str:
         """
@@ -579,8 +593,6 @@ class Commentaire(db.Model):
     article = db.relationship("Article",
                               backref=db.backref("commentaires",
                                                  lazy="dynamic"))
-
-
 class Information(db.Model):
     """
     Modèle représentant une information affichée sur la page 'renseignement'.
@@ -595,3 +607,16 @@ class Information(db.Model):
     titre = db.Column(db.String(100))
     contenu = db.Column(db.Text)
     ordre = db.Column(db.Integer)
+                                                 
+class Historique(db.Model):
+    """
+    Modèle représentant les différents événements de l'historique du club.
+    
+    Attributs:
+        id_chronologique (int): Clé primaire, id correspondant au placement de l'événement dans le temps. Plus l'événement est récent, plus l'id est grand.
+        date (str): date de l'événement.
+        description (Date): description de l'événement.
+    """
+    id_chronologique = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(30))
+    description = db.Column(db.String(280))

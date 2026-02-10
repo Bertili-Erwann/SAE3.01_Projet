@@ -1,4 +1,20 @@
 {% extends "base.html" %} {% block main %}
+<!-- Sidebar de recherche (couvre toute la page) -->
+<aside class="menu-recherche">
+  <button type="button" class="aside-slide" onclick="slider()"> > </button>
+  <div class="ctn-article">
+  </div>
+  <form role="form" method="GET" action="{{ url_for('demande_article') }}">
+    <p class="recherche">Recherche d'articles</p>
+  <div class="ctn-rech">
+    {{ formRech.choix_year(class_="form-control") }}
+    <div class="ctn-valider-rech">
+      {{ formRech.recherche(class_="form-control") }}
+      <input class="btn-rech-ar" type="submit" value="Rechercher">
+  </div>
+  </form>
+</div>
+</aside>
 <div class="header">
   <div class="header-content">
     <h1>Cercle d'Escrime de Blois</h1>
@@ -11,23 +27,8 @@
     alt="Logo du cercle d'éscrime de Blois"
   />
 </div>
+<button type="button" id="btn-entrant" class="aside-slide" onclick="sliderEntrant()"> < </button>
 <div class="main-content" id="actualite">
-  <aside class="menu-recherche">
-    <button type="button" class="aside-slide" onclick="slider()"> > </button>
-    <div class="ctn-article">
-    </div>
-    <form role="form" method="GET" action="{{ url_for('demande_article') }}">
-      <p class="recherche">Recherche d'articles</p>
-    <div class="ctn-rech">
-      {{ formRech.choix_year(class_="form-control") }}
-      <div class="ctn-valider-rech">
-        {{ formRech.recherche(class_="form-control") }}
-        <input class="btn-rech-ar" type="submit" value="Rechercher">
-    </div>
-    </form>
-  </div>
-  </aside>
-  <button type="button" id="btn-entrant" class="aside-slide hidden" onclick="sliderEntrant()"> < </button>
    <div class="carousel-row">
     <button type="button" class="carousel-btn prev" aria-label="Précédent">
       ‹
@@ -155,11 +156,11 @@
   <h1>Nos partenaires</h1>
   <div id="partenaire-content">
     <section>
-      <img src="{{ url_for('static', filename='images/logo_blois.png') }}" />
+      <a href="https://www.blois.fr/" target="_blank"><img src="{{ url_for('static', filename='images/logo_blois.png') }}" /></a>
       <p>Ville de Blois</p>
     </section>
     <section>
-      <img src="{{ url_for('static', filename='images/logo_escrime_centre_val_de_loire.png') }}" />
+      <a href="https://escrimecentre-valdeloire.com/" target="_blank"><img src="{{ url_for('static', filename='images/logo_escrime_centre_val_de_loire.png') }}" /></a>
       <p>Ligue d'Escrime Centre-Val de Loire</p>
     </section>
   </div>

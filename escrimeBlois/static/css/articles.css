@@ -7,12 +7,12 @@
 
 .ctn-list-art a {
   text-decoration: none;
-  color: black;
+  color: var(--text-black);
 }
 
 .art {
   margin: 15px auto;
-  background-color: #b8cee0b4;
+  background-color: var(--cold);
   border-radius: 25px;
   padding: 15px;
   width: 75%;
@@ -20,16 +20,17 @@
 }
 
 .art:hover {
-  background-color: #d1eafd;
+  background-color: var(--secondary);
 }
 
-.ctn-art > h1 {
+.ctn-art>h1 {
   text-align: center;
 }
+
 .date-art {
   font-weight: 300;
   font-style: italic;
-  color: rgb(80, 80, 80);
+  color: var(--text-light);
 }
 
 
@@ -40,8 +41,24 @@
   margin-bottom: 50px
 }
 
+.btn-back {
+  display: inline-block;
+  margin-bottom: 15px;
+  padding: 10px 18px;
+  background-color: var(--primary-hover);
+  color: var(--text-white);
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.btn-back:hover {
+  filter: brightness(0.95);
+  color: var(--text-white);
+}
+
 .view-art {
-  background-color: white;
+  background-color: var(--text-white);
   padding: 30px;
   max-width: 900px;
   margin: 50px auto 30px;
@@ -52,12 +69,12 @@
   font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #333;
+  color: var(--text-main);
 }
 
 .view-art .date-art {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--gray-600);
   margin-bottom: 20px;
   display: block;
 }
@@ -74,18 +91,18 @@
   max-height: 150px;
   object-fit: cover;
   border-radius: 5px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
 }
 
 .view-art p {
   font-size: 1rem;
   line-height: 1.6;
-  color: #333;
+  color: var(--text-main);
   text-align: justify;
 }
 
 .ctn-comm {
-  background-color: white;
+  background-color: var(--text-white);
   max-width: 900px;
   margin: 0 auto 20px;
   padding: 20px;
@@ -93,7 +110,7 @@
 }
 
 .comm {
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--gray-300);
   padding: 15px 0;
 }
 
@@ -104,18 +121,18 @@
 .comm h3 {
   font-size: 1rem;
   font-weight: bold;
-  color: #333;
+  color: var(--text-main);
   margin-bottom: 5px;
 }
 
 .comm p {
   font-size: 0.95rem;
-  color: #555;
+  color: var(--text-light);
   line-height: 1.5;
 }
 
 .message {
-  background-color: white;
+  background-color: var(--text-white);
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
@@ -123,12 +140,12 @@
 }
 
 .header-commenter {
-  background-color: #f0f0f0;
+  background-color: var(--bg-card);
   padding: 10px;
   font-weight: bold;
   font-size: 1.1rem;
   margin: -20px -20px 20px -20px;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid var(--border-color);
 }
 
 .message form {
@@ -143,7 +160,7 @@
   flex-wrap: wrap;
 }
 
-.com-fields > div {
+.com-fields>div {
   flex: 1;
   min-width: 200px;
 }
@@ -152,7 +169,7 @@
   display: block;
   margin-bottom: 5px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-main);
 }
 
 .ctn-msg {
@@ -163,14 +180,14 @@
 .ctn-msg label {
   margin-bottom: 5px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-main);
 }
 
 .ctn-msg textarea {
   min-height: 100px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
   font-family: inherit;
   resize: vertical;
 }
@@ -178,8 +195,8 @@
 .message input[type="submit"] {
   align-self: flex-start;
   padding: 10px 30px;
-  background-color: #5273cc;
-  color: white;
+  background-color: var(--primary-hover);
+  color: var(--text-white);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -187,5 +204,5 @@
 }
 
 .message input[type="submit"]:hover {
-  background-color: #3d5ba3;
+  background-color: var(--primary-hover);
 }

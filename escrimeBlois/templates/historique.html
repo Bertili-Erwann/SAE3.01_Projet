@@ -15,6 +15,9 @@
                 <tr class="head">
                   <th class="date">Date</th>
                   <th class="evenm">Évenement</th>
+                  {% if user.role=="admin" %}
+                  <th class="action"></th>
+                  {% endif %}
                 </tr>
               </thead>
             </table>
@@ -23,117 +26,39 @@
           <div class="table100-body js-pscroll">
             <table>
               <tbody>
+                {% for event in historique %}
                 <tr class="body">
-                  <td class="date">1883-1903</td>
+                  <td class="date">{{ event.date }}</td>
                   <td class="evenm">
-                    Apparition de la pratique structurée de l'escrime à Blois au
-                    sein de la « Société de Gymnastique et d'Escrime La Blésoise
-                    ».
+                    {{ event.description }}
                   </td>
-                </tr>
-
-                <tr class="body">
-                  <td class="date">18 janvier 1911</td>
-                  <td class="evenm">
-                    La « Société des Sports et d’Escrime de Loir-et-Cher » prend
-                    le relais sous la présidence du Dr Paterne.
+                  {% if user.role=="admin" %}
+                  <td class="action">
+                    <form method="POST" action="{{ url_for('supprimer_historique', id_chronologique=event.id_chronologique) }}" style="display:inline;" onsubmit="return confirm('Voulez-vous vraiment supprimer cet événement ?');">
+                      <button type="submit" class="historique_supprimer">Supprimer</button>
+                    </form>
                   </td>
+                  {% endif %}
                 </tr>
-
-                <tr class="body">
-                  <td class="date">18 janvier 1911</td>
-                  <td class="evenm">
-                    Renaissance de l’escrime blésoise sous son identité actuelle
-                    : le « Cercle d'Escrime de Blois », présidé par M. René-Jean
-                    Congard.
-                  </td>
-                </tr>
-
-                <tr class="body">
-                  <td class="date">1956</td>
-                  <td class="evenm">Successeur : le Dr Muller.</td>
-                </tr>
-
-                <tr class="body">
-                  <td class="date">1960</td>
-                  <td class="evenm">
-                    Successeur : P. Cartier. Le maître Marcel Gerbaud officie
-                    dans la salle d'Armes, rue du Lion Ferré (jusqu'en 1964).
-                  </td>
-                </tr>
-                <tr class="body">
-                  <td class="date">1969</td>
-                  <td class="evenm">
-                    Reprise des activités sous l’impulsion du président
-                    Philibert Martinot, assisté de Pierre Weber.
-                  </td>
-                </tr>
-
-                <tr class="body">
-                  <td class="date">1971</td>
-                  <td class="evenm">
-                    Le Cercle est hébergé dans les locaux du Palais des Sports
-                    de l’Abeille des Aides. Reprise sous la conduite du maître
-                    Claude Ruby.
-                  </td>
-                </tr>
-
-                <tr class="body">
-                  <td class="date">1975</td>
-                  <td class="evenm">
-                    Régis Eche succède à Claude Ruby en tant que maître.
-                  </td>
-                </tr>
-
-                <tr class="body">
-                  <td class="date">1983</td>
-                  <td class="evenm">
-                    Au retrait de Philibert Martinot, Pierre Havard reprend la
-                    présidence.
-                  </td>
-                </tr>
-
-                <tr class="body">
-                  <td class="date">1990</td>
-                  <td class="evenm">
-                    Installation du Cercle dans le gymnase de Cabochon.
-                  </td>
-                </tr>
-
-                <tr class="body">
-                  <td class="date">1999</td>
-                  <td class="evenm">Régis Eche prend la destinée du Cercle.</td>
-                </tr>
-
-                <tr class="body">
-                  <td class="date">Novembre 2016</td>
-                  <td class="evenm">
-                    Christophe Léchopier succède à Régis Eche.
-                  </td>
-                </tr>
-
-                <tr class="body">
-                  <td class="date">Décembre 2018</td>
-                  <td class="evenm">
-                    Décision d'une coprésidence avec Régis Eche et Christophe
-                    Léchopier.
-                  </td>
-                </tr>
-
-                <tr class="body">
-                  <td class="date">10 décembre 2024</td>
-                  <td class="evenm">
-                    Christophe Léchopier se retire ; Régis Eche est élu à la
-                    présidence du Cercle.
-                  </td>
-                </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
         </div>
       </div>
+      {% if user.role=="admin" %}
+  <div class="historique-ajout">
+    <h2>Ajouter un événement</h2>
+    <form method="POST" action="{{ url_for('ajouter_historique') }}" class="historique-form">
+      <input type="text" name="date" placeholder="Date" required />
+      <textarea name="description" placeholder="Description" required></textarea>
+      <button type="submit" class="historique_ajouter">Ajouter</button>
+    </form>
+  </div>
+  {% endif %}
     </div>
   </div>
+  
 </div>
 
 {% endblock %}

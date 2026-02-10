@@ -1,6 +1,8 @@
 {% extends "base.html" %} {% block main %}
 <div class="ctn-view-art">
+  
   <div class="view-art">
+    <a class="btn-back" href="{{ request.referrer or url_for('index') }}">Retour</a>
     <h1>{{ article.titre }}</h1>
     <span class="date-art">{{ article.date_publication }}</span>
     <div class="ctn-img">

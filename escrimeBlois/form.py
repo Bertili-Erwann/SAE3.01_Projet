@@ -214,3 +214,63 @@ class FormCommentaire(FlaskForm):
                         id_article=id_article,
                         message_com=self.message.data))
         db.session.commit()
+
+
+class FormModifMembre(FlaskForm):
+    """Formulaire pour modifier les informations d'un membre par un admin"""
+    nom = StringField('Nom', validators=[DataRequired()])
+    prenom = StringField('Prénom', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired()])
+    telephone = StringField('Numéro de téléphone', validators=[DataRequired()])
+    sexe = RadioField('Sexe',
+                      choices=[('H', 'Homme'), ('F', 'Femme')],
+                      validators=[DataRequired()])
+    date_naissance = DateField('Date de naissance',
+                               validators=[DataRequired()])
+    adresse = StringField('Adresse postale',
+                         validators=[DataRequired()])
+    eleve = RadioField('Élève / Scolarisé',
+                       choices=[('Oui', 'Oui'), ('Non', 'Non')],
+                       validators=[DataRequired()])
+    arme_principale = SelectField('Arme principale',
+                                  choices=[('épée', 'Épée'),
+                                          ('fleuret', 'Fleuret'),
+                                          ('sabre', 'Sabre')],
+                                  validators=[DataRequired()])
+    niveau = SelectField('Niveau',
+                        choices=[('débutant', 'Débutant'),
+                                ('intermédiaire', 'Intermédiaire'),
+                                ('avancé', 'Avancé'),
+                                ('expert', 'Expert')],
+                        validators=[DataRequired()])
+    role = SelectField('Rôle',
+                      choices=[('membre', 'Membre'),
+                              ('responsable', 'Responsable')],
+                      validators=[DataRequired()])
+
+    def format_mail(self) -> ValidatedEmail:
+        try:
+            return validate_email(self.email.data,
+                                  check_deliverability=False)
+        except EmailNotValidError as e:
+            print(str(e))
+            raise
+
+    def update_membre(self, personne):
+        """Met à jour les informations d'un membre"""
+        from .models import Personne
+        
+        mail = self.format_mail()
+        personne.nom_personne = self.nom.data
+        personne.prenom_personne = self.prenom.data
+        personne.email_personne = mail.normalized
+        personne.telephone = self.telephone.data
+        personne.sexe = self.sexe.data
+        personne.date_naissance = self.date_naissance.data
+        personne.adresse = self.adresse.data
+        personne.eleve = (self.eleve.data == 'Oui')
+        personne.arme_principale = self.arme_principale.data
+        personne.niveau = self.niveau.data
+        personne.role = self.role.data
+        
+        db.session.commit()

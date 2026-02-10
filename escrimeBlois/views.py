@@ -3,7 +3,7 @@ from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
 from hashlib import sha256
 from datetime import date, datetime
-from sqlalchemy import extract
+from sqlalchemy import extract, func
 from .app import app, db
 from .models import *
 from escrimeBlois.models import (
@@ -24,6 +24,7 @@ from escrimeBlois.form import (
     FormRechercheArticle,
     FormCommentaire,
     FormInformation,
+    FormModifMembre
 )
 import os
 
@@ -75,7 +76,57 @@ def demande_article():
 
 @app.route("/historique/")
 def historique():
-    return render_template("historique.html", form=FormFormulaire())
+    return render_template("historique.html",
+                           historique = Historique.query.order_by(Historique.id_chronologique),
+                           user = current_user,
+                           form=FormFormulaire())
+
+
+@app.route("/historique/ajouter", methods=["POST"])
+@login_required
+def ajouter_historique():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+
+    date_event = request.form.get("date").strip()
+    description = request.form.get("description").strip()
+
+    if not date_event or not description:
+        flash("La date et la description sont obligatoires", "error")
+        return redirect(url_for("historique"))
+
+    try:
+        max_id = db.session.query(func.max(Historique.id_chronologique)).scalar()
+        next_id = max_id + 1
+        event = Historique(id_chronologique=next_id,
+                           date=date_event,
+                           description=description)
+        db.session.add(event)
+        db.session.commit()
+        flash("Événement ajouté avec succès", "success")
+    except Exception:
+        db.session.rollback()
+        flash("Erreur lors de l'ajout de l'événement", "error")
+
+    return redirect(url_for("historique"))
+
+@app.route("/historique/supprimer/<int:id_chronologique>", methods=["POST"])
+@login_required
+def supprimer_historique(id_chronologique:int):
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    try:
+        event = Historique.query.get(id_chronologique)
+        if event:
+            db.session.delete(event)
+            db.session.commit()
+            flash("Historique mis à jours avec succès", "success")
+        else:
+            flash("Événement de l'historique inexistant", "error")
+    except Exception as e:
+        db.session.rollback()
+        flash("Erreur lors de la suppression", "error")
+    return redirect(url_for("historique"))
 
 
 @app.route("/renseignement/")
@@ -92,24 +143,17 @@ def login():
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
-
+        
         user = Personne.query.filter_by(email_personne=email).first()
-
+        
         if user:
             m = sha256()
             m.update(password.encode("utf-8"))
             hashed_password = m.hexdigest()
-
+            
             if user.mdp == hashed_password or user.mdp == password:
                 login_user(user)
-                if user.role == "membre":
-                    return redirect(url_for("infos_persos"))
-                elif user.role == "responsable":
-                    return redirect(url_for("ajouter_article"))
-                elif user.role == "admin":
-                    return redirect(url_for("admin_inscription_club"))
-                else:
-                    return redirect(url_for("index"))
+                return redirect(url_for('index')) 
             else:
                 flash("Mot de passe incorrect.", "error")
         else:
@@ -310,7 +354,6 @@ def inscription_event(id_evenement):
                                   email=form.email.data,
                                   date_naissance=form.date_naissance.data,
                                   sexe=form.sexe.data,
-                                  categorie=form.categorie.data,
                                   justificatif=justificatif_data)
         db.session.add(inscription)
         db.session.commit()
@@ -436,7 +479,7 @@ def admin_inscription_evenement():
                            inscriptions=inscriptions,
                            form=FormFormulaire())
 
-
+    
 @app.route("/admin/gestion_inscription/evenement/view/<int:id_inscription>",
            methods=["GET", "POST"])
 @login_required
@@ -491,6 +534,50 @@ def supprimer_membre(id_personne):
         db.session.rollback()
         flash("Erreur lors de la suppression", "error")
     return redirect(url_for("admin_miseajour_membres"))
+
+
+@app.route("/admin/modifier/membre/<int:id_personne>", methods=["GET", "POST"])
+@login_required
+def modifier_membre(id_personne):
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    
+    personne = Personne.query.get_or_404(id_personne)
+    
+    if request.method == "POST":
+        from escrimeBlois.form import FormModifMembre
+        form = FormModifMembre()
+        if form.validate_on_submit():
+            try:
+                form.update_membre(personne)
+                flash("Membre modifié avec succès", "success")
+                return redirect(url_for("admin_miseajour_membres"))
+            except Exception as e:
+                db.session.rollback()
+                flash(f"Erreur lors de la modification: {str(e)}", "error")
+        else:
+            flash("Erreur de validation du formulaire", "error")
+    
+    # Pré-remplir le formulaire avec les données existantes
+    from escrimeBlois.form import FormModifMembre
+    form = FormModifMembre(
+        nom=personne.nom_personne,
+        prenom=personne.prenom_personne,
+        email=personne.email_personne,
+        telephone=personne.telephone,
+        sexe=personne.sexe,
+        date_naissance=personne.date_naissance,
+        adresse=personne.adresse,
+        eleve='Oui' if personne.eleve else 'Non',
+        arme_principale=personne.arme_principale,
+        niveau=personne.niveau,
+        role=personne.role
+    )
+    
+    return render_template("admin_modifier_membre.html",
+                         form_modif=form,
+                         personne=personne,
+                         form=FormFormulaire())
 
 
 @app.route('/admin/creation_competition', methods=['GET', 'POST'])
@@ -714,7 +801,7 @@ app.config["JUSTIFICATIF_FOLDER"] = JUSTIFICATIF_FOLDER
 @app.route("/membre/information_personnel/")
 @login_required
 def infos_persos():
-    if current_user.role != "membre":
+    if current_user.role != "membre" and current_user.role != "responsable":
         return redirect(url_for("index"))
     return render_template("infos_persos_espMembre.html",
                            personne=current_user,

@@ -2,11 +2,11 @@
 
 /* -------------------- Blocs principaux -------------------- */
 .rens {
-  border-radius: 20px;
-  background-color: #cccccc;
+  border-radius: var(--border-radius-pill);
+  background-color: var(--gray-400);
   margin: 1%;
   border-collapse: collapse;
-  color: #000000;
+  color: var(--text-black);
 }
 
 .firstbloc {
@@ -15,22 +15,22 @@
 
 /* -------------------- Titres renseignements -------------------- */
 .TRens {
-  background-color: #666666;
+  background-color: var(--gray-700);
   border-collapse: collapse;
-  border-radius: 20px;
+  border-radius: var(--border-radius-pill);
   text-indent: 20px;
   display: block;
   padding: 0.8em;
   font-style: italic;
   font: small-caps bold 24px/1 sans-serif;
-  color: #e6e6e6;
+  color: var(--gray-200);
   cursor: pointer;
   position: relative;
   transition: background 0.3s ease;
 }
 
 .TRens:hover {
-  background-color: #888888;
+  background-color: var(--gray-600);
 }
 
 /* Animation de la flèche ▼ */
@@ -43,27 +43,27 @@
   transition: transform 0.3s ease;
 }
 
-.toggle:checked + .TRens::after {
+.toggle:checked+.TRens::after {
   transform: translateY(-50%) rotate(90deg);
 }
 
 /* -------------------- Indentation -------------------- */
 .indentL {
   text-indent: 15px;
-  color: #000000;
+  color: var(--text-black);
 }
 
 .indentP {
   text-indent: 10px;
-  color: #000000;
+  color: var(--text-black);
 }
 
 /* -------------------- Deux colonnes -------------------- */
 .deux-colonnes {
   display: flex;
   justify-content: space-between;
-  background-color: #aaaaaa;
-  border-radius: 20px;
+  background-color: var(--gray-500);
+  border-radius: var(--border-radius-pill);
   padding: 20px;
   gap: 30px;
   position: relative;
@@ -86,16 +86,16 @@
   left: 50%;
   /* centré horizontalement */
   width: 1px;
-  background-color: #cccccc;
+  background-color: var(--gray-400);
   transform: translateX(-50%);
 }
 
 /* -------------------- Tableau -------------------- */
 .tab {
-  border: 3px solid #e6e6e6;
+  border: 3px solid var(--gray-200);
   margin: 1px;
   text-decoration: solid;
-  text-decoration-color: #cccccc;
+  text-decoration-color: var(--gray-400);
   text-align: center;
 }
 
@@ -112,7 +112,7 @@
 }
 
 /* Quand on coche → le bloc s'ouvre */
-.toggle:checked ~ .contenu {
+.toggle:checked~.contenu {
   max-height: 2000px;
   padding: 1em;
 }

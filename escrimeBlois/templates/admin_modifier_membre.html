@@ -1,0 +1,124 @@
+{% extends "base.html" %} {% block main %} {% include "admin_nav_bar.html" %}
+
+<div class="container-modifier-membre">
+  <h1 id="titre_modifier_membre">
+    Modifier le membre: {{ personne.prenom_personne }} {{ personne.nom_personne
+    }}
+  </h1>
+
+  <div class="form-container">
+    <form
+      method="POST"
+      action="{{ url_for('modifier_membre', id_personne=personne.id_personne) }}"
+    >
+      {{ form_modif.csrf_token }}
+
+      <div class="form-section">
+        <h2>Informations personnelles</h2>
+
+        <div class="form-group">
+          <label for="nom">Nom *</label>
+          {{ form_modif.nom(class="form-control", id="nom") }} {% if
+          form_modif.nom.errors %}
+          <span class="error">{{ form_modif.nom.errors[0] }}</span>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="prenom">Prénom *</label>
+          {{ form_modif.prenom(class="form-control", id="prenom") }} {% if
+          form_modif.prenom.errors %}
+          <span class="error">{{ form_modif.prenom.errors[0] }}</span>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          {{ form_modif.email(class="form-control", id="email", type="email") }}
+          {% if form_modif.email.errors %}
+          <span class="error">{{ form_modif.email.errors[0] }}</span>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="telephone">Numéro de téléphone *</label>
+          {{ form_modif.telephone(class="form-control", id="telephone") }} {% if
+          form_modif.telephone.errors %}
+          <span class="error">{{ form_modif.telephone.errors[0] }}</span>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label>Sexe *</label>
+          <div class="radio-group">{{ form_modif.sexe }}</div>
+          {% if form_modif.sexe.errors %}
+          <span class="error">{{ form_modif.sexe.errors[0] }}</span>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="date_naissance">Date de naissance *</label>
+          {{ form_modif.date_naissance(class="form-control",
+          id="date_naissance") }} {% if form_modif.date_naissance.errors %}
+          <span class="error">{{ form_modif.date_naissance.errors[0] }}</span>
+          {% endif %}
+        </div>
+
+        <div class="form-group full-width">
+          <label for="adresse">Adresse postale *</label>
+          {{ form_modif.adresse(class="form-control", id="adresse") }} {% if
+          form_modif.adresse.errors %}
+          <span class="error">{{ form_modif.adresse.errors[0] }}</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2>Informations du club</h2>
+
+        <div class="form-group">
+          <label>Élève / Scolarisé *</label>
+          <div class="radio-group">{{ form_modif.eleve }}</div>
+          {% if form_modif.eleve.errors %}
+          <span class="error">{{ form_modif.eleve.errors[0] }}</span>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="arme_principale">Arme principale *</label>
+          {{ form_modif.arme_principale(class="form-control",
+          id="arme_principale") }} {% if form_modif.arme_principale.errors %}
+          <span class="error">{{ form_modif.arme_principale.errors[0] }}</span>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="niveau">Niveau *</label>
+          {{ form_modif.niveau(class="form-control", id="niveau") }} {% if
+          form_modif.niveau.errors %}
+          <span class="error">{{ form_modif.niveau.errors[0] }}</span>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="role">Rôle *</label>
+          {{ form_modif.role(class="form-control", id="role") }} {% if
+          form_modif.role.errors %}
+          <span class="error">{{ form_modif.role.errors[0] }}</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">
+          Enregistrer les modifications
+        </button>
+        <a href="{{ url_for('admin_miseajour_membres') }}" class="btn-cancel"
+          >Annuler</a
+        >
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
