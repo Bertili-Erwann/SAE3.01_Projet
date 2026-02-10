@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block main %}
 <main id="admin_nav" role="admin_nav" class="container-fluid p-0">
-  {% include "admin_nav_bar.html" %}{% include "admin_nav_inscription.html" %} 
+  {% include "admin/admin_navbar_globale.html" %}{% include "admin/admin_navbar_inscriptions.html" %} 
 </main>
 <div class="inscription_view">
   <h2>Inscription de {{ demande.nom }} {{ demande.prenom }}</h2>

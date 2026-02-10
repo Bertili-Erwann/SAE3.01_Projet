@@ -65,7 +65,7 @@ def index():
 
 @app.route('/event/classement/redirection_ffescrime')
 def redirection_ffescrime():
-   return render_template("redirection_ffescrime.html")
+   return render_template("evenement/event_classement_global_redirection.html")
 
 @app.route('/demande_article', methods=['GET'])
 def demande_article():
@@ -81,7 +81,7 @@ def demande_article():
                 and extract('year', Article.date_publication)
                 == date[1]).filter(Article.titre.contains(laRecherche)))
 
-        return render_template('articles.html',
+        return render_template('liste_articles.html',
                                articles=listarticle,
                                recherche=laRecherche,date=date)
     else:
@@ -146,7 +146,7 @@ def supprimer_historique(id_chronologique:int):
 @app.route("/renseignement/")
 def renseignement():
     infos = Information.query.order_by(Information.ordre).all()
-    return render_template("renseignement.html",
+    return render_template("renseignements.html",
                            title="renseignement",
                            form=FormFormulaire(),
                            infos=infos)
@@ -172,7 +172,7 @@ def login():
                 flash("Mot de passe incorrect.", "error")
         else:
             flash("Email inconnu.", "error")
-    return render_template("login.html", form=FormFormulaire())
+    return render_template("connexion/login.html", form=FormFormulaire())
 
 
 @app.route("/logout/")
@@ -202,13 +202,13 @@ def insert_inscription():
 
 @app.route("/mdp_oublier_envoyer_code/")
 def mdp_oublier_envoyer_code():
-    return render_template("mdp_oublier_envoyer_code.html",
+    return render_template("connexion/login_mdp_oublie_envoi_code.html",
                            form=FormFormulaire())
 
 
 @app.route("/mdp_oublier_code/")
 def mdp_oublier_code():
-    return render_template("mdp_oublier_code.html", form=FormFormulaire())
+    return render_template("connexion/login_mdp_oublie_code.html", form=FormFormulaire())
 
 
 @app.route("/mdp_oublier_confirmer_mdp/", methods=["GET", "POST"])
@@ -218,13 +218,13 @@ def mdp_oublier_confirmer_mdp():
         newpasswordconfirm = request.form.get("newpasswordconfirm")
 
         if newpassword != newpasswordconfirm:
-            return render_template("mdp_oublier_confirmer_mdp.html",
+            return render_template("connexion/login_mdp_oublie_confirmation.html",
                                    form=FormFormulaire())
 
         # Ici, tu peux ajouter la logique pour mettre à jour le mot de passe en base
         return redirect(url_for("login"))
 
-    return render_template("mdp_oublier_confirmer_mdp.html",
+    return render_template("connexion/login_mdp_oublie_confirmation.html",
                            form=FormFormulaire())
 
 
@@ -232,7 +232,7 @@ def mdp_oublier_confirmer_mdp():
 def view_article(ida):
     art = Article.query.get(ida)
     form = FormCommentaire()
-    return render_template('article_view.html', article=art, formCom=form)
+    return render_template('article.html', article=art, formCom=form)
 
 
 @app.route('/article/<ida>/comment', methods=["POST"])
@@ -242,7 +242,7 @@ def insert_commentaire(ida):
     if form.is_submitted():
         form.envoyer_commentaire(ida)
         return redirect(url_for('view_article', ida=ida))
-    return render_template('article_view.html', article=art, formCom=form)
+    return render_template('article.html', article=art, formCom=form)
 
 
 @app.route('/evenement')
@@ -269,7 +269,7 @@ def evenement_resultats():
                     selected_competition_id).order_by(
                         Classer.point.desc()).all()
 
-    return render_template("resultat.html",
+    return render_template("evenement/event_resultats.html",
                            competitions=competitions,
                            classements=classements,
                            selected_id=selected_competition_id,
@@ -302,7 +302,7 @@ def evenement_calendrier():
     query = query.order_by(Evenement.date.asc())
     evenements = query.all()
 
-    return render_template('calendrier_event.html',
+    return render_template('evenement/event_calendrier.html',
                            evenements=evenements,
                            filtres=request.args,
                            types_selectionnes=types_selectionnes,
@@ -312,7 +312,7 @@ def evenement_calendrier():
 @app.route('/evenement/calendrier/consulter/<int:id_evenement>')
 def evenement_consulter(id_evenement):
     evenement = Evenement.query.get_or_404(id_evenement)
-    return render_template('consulter_evenement.html',
+    return render_template('evenement/event_consultation.html',
                            evenement=evenement,
                            form=FormFormulaire())
 
@@ -383,7 +383,7 @@ def evenement_inscription(id_evenement):
                     id_evenement=id_evenement,
                     inscription_success=True))
 
-    return render_template('inscription_event.html',
+    return render_template('evenement/event_inscription.html',
                            formInsc=form,
                            id_evenement=id_evenement,
                            evenement=evenement,
@@ -398,7 +398,7 @@ def admin_gestion_information():
     if current_user.role != "admin":
         return redirect(url_for('login'))
     infos = Information.query.order_by(Information.ordre).all()
-    return render_template("admin_gestion_information.html", infos=infos)
+    return render_template("admin/admin_modification_renseignements.html", infos=infos)
 
 @app.route("/admin/gestion_information/ajouter", methods=["GET", "POST"])
 @login_required
@@ -413,7 +413,7 @@ def admin_ajout_information():
         db.session.add(info)
         db.session.commit()
         return redirect(url_for('admin_gestion_information'))
-    return render_template("admin_edit_information.html", form=FormFormulaire(), info_form=info_form, title="Ajouter une information")
+    return render_template("admin/admin_modification_informations_membre.html", form=FormFormulaire(), info_form=info_form, title="Ajouter une information")
 
 @app.route("/admin/gestion_information/modifier/<int:id>", methods=["GET", "POST"])
 @login_required
@@ -428,7 +428,7 @@ def admin_modif_information(id):
         info.ordre = int(info_form.ordre.data)
         db.session.commit()
         return redirect(url_for('admin_gestion_information'))
-    return render_template("admin_edit_information.html", form=FormFormulaire(), info_form=info_form, title="Modifier une information")
+    return render_template("admin/admin_modification_informations_membre.html", form=FormFormulaire(), info_form=info_form, title="Modifier une information")
 
 @app.route("/admin/gestion_information/supprimer/<int:id>")
 @login_required
@@ -455,7 +455,7 @@ def admin_gestion_inscription_club():
     if current_user.role != "admin":
         return redirect(url_for("index"))
     demandes = Demande_inscription.query.all()
-    return render_template("admin_gestion_inscription_club.html",
+    return render_template("admin/admin_club_liste_inscriptions.html",
                            demandes=demandes,
                            form=FormFormulaire())
 
@@ -491,7 +491,7 @@ def admin_gestion_inscription_club_view(id_inscription):
             db.session.delete(demande)
             db.session.commit()
         return redirect(url_for("admin_gestion_inscription_club"))
-    return render_template("admin_gestion_inscription_club_view.html",
+    return render_template("admin/admin_club_inscription_consultation.html",
                            demande=demande,
                            form=FormFormulaire())
 
@@ -502,7 +502,7 @@ def admin_gestion_inscription_evenement():
     if current_user.role != "admin":
         return redirect(url_for("index"))
     inscriptions = Inscription.query.all()
-    return render_template("admin_gestion_inscription_evenement.html",
+    return render_template("admin/admin_evenement_liste_inscriptions.html",
                            inscriptions=inscriptions,
                            form=FormFormulaire())
 
@@ -520,7 +520,7 @@ def admin_gestion_inscription_evenement_view(id_inscription):
             db.session.delete(inscription)
             db.session.commit()
         return redirect(url_for("admin_gestion_inscription_evenement"))
-    return render_template("admin_gestion_inscription_evenement_view.html",
+    return render_template("admin/admin_evenement_inscription_consultation.html",
                            inscription=inscription,
                            form=FormFormulaire())
 
@@ -538,7 +538,7 @@ def admin_miseajour_membres():
             les_responsables.append(e)
         elif e.role == "membre":
             les_membres.append(e)
-    return render_template("admin_miseajour_membres.html",
+    return render_template("admin/admin_miseajour_membres.html",
                            membres=les_membres,
                            responsables=les_responsables,
                            form=FormFormulaire())
@@ -601,7 +601,7 @@ def modifier_membre(id_personne):
         role=personne.role
     )
     
-    return render_template("admin_modifier_membre.html",
+    return render_template("admin/admin_modifier_membre.html",
                          form_modif=form,
                          personne=personne,
                          form=FormFormulaire())
@@ -644,7 +644,7 @@ def admin_creation_competition():
         flash('Compétition créée avec succès !', 'success')
         return redirect(url_for('admin_creation_competition'))
 
-    return render_template('admin_crea_comp.html', form=FormFormulaire())
+    return render_template('admin/admin_creation_competition.html', form=FormFormulaire())
 
 @app.route('/admin/resultats', methods=['GET'])
 @login_required
@@ -665,7 +665,7 @@ def admin_resultats():
             Classer.id_inscription == selected_competition_id
         ).order_by(Classer.point.desc()).all()
         
-    return render_template("admin_maj_res.html", competitions=competitions, classements=classements, selected_id=selected_competition_id)
+    return render_template("admin/admin_miseajour_resultats.html", competitions=competitions, classements=classements, selected_id=selected_competition_id)
 
 
 @app.route('/admin/resultats/update', methods=['POST'])
@@ -710,7 +710,7 @@ def responsable_gestion_formulaire():
     if current_user.role != "responsable":
         return redirect(url_for("index"))
     lesFormulaires = Formulaire.query.all()
-    return render_template("gestion_formulaire.html",
+    return render_template("responsable/responsable_liste_formulaires.html",
                            formulaires=lesFormulaires,
                            form=FormFormulaire())
 
@@ -721,7 +721,7 @@ def responsable_consultation_formulaire(id_formulaire):
     if current_user.role != "responsable":
         return redirect(url_for("index"))
     unForm = Formulaire.query.get(id_formulaire)
-    return render_template("consultation_form.html",
+    return render_template("responsable/resposable_consultation_formulaire.html",
                            selectedFormulaire=unForm,
                            form=FormFormulaire())
 
@@ -776,7 +776,7 @@ def responsable_ajouter_article():
         flash("Article ajouté avec succès ✅", "success")
         return redirect(url_for("responsable_ajouter_article"))
 
-    return render_template("ajout_article.html", form=FormFormulaire())
+    return render_template("responsable/responsable_nouvel_article.html", form=FormFormulaire())
 
 
 @app.route("/responsable/creer_evenement/", methods=['GET', 'POST'])
@@ -813,7 +813,7 @@ def responsable_creer_evenement():
         flash('Événement créé avec succès !', 'success')
         return redirect(url_for('responsable_creer_evenement'))
 
-    return render_template('resp_creation_event.html', form=FormFormulaire())
+    return render_template('responsable/responsable_creation_evenement.html', form=FormFormulaire())
 
 
 # ======================================== PAGES MEMBRES ========================================
@@ -831,7 +831,7 @@ def membre_index():
 def membre_information_personnel():
     if current_user.role != "membre" and current_user.role != "responsable":
         return redirect(url_for("index"))
-    return render_template("infos_persos_espMembre.html",
+    return render_template("membre/membre_informations.html",
                            personne=current_user,
                            form=FormFormulaire())
 
@@ -850,7 +850,7 @@ def membre_event_inscrits():
         insc.evenement for insc in inscriptions if insc.evenement
     ]
 
-    return render_template('event_inscrits.html',
+    return render_template('membre/membre_evenements_inscrits.html',
                            evenements=evenements_inscrits,
                            form=FormFormulaire())
 
@@ -862,7 +862,7 @@ def membre_consult_event(id_event):
         return redirect(url_for('index'))
 
     event = Evenement.query.get_or_404(id_event)
-    return render_template('membre_consult_event.html', evenement=event, form=FormFormulaire())
+    return render_template('membre/membre_evenement_inscrit_consultation.html', evenement=event, form=FormFormulaire())
 
 # Résultats passés du membre
 @app.route('/membre/resultats_passes/')
@@ -897,7 +897,7 @@ def membre_resultats_passes():
             'rang': rang
         })
 
-    return render_template('res_passe_membre.html', resultats=resultats_finaux, form=FormFormulaire())
+    return render_template('membre/membre_resultats.html', resultats=resultats_finaux, form=FormFormulaire())
 
 @app.route("/membre/information_personnel/changer_mdp/", methods=["POST"])
 @login_required

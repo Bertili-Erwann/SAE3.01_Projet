@@ -1,4 +1,4 @@
-{% extends "nav_membres.html" if current_user.role == 'membre' else "nav_responsable.html" %}
+{% extends "membre/membre_navbar.html" if current_user.role == 'membre' else "responsable/responsable_navbar.html" %}
 
 {% block membre %}
     {{ self.page_content() }}

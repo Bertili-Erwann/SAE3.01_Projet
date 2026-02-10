@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block main %}
 <main id="admin_nav" role="admin_nav" class="container-fluid p-0">
-  {% include "admin_nav_bar.html" %}
+  {% include "admin/admin_navbar_globale.html" %}
 </main>
 <div>
     <form action="{{ url_for('admin_creation_competition') }}" method="POST">
