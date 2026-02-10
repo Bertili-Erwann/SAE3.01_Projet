@@ -31,7 +31,7 @@
 
           <!-- BOUTON EVENEMENT -->
           <li class="nav-item">
-            <a class="nav-link {% if request.endpoint in ['calendrier', 'consulter_evenement', 'inscription_event', 'resultat', 'redirection_ffescrime'] %}active{% endif %}" href="{{ url_for ('calendrier')}}">Événement</a>
+            <a class="nav-link {% if request.endpoint in ['evenement_calendrier', 'evenement_consulter', 'evenement_inscription', 'evenement_resultats', 'redirection_ffescrime'] %}active{% endif %}" href="{{ url_for('evenement_calendrier')}}">Événement</a>
           </li>
 
           <!-- BOUTON RENSEIGNEMENT  -->
@@ -46,19 +46,19 @@
 
           {% if current_user.is_authenticated and current_user.role == 'membre' %}
           <li class="nav-item">
-            <a class="nav-link {% if request.endpoint in ['infos_persos', 'event_inscrits', 'membre_consult_event', 'resultats_passes', 'change_password', 'update_arme'] %}active{% endif %}" href="{{ url_for('infos_persos') }}">Espace Membre</a>
+            <a class="nav-link {% if request.endpoint in ['membre_information_personnel', 'membre_event_inscrits', 'membre_consult_event', 'membre_resultats_passes', 'membre_change_password', 'membre_update_arme'] %}active{% endif %}" href="{{ url_for('membre_information_personnel') }}">Espace Membre</a>
           </li>
           {% endif %}
 
           {% if current_user.is_authenticated and current_user.role == 'responsable' %}
           <li class="nav-item">
-            <a class="nav-link {% if request.endpoint in ['gest_form', 'consult_form', 'ajouter_article', 'create_event'] %}active{% endif %}" href="{{ url_for('gest_form') }}">Espace Responsable</a>
+            <a class="nav-link {% if request.endpoint in ['responsable_gestion_formulaire', 'responsable_consultation_formulaire', 'responsable_ajouter_article', 'responsable_creer_evenement'] %}active{% endif %}" href="{{ url_for('responsable_gestion_formulaire') }}">Espace Responsable</a>
           </li>
           {% endif %}
 
           {% if current_user.is_authenticated and current_user.role == 'admin' %}
           <li class="nav-item">
-            <a class="nav-link {% if request.endpoint in ['admin_inscription_club', 'admin_inscription_club_view', 'admin_inscription_evenement', 'admin_inscription_evenement_view', 'admin_miseajour_membres', 'supprimer_membre', 'admin_comp', 'admin_resultat', 'update_points'] %}active{% endif %}" href="{{ url_for('admin_inscription_club') }}">Espace Administrateur</a>
+            <a class="nav-link {% if request.endpoint in ['admin_gestion_inscription_club', 'admin_gestion_inscription_club_view', 'admin_gestion_inscription_evenement', 'admin_gestion_inscription_evenement_view', 'admin_miseajour_membres', 'supprimer_membre', 'admin_creation_competition', 'admin_resultats', 'admin_update_points'] %}active{% endif %}" href="{{ url_for('admin_gestion_inscription_club') }}">Espace Administrateur</a>
           </li>
           {% endif %}
 

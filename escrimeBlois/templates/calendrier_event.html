@@ -6,7 +6,7 @@
 <h1 id="event_creation_title">Calendrier des événements</h1>
 <div class="calendar-container">
     
-    <form action="{{ url_for('calendrier') }}" method="GET">
+    <form action="{{ url_for('evenement_calendrier') }}" method="GET">
         <div class="filter-box">
             
             <div class="filter-col">
@@ -72,7 +72,7 @@
 
         <div class="filter-actions">
             <button type="submit" class="btn btn-blue">Rechercher</button>
-            <a href="{{ url_for('calendrier') }}" class="btn btn-red">Réinitialiser</a>
+            <a href="{{ url_for('evenement_calendrier') }}" class="btn btn-red">Réinitialiser</a>
         </div>
     </form>
     <div id="blank_space"></div>
@@ -112,7 +112,7 @@
                     
                     <td class="col-actions">
                         <div class="action-buttons-wrapper">
-                            <a href="{{ url_for('consulter_evenement', id_evenement=event.id_evenement) }}" class="btn-action btn-consult">Consulter</a>
+                            <a href="{{ url_for('evenement_consulter', id_evenement=event.id_evenement) }}" class="btn-action btn-consult">Consulter</a>
                         </div>
                     </td>
                 </tr>

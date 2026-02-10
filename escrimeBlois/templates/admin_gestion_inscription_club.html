@@ -12,7 +12,7 @@
     {% for demande in demandes %}
     <div class="demande_inscription_item">
       <span>{{ demande.nom }} {{ demande.prenom }}</span>
-      <a href="{{ url_for('admin_inscription_club_view', id_inscription=demande.id_inscription) }}">
+      <a href="{{ url_for('admin_gestion_inscription_club_view', id_inscription=demande.id_inscription) }}">
         <button type="button">Inspecter</button>
       </a>
     </div>
