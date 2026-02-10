@@ -27,7 +27,9 @@
                     </p>
                   </div>
                   <div id="personne_options">
-                    <button type="button" id="membre_modifier">Modifier</button>
+                    <a href="{{ url_for('modifier_membre', id_personne=resp.id_personne) }}">
+                      <button type="button" id="membre_modifier">Modifier</button>
+                    </a>
                     <form method="POST" action="{{ url_for('supprimer_membre', id_personne=resp.id_personne) }}" style="display:inline;" onsubmit="return confirm('Voulez-vous vraiment supprimer {{ resp.prenom_personne }} {{ resp.nom_personne }} ?');">
                       <button type="submit" class="membre_supprimer">Supprimer</button>
                     </form>
@@ -66,7 +68,9 @@
                     </p>
                   </div>
                   <div id="personne_options">
-                    <button type="button" id="membre_modifier">Modifier</button>
+                    <a href="{{ url_for('modifier_membre', id_personne=memb.id_personne) }}">
+                      <button type="button" id="membre_modifier">Modifier</button>
+                    </a>
                     <form method="POST" action="{{ url_for('supprimer_membre', id_personne=memb.id_personne) }}" style="display:inline;" onsubmit="return confirm('Voulez-vous vraiment supprimer {{ memb.prenom_personne }} {{ memb.nom_personne }} ?');">
                       <button type="submit" class="membre_supprimer">Supprimer</button>
                     </form>
