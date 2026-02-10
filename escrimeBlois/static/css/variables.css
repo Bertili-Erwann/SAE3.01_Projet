@@ -90,4 +90,11 @@
   --border-radius-md: 8px;
   --border-radius-lg: 15px;
   --border-radius-pill: 20px;
+
+  /* --- Transitions & Animations --- */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
