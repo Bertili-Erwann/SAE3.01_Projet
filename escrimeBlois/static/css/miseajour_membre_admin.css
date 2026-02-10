@@ -6,7 +6,7 @@
   margin: 20px 15px;
   padding: 10px;
   border-radius: 2px;
-  background-color: var(--cold-dark);
+  background-color: var(--gray-600);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -18,13 +18,13 @@
   color: var(--text-white);
 }
 
-#banniere_responsable + h1,
-#banniere_membre + h1 {
+#banniere_responsable+h1,
+#banniere_membre+h1 {
   margin: 20px auto;
 }
 
-#banniere_responsable ~ .limiter,
-#banniere_membre ~ .limiter {
+#banniere_responsable~.limiter,
+#banniere_membre~.limiter {
   max-width: 1000px !important;
   margin: 10px auto !important;
   margin-top: 10px !important;
@@ -67,8 +67,8 @@
 }
 
 #personne:hover {
-  background-color: var(--bg-medium);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  background-color: var(--gray-200);
+  box-shadow: var(--shadow-medium);
 }
 
 #personne_infos {
@@ -92,11 +92,11 @@
 #membre_modifier,
 #membre_supprimer,
 .membre_supprimer {
-  background-color: var(--cold-dark);
+  background-color: var(--gray-600);
   color: var(--text-white);
   padding: 8px 20px;
   border: none;
-  border-radius: 20px;
+  border-radius: var(--border-radius-pill);
   cursor: pointer;
   font-size: 14px;
   transition: all 0.3s;
@@ -104,7 +104,7 @@
 
 
 #membre_modifier:hover {
-  background-color: var(--bg-medium);
+  background-color: var(--gray-400);
   transform: scale(1.05);
 }
 
@@ -118,6 +118,7 @@
   background-color: var(--danger-hover);
   transform: scale(1.05);
 }
+
 .wrap-table100_admin {
   overflow-x: auto;
   white-space: nowrap;
@@ -138,14 +139,14 @@
 }
 
 /* Neutraliser complètement les styles de historique.css */
-#banniere_responsable ~ .limiter .container-table100,
-#banniere_membre ~ .limiter .container-table100 {
+#banniere_responsable~.limiter .container-table100,
+#banniere_membre~.limiter .container-table100 {
   min-height: auto !important;
   padding-top: 0 !important;
   margin: 0 !important;
 }
 
-#titre_maj_membre{
+#titre_maj_membre {
   text-align: center;
   color: var(--text-main);
   font-size: 32px;
@@ -154,7 +155,7 @@
   letter-spacing: 1px;
 }
 
-#personne_non_trouve{
+#personne_non_trouve {
   text-align: center;
   color: var(--text-main);
   font-size: 32px;
