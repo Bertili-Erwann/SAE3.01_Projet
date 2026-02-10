@@ -23,8 +23,7 @@
 }
 
 .form-inscription>div {
-  margin: 5px;
-  padding-left: 15%;
+  margin: 15px 5px;
 }
 
 .form-inscription h1 {
@@ -58,6 +57,10 @@
 }
 
 /* -------------------- Bouton de soumission -------------------- */
+.btn-wrap {
+  text-align: center;
+}
+
 .form-inscription input[type="submit"] {
   padding: 12px;
   width: 70%;

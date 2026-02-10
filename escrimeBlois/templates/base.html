@@ -31,7 +31,7 @@
 
           <!-- BOUTON EVENEMENT -->
           <li class="nav-item">
-            <a class="nav-link {% if request.endpoint in ['calendrier', 'consulter_evenement', 'inscription_event', 'resultat', 'redirection_ffescrime'] %}active{% endif %}" href="{{ url_for ('redirection_ffescrime')}}">Événement</a>
+            <a class="nav-link {% if request.endpoint in ['calendrier', 'consulter_evenement', 'inscription_event', 'resultat', 'redirection_ffescrime'] %}active{% endif %}" href="{{ url_for ('calendrier')}}">Événement</a>
           </li>
 
           <!-- BOUTON RENSEIGNEMENT  -->

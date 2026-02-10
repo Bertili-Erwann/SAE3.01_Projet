@@ -228,6 +228,13 @@ def insert_commentaire(ida):
     return render_template('article_view.html', article=art, formCom=form)
 
 
+@app.route('/evenement')
+@app.route('/evenement/')
+def evenement():
+    """Route par défaut pour la section événements - redirige vers le calendrier"""
+    return redirect(url_for('calendrier'))
+
+
 @app.route('/evenement/résultats')
 def resultat():
     competitions = Evenement.query.filter_by(
