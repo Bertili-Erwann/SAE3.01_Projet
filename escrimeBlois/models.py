@@ -452,6 +452,7 @@ class Article(db.Model):
         description (str): Contenu de l'article.
         categorie (str): Catégorie de l'article.
         commentable (bool): Indique si l'article est commentable.
+        miniature (int): Clé étrangère vers Image (miniature de l'article).
         responsable_id (int): Clé étrangère vers Personne (responsable).
         responsable: Relation vers Personne.
     """
@@ -462,8 +463,10 @@ class Article(db.Model):
     categorie = db.Column(db.String(20))
     lien = db.Column(db.String(64))
     commentable = db.Column(db.Boolean)
+    miniature = db.Column(db.Integer, db.ForeignKey("image.id_image"), nullable=True)
     responsable_id = db.ForeignKey("personne.id_personne")
     responsable = None
+    miniature_image = db.relationship("Image", foreign_keys=[miniature])
 
     @validates('id_responsable')
     def validate_responsable_type(self, key: str, value: int) -> int:
@@ -531,8 +534,7 @@ class Posseder(db.Model):
     
     Attributs:
         id_image (int): partie de la clé primaire, une clé étrangère référencant l'id de la table image.
-        id_competition (int): partie de la clé primaire,une clé étrangère référencant l'id de la table article.
-        miniature(bool): True si c'est la maniature d'un article, False sinon. 
+        id_article (int): partie de la clé primaire, une clé étrangère référencant l'id de la table article.
     """
     id_image = db.Column(db.Integer,
                          db.ForeignKey("image.id_image"),
@@ -540,7 +542,6 @@ class Posseder(db.Model):
     id_article = db.Column(db.Integer,
                            db.ForeignKey("article.id_article"),
                            primary_key=True)
-    miniature = db.Column(db.Boolean)
 
 
 class Gerer(db.Model):

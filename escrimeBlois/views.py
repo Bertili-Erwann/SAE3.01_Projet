@@ -1,4 +1,4 @@
-from flask import flash, redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, url_for, send_from_directory
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
 from hashlib import sha256
@@ -43,6 +43,11 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["JUSTIFICATIF_FOLDER"] = JUSTIFICATIF_FOLDER
 
 
+@app.route('/uploads/<path:filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
 # ======================================== GESTION FOOTER (Accessible partout) ========================================
 @app.route('/insert_formulaire', methods=['POST'])
 def insert_formulaire():
@@ -61,11 +66,13 @@ def insert_formulaire():
 @app.route('/', )
 @app.route('/index/')
 def index():
-    return render_template("index.html", formRech=FormRechercheArticle(), page_actu = 'home')
+    
+    articles = Article.query.all()
+    return render_template("index.html", formRech=FormRechercheArticle(), page_actu = 'home',articles=articles)
 
 @app.route('/event/classement/redirection_ffescrime')
 def redirection_ffescrime():
-   return render_template("evenement/event_classement_global_redirection.html")
+   return render_template("redirection_ffescrime.html")
 
 @app.route('/demande_article', methods=['GET'])
 def demande_article():
@@ -75,15 +82,13 @@ def demande_article():
         date = request.args["choix_year"].split(
             "-")  # index 0 c'est le mois et 1 l'année
 
-        if laRecherche and laRecherche.strip():
-            listarticle = list(Article.query.filter(Article.titre.contains(laRecherche)))
-        else:
-            listarticle = list(
-                Article.query.filter(
-                    extract('month', Article.date_publication) == date[0],
-                    extract('year', Article.date_publication) == date[1]))
+        listarticle = list(
+            Article.query.filter(
+                extract('month', Article.date_publication) == date[0]
+                and extract('year', Article.date_publication)
+                == date[1]).filter(Article.titre.contains(laRecherche)))
 
-        return render_template('liste_articles.html',
+        return render_template('articles.html',
                                articles=listarticle,
                                recherche=laRecherche,date=date)
     else:
@@ -148,7 +153,7 @@ def supprimer_historique(id_chronologique:int):
 @app.route("/renseignement/")
 def renseignement():
     infos = Information.query.order_by(Information.ordre).all()
-    return render_template("renseignements.html",
+    return render_template("renseignement.html",
                            title="renseignement",
                            form=FormFormulaire(),
                            infos=infos)
@@ -174,7 +179,7 @@ def login():
                 flash("Mot de passe incorrect.", "error")
         else:
             flash("Email inconnu.", "error")
-    return render_template("connexion/login.html", form=FormFormulaire())
+    return render_template("login.html", form=FormFormulaire())
 
 
 @app.route("/logout/")
@@ -204,13 +209,13 @@ def insert_inscription():
 
 @app.route("/mdp_oublier_envoyer_code/")
 def mdp_oublier_envoyer_code():
-    return render_template("connexion/login_mdp_oublie_envoi_code.html",
+    return render_template("mdp_oublier_envoyer_code.html",
                            form=FormFormulaire())
 
 
 @app.route("/mdp_oublier_code/")
 def mdp_oublier_code():
-    return render_template("connexion/login_mdp_oublie_code.html", form=FormFormulaire())
+    return render_template("mdp_oublier_code.html", form=FormFormulaire())
 
 
 @app.route("/mdp_oublier_confirmer_mdp/", methods=["GET", "POST"])
@@ -220,13 +225,13 @@ def mdp_oublier_confirmer_mdp():
         newpasswordconfirm = request.form.get("newpasswordconfirm")
 
         if newpassword != newpasswordconfirm:
-            return render_template("connexion/login_mdp_oublie_confirmation.html",
+            return render_template("mdp_oublier_confirmer_mdp.html",
                                    form=FormFormulaire())
 
         # Ici, tu peux ajouter la logique pour mettre à jour le mot de passe en base
         return redirect(url_for("login"))
 
-    return render_template("connexion/login_mdp_oublie_confirmation.html",
+    return render_template("mdp_oublier_confirmer_mdp.html",
                            form=FormFormulaire())
 
 
@@ -234,7 +239,7 @@ def mdp_oublier_confirmer_mdp():
 def view_article(ida):
     art = Article.query.get(ida)
     form = FormCommentaire()
-    return render_template('article.html', article=art, formCom=form)
+    return render_template('article_view.html', article=art, formCom=form)
 
 
 @app.route('/article/<ida>/comment', methods=["POST"])
@@ -244,7 +249,7 @@ def insert_commentaire(ida):
     if form.is_submitted():
         form.envoyer_commentaire(ida)
         return redirect(url_for('view_article', ida=ida))
-    return render_template('article.html', article=art, formCom=form)
+    return render_template('article_view.html', article=art, formCom=form)
 
 
 @app.route('/evenement')
@@ -259,19 +264,19 @@ def evenement_resultats():
     competitions = Evenement.query.filter_by(
         type_evenement='Compétition').all()
 
-    selected_competition_id = request.args.get('competition')
+    selected_competition_id = request.args.get('Compétition')
     classements = []
 
     if selected_competition_id:
         classements = db.session.query(Classer, Inscription, Personne).join(
             Inscription,
-            Classer.id_inscription == Inscription.id_inscription).outerjoin(
+            Classer.id_competition == Inscription.id_inscription).outerjoin(
                 Personne, Inscription.email == Personne.email_personne).filter(
-                    Classer.id_competition ==
+                    Classer.id_inscription ==
                     selected_competition_id).order_by(
                         Classer.point.desc()).all()
 
-    return render_template("evenement/event_resultats.html",
+    return render_template("resultat.html",
                            competitions=competitions,
                            classements=classements,
                            selected_id=selected_competition_id,
@@ -304,7 +309,7 @@ def evenement_calendrier():
     query = query.order_by(Evenement.date.asc())
     evenements = query.all()
 
-    return render_template('evenement/event_calendrier.html',
+    return render_template('calendrier_event.html',
                            evenements=evenements,
                            filtres=request.args,
                            types_selectionnes=types_selectionnes,
@@ -314,7 +319,7 @@ def evenement_calendrier():
 @app.route('/evenement/calendrier/consulter/<int:id_evenement>')
 def evenement_consulter(id_evenement):
     evenement = Evenement.query.get_or_404(id_evenement)
-    return render_template('evenement/event_consultation.html',
+    return render_template('consulter_evenement.html',
                            evenement=evenement,
                            form=FormFormulaire())
 
@@ -385,7 +390,7 @@ def evenement_inscription(id_evenement):
                     id_evenement=id_evenement,
                     inscription_success=True))
 
-    return render_template('evenement/event_inscription.html',
+    return render_template('inscription_event.html',
                            formInsc=form,
                            id_evenement=id_evenement,
                            evenement=evenement,
@@ -400,7 +405,7 @@ def admin_gestion_information():
     if current_user.role != "admin":
         return redirect(url_for('login'))
     infos = Information.query.order_by(Information.ordre).all()
-    return render_template("admin/admin_modification_renseignements.html", infos=infos)
+    return render_template("admin_gestion_information.html", infos=infos)
 
 @app.route("/admin/gestion_information/ajouter", methods=["GET", "POST"])
 @login_required
@@ -415,7 +420,7 @@ def admin_ajout_information():
         db.session.add(info)
         db.session.commit()
         return redirect(url_for('admin_gestion_information'))
-    return render_template("admin/admin_modification_informations_membre.html", form=FormFormulaire(), info_form=info_form, title="Ajouter une information")
+    return render_template("admin_edit_information.html", form=FormFormulaire(), info_form=info_form, title="Ajouter une information")
 
 @app.route("/admin/gestion_information/modifier/<int:id>", methods=["GET", "POST"])
 @login_required
@@ -430,7 +435,7 @@ def admin_modif_information(id):
         info.ordre = int(info_form.ordre.data)
         db.session.commit()
         return redirect(url_for('admin_gestion_information'))
-    return render_template("admin/admin_modification_informations_membre.html", form=FormFormulaire(), info_form=info_form, title="Modifier une information")
+    return render_template("admin_edit_information.html", form=FormFormulaire(), info_form=info_form, title="Modifier une information")
 
 @app.route("/admin/gestion_information/supprimer/<int:id>")
 @login_required
@@ -457,7 +462,7 @@ def admin_gestion_inscription_club():
     if current_user.role != "admin":
         return redirect(url_for("index"))
     demandes = Demande_inscription.query.all()
-    return render_template("admin/admin_club_liste_inscriptions.html",
+    return render_template("admin_gestion_inscription_club.html",
                            demandes=demandes,
                            form=FormFormulaire())
 
@@ -493,7 +498,7 @@ def admin_gestion_inscription_club_view(id_inscription):
             db.session.delete(demande)
             db.session.commit()
         return redirect(url_for("admin_gestion_inscription_club"))
-    return render_template("admin/admin_club_inscription_consultation.html",
+    return render_template("admin_gestion_inscription_club_view.html",
                            demande=demande,
                            form=FormFormulaire())
 
@@ -504,7 +509,7 @@ def admin_gestion_inscription_evenement():
     if current_user.role != "admin":
         return redirect(url_for("index"))
     inscriptions = Inscription.query.all()
-    return render_template("admin/admin_evenement_liste_inscriptions.html",
+    return render_template("admin_gestion_inscription_evenement.html",
                            inscriptions=inscriptions,
                            form=FormFormulaire())
 
@@ -521,15 +526,8 @@ def admin_gestion_inscription_evenement_view(id_inscription):
         if action == "refuser":
             db.session.delete(inscription)
             db.session.commit()
-            return redirect(url_for("admin_gestion_inscription_evenement"))
-        elif action == "accepter":
-            # Si c'est une compétition, rediriger vers la page de mise à jour des résultats
-            if inscription.evenement.type_evenement == "Compétition":
-                return redirect(url_for("admin_resultats", competition=inscription.id_evenement))
-            else:
-                # Pour les autres types d'événements, simplement retourner à la liste
-                return redirect(url_for("admin_gestion_inscription_evenement"))
-    return render_template("admin/admin_evenement_inscription_consultation.html",
+        return redirect(url_for("admin_gestion_inscription_evenement"))
+    return render_template("admin_gestion_inscription_evenement_view.html",
                            inscription=inscription,
                            form=FormFormulaire())
 
@@ -547,7 +545,7 @@ def admin_miseajour_membres():
             les_responsables.append(e)
         elif e.role == "membre":
             les_membres.append(e)
-    return render_template("admin/admin_miseajour_membres.html",
+    return render_template("admin_miseajour_membres.html",
                            membres=les_membres,
                            responsables=les_responsables,
                            form=FormFormulaire())
@@ -610,7 +608,7 @@ def modifier_membre(id_personne):
         role=personne.role
     )
     
-    return render_template("admin/admin_modifier_membre.html",
+    return render_template("admin_modifier_membre.html",
                          form_modif=form,
                          personne=personne,
                          form=FormFormulaire())
@@ -653,7 +651,7 @@ def admin_creation_competition():
         flash('Compétition créée avec succès !', 'success')
         return redirect(url_for('admin_creation_competition'))
 
-    return render_template('admin/admin_creation_competition.html', form=FormFormulaire())
+    return render_template('admin_crea_comp.html', form=FormFormulaire())
 
 @app.route('/admin/resultats', methods=['GET'])
 @login_required
@@ -662,37 +660,19 @@ def admin_resultats():
         return redirect(url_for("index"))
     competitions = Evenement.query.filter_by(type_evenement='Compétition').all()
     
-    selected_competition_id = request.args.get('competition')
-    inscriptions_sans_resultat = []
+    selected_competition_id = request.args.get('Compétition')
     classements = []
     
     if selected_competition_id:
-        # Récupérer toutes les inscriptions à cette compétition
-        toutes_inscriptions = db.session.query(Inscription, Personne).outerjoin(
-            Personne, Inscription.email == Personne.email_personne
-        ).filter(
-            Inscription.id_evenement == selected_competition_id
-        ).all()
-        
-        # Récupérer les résultats existants
         classements = db.session.query(Classer, Inscription, Personne).join(
-            Inscription, Classer.id_inscription == Inscription.id_inscription
+            Inscription, Classer.id_competition == Inscription.id_inscription
         ).outerjoin(
             Personne, Inscription.email == Personne.email_personne
         ).filter(
-            Classer.id_competition == selected_competition_id
+            Classer.id_inscription == selected_competition_id
         ).order_by(Classer.point.desc()).all()
         
-        # Identifier les inscriptions sans résultats
-        inscriptions_avec_resultat = [c[1].id_inscription for c in classements]
-        inscriptions_sans_resultat = [(i, p) for i, p in toutes_inscriptions 
-                                      if i.id_inscription not in inscriptions_avec_resultat]
-        
-    return render_template("admin/admin_miseajour_resultats.html",
-                          competitions=competitions,
-                          classements=classements,
-                          inscriptions_sans_resultat=inscriptions_sans_resultat,
-                          selected_id=selected_competition_id)
+    return render_template("admin_maj_res.html", competitions=competitions, classements=classements, selected_id=selected_competition_id)
 
 
 @app.route('/admin/resultats/update', methods=['POST'])
@@ -702,48 +682,21 @@ def admin_update_points():
         return redirect(url_for("index"))
     competition_id = request.form.get('competition_id')
     
-    if not competition_id:
-        flash('Erreur: Compétition non spécifiée', 'error')
-        return redirect(url_for('admin_resultat'))
-    
     for key, value in request.form.items():
         if key.startswith('points_'):
             try:
-                _, id_insc, id_comp = key.split('_')
-                points = value.strip()
+                _, id_event, id_insc = key.split('_')
+                points = value
                 
-                # Vérifier que la valeur est un nombre valide >= 0
-                if points and points.isdigit():
-                    points = int(points)
-                    
-                    # Accepter seulement les valeurs >= 0
-                    if points >= 0:
-                        # Vérifier si le résultat existe déjà
-                        classer = Classer.query.filter_by(
-                            id_inscription=int(id_insc), 
-                            id_competition=int(id_comp)
-                        ).first()
-                        
-                        if classer:
-                            # Mettre à jour le résultat existant
-                            classer.point = points
-                        else:
-                            # Créer un nouveau résultat
-                            nouveau_classer = Classer(
-                                id_inscription=int(id_insc),
-                                id_competition=int(id_comp),
-                                point=points
-                            )
-                            db.session.add(nouveau_classer)
-            except (ValueError, AttributeError) as e:
+                if points:
+                    classer = Classer.query.filter_by(id_inscription=id_event, id_competition=id_insc).first()
+                    if classer:
+                        classer.point = points
+            except ValueError:
                 continue
                 
-    try:
-        db.session.commit()
-        flash('Points mis à jour avec succès', 'success')
-    except Exception as e:
-        db.session.rollback()
-        flash(f'Erreur lors de la mise à jour: {str(e)}', 'error')
+    db.session.commit()
+    flash('Points mis à jour avec succès', 'success')
         
     return redirect(url_for('admin_resultats', competition=competition_id))
 
@@ -764,7 +717,7 @@ def responsable_gestion_formulaire():
     if current_user.role != "responsable":
         return redirect(url_for("index"))
     lesFormulaires = Formulaire.query.all()
-    return render_template("responsable/responsable_liste_formulaires.html",
+    return render_template("gestion_formulaire.html",
                            formulaires=lesFormulaires,
                            form=FormFormulaire())
 
@@ -775,7 +728,7 @@ def responsable_consultation_formulaire(id_formulaire):
     if current_user.role != "responsable":
         return redirect(url_for("index"))
     unForm = Formulaire.query.get(id_formulaire)
-    return render_template("responsable/resposable_consultation_formulaire.html",
+    return render_template("consultation_form.html",
                            selectedFormulaire=unForm,
                            form=FormFormulaire())
 
@@ -816,21 +769,24 @@ def responsable_ajouter_article():
                 fichier.save(chemin_fichier)
 
                 image = Image(nom_image=fichier.filename[:15],
-                              url_image=fichier.filename[:60])
+                              url_image=f'/uploads/{fichier.filename}')
                 db.session.add(image)
                 db.session.commit()
 
                 posseder = Posseder(id_image=image.id_image,
-                                    id_article=article.id_article,
-                                    miniature=first_image)
+                                    id_article=article.id_article)
                 db.session.add(posseder)
                 db.session.commit()
-                first_image = False
+
+                if first_image:
+                    article.miniature = image.id_image
+                    db.session.commit()
+                    first_image = False
 
         flash("Article ajouté avec succès ✅", "success")
         return redirect(url_for("responsable_ajouter_article"))
 
-    return render_template("responsable/responsable_nouvel_article.html", form=FormFormulaire())
+    return render_template("ajout_article.html", form=FormFormulaire())
 
 
 @app.route("/responsable/creer_evenement/", methods=['GET', 'POST'])
@@ -867,7 +823,7 @@ def responsable_creer_evenement():
         flash('Événement créé avec succès !', 'success')
         return redirect(url_for('responsable_creer_evenement'))
 
-    return render_template('responsable/responsable_creation_evenement.html', form=FormFormulaire())
+    return render_template('resp_creation_event.html', form=FormFormulaire())
 
 
 # ======================================== PAGES MEMBRES ========================================
@@ -885,7 +841,7 @@ def membre_index():
 def membre_information_personnel():
     if current_user.role != "membre" and current_user.role != "responsable":
         return redirect(url_for("index"))
-    return render_template("membre/membre_informations.html",
+    return render_template("infos_persos_espMembre.html",
                            personne=current_user,
                            form=FormFormulaire())
 
@@ -904,7 +860,7 @@ def membre_event_inscrits():
         insc.evenement for insc in inscriptions if insc.evenement
     ]
 
-    return render_template('membre/membre_evenements_inscrits.html',
+    return render_template('event_inscrits.html',
                            evenements=evenements_inscrits,
                            form=FormFormulaire())
 
@@ -916,7 +872,7 @@ def membre_consult_event(id_event):
         return redirect(url_for('index'))
 
     event = Evenement.query.get_or_404(id_event)
-    return render_template('membre/membre_evenement_inscrit_consultation.html', evenement=event, form=FormFormulaire())
+    return render_template('membre_consult_event.html', evenement=event, form=FormFormulaire())
 
 # Résultats passés du membre
 @app.route('/membre/resultats_passes/')
@@ -951,7 +907,7 @@ def membre_resultats_passes():
             'rang': rang
         })
 
-    return render_template('membre/membre_resultats.html', resultats=resultats_finaux, form=FormFormulaire())
+    return render_template('res_passe_membre.html', resultats=resultats_finaux, form=FormFormulaire())
 
 @app.route("/membre/information_personnel/changer_mdp/", methods=["POST"])
 @login_required

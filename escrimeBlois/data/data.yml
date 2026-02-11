@@ -583,6 +583,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 2
+    miniature: 1
   - id_article: 2
     titre: "Succès au Championnat Régional"
     date_publication: "2025-10-25"
@@ -591,6 +592,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 2
+    miniature: 2
   - id_article: 3
     titre: "Stage d'Initiation pour Débutants"
     date_publication: "2025-11-01"
@@ -599,6 +601,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 5
+    miniature: 3
   - id_article: 4
     titre: "Nouveaux Horaires d'Entraînement"
     date_publication: "2025-11-03"
@@ -607,6 +610,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 2
+    miniature: null
   - id_article: 5
     titre: "Interview avec Thomas Lefebvre"
     date_publication: "2025-11-08"
@@ -615,6 +619,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 5
+    miniature: null
   - id_article: 6
     titre: "Gala de Fin d'Année 2025"
     date_publication: "2025-11-12"
@@ -623,6 +628,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 2
+    miniature: 4
   - id_article: 7
     titre: "Résultats du Tournoi Club"
     date_publication: "2025-11-06"
@@ -631,6 +637,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 2
+    miniature: 2
   - id_article: 8
     titre: "L'Escrime : Un Sport pour Tous"
     date_publication: "2025-11-15"
@@ -639,6 +646,7 @@ articles:
     lien: "https://www.ffescrime.fr/"
     commentable: true
     responsable_id: 5
+    miniature: 3
   - id_article: 9
     titre: "Matériel : Bien Choisir son Équipement"
     date_publication: "2025-11-18"
@@ -647,6 +655,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 5
+    miniature: 7
   - id_article: 10
     titre: "Retour sur le Championnat National"
     date_publication: "2025-11-22"
@@ -655,6 +664,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 2
+    miniature: 2
   - id_article: 11
     titre: "L'Histoire de l'Escrime à Blois"
     date_publication: "2025-11-25"
@@ -663,6 +673,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 5
+    miniature: 5
   - id_article: 12
     titre: "Préparation aux JO 2028"
     date_publication: "2025-11-28"
@@ -671,6 +682,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 2
+    miniature: 5
   - id_article: 13
     titre: "Stages Vacances de Noël"
     date_publication: "2025-12-01"
@@ -679,6 +691,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 5
+    miniature: 4
   - id_article: 14
     titre: "Les Bienfaits de l'Escrime chez les Jeunes"
     date_publication: "2025-12-03"
@@ -687,6 +700,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 5
+    miniature: 7
   - id_article: 15
     titre: "Résultats Tournoi Mixte"
     date_publication: "2025-12-09"
@@ -695,6 +709,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 2
+    miniature: 2
   - id_article: 16
     titre: "Portrait : Marie Martin, Notre Championne"
     date_publication: "2025-12-12"
@@ -703,6 +718,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 5
+    miniature: 1
   - id_article: 17
     titre: "La Technique du Fleuret Expliquée"
     date_publication: "2025-12-15"
@@ -711,6 +727,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 5
+    miniature: 3
   - id_article: 18
     titre: "Saison 2026 : Nouveaux Projets"
     date_publication: "2025-12-18"
@@ -719,6 +736,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 2
+    miniature: 4
   - id_article: 19
     titre: "L'Épée : Arme de Précision"
     date_publication: "2025-12-22"
@@ -727,6 +745,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 5
+    miniature: 3
   - id_article: 20
     titre: "Bilan du Gala 2025"
     date_publication: "2025-12-17"
@@ -735,6 +754,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 2
+    miniature: 6
   - id_article: 21
     titre: "Escrime et Santé : Les Bienfaits"
     date_publication: "2026-01-05"
@@ -743,6 +763,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 5
+    miniature: 8
   - id_article: 22
     titre: "Inscriptions Semestre Printemps 2026"
     date_publication: "2026-01-10"
@@ -751,6 +772,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 2
+    miniature: 1
   - id_article: 23
     titre: "Compétition Régionale Féminine à Venir"
     date_publication: "2026-01-08"
@@ -759,6 +781,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 2
+    miniature: 4
   - id_article: 24
     titre: "Le Sabre : Vitesse et Explosivité"
     date_publication: "2026-01-15"
@@ -767,6 +790,7 @@ articles:
     lien: null
     commentable: true
     responsable_id: 5
+    miniature: 3
   - id_article: 25
     titre: "Partenariat avec la Fédération Française"
     date_publication: "2026-01-20"
@@ -775,6 +799,7 @@ articles:
     lien: "https://www.ffescrime.fr/"
     commentable: true
     responsable_id: 2
+    miniature: 5
 
 image:
   - id_image: 1
@@ -805,73 +830,50 @@ image:
 posseder:
   - id_image: 1
     id_article: 1
-    miniature: true
   - id_image: 2
     id_article: 2
-    miniature: true
   - id_image: 3
     id_article: 3
-    miniature: true
   - id_image: 4
     id_article: 6
-    miniature: true
   - id_image: 2
     id_article: 7
-    miniature: true
   - id_image: 3
     id_article: 8
-    miniature: true
   - id_image: 7
     id_article: 9
-    miniature: true
   - id_image: 2
     id_article: 10
-    miniature: true
   - id_image: 5
     id_article: 11
-    miniature: true
   - id_image: 5
     id_article: 12
-    miniature: true
   - id_image: 4
     id_article: 13
-    miniature: true
   - id_image: 7
     id_article: 14
-    miniature: true
   - id_image: 2
     id_article: 15
-    miniature: true
   - id_image: 1
     id_article: 16
-    miniature: true
   - id_image: 3
     id_article: 17
-    miniature: true
   - id_image: 4
     id_article: 18
-    miniature: true
   - id_image: 3
     id_article: 19
-    miniature: true
   - id_image: 6
     id_article: 20
-    miniature: true
   - id_image: 8
     id_article: 21
-    miniature: true
   - id_image: 1
     id_article: 22
-    miniature: true
   - id_image: 4
     id_article: 23
-    miniature: true
   - id_image: 3
     id_article: 24
-    miniature: true
   - id_image: 5
     id_article: 25
-    miniature: true
 
 gerer:
   - id_admin: 1
