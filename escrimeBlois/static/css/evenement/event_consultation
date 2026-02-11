@@ -1,0 +1,119 @@
+/* ==================== Événement - Consultation d'un événement ==================== */
+
+.consultation-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: sans-serif;
+}
+
+.page-title-box {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: fit-content;
+}
+
+.page-title-box h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: normal;
+}
+
+.consultation-section {
+    background-color: var(--gray-300);
+    border-radius: var(--border-radius-lg);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.consultation-section h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-main);
+}
+
+.consultation-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.consultation-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.consultation-label {
+    font-weight: bold;
+    margin-right: 10px;
+    color: var(--text-main);
+    font-size: 0.9rem;
+}
+
+.consultation-value {
+    background-color: var(--text-white);
+    padding: 5px 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    min-width: 120px;
+    text-align: center;
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.consultation-description {
+    background-color: var(--text-white);
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    line-height: 1.5;
+    text-align: justify;
+    font-size: 0.9rem;
+}
+
+.consultation-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn-retour {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--gray-600);
+    color: var(--text-white);
+    text-decoration: none;
+    border-radius: var(--border-radius-sm);
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-retour:hover {
+    background-color: var(--gray-700);
+    color: var(--text-white);
+}
+
+.btn-action {
+    padding: 8px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.btn-register {
+    background-color: var(--warning);
+    color: var(--text-black);
+}

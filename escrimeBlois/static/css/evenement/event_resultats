@@ -1,4 +1,4 @@
-/*------------------------ Maj Resultat ---------------------------*/
+/* ==================== Événement - Résultats des compétitions ==================== */
 
 .result-page-title {
     background-color: var(--bg-dark);
@@ -108,13 +108,4 @@
     text-align: center;
     color: var(--text-white);
     font-size: 1.1rem;
-}
-
-.result-submit-container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.result-points-input {
-    width: 80px;
 }
