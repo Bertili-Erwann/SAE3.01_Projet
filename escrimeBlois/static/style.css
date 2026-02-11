@@ -31,13 +31,14 @@
 @import url('css/membre/membre_resultats.css');
 
 /* RESPONSABLE */
-@import url('css/responsable/responsable_navbar');
-@import url('css/responsable/responsable/responsable_liste_formulaires.css');
+@import url('css/responsable/responsable_navbar.css');
+@import url('css/responsable/responsable_liste_formulaires.css');
 @import url('css/responsable/responsable_consultation_formulaire.css');
-@import url('css/responsable/responsable_creation_evenement');
-@import url('css/responsable/responsable_nouvel_article'); 
+@import url('css/responsable/responsable_creation_evenement.css');
+@import url('css/responsable/responsable_nouvel_article.css'); 
 
 /* ADMIN */
+@import url('css/admin/admin_navbar.css');
 @import url('css/admin/admin_miseajour_resultats.css');
 @import url('css/admin/admin_liste_inscriptions.css');
 @import url('css/admin/admin_miseajour_membres.css');

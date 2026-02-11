@@ -6,8 +6,9 @@
     margin-top: 30px;
     margin-bottom: 20px;
     font-size: 2rem;
-    color: #333;
-    font-family: 'Poppins-Bold', sans-serif;
+    color: var(--text-main);
+    font-family: var(--font-family);
+    font-weight: bold;
 }
 
 .action-container {
@@ -18,31 +19,31 @@
 .btn-ajouter-info {
     display: inline-block;
     padding: 12px 25px;
-    background-color: #4a90e2; /* Utilisation de la variable cold project */
-    color: white;
+    background-color: var(--primary);
+    color: var(--text-white);
     text-decoration: none;
     border-radius: 25px;
     font-size: 1rem;
     font-weight: bold;
     transition: all 0.3s ease;
     border: none;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-light);
 }
 
 .btn-ajouter-info:hover {
-    background-color: #a09fe0; /* Darker shade of --cold approx */
+    background-color: var(--cold);
     transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0,0,0,0.15);
-    color: white;
+    box-shadow: var(--shadow-medium);
+    color: var(--text-white);
 }
 
 .table-info-container {
     width: 90%;
     margin: 0 auto;
-    background: #fff;
+    background: var(--text-white);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    box-shadow: var(--shadow-light);
 }
 
 .table-info {
@@ -51,8 +52,8 @@
 }
 
 .table-info thead {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--gray-800);
+    color: var(--text-white);
 }
 
 .table-info th {
@@ -63,8 +64,8 @@
 
 .table-info td {
     padding: 15px 18px;
-    border-bottom: 1px solid #eee;
-    color: #555;
+    border-bottom: 1px solid var(--gray-200);
+    color: var(--text-light);
 }
 
 .table-info tr:last-child td {
@@ -72,7 +73,7 @@
 }
 
 .table-info tr:hover {
-    background-color: #f8f9fa;
+    background-color: var(--gray-100);
 }
 
 .col-ordre {
@@ -90,7 +91,7 @@
 }
 
 .btn-modifier {
-    color: #4a90e2;
+    color: var(--accent-link);
     margin-right: 15px;
     font-weight: 600;
     text-decoration: none;
@@ -98,19 +99,19 @@
 }
 
 .btn-modifier:hover {
-    color: #2a60a2;
+    color: var(--accent-link-hover);
     text-decoration: underline;
 }
 
 .btn-supprimer {
-    color: #e74c3c;
+    color: var(--danger);
     font-weight: 600;
     text-decoration: none;
     font-size: 0.95rem;
 }
 
 .btn-supprimer:hover {
-    color: #c0392b;
+    color: var(--danger-hover);
     text-decoration: underline;
 }
 
@@ -128,16 +129,17 @@
 .edit-info-wrap {
     width: 1000px !important;
     padding: 40px 50px 50px 50px !important;
-    background: #d6d6d6;
+    background: var(--gray-300);
     border-radius: 10px;
-    box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-light);
     overflow: visible !important; /* Pour CKEditor tooltips etc */
 }
 
 .edit-info-title {
-    font-family: 'Poppins-Bold', sans-serif;
+    font-family: var(--font-family);
+    font-weight: bold;
     font-size: 24px;
-    color: #333;
+    color: var(--text-main);
     line-height: 1.2;
     text-align: center;
     width: 100%;
@@ -153,9 +155,9 @@
 }
 
 .label-info {
-    font-family: 'Poppins-Regular', sans-serif;
+    font-family: var(--font-family);
     font-size: 15px;
-    color: #333;
+    color: var(--text-main);
     line-height: 1.5;
     padding-left: 5px;
     margin-bottom: 8px;
@@ -163,28 +165,29 @@
 }
 
 .input-info-text, .input-info-number {
-    font-family: 'Poppins-Medium', sans-serif;
+    font-family: var(--font-family);
+    font-weight: 500;
     font-size: 15px;
-    color: #333;
+    color: var(--text-main);
     line-height: 1.2;
     display: block;
     width: 100%;
-    background: #e6e6e6; /* Input100 style matching */
+    background: var(--gray-200);
     height: 50px;
-    border-radius: 15px;
+    border-radius: var(--border-radius-lg);
     padding: 0 30px 0 30px;
     border: none;
     outline: none;
 }
 
 .input-info-text:focus, .input-info-number:focus {
-    box-shadow: 0 0 0 2px rgba(195, 194, 244, 0.5); /* using cold var color */
+    box-shadow: 0 0 0 2px rgba(195, 194, 244, 0.5);
 }
 
 /* CKEditor container spacing */
 .cke_chrome {
-    border: 1px solid #d1d1d1 !important;
-    border-radius: 5px !important;
+    border: 1px solid var(--gray-400) !important;
+    border-radius: var(--border-radius-sm) !important;
 }
 
 .form-actions {
@@ -195,9 +198,10 @@
 }
 
 .btn-save {
-    font-family: 'Poppins-Medium', sans-serif;
+    font-family: var(--font-family);
+    font-weight: 500;
     font-size: 16px;
-    color: #fff;
+    color: var(--text-white);
     line-height: 1.2;
     text-transform: uppercase;
     display: flex;
@@ -206,21 +210,22 @@
     padding: 0 20px;
     width: 200px;
     height: 50px;
-    background-color: #4a90e2;
-    border-radius: 25px;
-    transition: all 0.4s;
+    background-color: var(--primary);
+    border-radius: var(--border-radius-pill);
+    transition: var(--transition-base);
     border: none;
     cursor: pointer;
 }
 
 .btn-save:hover {
-    background-color: #333;
+    background-color: var(--primary-hover);
 }
 
-.btn-cancel {
-    font-family: 'Poppins-Medium', sans-serif;
+.btn-cancel-info {
+    font-family: var(--font-family);
+    font-weight: 500;
     font-size: 16px;
-    color: #fff;
+    color: var(--text-white);
     line-height: 1.2;
     text-transform: uppercase;
     display: flex;
@@ -229,12 +234,12 @@
     padding: 0 20px;
     width: 200px;
     height: 50px;
-    background-color: #ff0000;
-    border-radius: 25px;
-    transition: all 0.4s;
+    background-color: var(--danger);
+    border-radius: var(--border-radius-pill);
+    transition: var(--transition-base);
     text-decoration: none;
 }
 
-.btn-cancel:hover {
-    background-color: #666;
+.btn-cancel-info:hover {
+    background-color: var(--danger-hover);
 }

@@ -1,49 +1,5 @@
 /* ==================== Administrateur - Liste des inscriptions ==================== */
 
-.inscription {
-  display: flex;
-  background-color: var(--cold);
-  margin: 50px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 40px;
-  width: 60%;
-  border-radius: 10px;
-  color: var(--text-white);
-  -webkit-text-stroke: 1px var(--text-white);
-  text-shadow: 0 1px 0 #000, 1px 0 0 #000, -1px 0 0 #000, 0 -1px 0 #000,
-    1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000,
-    0 2px 0 #000, 2px 0 0 #000, -2px 0 0 #000, 0 -2px 0 #000, 2px 2px 0 #000,
-    -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
-}
-
-.inscription>img {
-  width: 40vh;
-  height: 30vh;
-  margin: -40px;
-}
-
-.inscription-wrap {
-  margin-top: 50px;
-}
-
-.inscription-wrap h1 {
-  margin-top: -5px;
-  margin-left: 50px;
-}
-
-.inscription-wrap a {
-  text-decoration: none;
-  color: var(--accent-coral);
-  -webkit-text-stroke: 1px var(--accent-coral);
-  letter-spacing: 2px;
-}
-
-.inscription-wrap img {
-  width: 50px;
-  height: 70px;
-}
-
 /* ==================== navbar ==================== */
 #navbar_inscription {
   background-color: var(--gray-400);

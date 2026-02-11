@@ -94,7 +94,7 @@
 .tab {
   border: 3px solid var(--gray-200);
   margin: 1px;
-  text-decoration: solid;
+  text-decoration-style: solid;
   text-decoration-color: var(--gray-400);
   text-align: center;
 }
