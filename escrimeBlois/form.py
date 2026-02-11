@@ -178,21 +178,38 @@ class FormGestionMdpOublier(FlaskForm):
         from flask_mail import Message
         from .app import mail
         import random
+        from datetime import datetime, timedelta
 
         user = Personne.query.filter_by(email_personne=self.email.data).first()
         if not user:
             return None, "Email inconnu."
-        code_verification = str(random.randint(100000, 999999))
+        
+        # Générer un code à 4 chiffres
+        code_verification = str(random.randint(1000, 9999))
+        
+        # Définir l'expiration du code (15 minutes)
+        code_expiration = datetime.now() + timedelta(minutes=15)
+        
+        # Sauvegarder le code et son expiration dans la base de données
+        user.code_verification_mdp = code_verification
+        user.code_verification_expiration = code_expiration
+        
         try:
             msg = Message(subject='Code de vérification - Mot de passe oublié',
                           recipients=[self.email.data])
             msg.body = f'Votre code de vérification est : {code_verification}\n\nCe code est valable pendant 15 minutes.'
             mail.send(msg)
-            print(f"Email envoyé avec succès à {self.email.data}")
+            db.session.commit()
+            print(f"✉️  Email envoyé avec succès à {self.email.data}")
             return user, None 
         except Exception as e:
-            print(f" > ERREUR d'envoi d'email (mode développement): {str(e)}")
-            print(f" > Email simulé envoyé à: {self.email.data}")
-            print(f" > Code de vérification: {code_verification}")
-            return None, str(e)
+            db.session.commit()  # Sauvegarder quand même le code gen généré
+            print(f"\n{'='*60}")
+            print(f"⚠️  Mode DÉVELOPPEMENT - Email non envoyé")
+            print(f"{'='*60}")
+            print(f"Email destination : {self.email.data}")
+            print(f"Code de vérification : {code_verification}")
+            print(f"{'='*60}\n")
+            # Retourner l'utilisateur même en cas d'erreur pour permettre le développement
+            return user, None
             

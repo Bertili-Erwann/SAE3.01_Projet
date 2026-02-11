@@ -73,11 +73,13 @@ def login():
 
 @app.route("/login/mdp_oublier", methods=["POST", "GET"])
 def mdp_oublier_etape_1():
+    from flask import session
     formAuth = FormGestionMdpOublier()
 
     if formAuth.validate_on_submit():
         user, error = formAuth.etape_1()
         if user:
+            session['reset_email'] = user.email_personne
             flash("Un code a été envoyé à votre adresse email.", "success")
             return redirect(url_for('mdp_oublier_code'))
         else:
@@ -117,23 +119,82 @@ def mdp_oublier_envoyer_code():
                            form=FormFormulaire())
 
 
-@app.route("/mdp_oublier_code/")
+@app.route("/mdp_oublier_code/", methods=["GET", "POST"])
 def mdp_oublier_code():
+    from flask import session
+    if request.method == "POST":
+        code = request.form.get("code")
+        email = session.get("reset_email")
+        
+        if not email:
+            flash("Session expirée. Veuillez recommencer.", "error")
+            return redirect(url_for('mdp_oublier_etape_1'))
+        
+        user = Personne.query.filter_by(email_personne=email).first()
+        
+        if not user:
+            flash("Utilisateur non trouvé.", "error")
+            return redirect(url_for('mdp_oublier_etape_1'))
+        
+        # Vérifier le code
+        from datetime import datetime
+        if user.code_verification_mdp != code:
+            flash("Code incorrect.", "error")
+            return render_template("mdp_oublier_code.html", form=FormFormulaire())
+        
+        # Vérifier l'expiration du code
+        if datetime.now() > user.code_verification_expiration:
+            flash("Le code a expiré. Veuillez recommencer.", "error")
+            return redirect(url_for('mdp_oublier_etape_1'))
+        
+        # Code valide, rediriger vers la confirmation du mot de passe
+        return redirect(url_for('mdp_oublier_confirmer_mdp'))
+    
     return render_template("mdp_oublier_code.html", form=FormFormulaire())
 
 
 @app.route("/mdp_oublier_confirmer_mdp/", methods=["GET", "POST"])
 def mdp_oublier_confirmer_mdp():
+    from flask import session
+    email = session.get("reset_email")
+    
+    if not email:
+        flash("Session expirée. Veuillez recommencer.", "error")
+        return redirect(url_for('mdp_oublier_etape_1'))
+    
     if request.method == "POST":
         newpassword = request.form.get("newpassword")
         newpasswordconfirm = request.form.get("newpasswordconfirm")
 
-        if newpassword != newpasswordconfirm:
+        if not newpassword or not newpasswordconfirm:
+            flash("Veuillez remplir tous les champs.", "error")
             return render_template("mdp_oublier_confirmer_mdp.html",
                                    form=FormFormulaire())
 
-        # Ici, tu peux ajouter la logique pour mettre à jour le mot de passe en base
-        return redirect(url_for("login"))  # Ou une autre page
+        if newpassword != newpasswordconfirm:
+            flash("Les mots de passe ne correspondent pas.", "error")
+            return render_template("mdp_oublier_confirmer_mdp.html",
+                                   form=FormFormulaire())
+
+        # Récupérer l'utilisateur et mettre à jour le mot de passe
+        user = Personne.query.filter_by(email_personne=email).first()
+        if user:
+            from hashlib import sha256
+            m = sha256()
+            m.update(newpassword.encode('utf-8'))
+            user.mdp = m.hexdigest()
+            
+            # Effacer le code de vérification
+            user.code_verification_mdp = None
+            user.code_verification_expiration = None
+            
+            db.session.commit()
+            session.pop('reset_email', None)
+            flash("Mot de passe réinitialisé avec succès !", "success")
+            return redirect(url_for("login"))
+        else:
+            flash("Utilisateur non trouvé.", "error")
+            return redirect(url_for('mdp_oublier_etape_1'))
 
     return render_template("mdp_oublier_confirmer_mdp.html",
                            form=FormFormulaire())

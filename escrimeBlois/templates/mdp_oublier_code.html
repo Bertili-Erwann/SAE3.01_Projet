@@ -9,11 +9,11 @@
   <p>Mot de passe oublier</p>
 </div>
 <div class="fenetre-mdp-oublier-code-envoyer">
-  <form method="POST" onsubmit="return false;">
+  <form method="POST">
     <!-- TEXTE -->
     <p>
-      Un <b>code</b> à <b>quatre chiffres</b> vous a été envoyé à l’adresse
-      suivante : <b>placeholder@test.com</b>. Pensez à regarder la boîte mail
+      Un <b>code</b> à <b>quatre chiffres</b> vous a été envoyé à l'adresse
+      suivante : <b>{{ session.get('reset_email') }}</b>. Pensez à regarder la boîte mail
       <b>« spam »</b>.
     </p>
 
