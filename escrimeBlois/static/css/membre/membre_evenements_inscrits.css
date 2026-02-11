@@ -1,0 +1,64 @@
+/* ==================== Membre - Événements inscrits ==================== */
+
+#container_table_event_inscrits {
+    margin: 0 auto;
+    width: 80%;
+    min-height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    background-color: var(--text-white);
+}
+
+.table100-body {
+    max-height: 400px;
+}
+
+.event-table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid var(--border-color);
+}
+
+.table-th,
+.table-td {
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    vertical-align: middle;
+}
+
+.table-th {
+    background-color: var(--gray-800);
+    color: var(--text-white);
+}
+
+.table-td {
+    background-color: var(--gray-100);
+    color: var(--gray-700);
+}
+
+.nom_event_insc,
+.date_event_insc,
+.type_event_incs,
+.action_event_insc {
+    text-align: center;
+}
+
+.action_event_insc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.event_buttons {
+    background-color: var(--bg-card);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: left;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-light);
+}
+
+.event_buttons:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}

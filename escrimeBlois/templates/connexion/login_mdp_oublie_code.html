@@ -1,0 +1,37 @@
+{% extends "base.html" %} {% block main %}
+<div class="logo-texte">
+  <img
+    src="{{ url_for('static', filename='images/logo_cercle_escrime_blois.png') }}"
+    alt="Logo du cercle d'escrime de Blois"
+    width="100"
+    height="100"
+  />
+  <p>Mot de passe oublié</p>
+</div>
+<div class="fenetre-mdp-oublier-code-envoyer">
+  <form method="POST" onsubmit="return false;">
+    <!-- TEXTE -->
+    <p>
+      Un <b>code</b> à <b>quatre chiffres</b> vous a été envoyé à l’adresse
+      suivante : <b>placeholder@test.com</b>. Pensez à regarder la boîte mail
+      <b>« spam »</b>.
+    </p>
+
+    <!-- CODE -->
+    <h2>Code</h2>
+    <input
+      type="text"
+      name="code"
+      placeholder="Code à quatre chiffres"
+      pattern="[0-9]{4}"
+      maxlength="4"
+      inputmode="numeric"
+      oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+      required
+    />
+
+    <!-- BOUTON CONFIRMER -->
+    <input type="submit" value="Confirmer" />
+  </form>
+</div>
+{% endblock %}

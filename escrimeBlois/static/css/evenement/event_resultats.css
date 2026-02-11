@@ -1,0 +1,111 @@
+/* ==================== Événement - Résultats des compétitions ==================== */
+
+.result-page-title {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: fit-content;
+}
+
+.result-page-title h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.result-search-bar {
+    background-color: var(--gray-500);
+    padding: 15px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.result-search-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.result-search-select {
+    width: 250px;
+    border-radius: 20px;
+    border: none;
+    padding: 5px 15px;
+}
+
+.result-search-btn {
+    border-radius: 20px;
+    background-color: var(--secondary);
+    border: none;
+    padding: 5px 20px;
+}
+
+.result-search-icon {
+    opacity: 0.6;
+}
+
+.result-pdf-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.result-pdf-btn {
+    border-radius: var(--border-radius-pill);
+    background-color: var(--gray-600);
+    border: none;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.result-table-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--gray-600);
+    padding: 10px;
+    border-radius: var(--border-radius-lg);
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid var(--bg-dark);
+}
+
+.result-table-header {
+    background-color: var(--gray-600);
+    color: var(--text-white);
+}
+
+.result-table-th {
+    border: 2px solid var(--bg-dark);
+    padding: 10px;
+    text-align: center;
+    font-weight: normal;
+    font-size: 1.2rem;
+}
+
+.result-table-row {
+    background-color: var(--gray-500);
+}
+
+.result-table-td {
+    border: 2px solid var(--bg-dark);
+    padding: 10px;
+    text-align: center;
+    color: var(--text-white);
+    font-size: 1.1rem;
+}

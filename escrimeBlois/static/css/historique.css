@@ -1,4 +1,4 @@
-/* ==================== Page Historique ==================== */
+/* ==================== Historique ==================== */
 
 /* -------------------- En-tête -------------------- */
 .historique-content h1 {
@@ -72,10 +72,6 @@ table {
   border-radius: 10px;
   overflow: scroll;
   box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
-  -o-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
-  -ms-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
 }
 
 .table100-head {
@@ -98,30 +94,30 @@ table {
 }
 
 .table100 td {
-  font-family: Lato-Regular;
+  font-family: var(--font-family);
   font-size: 15px;
   color: var(--gray-700);
   line-height: 1.4;
 }
 
 .historique_supprimer {
-  background-color: #d90000;
-  color: white;
+  background-color: var(--danger);
+  color: var(--text-white);
   padding: 8px 20px;
   border: none;
-  border-radius: 20px;
+  border-radius: var(--border-radius-pill);
   cursor: pointer;
   font-size: 14px;
-  transition: all 0.3s;
+  transition: var(--transition-base);
 }
 
 .historique_supprimer:hover {
-  background-color: #ff5d5d;
+  background-color: var(--danger-hover);
   transform: scale(1.05);
 }
 
 .table100 .table100-body tr:nth-child(even) {
-  background-color: #f8f6ff;
+  background-color: var(--gray-100);
 }
 
 .historique-ajout {
@@ -144,8 +140,8 @@ table {
 .historique-form input,
 .historique-form textarea {
   padding: 10px 12px;
-  border: 1px solid #d2d2d2;
-  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
   font-size: 14px;
   font-family: inherit;
 }
@@ -162,17 +158,17 @@ table {
 }
 
 .historique_ajouter {
-  background-color: #353536;
-  color: white;
+  background-color: var(--gray-800);
+  color: var(--text-white);
   padding: 10px 22px;
   border: none;
-  border-radius: 20px;
+  border-radius: var(--border-radius-pill);
   cursor: pointer;
   font-size: 14px;
-  transition: all 0.3s;
+  transition: var(--transition-base);
 }
 
 .historique_ajouter:hover {
-  background-color: var(--gray-100);
+  background-color: var(--gray-600);
   transform: scale(1.05);
 }
