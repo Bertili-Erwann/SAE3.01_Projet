@@ -62,13 +62,8 @@
 .deux-colonnes {
   display: flex;
   justify-content: space-between;
-<<<<<<< HEAD:escrimeBlois/static/css/renseignement.css
-  background-color: #aaaaaa75;
-  border-radius: 20px;
-=======
   background-color: var(--gray-500);
   border-radius: var(--border-radius-pill);
->>>>>>> develop:escrimeBlois/static/css/renseignements.css
   padding: 20px;
   gap: 30px;
   position: relative;
@@ -120,12 +115,4 @@
 .toggle:checked~.contenu {
   max-height: 2000px;
   padding: 1em;
-<<<<<<< HEAD:escrimeBlois/static/css/renseignement.css
 }
-
-.espaceur {
-  min-height: 80vh;
-}
-=======
-}
->>>>>>> develop:escrimeBlois/static/css/renseignements.css
