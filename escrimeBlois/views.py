@@ -61,7 +61,9 @@ def insert_formulaire():
 @app.route('/', )
 @app.route('/index/')
 def index():
-    return render_template("index.html", formRech=FormRechercheArticle(), page_actu = 'home')
+    query_articles = Article.query.all()
+    print(query_articles)
+    return render_template("index.html", formRech=FormRechercheArticle(), page_actu = 'home',articles=query_articles)
 
 @app.route('/event/classement/redirection_ffescrime')
 def redirection_ffescrime():

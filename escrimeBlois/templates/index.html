@@ -35,107 +35,17 @@
     </button>
     <h1> ACTUALITÉ</h1>
     <div class="articles">
+      {% for ar in articles %}
       <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder1.png') }}" alt=""
-        /></a>
+        <a href="{{url_for('view_article',ida=ar.id_article ) }}" class="image featured">
+        <img src="{{ url_for('static', filename='uploads/{ar.lien}') }}" alt=""/>
         <header>
-          <h3>Titre 1</h3>
+          <h3>{{ ar.titre }}</h3>
         </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+        <p>{{ar.description}}</p>
+        </a>
       </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder2.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 2</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder3.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 3</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder4.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 4</h3>
-        </header>
-        <p>
-          TitreCommodo id natoque malesuada sollicitudin elit suscipit magna.
-        </p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder5.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 5</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder6.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 6</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder7.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 7</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder8.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 8</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder9.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 9</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder10.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 10</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
+      {% endfor %}
     </div>
     <button type="button" class="carousel-btn next" aria-label="Suivant">
       ›
