@@ -6,18 +6,12 @@
     <h1>{{ article.titre }}</h1>
     <span class="date-art">{{ article.date_publication }}</span>
     <div class="ctn-img">
+      {% for i in images %}
       <img
-        src="{{ url_for('static',filename='images/placeholder1.png') }}"
-        alt="Image article"
+        src="{{ i.url_image }}"
+        alt="{{ i.nom_image }}"
       />
-      <img
-        src="{{ url_for('static',filename='images/placeholder1.png') }}"
-        alt="Image article"
-      />
-      <img
-        src="{{ url_for('static',filename='images/placeholder1.png') }}"
-        alt="Image article"
-      />
+    {% endfor %}
     </div>
     <p>{{ article.description }}</p>
   </div>

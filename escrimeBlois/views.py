@@ -238,8 +238,9 @@ def mdp_oublier_confirmer_mdp():
 @app.route('/article/<ida>/view')
 def view_article(ida):
     art = Article.query.get(ida)
+    img = db.session.query(Image).join(Posseder, Posseder.id_image == Image.id_image).filter(Posseder.id_article == ida).all()    
     form = FormCommentaire()
-    return render_template('article.html', article=art, formCom=form)
+    return render_template('article.html', article=art, formCom=form,images=img)
 
 
 @app.route('/article/<ida>/comment', methods=["POST"])
