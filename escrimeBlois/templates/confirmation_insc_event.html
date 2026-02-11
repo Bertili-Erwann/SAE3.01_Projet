@@ -10,7 +10,7 @@
         <p class="mb-2 fw-bold">Êtes-vous sûr de vouloir vous inscrire à l'événement :</p>
         <p class="fw-bold mb-4">{{ evenement.nom }} ?</p>
         <div class="d-flex justify-content-center gap-5">
-            <a href="{{ url_for('inscription_event', id_evenement=evenement.id_evenement) }}" class="btn btn-success px-4 rounded-pill fw-bold">Oui</a>
+            <a href="{{ url_for('evenement_inscription', id_evenement=evenement.id_evenement) }}" class="btn btn-success px-4 rounded-pill fw-bold">Oui</a>
             <button type="button" class="btn btn-danger px-4 rounded-pill fw-bold" data-bs-dismiss="modal">Non</button>
         </div>
       </div>
