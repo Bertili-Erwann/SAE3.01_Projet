@@ -1,0 +1,35 @@
+{% extends "responsable/responsable_navbar.html" %} 
+
+{% block section_resp %}
+<main id="consult_form">
+    <div id="info_form_area">
+        <div class="form_area">
+            <p><strong>Expéditeur : </strong></p>
+            <div class="data_form"><p> {{ selectedFormulaire.nom_auteur }} 
+                {{ selectedFormulaire.prenom_auteur }} -- 
+                {{ selectedFormulaire.email_auteur }}</p></div>
+        </div>
+        <div class="form_area">
+            <p><strong>Objet : </strong></p>
+            <div class="data_form"><p> {{ selectedFormulaire.objet }}</p></div>
+        </div>
+    </div>
+    <div id="message_form_area">
+        <p><strong>Message</strong></p>
+        <div class="data_form"><p> {{ selectedFormulaire.message }}</p></div>
+    </div>
+    <div id="reponse_form_area" style="width: 100%;">
+        <p><strong>Réponse</strong></p>
+        <textarea id="form_rep_section" placeholder="Rédiger une réponse au formulaire" rows="11" style="width: 100%;"></textarea>
+    </div>
+    <div id="form_button_area">
+        <form action="{{ url_for('responsable_gestion_formulaire') }}" class="form_button_container">
+            <input type="submit" id="form_bouton_back" value="Retour"/>
+        </form>
+        <form action="" class="form_button_container">
+            <input type="submit" id="form_bouton_rep" value="Répondre"/>
+        </form>
+        
+    </div>
+</main>
+{% endblock %}

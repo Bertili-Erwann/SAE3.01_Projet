@@ -1,0 +1,245 @@
+/* ==================== Administrateur - Modification des informations personnelles d'un membre ==================== */
+
+/* Page Liste */
+#titre_page_info {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: var(--text-main);
+    font-family: var(--font-family);
+    font-weight: bold;
+}
+
+.action-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.btn-ajouter-info {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: var(--primary);
+    color: var(--text-white);
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: var(--shadow-light);
+}
+
+.btn-ajouter-info:hover {
+    background-color: var(--cold);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+    color: var(--text-white);
+}
+
+.table-info-container {
+    width: 90%;
+    margin: 0 auto;
+    background: var(--text-white);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+}
+
+.table-info {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-info thead {
+    background-color: var(--gray-800);
+    color: var(--text-white);
+}
+
+.table-info th {
+    padding: 18px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.table-info td {
+    padding: 15px 18px;
+    border-bottom: 1px solid var(--gray-200);
+    color: var(--text-light);
+}
+
+.table-info tr:last-child td {
+    border-bottom: none;
+}
+
+.table-info tr:hover {
+    background-color: var(--gray-100);
+}
+
+.col-ordre {
+    width: 10%;
+    text-align: center !important;
+}
+
+.col-titre {
+    width: 70%;
+}
+
+.col-actions {
+    width: 20%;
+    text-align: center !important;
+}
+
+.btn-modifier {
+    color: var(--accent-link);
+    margin-right: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.btn-modifier:hover {
+    color: var(--accent-link-hover);
+    text-decoration: underline;
+}
+
+.btn-supprimer {
+    color: var(--danger);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.btn-supprimer:hover {
+    color: var(--danger-hover);
+    text-decoration: underline;
+}
+
+
+/* Page Edition (Ajouter/Modifier) */
+.admin-edit-container {
+    width: 100%;
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 50px;
+}
+
+.edit-info-wrap {
+    width: 1000px !important;
+    padding: 40px 50px 50px 50px !important;
+    background: var(--gray-300);
+    border-radius: 10px;
+    box-shadow: var(--shadow-light);
+    overflow: visible !important; /* Pour CKEditor tooltips etc */
+}
+
+.edit-info-title {
+    font-family: var(--font-family);
+    font-weight: bold;
+    font-size: 24px;
+    color: var(--text-main);
+    line-height: 1.2;
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin-bottom: 30px;
+}
+
+.form-group-info {
+    width: 100%;
+    position: relative;
+    border-bottom: none;
+    margin-bottom: 25px;
+}
+
+.label-info {
+    font-family: var(--font-family);
+    font-size: 15px;
+    color: var(--text-main);
+    line-height: 1.5;
+    padding-left: 5px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.input-info-text, .input-info-number {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--text-main);
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+    background: var(--gray-200);
+    height: 50px;
+    border-radius: var(--border-radius-lg);
+    padding: 0 30px 0 30px;
+    border: none;
+    outline: none;
+}
+
+.input-info-text:focus, .input-info-number:focus {
+    box-shadow: 0 0 0 2px rgba(195, 194, 244, 0.5);
+}
+
+/* CKEditor container spacing */
+.cke_chrome {
+    border: 1px solid var(--gray-400) !important;
+    border-radius: var(--border-radius-sm) !important;
+}
+
+.form-actions {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn-save {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--text-white);
+    line-height: 1.2;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 200px;
+    height: 50px;
+    background-color: var(--primary);
+    border-radius: var(--border-radius-pill);
+    transition: var(--transition-base);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-save:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-cancel-info {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--text-white);
+    line-height: 1.2;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 200px;
+    height: 50px;
+    background-color: var(--danger);
+    border-radius: var(--border-radius-pill);
+    transition: var(--transition-base);
+    text-decoration: none;
+}
+
+.btn-cancel-info:hover {
+    background-color: var(--danger-hover);
+}

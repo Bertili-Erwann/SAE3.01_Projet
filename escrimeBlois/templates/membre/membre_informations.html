@@ -1,0 +1,115 @@
+{% extends "membre/membre_navbar.html" if current_user.role == 'membre' else "responsable/responsable_navbar.html" %}
+
+{% block membre %}
+    {{ self.page_content() }}
+{% endblock %}
+
+{% block section_resp %}
+    {{ self.page_content() }}
+{% endblock %}
+
+{% block page_content %}
+<h1 class="text_form">Informations personnelles</h1>
+<div class="infos-container-v2">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div class="section-v2">
+        <details open>
+            <summary><h2>Informations générales</h2></summary>
+            <div class="form-columns-v2">
+            <div class="form-col-v2">
+                <div class="form-field-v2">
+                    <label>Nom<span class="non-modifiable-v2"></span></label>
+                    <input type="text" disabled value="{{ personne.nom_personne }}">
+                </div>
+                <div class="form-field-v2">
+                    <label>Prénom<span class="non-modifiable-v2"></span></label>
+                    <input type="text" disabled value="{{ personne.prenom_personne }}">
+                </div>
+                <div class="form-field-v2">
+                    <label>Numéro de téléphone<span class="non-modifiable-v2"></span></label>
+                    <input type="tel" disabled value="{{ personne.telephone }}">
+                </div>
+            </div>
+            <div class="form-col-v2">
+                <div class="form-field-v2">
+                    <label>Adresse email<span class="non-modifiable-v2"></span></label>
+                    <input type="email" disabled value="{{ personne.email_personne }}">
+                </div>
+                <div class="form-field-v2">
+                    <label>Date de naissance<span class="non-modifiable-v2"></span></label>
+                    <input type="date" disabled value="{{ personne.date_naissance }}">
+                </div>
+                <div class="form-field-v2">
+                    <label>Adresse<span class="non-modifiable-v2"></span></label>
+                    <input type="text" disabled value="{{ personne.adresse }}">
+                </div>
+            </div>
+        </details>
+    </div>
+
+    <form method="POST" action="{{ url_for('membre_change_password') }}" class="form-group">
+        <div class="section-v2">
+            <details open>
+                <summary><h2>Changer mot de passe</h2></summary>
+                <div class="form-columns-v2">
+                <div class="form-col-v2">
+                    <div class="form-field-v2">
+                        <label>Nouveau mot de passe<span class="modifiable-v2"></span></label>
+                        <div class="password-wrapper">
+                            <input type="password" name="new_password" id="new_password" required autocomplete="new-password">
+                            <span class="toggle-password" onclick="togglePassword('new_password', this)">👁️</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-col-v2">
+                    <div class="form-field-v2">
+                        <label>Confirmation nouveau mot de passe<span class="modifiable-v2"></span></label>
+                        <div class="password-wrapper">
+                            <input type="password" name="confirm_password" id="confirm_password" required autocomplete="new-password">
+                            <span class="toggle-password" onclick="togglePassword('confirm_password', this)">👁️</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn-v2 green-btn-v2">Confirmer</button>
+            </details>
+        </div>
+    </form>
+
+    <form method="POST" action="{{ url_for('membre_update_arme') }}" class="form-group">
+        <div class="section-v2">
+            <details open>
+                <summary><h2>Informations sportives</h2></summary>
+                <div class="form-columns-v2">
+                <div class="form-col-v2">
+                    <div class="form-field-v2">
+                        <label>Arme principale<span class="modifiable-v2"></span></label>
+                        <select class="ic" id="theme" name="arme_principale" class="form-control" required>
+                            <option value="fleuret" {% if personne.arme_principale == 'fleuret' %}selected{% endif %}>Fleuret</option>
+                            <option value="épée" {% if personne.arme_principale == 'épée' %}selected{% endif %}>Épée</option>
+                            <option value="sabre" {% if personne.arme_principale == 'sabre' %}selected{% endif %}>Sabre</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-col-v2">
+                    <div class="form-field-v2">
+                        <label>Catégorie<span class="non-modifiable-v2"></span></label>
+                        <input type="text" disabled value="{{ personne.niveau }}">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn-v2 green-btn-v2">Mettre à jour l'arme</button>
+            </details>
+        </div>
+    </form>
+</div>
+{% endblock %}
