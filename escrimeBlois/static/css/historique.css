@@ -1,4 +1,4 @@
-/* ==================== Page Historique ==================== */
+/* ==================== Historique ==================== */
 
 /* -------------------- En-tête -------------------- */
 .historique-content h1 {
@@ -47,6 +47,11 @@ table {
   padding-left: 20px;
 }
 
+.action {
+  width: 1%;
+  text-align: center;
+}
+
 .evenm {
   width: 10%;
 }
@@ -67,10 +72,6 @@ table {
   border-radius: 10px;
   overflow: scroll;
   box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
-  -o-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
-  -ms-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
 }
 
 .table100-head {
@@ -87,18 +88,87 @@ table {
 
 .table100 th {
   font-size: 18px;
-  color: #fff;
+  color: var(--text-white);
   line-height: 1.4;
-  background-color: #353536;
+  background-color: var(--gray-800);
 }
 
 .table100 td {
-  font-family: Lato-Regular;
+  font-family: var(--font-family);
   font-size: 15px;
-  color: #575656;
+  color: var(--gray-700);
   line-height: 1.4;
 }
 
+.historique_supprimer {
+  background-color: var(--danger);
+  color: var(--text-white);
+  padding: 8px 20px;
+  border: none;
+  border-radius: var(--border-radius-pill);
+  cursor: pointer;
+  font-size: 14px;
+  transition: var(--transition-base);
+}
+
+.historique_supprimer:hover {
+  background-color: var(--danger-hover);
+  transform: scale(1.05);
+}
+
 .table100 .table100-body tr:nth-child(even) {
-  background-color: #f8f6ff;
+  background-color: var(--gray-100);
+}
+
+.historique-ajout {
+  width: 1000px;
+  margin: 0px auto 50px;
+}
+
+.historique-ajout h2 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.historique-form {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.historique-form input,
+.historique-form textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.historique-form input {
+  min-width: 160px;
+}
+
+.historique-form textarea {
+  min-width: 320px;
+  min-height: 90px;
+  resize: vertical;
+  flex: 1 1 420px;
+}
+
+.historique_ajouter {
+  background-color: var(--gray-800);
+  color: var(--text-white);
+  padding: 10px 22px;
+  border: none;
+  border-radius: var(--border-radius-pill);
+  cursor: pointer;
+  font-size: 14px;
+  transition: var(--transition-base);
+}
+
+.historique_ajouter:hover {
+  background-color: var(--gray-600);
+  transform: scale(1.05);
 }

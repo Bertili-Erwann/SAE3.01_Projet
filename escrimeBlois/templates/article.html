@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block main %}
+<div class="ctn-view-art">
+  
+  <div class="view-art">
+    <a class="btn-back" href="{{ request.referrer or url_for('index') }}">Retour</a>
+    <h1>{{ article.titre }}</h1>
+    <span class="date-art">{{ article.date_publication }}</span>
+    <div class="ctn-img">
+      <img
+        src="{{ url_for('static',filename='images/placeholder1.png') }}"
+        alt="Image article"
+      />
+      <img
+        src="{{ url_for('static',filename='images/placeholder1.png') }}"
+        alt="Image article"
+      />
+      <img
+        src="{{ url_for('static',filename='images/placeholder1.png') }}"
+        alt="Image article"
+      />
+    </div>
+    <p>{{ article.description }}</p>
+  </div>
+
+  {% if article.commentable %} {% if article.commentaires %}
+  <div class="ctn-comm">
+    {% for com in article.commentaires %}
+    <div class="comm">
+      <h3>{{ com.nom_aut }} :</h3>
+      <p>{{ com.message_com }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="message">
+    <p class="header-commenter">Commenter</p>
+    <form
+      method="post"
+      role="form"
+      action="{{ url_for('insert_commentaire', ida=article.id_article) }}"
+    >
+      {{ formCom.hidden_tag() }}
+      <div class="com-fields">
+        <div>
+          {{ formCom.nom_aut.label }} {{
+          formCom.nom_aut(class_="form-control")}}
+        </div>
+        <div>
+          {{ formCom.email_aut.label }} {{
+          formCom.email_aut(class_="form-control") }}
+        </div>
+      </div>
+      <div class="ctn-msg">
+        {{ formCom.message.label }} {{ formCom.message(class_="form-control") }}
+      </div>
+      <input type="submit" value="Envoyer" />
+    </form>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

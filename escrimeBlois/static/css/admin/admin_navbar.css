@@ -1,0 +1,36 @@
+/* ==================== Administrateur - Navbar ==================== */
+
+#navbar_admin {
+  background-color: var(--gray-400);
+  padding: 2px 0;
+  margin-bottom: 10px;
+}
+
+#nav_admin {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#nav_admin>li {
+  flex-basis: 20%;
+  margin: 0 10px;
+}
+
+#nav_admin>li a {
+  text-decoration: none;
+  color: var(--text-main);
+  padding: 12px 20px;
+  display: block;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+#nav_admin>li:hover a {
+  font-weight: bold;
+  color: var(--accent-link);
+  background-color: rgba(74, 144, 226, 0.1);
+}

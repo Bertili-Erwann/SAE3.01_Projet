@@ -29,8 +29,8 @@
         endif
         %}
       >
-        {{ formInscription.nom(size=10, class_="form-control")}} {{
-        formInscription.prenom(size=10, class_="form-control")}}
+        {{ formInscription.nom(size=10, class_="form-control", placeholder="Nom")}} {{
+        formInscription.prenom(size=10, class_="form-control", placeholder="Prénom")}}
       </div>
     </div>
     <div class="mot-de-passe base-block two-tf">
@@ -49,8 +49,8 @@
         endif
         %}
       >
-        {{ formInscription.mot_de_passe(size=10, class_="form-control")}} {{
-        formInscription.conf_mot_de_passe(size=10, class_="form-control")}}
+        {{ formInscription.mot_de_passe(size=10, class_="form-control", placeholder="Mot de passe")}} {{
+        formInscription.conf_mot_de_passe(size=10, class_="form-control", placeholder="Confirmation mot de passe")}}
       </div>
     </div>
     <div class="sexe">
@@ -70,7 +70,7 @@
         5. Numéro de téléphone <span id="obligatoire">*</span>
       </label>
       <div>
-        {{ formInscription.num_tel(size=10, class_="form-control full-space") }}
+        {{ formInscription.num_tel(size=10, class_="form-control full-space", placeholder="Numéro de téléphone") }}
       </div>
     </div>
     <div class="mail base-block">
@@ -78,8 +78,7 @@
         6. Adresse email <span id="obligatoire">*</span></label
       >
       <div>
-        {{ formInscription.adresse_mail(size=10, class_="form-control
-        full-space") }}
+        {{ formInscription.adresse_mail(size=10, class_="form-control full-space", placeholder="Adresse email") }}
       </div>
     </div>
     <div class="adresse-postale base-block">
@@ -87,8 +86,7 @@
         7. Adresse postale <span id="obligatoire">*</span>
       </label>
       <div>
-        {{ formInscription.adresse_postale(size=10, class_="form-control
-        full-space") }}
+        {{ formInscription.adresse_postale(size=10, class_="form-control full-space", placeholder="Adresse postale") }}
       </div>
     </div>
     <div>
@@ -113,5 +111,4 @@
 </div>
 {% endblock %}{% block scripts %}
 <script src="{{ url_for('static', filename='js/justificatif.js') }}"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 {% endblock %}

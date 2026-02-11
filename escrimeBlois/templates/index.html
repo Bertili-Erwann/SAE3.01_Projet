@@ -1,121 +1,55 @@
 {% extends "base.html" %} {% block main %}
+<!-- Sidebar de recherche (couvre toute la page) -->
+<aside class="menu-recherche">
+  <button type="button" class="aside-slide" onclick="slider()"> > </button>
+  <div class="ctn-article">
+  </div>
+  <form role="form" method="GET" action="{{ url_for('demande_article') }}">
+    <p class="recherche">Recherche d'articles</p>
+  <div class="ctn-rech">
+    {{ formRech.choix_year(class_="form-control") }}
+    <div class="ctn-valider-rech">
+      {{ formRech.recherche(class_="form-control") }}
+      <input class="btn-rech-ar" type="submit" value="Rechercher">
+  </div>
+  </form>
+</div>
+</aside>
 <div class="header">
   <div class="header-content">
     <h1>Cercle d'Escrime de Blois</h1>
   </div>
+  <button type="button" class="scroll-down-btn" aria-label="Défiler vers le bas" onclick="scrollToContent()">
+    ↓
+  </button>
   <img
     src="{{ url_for('static', filename='images/logo_cercle_escrime_blois.png') }}"
     alt="Logo du cercle d'éscrime de Blois"
   />
 </div>
+<button type="button" id="btn-entrant" class="aside-slide" onclick="sliderEntrant()"> < </button>
 <div class="main-content" id="actualite">
-  <h1>ACTUALITÉ</h1>
-  <div class="carousel-row">
+   <div class="carousel-row">
     <button type="button" class="carousel-btn prev" aria-label="Précédent">
       ‹
     </button>
+    <h1> ACTUALITÉ</h1>
     <div class="articles">
+      {% for ar in articles %}
       <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder1.png') }}" alt=""
-        /></a>
+        <a href="{{url_for('view_article',ida=ar.id_article ) }}" class="image featured">
+        {% if ar.miniature_image %}
+        <img src="{{ ar.miniature_image.url_image }}" alt="{{ ar.miniature_image.nom_image }}"/>
+        {% else %}
+        <img src="{{ url_for('static', filename='images/placeholder1.png') }}" alt=""/>
+        {% endif %}
         <header>
-          <h3>Titre 1</h3>
+          <h3>{{ ar.titre }}</h3>
         </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
+        <p>{{ar.description}}</p>
+        </a>
       </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder2.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 2</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder3.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 3</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder4.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 4</h3>
-        </header>
-        <p>
-          TitreCommodo id natoque malesuada sollicitudin elit suscipit magna.
-        </p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder5.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 5</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder6.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 6</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder7.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 7</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder8.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 8</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder9.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 9</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
-
-      <article>
-        <a href="#" class="image featured"
-          ><img src="{{ url_for('static', filename='images/placeholder10.png') }}" alt=""
-        /></a>
-        <header>
-          <h3>Titre 10</h3>
-        </header>
-        <p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-      </article>
+      {% endfor %}
     </div>
     <button type="button" class="carousel-btn next" aria-label="Suivant">
       ›
@@ -136,15 +70,19 @@
   <h1>Nos partenaires</h1>
   <div id="partenaire-content">
     <section>
-      <img src="{{ url_for('static', filename='images/logo_blois.png') }}" />
+      <a href="https://www.blois.fr/" target="_blank"><img src="{{ url_for('static', filename='images/logo_blois.png') }}" /></a>
       <p>Ville de Blois</p>
     </section>
     <section>
-      <img src="{{ url_for('static', filename='images/logo_escrime_centre_val_de_loire.png') }}" />
+      <a href="https://escrimecentre-valdeloire.com/" target="_blank"><img src="{{ url_for('static', filename='images/logo_escrime_centre_val_de_loire.png') }}" /></a>
       <p>Ligue d'Escrime Centre-Val de Loire</p>
     </section>
   </div>
 </div>
+
 {% endblock %} {% block scripts %}
 <script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src= "{{ url_for('static',filename='js/slider.js')}}" ></script>
+<script src= "{{ url_for('static',filename='js/scrollBouton.js')}}" ></script>
 {% endblock %}

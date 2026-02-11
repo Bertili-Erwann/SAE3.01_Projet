@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% block main %}
+<div class="logo-texte">
+  <img
+    src="{{ url_for('static', filename='images/logo_cercle_escrime_blois.png') }}"
+    alt="Logo du cercle d'escrime de Blois"
+    width="100"
+    height="100"
+  />
+  <p>Mot de passe oublié</p>
+</div>
+<div class="espaceur">
+  <div class="fenetre-login">
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    'error' %}
+    <p class="error-message">{{ message }}</p>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+    <form
+      role="form"
+      method="POST"
+      action="{{ url_for('mdp_oublier_etape_1')}}"
+    >
+      {{ formAuth.hidden_tag() }}
+      <h2>Adresse e-mail</h2>
+      {{ formAuth.email(size=10, class_="form-control", placeholder="Entrez votre e-mail") }}
+      <a href="{{ url_for('login') }}" id="passwrd-oublie"
+        >Revenir à la page de connexion</a
+      >
+      <input type="submit" value="Envoyer code" />
+    </form>
+  </div>
+</div>
+{% endblock %}
+

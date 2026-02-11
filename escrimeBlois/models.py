@@ -2,8 +2,10 @@ from .app import db
 from flask_login import UserMixin
 from .app import login_manager
 from sqlalchemy.orm import validates
-from sqlalchemy_media import File
+from sqlalchemy.ext.mutable import MutableDict
 from sqlalchemy import JSON
+
+File = MutableDict
 
 
 @login_manager.user_loader
@@ -171,7 +173,7 @@ class Evenement(db.Model):
         niveau (str): Niveau requis (pour compétitions).
         discipline (str): Discipline (pour compétitions).
         cooperative (str): Partenaire coopératif (pour compétitions).
-        type_evenement (str): Type ('competition' ou autre).
+        type_evenement (str): Type ('Compétition' ou autre).
     """
     id_evenement = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(64))
@@ -186,6 +188,21 @@ class Evenement(db.Model):
     cooperative = db.Column(db.String(60))
 
     type_evenement = db.Column(db.String(64))
+    inscriptions = db.relationship("Inscription", backref=db.backref("evenement"))
+
+    @property
+    def heure_formatee(self):
+        """
+        Retourne l'heure formatée en HH:MM à partir des minutes stockées.
+        
+        Returns:
+            str: L'heure au format HH:MM (ex: "05:00" pour 300 minutes).
+        """
+        if self.heure is None:
+            return "-"
+        heures = self.heure // 60
+        minutes = self.heure % 60
+        return f"{heures:02d}:{minutes:02d}"
 
     @validates('type_evenement')
     def validate_attributs_evenement(self, key: str, value: str) -> str:
@@ -203,7 +220,7 @@ class Evenement(db.Model):
             ValueError: Si les champs requis ne sont pas remplis ou si des champs en trop sont présents.
         """
         match value:
-            case "competition":
+            case "Compétition":
                 if self.niveau is None or self.discipline is None or self.cooperative is None:
                     raise ValueError(
                         f"'{value}' n'a pas rempli un des champs requis")
@@ -240,6 +257,7 @@ class Inscription(db.Model):
         id_evenement (int): Clé étrangère vers Evenement.
         nom (str): Nom de la personne.
         prenom (str): Prénom de la personne.
+        id_personne (int): Clé étrangère vers Personne (nullable, pour indiquer si c'est un membre inscrit).
     """
     id_inscription = db.Column(db.Integer, primary_key=True)
     id_evenement = db.Column(db.Integer,
@@ -247,15 +265,10 @@ class Inscription(db.Model):
     nom = db.Column(db.String(64))
     prenom = db.Column(db.String(64))
     email = db.Column(db.String(64))
-    date_naissance = db.Column(db.Date)
     sexe = db.Column(db.String(1))
-    categorie = db.Column(db.String(30))
-    justificatif = db.Column(db.String(255))
-
-    # Relations
-    evenement = db.relationship("Evenement",
-                                backref=db.backref("inscriptions",
-                                                   lazy="dynamic"))
+    date_naissance = db.Column(db.Date)
+    justificatif = db.Column(File.as_mutable(JSON))
+    id_personne = db.Column(db.Integer, db.ForeignKey("personne.id_personne"), nullable=True)
 
     def __repr__(self) -> str:
         """
@@ -281,39 +294,39 @@ class Classer(db.Model):
     Modèle représentant le classement dans une compétition.
     
     Attributs:
-        id_competition (int): Clé étrangère vers Inscription, partie de la clé primaire.
-        id_inscription (int): Clé étrangère vers Evenement, partie de la clé primaire.
+        id_competition (int): Clé étrangère vers Evenement, partie de la clé primaire.
+        id_inscription (int): Clé étrangère vers Inscription, partie de la clé primaire.
         point (int): Points obtenus.
     """
     id_competition = db.Column(db.Integer,
-                               db.ForeignKey("inscription.id_inscription"),
+                               db.ForeignKey("evenement.id_evenement"),
                                primary_key=True)
     id_inscription = db.Column(db.Integer,
-                               db.ForeignKey("evenement.id_evenement"),
+                               db.ForeignKey("inscription.id_inscription"),
                                primary_key=True)
     point = db.Column(db.Integer)
 
-    @validates('id_inscription')
+    @validates('id_competition')
     def validate_evenement_type(self, key: str, value: int) -> int:
         """
         Valide que l'événement est une compétition.
         
         Args:
-            key (str): Le nom de l'attribut ('id_inscription').
+            key (str): Le nom de l'attribut ('id_competition').
             value (int): L'ID de l'événement.
         
         Returns:
             int: La valeur validée.
         
         Raises:
-            ValueError: Si l'événement n'existe pas ou n'est pas une compétition.
+            ValueError: Si l'événement n'existe pas ou n'est pas une Compétition.
         """
         ev = Evenement.query.get(value)
         if ev is None:
             raise ValueError(f"Événement {value} introuvable")
-        if ev.type_evenement != 'competition':
+        if ev.type_evenement != 'Compétition':
             raise ValueError(
-                f"L'événement {value} doit être de type competition ")
+                f"L'événement {value} doit être de type Compétition")
         return value
 
     def __repr__(self) -> str:
@@ -441,6 +454,7 @@ class Article(db.Model):
         description (str): Contenu de l'article.
         categorie (str): Catégorie de l'article.
         commentable (bool): Indique si l'article est commentable.
+        miniature (int): Clé étrangère vers Image (miniature de l'article).
         responsable_id (int): Clé étrangère vers Personne (responsable).
         responsable: Relation vers Personne.
     """
@@ -449,9 +463,12 @@ class Article(db.Model):
     date_publication = db.Column(db.Date)
     description = db.Column(db.String(1000))
     categorie = db.Column(db.String(20))
+    lien = db.Column(db.String(64))
     commentable = db.Column(db.Boolean)
+    miniature = db.Column(db.Integer, db.ForeignKey("image.id_image"), nullable=True)
     responsable_id = db.ForeignKey("personne.id_personne")
     responsable = None
+    miniature_image = db.relationship("Image", foreign_keys=[miniature])
 
     @validates('id_responsable')
     def validate_responsable_type(self, key: str, value: int) -> int:
@@ -519,8 +536,7 @@ class Posseder(db.Model):
     
     Attributs:
         id_image (int): partie de la clé primaire, une clé étrangère référencant l'id de la table image.
-        id_competition (int): partie de la clé primaire,une clé étrangère référencant l'id de la table article.
-        miniature(bool): True si c'est la maniature d'un article, False sinon. 
+        id_article (int): partie de la clé primaire, une clé étrangère référencant l'id de la table article.
     """
     id_image = db.Column(db.Integer,
                          db.ForeignKey("image.id_image"),
@@ -528,7 +544,6 @@ class Posseder(db.Model):
     id_article = db.Column(db.Integer,
                            db.ForeignKey("article.id_article"),
                            primary_key=True)
-    miniature = db.Column(db.Boolean)
 
 
 class Gerer(db.Model):
@@ -570,3 +585,41 @@ class Gerer(db.Model):
                 f"La personne {value} doit être de type 'admin' vous avez le type {pers.role}"
             )
         return value
+
+
+class Commentaire(db.Model):
+    id_commentaire = db.Column(db.Integer, primary_key=True)
+    id_article = db.Column(db.Integer, db.ForeignKey("article.id_article"))
+    nom_aut = db.Column(db.String(30))
+    email_aut = db.Column(db.String(60))
+    message_com = db.Column(db.String(280))
+    article = db.relationship("Article",
+                              backref=db.backref("commentaires",
+                                                 lazy="dynamic"))
+class Information(db.Model):
+    """
+    Modèle représentant une information affichée sur la page 'renseignement'.
+    
+    Attributs:
+        id (int): Clé primaire.
+        titre (str): Titre de la section (ex: Horaires).
+        contenu (str): Contenu HTML de la section.
+        ordre (int): Ordre d'affichage.
+    """
+    id = db.Column(db.Integer, primary_key=True)
+    titre = db.Column(db.String(100))
+    contenu = db.Column(db.Text)
+    ordre = db.Column(db.Integer)
+                                                 
+class Historique(db.Model):
+    """
+    Modèle représentant les différents événements de l'historique du club.
+    
+    Attributs:
+        id_chronologique (int): Clé primaire, id correspondant au placement de l'événement dans le temps. Plus l'événement est récent, plus l'id est grand.
+        date (str): date de l'événement.
+        description (Date): description de l'événement.
+    """
+    id_chronologique = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(30))
+    description = db.Column(db.String(280))

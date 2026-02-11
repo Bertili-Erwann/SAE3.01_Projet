@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block main %}
+
+<div class="ctn-list-art">
+  <div class="list-art ctn-art">
+    {% if articles is defined and articles|length > 0 %} {% if recherche != ""
+    %}
+    <h1>Les articles pour "{{ recherche }}"</h1>
+    {% else %}
+    <h1>Les articles pour le {{ date[0]}} / {{date[1]}}</h1>
+    {% endif %} {% for ar in articles %}
+    <a href="{{ url_for('view_article', ida=ar.id_article) }}">
+      <div id="article-{{ ar.id_article }}" class="art">
+        <h2 class="titre-art">{{ ar.titre }}</h2>
+        <p class="date-art">{{ ar.date_publication}}</p>
+        <p class="auteur-art">
+          {{ ar.responsable.nom_personne }} {{ ar.responsable.prenom_personne }}
+        </p>
+      </div>
+    </a>
+    {% endfor %} {% else %}
+    <div class="pas-trouver ctn-art">
+      <h1>
+        La recherche "<span id="obligatoire">{{ recherche }}</span>" n'a pas
+        abouti
+      </h1>
+      <a href="{{ url_for('index') }}"><p>Revenir à la page d'accueil</p></a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

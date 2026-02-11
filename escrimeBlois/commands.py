@@ -23,7 +23,7 @@ def loaddb(filename: str) -> None:
     db.create_all()
 
     import yaml
-    from .models import Personne, Evenement, Classer, Formulaire, Repondre, Article, Inscription, Image, Posseder, Demande_inscription, Gerer
+    from .models import Personne, Evenement, Classer, Formulaire, Repondre, Article, Inscription, Image, Posseder, Demande_inscription, Gerer, Historique, Information
 
     with open(filename, 'r', encoding='utf-8') as file:
         data = yaml.safe_load(file) or []
@@ -58,6 +58,7 @@ def loaddb(filename: str) -> None:
                               categorie=ev.get('categorie'),
                               lieu=ev['lieu'],
                               description=ev['description'],
+                              sexe=ev.get('sexe'),
                               niveau=ev.get('niveau'),
                               discipline=ev.get('discipline'),
                               cooperative=ev.get('cooperative'),
@@ -66,7 +67,7 @@ def loaddb(filename: str) -> None:
         db.session.commit()
 
     for insc in data.get("inscriptions", []):
-        date_naissance = None
+        date_naissance_insc = None
         if insc.get('date_naissance'):
             date_naissance = datetime.date.fromisoformat(insc['date_naissance'])
             
@@ -77,7 +78,6 @@ def loaddb(filename: str) -> None:
                                   email=insc.get('email'),
                                   date_naissance=date_naissance,
                                   sexe=insc.get('sexe'),
-                                  categorie=insc.get('categorie'),
                                   justificatif=insc.get('justificatif'))
         db.session.add(inscription)
         db.session.commit()
@@ -112,7 +112,8 @@ def loaddb(filename: str) -> None:
                           description=art['description'],
                           categorie=art['categorie'],
                           commentable=art['commentable'],
-                          responsable_id=art['responsable_id'])
+                          responsable_id=art['responsable_id'],
+                          miniature=art.get('miniature'))
         db.session.add(article)
         db.session.commit()
     for img in data['image']:
@@ -123,9 +124,15 @@ def loaddb(filename: str) -> None:
         db.session.commit()
     for poss in data['posseder']:
         posseder = Posseder(id_image=poss['id_image'],
-                            id_article=poss['id_article'],
-                            miniature=poss['miniature'])
+                            id_article=poss['id_article'])
         db.session.add(posseder)
+        db.session.commit()
+
+    for hist in data.get("historique", []):
+        historique = Historique(id_chronologique=hist['id_chronologique'],
+                                date=hist['date'],
+                                description=hist['description'])
+        db.session.add(historique)
         db.session.commit()
 
     for dem in data.get("demande_inscriptions", []):
@@ -159,6 +166,14 @@ def loaddb(filename: str) -> None:
         gerer = Gerer(id_admin=ger['id_admin'],
                       id_inscription=ger['id_inscription'])
         db.session.add(gerer)
+        db.session.commit()
+
+    for info in data.get("informations", []):
+        information = Information(id=info['id'],
+                                  titre=info['titre'],
+                                  contenu=info['contenu'],
+                                  ordre=info['ordre'])
+        db.session.add(information)
         db.session.commit()
 
 
