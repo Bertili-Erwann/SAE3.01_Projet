@@ -75,11 +75,13 @@ def demande_article():
         date = request.args["choix_year"].split(
             "-")  # index 0 c'est le mois et 1 l'année
 
-        listarticle = list(
-            Article.query.filter(
-                extract('month', Article.date_publication) == date[0]
-                and extract('year', Article.date_publication)
-                == date[1]).filter(Article.titre.contains(laRecherche)))
+        if laRecherche and laRecherche.strip():
+            listarticle = list(Article.query.filter(Article.titre.contains(laRecherche)))
+        else:
+            listarticle = list(
+                Article.query.filter(
+                    extract('month', Article.date_publication) == date[0],
+                    extract('year', Article.date_publication) == date[1]))
 
         return render_template('articles.html',
                                articles=listarticle,
