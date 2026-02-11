@@ -38,7 +38,11 @@
       {% for ar in articles %}
       <article>
         <a href="{{url_for('view_article',ida=ar.id_article ) }}" class="image featured">
-        <img src="{{ url_for('static', filename='uploads/{ar.lien}') }}" alt=""/>
+        {% if ar.miniature_image %}
+        <img src="{{ ar.miniature_image.url_image }}" alt="{{ ar.miniature_image.nom_image }}"/>
+        {% else %}
+        <img src="{{ url_for('static', filename='images/placeholder1.png') }}" alt=""/>
+        {% endif %}
         <header>
           <h3>{{ ar.titre }}</h3>
         </header>

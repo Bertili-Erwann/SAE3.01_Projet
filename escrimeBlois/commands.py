@@ -112,7 +112,8 @@ def loaddb(filename: str) -> None:
                           description=art['description'],
                           categorie=art['categorie'],
                           commentable=art['commentable'],
-                          responsable_id=art['responsable_id'])
+                          responsable_id=art['responsable_id'],
+                          miniature=art.get('miniature'))
         db.session.add(article)
         db.session.commit()
     for img in data['image']:
@@ -123,8 +124,7 @@ def loaddb(filename: str) -> None:
         db.session.commit()
     for poss in data['posseder']:
         posseder = Posseder(id_image=poss['id_image'],
-                            id_article=poss['id_article'],
-                            miniature=poss['miniature'])
+                            id_article=poss['id_article'])
         db.session.add(posseder)
         db.session.commit()
 

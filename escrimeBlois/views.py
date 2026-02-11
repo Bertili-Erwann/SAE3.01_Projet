@@ -3,7 +3,7 @@ from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
 from hashlib import sha256
 from datetime import date, datetime
-from sqlalchemy import extract, func, select
+from sqlalchemy import extract, func
 from .app import app, db
 from .models import *
 from escrimeBlois.models import (
@@ -62,10 +62,8 @@ def insert_formulaire():
 @app.route('/index/')
 def index():
     
-    query_articles =  db.session.execute(select(Article, Posseder, Image).select_from(Article).join(Posseder, 
-          Article.id_article == Posseder.id_article).join(Image,Posseder.id_image == Image.id_image)).all()
-    query_articles[1]
-    return render_template("index.html", formRech=FormRechercheArticle(), page_actu = 'home',articles=query_articles)
+    articles = Article.query.all()
+    return render_template("index.html", formRech=FormRechercheArticle(), page_actu = 'home',articles=articles)
 
 @app.route('/event/classement/redirection_ffescrime')
 def redirection_ffescrime():
@@ -771,11 +769,14 @@ def responsable_ajouter_article():
                 db.session.commit()
 
                 posseder = Posseder(id_image=image.id_image,
-                                    id_article=article.id_article,
-                                    miniature=first_image)
+                                    id_article=article.id_article)
                 db.session.add(posseder)
                 db.session.commit()
-                first_image = False
+
+                if first_image:
+                    article.miniature = image.id_image
+                    db.session.commit()
+                    first_image = False
 
         flash("Article ajouté avec succès ✅", "success")
         return redirect(url_for("responsable_ajouter_article"))
