@@ -18,6 +18,7 @@
       href="{{ url_for('static', filename='style.css') }}"
     />
     <link rel="icon" href="{{ url_for('static',filename='images/logo_cercle_escrime_blois.png')}}"/>
+    {% block extra_css %}{% endblock %}
   </head>
   <body>
     {% block navbar %}
