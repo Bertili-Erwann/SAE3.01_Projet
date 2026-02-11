@@ -1,4 +1,4 @@
-from flask import flash, redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, url_for, send_from_directory
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
 from hashlib import sha256
@@ -41,6 +41,11 @@ if not os.path.exists(JUSTIFICATIF_FOLDER):
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["JUSTIFICATIF_FOLDER"] = JUSTIFICATIF_FOLDER
+
+
+@app.route('/uploads/<path:filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
 # ======================================== GESTION FOOTER (Accessible partout) ========================================
@@ -764,7 +769,7 @@ def responsable_ajouter_article():
                 fichier.save(chemin_fichier)
 
                 image = Image(nom_image=fichier.filename[:15],
-                              url_image=fichier.filename[:60])
+                              url_image=f'/uploads/{fichier.filename}')
                 db.session.add(image)
                 db.session.commit()
 

@@ -13,6 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const nouveauxFichiers = Array.from(input.files);
         fichiersAjoutes = fichiersAjoutes.concat(nouveauxFichiers);
 
+        // Mettre à jour le vrai input avec tous les fichiers accumulés
+        const dt = new DataTransfer();
+        fichiersAjoutes.forEach(f => dt.items.add(f));
+        input.files = dt.files;
+
         // Mise à jour du compteur
         const nb = fichiersAjoutes.length;
         compteur.textContent = nb === 0 ? "Aucun fichier sélectionné ❌" :
