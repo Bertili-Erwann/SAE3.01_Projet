@@ -3,7 +3,7 @@ from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
 from hashlib import sha256
 from datetime import date, datetime
-from sqlalchemy import extract, func
+from sqlalchemy import extract, func, select
 from .app import app, db
 from .models import *
 from escrimeBlois.models import (
@@ -61,8 +61,10 @@ def insert_formulaire():
 @app.route('/', )
 @app.route('/index/')
 def index():
-    query_articles = Article.query.all()
-    print(query_articles)
+    
+    query_articles =  db.session.execute(select(Article, Posseder, Image).select_from(Article).join(Posseder, 
+          Article.id_article == Posseder.id_article).join(Image,Posseder.id_image == Image.id_image)).all()
+    query_articles[1]
     return render_template("index.html", formRech=FormRechercheArticle(), page_actu = 'home',articles=query_articles)
 
 @app.route('/event/classement/redirection_ffescrime')
