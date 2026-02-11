@@ -12,7 +12,7 @@
 <h1 class="text_form">Gestion des résultats de compétitions</h1>
 <div class="result-page-container">
     <div class="result-search-bar">
-        <form method="GET" action="{{ url_for('admin_resultat') }}" class="result-search-form">
+        <form method="GET" action="{{ url_for('admin_resultats') }}" class="result-search-form">
             <select name="competition" id="competition-select" class="form-control result-search-select">
                 <option value="">Sélectionner une compétition</option>
                 {% for comp in competitions %}
@@ -28,7 +28,7 @@
 
     {% if selected_id %}
     <!-- Formulaire de mise à jour des résultats -->
-    <form action="{{ url_for('update_points') }}" method="POST">
+    <form action="{{ url_for('admin_update_points') }}" method="POST">
         <input type="hidden" name="competition_id" value="{{ selected_id }}">
         
         <div class="result-table-container">
@@ -114,7 +114,7 @@
             <button type="submit" class="btn btn-success btn-lg">
                 <i class="fas fa-save"></i> Enregistrer tous les résultats
             </button>
-            <a href="{{ url_for('admin_resultat') }}" class="btn btn-secondary btn-lg">
+            <a href="{{ url_for('admin_resultats') }}" class="btn btn-secondary btn-lg">
                 <i class="fas fa-times"></i> Annuler
             </a>
         </div>
