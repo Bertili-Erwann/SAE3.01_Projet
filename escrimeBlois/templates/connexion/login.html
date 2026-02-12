@@ -40,7 +40,7 @@
         />
         <span class="toggle-password-log" onclick="togglePassword('new_password', this)">👁️</span>
     </div>
-    <a href="#" id="passwrd-oublie">Mot de passe oublié ?</a>
+    <a href="{{ url_for('mdp_oublier_etape_1') }}" id="passwrd-oublie">Mot de passe oublié ?</a>
 
     <!-- BOUTON LOGIN -->
     <input type="submit" value="Se Connecter" />

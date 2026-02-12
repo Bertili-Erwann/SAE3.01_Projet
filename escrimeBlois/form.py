@@ -274,3 +274,76 @@ class FormModifMembre(FlaskForm):
         personne.role = self.role.data
         
         db.session.commit()
+
+
+class FormGestionLogin(FlaskForm):
+    email = StringField('email', validators=[DataRequired()])
+    mdp = PasswordField('Password', validators=[DataRequired()])
+
+    def authenticate_user(self):
+        """
+        Authentifie l'utilisateur et retourne un tuple (user, error_message).
+        Si l'authentification réussit, retourne (user, None).
+        Sinon, retourne (None, error_message).
+        """
+        from .models import Personne
+
+        user = Personne.query.filter_by(email_personne=self.email.data).first()
+
+        if not user:
+            return None, "Email inconnu."
+
+        # Vérifier le mot de passe
+        m = sha256()
+        m.update(self.mdp.data.encode("utf-8"))
+        hashed_password = m.hexdigest()
+
+        if user.mdp == hashed_password or user.mdp == self.mdp.data:
+            return user, None
+        else:
+            return None, "Mot de passe incorrect."
+
+
+class FormGestionMdpOublier(FlaskForm):
+    email = StringField('email', validators=[DataRequired()])
+
+    def etape_1(self):
+        from .models import Personne
+        from flask_mail import Message
+        from .app import mail
+        import random
+        from datetime import datetime, timedelta
+
+        user = Personne.query.filter_by(email_personne=self.email.data).first()
+        if not user:
+            return None, "Email inconnu."
+        
+        # Générer un code à 4 chiffres
+        code_verification = str(random.randint(1000, 9999))
+        
+        # Définir l'expiration du code (15 minutes)
+        code_expiration = datetime.now() + timedelta(minutes=15)
+        
+        # Sauvegarder le code et son expiration dans la base de données
+        user.code_verification_mdp = code_verification
+        user.code_verification_expiration = code_expiration
+        
+        try:
+            msg = Message(subject='Code de vérification - Mot de passe oublié',
+                          recipients=[self.email.data])
+            msg.body = f'Votre code de vérification est : {code_verification}\n\nCe code est valable pendant 15 minutes.'
+            mail.send(msg)
+            db.session.commit()
+            print(f"✉️  Email envoyé avec succès à {self.email.data}")
+            return user, None 
+        except Exception as e:
+            db.session.commit()  # Sauvegarder quand même le code gen généré
+            print(f"\n{'='*60}")
+            print(f"⚠️  Mode DÉVELOPPEMENT - Email non envoyé")
+            print(f"{'='*60}")
+            print(f"Email destination : {self.email.data}")
+            print(f"Code de vérification : {code_verification}")
+            print(f"{'='*60}\n")
+            # Retourner l'utilisateur même en cas d'erreur pour permettre le développement
+            return user, None
+            

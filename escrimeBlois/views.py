@@ -1,4 +1,4 @@
-from flask import flash, redirect, render_template, request, url_for, send_from_directory
+from flask import flash, redirect, render_template, request, url_for, send_from_directory, session
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
 from hashlib import sha256
@@ -24,7 +24,8 @@ from escrimeBlois.form import (
     FormRechercheArticle,
     FormCommentaire,
     FormInformation,
-    FormModifMembre
+    FormModifMembre,
+    FormGestionMdpOublier
 )
 import os
 
@@ -187,6 +188,22 @@ def logout():
     logout_user()
     return redirect(url_for("login"))
 
+@app.route("/login/mdp_oublier", methods=["POST", "GET"])
+def mdp_oublier_etape_1():
+   formAuth = FormGestionMdpOublier()
+
+
+   if formAuth.validate_on_submit():
+       user, error = formAuth.etape_1()
+       if user:
+           session['reset_email'] = user.email_personne
+           return redirect(url_for('mdp_oublier_code'))
+       else:
+           flash(error, "error")
+   return render_template("connexion/mdp_oublier_etape_1.html",
+                          form=FormFormulaire(),
+                          formAuth=formAuth)
+
 
 @app.route("/inscription/", )
 def inscription():
@@ -207,29 +224,96 @@ def insert_inscription():
                            form=FormFormulaire())
 
 
-@app.route("/mdp_oublier_envoyer_code/")
+@app.route("/login/mdp_oublier_envoyer_code/")
 def mdp_oublier_envoyer_code():
     return render_template("connexion/login_mdp_oublie_envoi_code.html",
                            form=FormFormulaire())
 
 
-@app.route("/mdp_oublier_code/")
+@app.route("/login/mdp_oublier_code/", methods=["GET", "POST"])
 def mdp_oublier_code():
-    return render_template("connexion/login_mdp_oublie_code.html", form=FormFormulaire())
+    email = session.get('reset_email')
+    
+    if not email:
+        flash("Session expirée. Veuillez recommencer.", "error")
+        return redirect(url_for('mdp_oublier_etape_1'))
+    
+    if request.method == "POST":
+        code = request.form.get('code')
+        user = Personne.query.filter_by(email_personne=email).first()
+        
+        if not user:
+            flash("Utilisateur introuvable.", "error")
+            return redirect(url_for('mdp_oublier_etape_1'))
+        
+        # Vérifier si le code est correct et pas expiré
+        if user.code_verification_mdp == code and user.code_verification_expiration > datetime.now():
+            # Code correct, rediriger vers confirmation
+            return redirect(url_for('mdp_oublier_confirmer_mdp'))
+        elif user.code_verification_expiration <= datetime.now():
+            flash("Le code a expiré. Veuillez recommencer.", "error")
+        else:
+            flash("Code incorrect.", "error")
+        
+        return render_template("connexion/login_mdp_oublie_code.html", 
+                               form=FormFormulaire(),
+                               email=email)
+    
+    return render_template("connexion/login_mdp_oublie_code.html", 
+                           form=FormFormulaire(),
+                           email=email)
 
 
-@app.route("/mdp_oublier_confirmer_mdp/", methods=["GET", "POST"])
+@app.route("/login/mdp_oublier_confirmer_mdp/", methods=["GET", "POST"])
 def mdp_oublier_confirmer_mdp():
+    email = session.get('reset_email')
+    
+    if not email:
+        flash("Session expirée. Veuillez recommencer.", "error")
+        return redirect(url_for('mdp_oublier_etape_1'))
+    
     if request.method == "POST":
         newpassword = request.form.get("newpassword")
         newpasswordconfirm = request.form.get("newpasswordconfirm")
 
-        if newpassword != newpasswordconfirm:
+        if not newpassword or not newpasswordconfirm:
+            flash("Les deux champs de mot de passe sont requis.", "error")
             return render_template("connexion/login_mdp_oublie_confirmation.html",
                                    form=FormFormulaire())
 
-        # Ici, tu peux ajouter la logique pour mettre à jour le mot de passe en base
-        return redirect(url_for("login"))
+        if newpassword != newpasswordconfirm:
+            flash("Les mots de passe ne correspondent pas.", "error")
+            return render_template("connexion/login_mdp_oublie_confirmation.html",
+                                   form=FormFormulaire())
+
+        if len(newpassword) < 8:
+            flash("Le mot de passe doit contenir au moins 8 caractères.", "error")
+            return render_template("connexion/login_mdp_oublie_confirmation.html",
+                                   form=FormFormulaire())
+
+        if not any(c.isalpha() for c in newpassword) or not any(c.isdigit() for c in newpassword):
+            flash("Le mot de passe doit contenir au moins une lettre et un chiffre.", "error")
+            return render_template("connexion/login_mdp_oublie_confirmation.html",
+                                   form=FormFormulaire())
+
+        # Récupérer l'utilisateur et mettre à jour le mot de passe
+        user = Personne.query.filter_by(email_personne=email).first()
+        if user:
+            user.password_personne = sha256(newpassword.encode()).hexdigest()
+            user.code_verification_mdp = None
+            user.code_verification_expiration = None
+            db.session.commit()
+            
+            # Nettoyer la session
+            session.pop('reset_email', None)
+            
+            # Afficher le message de succès sans rediriger
+            return render_template("connexion/login_mdp_oublie_confirmation.html",
+                                   form=FormFormulaire(),
+                                   password_changed=True)
+        else:
+            flash("Utilisateur introuvable.", "error")
+            return redirect(url_for('mdp_oublier_etape_1'))
 
     return render_template("connexion/login_mdp_oublie_confirmation.html",
                            form=FormFormulaire())

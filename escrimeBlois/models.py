@@ -55,6 +55,8 @@ class Personne(UserMixin, db.Model):
     arme_principale = db.Column(db.String(30))
     niveau = db.Column(db.String(20))
     role = db.Column(db.String(10))
+    code_verification_mdp = db.Column(db.String(4), nullable=True)
+    code_verification_expiration = db.Column(db.DateTime, nullable=True)
 
     @validates('role')
     def validate_role(self, key: str, value: str) -> str:

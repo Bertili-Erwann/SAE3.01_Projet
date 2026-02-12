@@ -14,6 +14,9 @@
   background-color: var(--bg-card);
   border-radius: 5%;
 }
+.espaceur{
+    min-height: 65vh;
+}
 
 /* -------------------- Logo & Texte -------------------- */
 .logo-texte {
