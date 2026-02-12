@@ -1,4 +1,4 @@
-{% extends "membre/membre_navbar.html" if current_user.role == 'membre' else "responsable/responsable_navbar.html" %}
+{% extends "membre/membre_navbar.html" %}
 
 {% block membre %}
     {{ self.page_content() }}
@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block page_content %}
-<h1 class="text_form">Informations personnelles</h1>
+<h1 class="text_form">Mes informations</h1>
 <div class="infos-container-v2">
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
