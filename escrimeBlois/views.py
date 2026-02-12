@@ -348,7 +348,7 @@ def evenement_resultats():
     competitions = Evenement.query.filter_by(
         type_evenement='Compétition').all()
 
-    selected_competition_id = request.args.get('Compétition')
+    selected_competition_id = request.args.get('competition')
     classements = []
 
     if selected_competition_id:
@@ -744,19 +744,31 @@ def admin_resultats():
         return redirect(url_for("index"))
     competitions = Evenement.query.filter_by(type_evenement='Compétition').all()
     
-    selected_competition_id = request.args.get('Compétition')
+    selected_competition_id = request.args.get('competition')
     classements = []
+    
+    inscriptions_sans_resultat = []
     
     if selected_competition_id:
         classements = db.session.query(Classer, Inscription, Personne).join(
-            Inscription, Classer.id_competition == Inscription.id_inscription
+            Inscription, Classer.id_inscription == Inscription.id_inscription
         ).outerjoin(
             Personne, Inscription.email == Personne.email_personne
         ).filter(
-            Classer.id_inscription == selected_competition_id
+            Classer.id_competition == selected_competition_id
         ).order_by(Classer.point.desc()).all()
         
-    return render_template("admin/admin_miseajour_resultats.html", competitions=competitions, classements=classements, selected_id=selected_competition_id)
+        # Récupérer les inscrits qui n'ont pas encore de résultat
+        ids_avec_resultat = [insc.id_inscription for _, insc, _ in classements]
+        inscrits_sans = db.session.query(Inscription, Personne).outerjoin(
+            Personne, Inscription.email == Personne.email_personne
+        ).filter(
+            Inscription.id_evenement == selected_competition_id,
+            ~Inscription.id_inscription.in_(ids_avec_resultat) if ids_avec_resultat else True
+        ).all()
+        inscriptions_sans_resultat = inscrits_sans
+        
+    return render_template("admin/admin_miseajour_resultats.html", competitions=competitions, classements=classements, selected_id=selected_competition_id, inscriptions_sans_resultat=inscriptions_sans_resultat)
 
 
 @app.route('/admin/resultats/update', methods=['POST'])
@@ -776,6 +788,9 @@ def admin_update_points():
                     classer = Classer.query.filter_by(id_inscription=id_event, id_competition=id_insc).first()
                     if classer:
                         classer.point = points
+                    else:
+                        nouveau_classer = Classer(id_inscription=int(id_event), id_competition=int(id_insc), point=int(points))
+                        db.session.add(nouveau_classer)
             except ValueError:
                 continue
                 
@@ -933,7 +948,7 @@ def membre_information_personnel():
 @app.route('/membre/event_inscrits/')
 @login_required
 def membre_event_inscrits():
-    if current_user.role != 'membre':
+    if current_user.role != 'membre' and current_user.role != 'responsable':
         return redirect(url_for('index'))
 
     inscriptions = Inscription.query.filter_by(
@@ -952,7 +967,7 @@ def membre_event_inscrits():
 @app.route('/membre/consult_event/<int:id_event>/')
 @login_required
 def membre_consult_event(id_event):
-    if current_user.role != 'membre':
+    if current_user.role != 'membre' and current_user.role != 'responsable':
         return redirect(url_for('index'))
 
     event = Evenement.query.get_or_404(id_event)
@@ -968,20 +983,21 @@ def membre_resultats_passes():
     resultats = db.session.query(Evenement, Classer).join(
         Inscription, Inscription.id_evenement == Evenement.id_evenement
     ).join(
-        Classer, Classer.id_competition == Inscription.id_inscription
+        Classer, Classer.id_inscription == Inscription.id_inscription
     ).filter(
+        Classer.id_competition == Evenement.id_evenement,
         Inscription.email == current_user.email_personne
     ).order_by(Evenement.date.desc()).all()
     
     resultats_finaux = []
     for evenement, classement_utilisateur in resultats:
         tous_les_scores = db.session.query(Classer).filter(
-            Classer.id_inscription == evenement.id_evenement
+            Classer.id_competition == evenement.id_evenement
         ).order_by(Classer.point.desc()).all()
         
         rang = 1
         for score in tous_les_scores:
-            if score.id_competition == classement_utilisateur.id_competition:
+            if score.id_inscription == classement_utilisateur.id_inscription:
                 break
             rang += 1
             
