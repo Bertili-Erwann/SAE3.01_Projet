@@ -157,7 +157,7 @@ personnes:
     niveau: "Débutant"
   - id_personne: 13
     mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
-    role: "responsonable"
+    role: "responsable"
     nom_personne: "Dramé"
     prenom_personne: "Zakharia"
     email_personne: "zakhariadu28@gmail.com"
@@ -562,6 +562,11 @@ formulaires:
     email_auteur: "celine.perrin@example.com"
     objet: "Saison prochaine"
     message: "Quand commencent les inscriptions pour la saison prochaine ?"
+  - id_formulaire: 12
+    nom_auteur: "Drame Zakharia"
+    email_auteur: "zakhariadrame@gmail.com"
+    objet: "Test d'envoi de mail"
+    message: "Ceci est un message de test pour vérifier l'envoi de mails depuis le formulaire de contact."
 
 repondre:
   - id_responsable: 2

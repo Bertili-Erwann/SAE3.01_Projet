@@ -1,0 +1,179 @@
+/* Configuration Email Admin Page */
+
+#config_email {
+    margin-top: 60px;
+    padding: 30px;
+}
+
+#config_email h1 {
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.config-email-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.config-email-fieldset {
+    border: 2px solid #e0e0e0;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 6px;
+    background-color: #fafafa;
+}
+
+.config-email-fieldset legend {
+    padding: 0 15px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.config-email-form-group {
+    margin-bottom: 20px;
+}
+
+.config-email-form-group:last-child {
+    margin-bottom: 0;
+}
+
+.config-email-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #222;
+    font-size: 14px;
+}
+
+.config-email-input,
+.config-email-password {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.config-email-input:focus,
+.config-email-password:focus {
+    outline: none;
+    border-color: #0066cc;
+    background-color: #f0f8ff;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.config-email-error {
+    color: #d32f2f;
+    font-size: 13px;
+    margin-top: 5px;
+    display: block;
+}
+
+.config-email-hint {
+    color: #666;
+    font-size: 13px;
+    display: block;
+    margin-top: 5px;
+}
+
+.config-email-hint a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.config-email-hint a:hover {
+    text-decoration: underline;
+}
+
+.config-email-radio-wrapper {
+    display: flex;
+    gap: 20px;
+    margin-top: 8px;
+}
+
+.config-email-radio-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.config-email-radio-group input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.config-email-radio-group label {
+    margin: 0;
+    font-weight: normal;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.config-email-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.config-email-btn {
+    padding: 11px 35px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.config-email-btn-primary {
+    background-color: #0066cc;
+    color: white;
+}
+
+.config-email-btn-primary:hover {
+    background-color: #0052a3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+}
+
+.config-email-btn-secondary {
+    background-color: #999;
+    color: white;
+}
+
+.config-email-btn-secondary:hover {
+    background-color: #777;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.config-email-info {
+    background-color: #e3f2fd;
+    border-left: 5px solid #2196F3;
+    padding: 15px;
+    margin-top: 25px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+}
+
+.config-email-info strong {
+    color: #1976D2;
+    font-weight: 600;
+}
