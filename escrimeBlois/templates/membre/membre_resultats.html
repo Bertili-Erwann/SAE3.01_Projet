@@ -1,4 +1,4 @@
-{% extends "membre/membre_navbar.html" if current_user.role == 'membre' else "responsable/responsable_navbar.html" %}
+{% extends "membre/membre_navbar.html" %}
 
 {% block membre %}
     {{ self.page_content() }}
