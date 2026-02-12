@@ -299,7 +299,7 @@ def mdp_oublier_confirmer_mdp():
         # Récupérer l'utilisateur et mettre à jour le mot de passe
         user = Personne.query.filter_by(email_personne=email).first()
         if user:
-            user.password_personne = sha256(newpassword.encode()).hexdigest()
+            user.mdp = sha256(newpassword.encode()).hexdigest()
             user.code_verification_mdp = None
             user.code_verification_expiration = None
             db.session.commit()
