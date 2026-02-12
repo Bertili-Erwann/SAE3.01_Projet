@@ -1,0 +1,34 @@
+#navbar_event {
+  background-color: var(--gray-400);
+  padding: 10px 0;
+  box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+}
+
+#nav_event {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#nav_event>li {
+  flex-basis: 20%;
+  margin: 0 10px;
+}
+
+#nav_event>li:hover {
+  font-weight: bold;
+}
+
+#nav_event .nav-link {
+  text-decoration: none;
+  color: var(--text-main);
+  text-align: center;
+  margin-right: 20px;
+}
+
+#nav_event .nav-link:hover {
+  color: var(--text-black);
+}

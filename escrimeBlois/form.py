@@ -159,7 +159,6 @@ class FormRechercheArticle(FlaskForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Charger les choix dynamiquement
         from .models import Article
         from sqlalchemy import extract
         try:
@@ -168,15 +167,14 @@ class FormRechercheArticle(FlaskForm):
                 extract('month', Article.date_publication).label('month'),
                 func.count().label('count')).group_by(
                     'year', 'month').order_by('year', 'month').all()
-            choices = []
+            choices = [("all", "Tous les mois")]
             for ar in lesArticles:
                 value = f"{ar.month}-{ar.year}"
                 label = f"{ar.month}-{ar.year} ({ar.count})"
                 choices.append((value, label))
             self.choix_year.choices = choices
         except:
-            # Si la table n'existe pas encore (tests), laisser vide
-            self.choix_year.choices = []
+            self.choix_year.choices = [("all", "Tous les mois")]
 
 
 class FormCommentaire(FlaskForm):

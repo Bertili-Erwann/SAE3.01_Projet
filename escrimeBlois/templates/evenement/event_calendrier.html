@@ -29,7 +29,7 @@
 
             <div class="filter-col">
                 <div class="search-wrapper">
-                    <input type="text" name="ville" placeholder="Villes" value="{{ filtres.get('ville', '') }}">
+                    <input type="text" name="ville" placeholder="Rechercher" value="{{ filtres.get('ville', '') }}">
                     <button type="submit" class="search-icon-input" style="border: none; background: none; padding: 0; cursor: pointer; pointer-events: auto;">
                         <img src="{{ url_for('static', filename='images/loupe_recherche.png') }}" alt="Rechercher" style="width: 15px; height: 15px; filter: brightness(0);">
                     </button>

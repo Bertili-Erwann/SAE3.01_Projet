@@ -78,22 +78,28 @@ def redirection_ffescrime():
 @app.route('/demande_article', methods=['GET'])
 def demande_article():
     formRech = FormRechercheArticle()
-    if request.method == 'GET':
-        laRecherche = request.args["recherche"]
-        date = request.args["choix_year"].split(
-            "-")  # index 0 c'est le mois et 1 l'année
-
-        listarticle = list(
-            Article.query.filter(
-                extract('month', Article.date_publication) == date[0]
-                and extract('year', Article.date_publication)
-                == date[1]).filter(Article.titre.contains(laRecherche)))
-
-        return render_template('liste_articles.html',
-                               articles=listarticle,
-                               recherche=laRecherche,date=date)
-    else:
-        return render_template("index.html", formRech=formRech())
+    laRecherche = request.args.get("recherche", "")
+    choix_date = request.args.get("choix_year", "all")
+    
+    query = Article.query
+    
+    if choix_date != "all":
+        date = choix_date.split("-")
+        query = query.filter(
+            extract('month', Article.date_publication) == int(date[0]),
+            extract('year', Article.date_publication) == int(date[1])
+        )
+    
+    if laRecherche:
+        query = query.filter(Article.titre.contains(laRecherche))
+    
+    listarticle = query.order_by(Article.date_publication.desc()).all()
+    date = choix_date.split("-") if choix_date != "all" else None
+    
+    return render_template('liste_articles.html',
+                           articles=listarticle,
+                           recherche=laRecherche,
+                           date=date)
 
 
 @app.route("/historique/")
@@ -363,9 +369,9 @@ def evenement_resultats():
     if selected_competition_id:
         classements = db.session.query(Classer, Inscription, Personne).join(
             Inscription,
-            Classer.id_competition == Inscription.id_inscription).outerjoin(
+            Classer.id_inscription == Inscription.id_inscription).outerjoin(
                 Personne, Inscription.email == Personne.email_personne).filter(
-                    Classer.id_inscription ==
+                    Classer.id_competition ==
                     selected_competition_id).order_by(
                         Classer.point.desc()).all()
 
@@ -378,30 +384,39 @@ def evenement_resultats():
 
 @app.route('/evenement/calendrier')
 def evenement_calendrier():
-    types_selectionnes = request.args.getlist('type')
-    ville_recherche = request.args.get('ville')
-    date_debut = request.args.get('date_debut')
-    date_fin = request.args.get('date_fin')
-    categorie = request.args.get('categorie')
-    niveau = request.args.get('niveau')
     query = Evenement.query
-
+    
+    types_selectionnes = request.args.getlist('type')
     if types_selectionnes:
         query = query.filter(Evenement.type_evenement.in_(types_selectionnes))
-    if ville_recherche:
-        query = query.filter(Evenement.lieu.ilike(f'%{ville_recherche}%'))
+    
+    recherche = request.args.get('ville', '').strip()
+    if recherche:
+        query = query.filter(
+            db.or_(
+                Evenement.nom.ilike(f'%{recherche}%'),
+                Evenement.lieu.ilike(f'%{recherche}%')
+            )
+        )
+    
+    date_debut = request.args.get('date_debut', '').strip()
     if date_debut:
         query = query.filter(Evenement.date >= date_debut)
+    
+    date_fin = request.args.get('date_fin', '').strip()
     if date_fin:
         query = query.filter(Evenement.date <= date_fin)
-    if categorie and categorie != "Toutes catégories":
+    
+    categorie = request.args.get('categorie', 'Toutes catégories')
+    if categorie != "Toutes catégories":
         query = query.filter(Evenement.categorie == categorie)
-    if niveau and niveau != "Niveaux":
+    
+    niveau = request.args.get('niveau', 'Niveaux')
+    if niveau != "Niveaux":
         query = query.filter(Evenement.niveau == niveau)
-
-    query = query.order_by(Evenement.date.asc())
-    evenements = query.all()
-
+    
+    evenements = query.order_by(Evenement.date.asc()).all()
+    
     return render_template('evenement/event_calendrier.html',
                            evenements=evenements,
                            filtres=request.args,
@@ -916,7 +931,7 @@ def responsable_consultation_formulaire(id_formulaire):
         reponse = request.form.get("reponse_formulaire")
         if not reponse:
             flash("Veuillez rédiger une réponse.", "error")
-            return render_template("responsable/resposable_consultation_formulaire.html",
+            return render_template("responsable/responsable_consultation_formulaire.html",
                                    selectedFormulaire=unForm,
                                    form=FormFormulaire())
         # Envoi du mail
@@ -946,7 +961,7 @@ def responsable_consultation_formulaire(id_formulaire):
             app.logger.error(f"Erreur envoi mail: {str(e)}", exc_info=True)
             flash(f"Erreur lors de l'envoi du mail : {str(e)}", "error")
         return redirect(url_for('responsable_gestion_formulaire'))
-    return render_template("responsable/resposable_consultation_formulaire.html",
+    return render_template("responsable/responsable_consultation_formulaire.html",
                            selectedFormulaire=unForm,
                            form=FormFormulaire())
 

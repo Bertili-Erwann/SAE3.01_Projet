@@ -38,18 +38,33 @@
     width: 250px;
     border-radius: 20px;
     border: none;
-    padding: 5px 15px;
+    padding: 8px 15px;
 }
 
 .result-search-btn {
     border-radius: 20px;
     background-color: var(--secondary);
     border: none;
-    padding: 5px 20px;
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-white);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    font-size: 14px;
+    white-space: nowrap;
 }
 
-.result-search-icon {
-    opacity: 0.6;
+.result-search-btn:hover {
+    background-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.result-search-btn .result-search-icon {
+    opacity: 0.8;
+    margin: 0;
+    flex-shrink: 0;
 }
 
 .result-pdf-btn-container {
