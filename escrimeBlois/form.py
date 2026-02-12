@@ -3,6 +3,7 @@ from wtforms.validators import DataRequired, Length, Optional
 from flask_wtf import FlaskForm
 from hashlib import sha256
 from email_validator import validate_email, EmailNotValidError, ValidatedEmail
+from email_validator.exceptions import EmailSyntaxError
 from werkzeug.utils import secure_filename
 from .app import app, db
 from .models import Demande_inscription, Formulaire, Commentaire, Information
@@ -49,9 +50,8 @@ class FormInscription(FlaskForm):
         try:
             return validate_email(self.adresse_mail.data,
                                   check_deliverability=False)
-        except EmailNotValidError as e:
-            print(str(e))
-            raise
+        except (EmailNotValidError, EmailSyntaxError) as e:
+            raise ValueError(f"Adresse email invalide : {str(e)}")
 
     def commit_inscription(self):
         if not self.bon_mdp():
@@ -133,9 +133,8 @@ class FormFormulaire(FlaskForm):
     def format_mail(self) -> ValidatedEmail:
         try:
             return validate_email(self.email.data, check_deliverability=False)
-        except EmailNotValidError as e:
-            print(str(e))
-            raise
+        except (EmailNotValidError, EmailSyntaxError) as e:
+            raise ValueError(f"Adresse email invalide : {str(e)}")
 
     def commit_formulaire(self):
         id_form = self.max_id()
@@ -192,9 +191,8 @@ class FormCommentaire(FlaskForm):
         try:
             return validate_email(self.email_aut.data,
                                   check_deliverability=False)
-        except EmailNotValidError as e:
-            print(str(e))
-            raise
+        except (EmailNotValidError, EmailSyntaxError) as e:
+            raise ValueError(f"Adresse email invalide : {str(e)}")
 
     def envoyer_commentaire(self, id_article: int):
         mail = self.format_mail()
@@ -245,9 +243,8 @@ class FormModifMembre(FlaskForm):
         try:
             return validate_email(self.email.data,
                                   check_deliverability=False)
-        except EmailNotValidError as e:
-            print(str(e))
-            raise
+        except (EmailNotValidError, EmailSyntaxError) as e:
+            raise ValueError(f"Adresse email invalide : {str(e)}")
 
     def update_membre(self, personne):
         """Met à jour les informations d'un membre"""

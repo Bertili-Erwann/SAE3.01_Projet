@@ -54,10 +54,10 @@ def uploaded_file(filename):
 def insert_formulaire():
     form = FormFormulaire()
     if form.validate_on_submit():
-        form.commit_formulaire()
-        flash("Votre message a été envoyé avec succès.", "success") 
-    else:
-        flash("Erreur lors de l'envoi du formulaire.", "error")
+        try:
+            form.commit_formulaire()
+        except ValueError:
+            pass
     return redirect(request.referrer or url_for('index'))
 
 
@@ -223,8 +223,11 @@ def inscription():
 def insert_inscription():
     form = FormInscription()
     if form.validate_on_submit():
-        form.commit_inscription()
-        return redirect(url_for('index'))
+        try:
+            form.commit_inscription()
+            return redirect(url_for('index'))
+        except ValueError:
+            pass
 
     return render_template("inscription.html",
                            formInscription=form,
@@ -342,8 +345,11 @@ def insert_commentaire(ida):
     art = Article.query.get(ida)
     form = FormCommentaire()
     if form.is_submitted():
-        form.envoyer_commentaire(ida)
-        return redirect(url_for('view_article', ida=ida))
+        try:
+            form.envoyer_commentaire(ida)
+            return redirect(url_for('view_article', ida=ida))
+        except ValueError:
+            pass
     # Récupérer les images associées à l'article
     images_article = db.session.query(Image).join(Posseder).filter(
         Posseder.id_article == ida
