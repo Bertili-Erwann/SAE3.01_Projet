@@ -9,6 +9,20 @@
   <p>Mot de passe oublié</p>
 </div>
 <div class="fenetre-mdp-confirmer_mdp">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% if password_changed %}
+    <div class="alert alert-success">
+      <p><b>Mot de passe changé avec succès.</b></p>
+      <p>Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.</p>
+    </div>
+     <a href="{{ url_for('login') }}" id="passwrd-oublie">Revenir à la page de connexion</a>
+  {% else %}
   <form method="POST">
     <!-- NEW MOT DE PASSE -->
     <h2>Nouveau mot de passe</h2>
@@ -31,5 +45,6 @@
     <!-- BOUTON CONFIRMER -->
     <input type="submit" value="Confirmer" />
   </form>
+  {% endif %}
 </div>
 {% endblock %}

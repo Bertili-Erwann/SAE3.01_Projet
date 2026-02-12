@@ -155,6 +155,19 @@ personnes:
     eleve: true
     arme_principale: "Épée"
     niveau: "Débutant"
+  - id_personne: 13
+    mdp: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+    role: "responsonable"
+    nom_personne: "Dramé"
+    prenom_personne: "Zakharia"
+    email_personne: "zakhariadu28@gmail.com"
+    telephone: "0708090605"
+    sexe: "M"
+    adresse: "28 rue de otf,BGS"
+    date_naissance: "2006-07-08"
+    eleve: false
+    arme_principale: "Épée"
+    niveau: "National"
 
 evenements:
   - id_evenement: 1
