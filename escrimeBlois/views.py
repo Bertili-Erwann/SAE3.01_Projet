@@ -924,6 +924,18 @@ def responsable_gestion_formulaire():
                            form=FormFormulaire())
 
 
+@app.route("/responsable/supprimer_formulaire/<id_formulaire>/", methods=["POST"])
+@login_required
+def responsable_supprimer_formulaire(id_formulaire):
+    if current_user.role != "responsable":
+        return redirect(url_for("index"))
+    unForm = Formulaire.query.get(id_formulaire)
+    if unForm:
+        db.session.delete(unForm)
+        db.session.commit()
+    return redirect(url_for("responsable_gestion_formulaire"))
+
+
 @app.route("/responsable/consultation_formulaire/<id_formulaire>/", methods=["GET", "POST"])
 @login_required
 def responsable_consultation_formulaire(id_formulaire):
