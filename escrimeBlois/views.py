@@ -1,10 +1,11 @@
 from flask import flash, redirect, render_template, request, url_for, send_from_directory, session
 from flask_login import login_required, current_user, login_user, logout_user
+from flask_mail import Message
 from werkzeug.utils import secure_filename
 from hashlib import sha256
 from datetime import date, datetime
 from sqlalchemy import extract, func
-from .app import app, db
+from .app import app, db, mail
 from .models import *
 from escrimeBlois.models import (
     Formulaire,
@@ -827,12 +828,36 @@ def responsable_gestion_formulaire():
                            form=FormFormulaire())
 
 
-@app.route("/responsable/consultation_formulaire/<id_formulaire>/")
+@app.route("/responsable/consultation_formulaire/<id_formulaire>/", methods=["GET", "POST"])
 @login_required
 def responsable_consultation_formulaire(id_formulaire):
     if current_user.role != "responsable":
         return redirect(url_for("index"))
     unForm = Formulaire.query.get(id_formulaire)
+    if not unForm:
+        flash("Formulaire non trouvé.", "error")
+        return redirect(url_for("responsable_gestion_formulaire"))
+    if request.method == "POST":
+        reponse = request.form.get("reponse_formulaire")
+        if not reponse:
+            flash("Veuillez rédiger une réponse.", "error")
+            return render_template("responsable/resposable_consultation_formulaire.html",
+                                   selectedFormulaire=unForm,
+                                   form=FormFormulaire())
+        # Envoi du mail
+        try:
+            msg = Message(
+                subject=f"Réponse à votre formulaire : {unForm.objet}",
+                sender=app.config['MAIL_DEFAULT_SENDER'],
+                recipients=[unForm.email_auteur],
+                body=f"Bonjour {unForm.nom_auteur} {unForm.prenom_auteur},\n\nVotre message :\n{unForm.message}\n\nRéponse du responsable :\n{reponse}\n\nCordialement,\nLe club Escrime Blois."
+            )
+            mail.send(msg)
+            flash("Réponse envoyée par mail avec succès !", "success")
+        except Exception as e:
+            app.logger.error(f"Erreur envoi mail: {str(e)}")
+            flash(f"Erreur lors de l'envoi du mail : {str(e)}", "error")
+        return redirect(url_for('responsable_gestion_formulaire'))
     return render_template("responsable/resposable_consultation_formulaire.html",
                            selectedFormulaire=unForm,
                            form=FormFormulaire())
