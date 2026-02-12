@@ -1,6 +1,18 @@
 {% extends "responsable/responsable_navbar.html" %} 
 
 {% block section_resp %}
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert" id="flash-message">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
 <main id="gest_form">
 
     {% if formulaires|length == 0 %}
@@ -31,4 +43,8 @@
         </div>
     {% endif %}
 </main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/flash_messages.js') }}"></script>
 {% endblock %}

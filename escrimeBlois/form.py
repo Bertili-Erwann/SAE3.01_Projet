@@ -341,4 +341,21 @@ class FormGestionMdpOublier(FlaskForm):
             print(f"{'='*60}\n")
             # Retourner l'utilisateur même en cas d'erreur pour permettre le développement
             return user, None
-            
+
+
+class FormConfigurationMail(FlaskForm):
+    """Formulaire pour configurer les paramètres d'envoi d'email"""
+    mail_server = StringField('Serveur SMTP', validators=[DataRequired()], default='smtp.gmail.com')
+    mail_port = IntegerField('Port', validators=[DataRequired()], default=587)
+    mail_use_tls = RadioField('Utiliser TLS', 
+                             choices=[('True', 'Oui'), ('False', 'Non')],
+                             validators=[DataRequired()],
+                             default='True')
+    mail_use_ssl = RadioField('Utiliser SSL',
+                             choices=[('True', 'Oui'), ('False', 'Non')],
+                             validators=[DataRequired()],
+                             default='False')
+    mail_username = StringField('Nom d\'utilisateur / Email', validators=[DataRequired()])
+    mail_password = PasswordField('Mot de passe / Clé API', validators=[DataRequired()])
+    mail_sender_name = StringField('Nom de l\'expéditeur', validators=[DataRequired()], default='Escrime Blois')
+    mail_sender_email = StringField('Email de l\'expéditeur', validators=[DataRequired()], default='noreply@escrimeblois.com')

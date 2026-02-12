@@ -777,6 +777,81 @@ def admin_resultats():
         
     return render_template("admin/admin_miseajour_resultats.html", competitions=competitions, classements=classements, selected_id=selected_competition_id, inscriptions_sans_resultat=inscriptions_sans_resultat)
 
+# Généré par l'ia pour la configuration des mails, à revoir pour la sécurité et la gestion des erreurs
+@app.route('/admin/configuration/email', methods=['GET', 'POST'])
+@login_required
+def admin_configuration_email():
+    from escrimeBlois.form import FormConfigurationMail
+    import os
+    
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    
+    # Cargar variables actuales desde .env
+    mail_config = {
+        'mail_server': os.environ.get('MAIL_SERVER', 'smtp.gmail.com'),
+        'mail_port': os.environ.get('MAIL_PORT', '587'),
+        'mail_use_tls': os.environ.get('MAIL_USE_TLS', 'True'),
+        'mail_use_ssl': os.environ.get('MAIL_USE_SSL', 'False'),
+        'mail_username': os.environ.get('MAIL_USERNAME', ''),
+        'mail_password': os.environ.get('MAIL_PASSWORD', ''),
+        'mail_sender_name': os.environ.get('MAIL_DEFAULT_SENDER_NAME', 'Escrime Blois'),
+        'mail_sender_email': os.environ.get('MAIL_DEFAULT_SENDER_EMAIL', 'noreply@escrimeblois.com'),
+    }
+    
+    form = FormConfigurationMail()
+    
+    if form.validate_on_submit():
+        # Écrire dans le fichier .env
+        env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+        
+        env_content = f"""# Mail Configuration
+MAIL_SERVER={form.mail_server.data}
+MAIL_PORT={form.mail_port.data}
+MAIL_USE_TLS={form.mail_use_tls.data}
+MAIL_USE_SSL={form.mail_use_ssl.data}
+MAIL_USERNAME={form.mail_username.data}
+MAIL_PASSWORD={form.mail_password.data}
+MAIL_DEFAULT_SENDER_NAME={form.mail_sender_name.data}
+MAIL_DEFAULT_SENDER_EMAIL={form.mail_sender_email.data}
+"""
+        
+        try:
+            with open(env_path, 'w') as f:
+                f.write(env_content)
+            # Recharger les variables d'environnement
+            from dotenv import load_dotenv
+            load_dotenv(env_path, override=True)
+            
+            # Recharger la configuration Flask
+            app.config['MAIL_SERVER'] = form.mail_server.data
+            app.config['MAIL_PORT'] = form.mail_port.data
+            app.config['MAIL_USE_TLS'] = form.mail_use_tls.data == 'True'
+            app.config['MAIL_USE_SSL'] = form.mail_use_ssl.data == 'True'
+            app.config['MAIL_USERNAME'] = form.mail_username.data
+            app.config['MAIL_PASSWORD'] = form.mail_password.data
+            app.config['MAIL_DEFAULT_SENDER'] = (form.mail_sender_name.data, form.mail_sender_email.data)
+            
+            flash('Configuration email mise à jour avec succès et appliquée!', 'success')
+        except Exception as e:
+            app.logger.error(f"Erreur lors de la sauvegarde de la configuration: {str(e)}")
+            flash(f'Erreur lors de la sauvegarde: {str(e)}', 'error')
+        
+        return redirect(url_for('admin_configuration_email'))
+    
+    elif request.method == 'GET':
+        # Pré-remplir le formulaire avec les valeurs actuelles
+        form.mail_server.data = mail_config['mail_server']
+        form.mail_port.data = int(mail_config['mail_port'])
+        form.mail_use_tls.data = mail_config['mail_use_tls']
+        form.mail_use_ssl.data = mail_config['mail_use_ssl']
+        form.mail_username.data = mail_config['mail_username']
+        form.mail_password.data = mail_config['mail_password']
+        form.mail_sender_name.data = mail_config['mail_sender_name']
+        form.mail_sender_email.data = mail_config['mail_sender_email']
+    
+    return render_template('admin/admin_configuration_email.html', config_form=form)
+
 
 @app.route('/admin/resultats/update', methods=['POST'])
 @login_required
@@ -846,16 +921,29 @@ def responsable_consultation_formulaire(id_formulaire):
                                    form=FormFormulaire())
         # Envoi du mail
         try:
+            # Vérifier que la configuration du mail est disponible
+            username = app.config.get('MAIL_USERNAME')
+            password = app.config.get('MAIL_PASSWORD')
+            
+            app.logger.debug(f"Config mail - USERNAME: {username}, PASSWORD: {'*' * len(password) if password else 'None'}")
+            
+            if not username or not password:
+                app.logger.error(f"Configuration email incomplète - USERNAME: {username}, PASSWORD: {password}")
+                flash("Erreur : Configuration email non disponible. Contactez l'administrateur.", "error")
+                return redirect(url_for('responsable_gestion_formulaire'))
+            
             msg = Message(
                 subject=f"Réponse à votre formulaire : {unForm.objet}",
                 sender=app.config['MAIL_DEFAULT_SENDER'],
                 recipients=[unForm.email_auteur],
-                body=f"Bonjour {unForm.nom_auteur} {unForm.prenom_auteur},\n\nVotre message :\n{unForm.message}\n\nRéponse du responsable :\n{reponse}\n\nCordialement,\nLe club Escrime Blois."
+                body=f"Bonjour {unForm.nom_auteur},\n\nVotre message :\n{unForm.message}\n\nRéponse du responsable :\n{reponse}\n\nCordialement,\nLe club Escrime Blois."
             )
+            app.logger.debug(f"Envoi d'email à {unForm.email_auteur}")
             mail.send(msg)
+            app.logger.info(f"Email envoyé avec succès à {unForm.email_auteur}")
             flash("Réponse envoyée par mail avec succès !", "success")
         except Exception as e:
-            app.logger.error(f"Erreur envoi mail: {str(e)}")
+            app.logger.error(f"Erreur envoi mail: {str(e)}", exc_info=True)
             flash(f"Erreur lors de l'envoi du mail : {str(e)}", "error")
         return redirect(url_for('responsable_gestion_formulaire'))
     return render_template("responsable/resposable_consultation_formulaire.html",

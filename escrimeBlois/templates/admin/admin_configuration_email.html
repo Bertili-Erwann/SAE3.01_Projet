@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin_configuration_email.css') }}">
+{% endblock %}
+
+{% block main %}
+{% include "admin/admin_navbar_globale.html" %}
+
+<main id="config_email">
+    <h1 class="text_form">Configuration des Paramètres Email</h1>
+    
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <div class="config-email-container">
+        <form method="POST" novalidate>
+            {{ config_form.hidden_tag() }}
+            
+            <!-- Configuration SMTP -->
+            <fieldset class="config-email-fieldset">
+                <legend>⚙️ Configuration SMTP</legend>
+                
+                <!-- Serveur SMTP -->
+                <div class="config-email-form-group">
+                    <label class="config-email-label">{{ config_form.mail_server.label.text }}</label>
+                    {{ config_form.mail_server(class="config-email-input") }}
+                    {% if config_form.mail_server.errors %}
+                        <span class="config-email-error">{{ config_form.mail_server.errors[0] }}</span>
+                    {% endif %}
+                    <span class="config-email-hint">📝 Exemples: smtp.gmail.com, smtp.office365.com, smtp.mailtrap.io, smtp.sendgrid.net</span>
+                </div>
+                
+                <!-- Port -->
+                <div class="config-email-form-group">
+                    <label class="config-email-label">{{ config_form.mail_port.label.text }}</label>
+                    {{ config_form.mail_port(class="config-email-input", type="number") }}
+                    {% if config_form.mail_port.errors %}
+                        <span class="config-email-error">{{ config_form.mail_port.errors[0] }}</span>
+                    {% endif %}
+                    <span class="config-email-hint">📝 Généralement: 587 (TLS) ou 465 (SSL). Consulter les docs de votre fournisseur.</span>
+                </div>
+                
+                <!-- Utiliser TLS -->
+                <div class="config-email-form-group">
+                    <label class="config-email-label">{{ config_form.mail_use_tls.label.text }}</label>
+                    <div class="config-email-radio-wrapper">
+                        {% for choice, label in config_form.mail_use_tls.choices %}
+                            <div class="config-email-radio-group">
+                                <input type="radio" name="mail_use_tls" value="{{ choice }}" id="mail_use_tls_{{ choice }}" {% if config_form.mail_use_tls.data == choice %}checked{% endif %} />
+                                <label for="mail_use_tls_{{ choice }}">{{ label }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if config_form.mail_use_tls.errors %}
+                        <span class="config-email-error">{{ config_form.mail_use_tls.errors[0] }}</span>
+                    {% endif %}
+                </div>
+                
+                <!-- Utiliser SSL -->
+                <div class="config-email-form-group">
+                    <label class="config-email-label">{{ config_form.mail_use_ssl.label.text }}</label>
+                    <div class="config-email-radio-wrapper">
+                        {% for choice, label in config_form.mail_use_ssl.choices %}
+                            <div class="config-email-radio-group">
+                                <input type="radio" name="mail_use_ssl" value="{{ choice }}" id="mail_use_ssl_{{ choice }}" {% if config_form.mail_use_ssl.data == choice %}checked{% endif %} />
+                                <label for="mail_use_ssl_{{ choice }}">{{ label }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if config_form.mail_use_ssl.errors %}
+                        <span class="config-email-error">{{ config_form.mail_use_ssl.errors[0] }}</span>
+                    {% endif %}
+                </div>
+            </fieldset>
+            
+            <!-- Authentification -->
+            <fieldset class="config-email-fieldset">
+                <legend>🔐 Authentification</legend>
+                
+                <!-- Nom d'utilisateur / Email -->
+                <div class="config-email-form-group">
+                    <label class="config-email-label">{{ config_form.mail_username.label.text }}</label>
+                    {{ config_form.mail_username(class="config-email-input") }}
+                    {% if config_form.mail_username.errors %}
+                        <span class="config-email-error">{{ config_form.mail_username.errors[0] }}</span>
+                    {% endif %}
+                    <span class="config-email-hint">📧 Généralement votre adresse email ou identité SMTP fournie par votre fournisseur</span>
+                </div>
+                
+                <!-- Mot de passe / Clé API -->
+                <div class="config-email-form-group">
+                    <label class="config-email-label">{{ config_form.mail_password.label.text }}</label>
+                    {{ config_form.mail_password(class="config-email-input", type="password") }}
+                    {% if config_form.mail_password.errors %}
+                        <span class="config-email-error">{{ config_form.mail_password.errors[0] }}</span>
+                    {% endif %}
+                    <span class="config-email-hint">🔑 Mot de passe ou clé API SMTP. <a href="https://support.google.com/accounts/answer/185833" target="_blank">Gmail</a> / <a href="https://support.microsoft.com/en-us/account-billing/using-app-passwords-with-your-microsoft-account" target="_blank">Outlook</a></span>
+                </div>
+            </fieldset>
+            
+            <!-- Expéditeur -->
+            <fieldset class="config-email-fieldset">
+                <legend>📮 Expéditeur</legend>
+                
+                <!-- Nom de l'expéditeur -->
+                <div class="config-email-form-group">
+                    <label class="config-email-label">{{ config_form.mail_sender_name.label.text }}</label>
+                    {{ config_form.mail_sender_name(class="config-email-input") }}
+                    {% if config_form.mail_sender_name.errors %}
+                        <span class="config-email-error">{{ config_form.mail_sender_name.errors[0] }}</span>
+                    {% endif %}
+                </div>
+                
+                <!-- Email de l'expéditeur -->
+                <div class="config-email-form-group">
+                    <label class="config-email-label">{{ config_form.mail_sender_email.label.text }}</label>
+                    {{ config_form.mail_sender_email(class="config-email-input", type="email") }}
+                    {% if config_form.mail_sender_email.errors %}
+                        <span class="config-email-error">{{ config_form.mail_sender_email.errors[0] }}</span>
+                    {% endif %}
+                </div>
+            </fieldset>
+            
+            <!-- Boutons -->
+            <div class="config-email-buttons">
+                <button type="submit" class="config-email-btn config-email-btn-primary">💾 Enregistrer la configuration</button>
+            </div>
+        </form>
+        
+        <!-- Information -->
+        <div class="config-email-info">
+            <strong>📋 Fournisseurs SMTP populaires:</strong>
+            <ul style="margin-top: 10px; margin-left: 20px;">
+                <li><strong>Gmail:</strong> smtp.gmail.com:587 (TLS) - Nécessite mot de passe application</li>
+                <li><strong>Outlook/Office 365:</strong> smtp.office365.com:587 (TLS)</li>
+                <li><strong>Sendgrid:</strong> smtp.sendgrid.net:587 (TLS) - Utiliser "apikey" comme username</li>
+                <li><strong>Mailgun:</strong> smtp.mailgun.org:587 (TLS)</li>
+                <li><strong>Mailtrap:</strong> smtp.mailtrap.io:2525 (TLS) - Pour les tests</li>
+                <li><strong>Serveur local:</strong> localhost:25 (Pas de TLS/SSL)</li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
