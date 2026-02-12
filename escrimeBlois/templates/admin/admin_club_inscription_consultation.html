@@ -15,7 +15,11 @@
     <p><strong>Sexe :</strong> {{ demande.sexe }}</p>
     <p><strong>Scolarisé/Étudiant :</strong> {% if demande.eleve %}Oui{% else %}Non{% endif %}</p>
     {% if demande.justificatif %}
-    <p><strong>Justificatif :</strong> <a href="#">{{ demande.justificatif }}</a></p>
+    <p><strong>Justificatif :</strong> 
+      <a href="{{ url_for('uploaded_file', filename='files/' + demande.justificatif.filename) }}" target="_blank">
+        📎 {{ demande.justificatif.original_filename or demande.justificatif.filename }}
+      </a>
+    </p>
     {% endif %}
 
     <form method="POST" action="{{ url_for('admin_gestion_inscription_club_view', id_inscription=demande.id_inscription) }}" class="inscription_buttons">

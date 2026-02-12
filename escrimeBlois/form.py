@@ -63,21 +63,16 @@ class FormInscription(FlaskForm):
         m.update(self.mot_de_passe.data.encode('utf-8'))
         est_scolarise = self.eleve.data == 'Oui'
 
-        # Gestion du justificatif
         justificatif_data = None
         file_data = self.justificatif.data
         
         if file_data and getattr(file_data, "filename", ""):
-            # Sécuriser le nom du fichier
             filename = secure_filename(file_data.filename)
-            # Définir le chemin d'upload relatif
-            upload_folder = os.path.join(os.path.dirname(__file__), 'uploads', 'files')
+            upload_folder = os.path.join(os.getcwd(), 'uploads', 'files')
             os.makedirs(upload_folder, exist_ok=True)
-            # Sauvegarder le fichier
             file_path = os.path.join(upload_folder, filename)
             file_data.save(file_path)
             
-            # Stocker les métadonnées en JSON (nom et chemin relatif)
             justificatif_data = {
                 'filename': filename,
                 'path': f'uploads/files/{filename}',

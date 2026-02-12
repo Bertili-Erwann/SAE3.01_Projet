@@ -31,7 +31,6 @@ import os
 
 
 # ======================================== CONFIGURATION ========================================
-# Configuration unique des dossiers d'upload (inclut JUSTIFICATIF_FOLDER)
 UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
 JUSTIFICATIF_FOLDER = os.path.join(os.getcwd(), 'escrimeBlois', 'justificatifs')
 
@@ -218,6 +217,7 @@ def insert_inscription():
     form = FormInscription()
     if form.validate_on_submit():
         form.commit_inscription()
+        return redirect(url_for('index'))
 
     return render_template("inscription.html",
                            formInscription=form,
@@ -323,7 +323,11 @@ def mdp_oublier_confirmer_mdp():
 def view_article(ida):
     art = Article.query.get(ida)
     form = FormCommentaire()
-    return render_template('article.html', article=art, formCom=form)
+    # Récupérer les images associées à l'article
+    images_article = db.session.query(Image).join(Posseder).filter(
+        Posseder.id_article == ida
+    ).all()
+    return render_template('article.html', article=art, formCom=form, images=images_article)
 
 
 @app.route('/article/<ida>/comment', methods=["POST"])
@@ -333,7 +337,11 @@ def insert_commentaire(ida):
     if form.is_submitted():
         form.envoyer_commentaire(ida)
         return redirect(url_for('view_article', ida=ida))
-    return render_template('article.html', article=art, formCom=form)
+    # Récupérer les images associées à l'article
+    images_article = db.session.query(Image).join(Posseder).filter(
+        Posseder.id_article == ida
+    ).all()
+    return render_template('article.html', article=art, formCom=form, images=images_article)
 
 
 @app.route('/evenement')
@@ -447,13 +455,11 @@ def evenement_inscription(id_evenement):
         if form.justificatif.data:
             f = form.justificatif.data
             filename = secure_filename(f.filename)
-            # Définir le chemin d'upload
-            upload_folder = os.path.join(os.path.dirname(__file__), 'uploads', 'files')
+            upload_folder = os.path.join(os.getcwd(), 'uploads', 'files')
             os.makedirs(upload_folder, exist_ok=True)
             file_path = os.path.join(upload_folder, filename)
             f.save(file_path)
             
-            # Stocker les métadonnées en JSON
             justificatif_data = {
                 'filename': filename,
                 'path': f'uploads/files/{filename}',

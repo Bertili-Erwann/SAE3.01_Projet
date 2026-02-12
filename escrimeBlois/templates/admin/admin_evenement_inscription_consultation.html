@@ -9,6 +9,13 @@
     <h3>Informations du participant</h3>
     <p><strong>Nom :</strong> {{ inscription.nom }}</p>
     <p><strong>Prénom :</strong> {{ inscription.prenom }}</p>
+    {% if inscription.justificatif %}
+    <p><strong>Justificatif :</strong> 
+      <a href="{{ url_for('uploaded_file', filename='files/' + inscription.justificatif.filename) }}" target="_blank">
+        📎 {{ inscription.justificatif.original_filename or inscription.justificatif.filename }}
+      </a>
+    </p>
+    {% endif %}
 
     <h3>Informations de l'événement</h3>
     <p><strong>Type :</strong> {{ inscription.evenement.type_evenement }}</p>

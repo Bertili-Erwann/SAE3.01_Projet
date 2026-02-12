@@ -5,20 +5,16 @@
     <a class="btn-back" href="{{ request.referrer or url_for('index') }}">Retour</a>
     <h1>{{ article.titre }}</h1>
     <span class="date-art">{{ article.date_publication }}</span>
+    {% if images and images|length > 0 %}
     <div class="ctn-img">
+      {% for image in images %}
       <img
-        src="{{ url_for('static',filename='images/placeholder1.png') }}"
-        alt="Image article"
+        src="{{ image.url_image }}"
+        alt="{{ image.nom_image }}"
       />
-      <img
-        src="{{ url_for('static',filename='images/placeholder1.png') }}"
-        alt="Image article"
-      />
-      <img
-        src="{{ url_for('static',filename='images/placeholder1.png') }}"
-        alt="Image article"
-      />
+      {% endfor %}
     </div>
+    {% endif %}
     <p>{{ article.description }}</p>
   </div>
 
