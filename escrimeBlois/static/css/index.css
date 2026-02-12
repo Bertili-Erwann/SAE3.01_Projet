@@ -90,18 +90,19 @@
 .articles>article {
   flex: 0 0 280px;
   scroll-snap-align: start;
-  background-color: var(--cold);
-  padding: 2em;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px;
-  padding-top: 15px;
+  background: none;
+  padding: 1.5em;
   margin-bottom: 50px;
   transition: var(--transition-smooth);
-  border-radius: var(--border-radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .articles>article:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 20px 35px;
 }
 
 .articles img {
@@ -117,10 +118,25 @@
   transform: scale(1.05);
 }
 
+.articles a {
+  text-decoration: none;
+  color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .articles h3 {
   font-weight: 650;
   font-size: 20px;
+  color: var(--text-main);
   transition: var(--transition-base);
+}
+
+.articles p {
+  color: var(--text-light);
+  font-size: var(--font-size-sm);
 }
 
 .articles>article:hover h3 {
@@ -164,7 +180,6 @@
 .carousel-btn.next {
   right: 0.5rem;
 }
-
 /* -------------------- Bouton de défilement -------------------- */
 .scroll-down-btn {
   position: absolute;
