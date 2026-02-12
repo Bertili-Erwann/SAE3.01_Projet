@@ -1,6 +1,6 @@
-{% extends "responsable/responsable_navbar.html" %} {% block section_resp %}
+{% extends "membre/membre_navbar.html" %} {% block membre %}
 
-<div class="longbloc"></div>
+<h1 class="text_form">Rédaction d'un article</h1>
 
 <div class="container-article">
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -31,15 +31,15 @@
             <select id="theme" name="theme" class="form-control"
                 required>
                 <option value>Sélectionner un thème</option>
-                <option value="résumé">résumé</option>
-                <option value="compétition">compétition</option>
-                <option value="interview">interview</option>
-                <option value="annonces">annonces</option>
+                <option value="résumé">Résumé</option>
+                <option value="compétition">Compétition</option>
+                <option value="interview">Interview</option>
+                <option value="annonces">Annonces</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label>Fichiers (placer dans l'ordre) :</label>
+            <label>Fichiers (placés dans l'ordre souhaité) :</label>
             <div class="file-upload-area">
                 <div class="drop-zone">
                     <i class="icon-upload"></i>
@@ -63,7 +63,7 @@
         </div>
 
         <div class="form-group">
-            <label for="lien_article">Lien de redirection vers l'article :</label>
+            <label for="lien_article">Lien de redirection vers un article (Optionnel) :</label>
             <input type="url" id="lien" name="lien" placeholder="https://exemple.com/mon-article"
            class="form-control">
         </div>

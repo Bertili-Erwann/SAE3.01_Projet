@@ -1,6 +1,6 @@
-{% extends "responsable/responsable_navbar.html" %}
+{% extends "membre/membre_navbar.html" %}
 
-{% block section_resp %}
+{% block membre %}
 <main>
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -69,7 +69,7 @@
             </section>
             <section id="event_creation__bottom_area">
                 <p>Description</p>
-                <textarea name="bottom_create_event" placeholder="Décrivez le contenu de l'entraînement." rows="11" style="width: 100%;" required></textarea>
+                <textarea name="bottom_create_event" placeholder="Décrivez le contenu de l'événement." rows="11" style="width: 100%;" required></textarea>
                 <input type="submit" id="create_event_save" value="Enregistrer"/>
             </section>
         </div>

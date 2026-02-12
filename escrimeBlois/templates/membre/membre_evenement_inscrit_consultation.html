@@ -3,7 +3,7 @@
 {% block membre %}
 <div class="consultation-container">
     <div class="consultation-section">
-        <h3>Informations Événement</h3>
+        <h3>Informations de l'événement</h3>
         <div class="consultation-grid">
             <div class="consultation-item">
                 <span class="consultation-label">Nom Événement</span>
@@ -29,7 +29,7 @@
     </div>
 
     <div class="consultation-section">
-        <h3>Description Événement</h3>
+        <h3>Description de l'événement</h3>
         <div class="consultation-description">
             <p>{{ evenement.description }}</p>
         </div>
@@ -37,7 +37,7 @@
 
     {% if evenement.type_evenement == 'Compétition' %}
     <div class="consultation-section">
-        <h3>Informations Supplémentaires</h3>
+        <h3>Informations supplémentaires</h3>
         <div class="consultation-grid">
             <div class="consultation-item">
                 <span class="consultation-label">Discipline</span>
