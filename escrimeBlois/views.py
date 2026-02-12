@@ -1034,8 +1034,7 @@ def responsable_ajouter_article():
                     db.session.commit()
                     first_image = False
 
-        flash("Article ajouté avec succès ✅", "success")
-        return redirect(url_for("responsable_ajouter_article"))
+        return redirect(url_for('view_article', ida=article.id_article))
 
     return render_template("responsable/responsable_nouvel_article.html", form=FormFormulaire())
 

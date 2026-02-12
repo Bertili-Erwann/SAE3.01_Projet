@@ -59,6 +59,24 @@
   color: var(--text-white);
 }
 
+.btn-lien {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: var(--primary);
+  color: var(--text-white);
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-lien:hover {
+  background-color: var(--primary-hover);
+  color: var(--text-white);
+  transform: translateY(-2px);
+}
+
 .view-art {
   background-color: var(--text-white);
   padding: 30px;
