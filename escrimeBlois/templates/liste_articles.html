@@ -3,35 +3,39 @@
 <div class="ctn-list-art">
   <div class="list-art ctn-art">
     {% if articles is defined and articles|length > 0 %}
-    <h1>
-      {% if recherche and date %}
-        Les articles pour "{{ recherche }}" du mois {{ date[0]}}/{{date[1]}}
-      {% elif recherche %}
-        Les articles pour "{{ recherche }}"
-      {% elif date %}
-        Les articles pour le {{ date[0]}}/{{date[1]}}
+      {% if recherche != "" %}
+        <h1 class="titre-liste-articles">Les articles pour "{{ recherche }}"</h1>
       {% else %}
-        Tous les articles
+        <h1 class="titre-liste-articles">Les articles pour le {{ date[0]}} / {{date[1]}}</h1>
       {% endif %}
-    </h1>
-    {% for ar in articles %}
-    <a href="{{ url_for('view_article', ida=ar.id_article) }}">
-      <div id="article-{{ ar.id_article }}" class="art">
-        <h2 class="titre-art">{{ ar.titre }}</h2>
-        <p class="date-art">{{ ar.date_publication}}</p>
-        <p class="auteur-art">
-          {{ ar.responsable.nom_personne }} {{ ar.responsable.prenom_personne }}
-        </p>
+      <div class="articles-grid">
+        {% for ar in articles %}
+        <a href="{{ url_for('view_article', ida=ar.id_article) }}" class="article-link">
+          <div id="article-{{ ar.id_article }}" class="art modern-art">
+            <div class="art-img-wrap">
+              <img src="{{ ar.miniature_image.url_image }}" alt="{{ ar.miniature_image.nom_image }}" class="art-img"/>
+            </div>
+            <div class="art-content">
+              <h2 class="titre-art">{{ ar.titre }}</h2>
+              <p class="date-art">{{ ar.date_publication}}</p>
+              <p class="desc">{{ ar.description}}</p>
+              <div class="art-footer">
+                <span class="auteur-art">
+                  {{ ar.responsable.nom_personne }} {{ ar.responsable.prenom_personne }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
       </div>
-    </a>
-    {% endfor %} {% else %}
-    <div class="pas-trouver ctn-art">
-      <h1>
-        La recherche "<span id="obligatoire">{{ recherche }}</span>" n'a pas
-        abouti
-      </h1>
-      <a href="{{ url_for('index') }}"><p>Revenir à la page d'accueil</p></a>
-    </div>
+    {% else %}
+      <div class="pas-trouver ctn-art">
+        <h1>
+          La recherche "<span id="obligatoire">{{ recherche }}</span>" n'a pas abouti
+        </h1>
+        <a href="{{ url_for('index') }}"><p>Revenir à la page d'accueil</p></a>
+      </div>
     {% endif %}
   </div>
 </div>
