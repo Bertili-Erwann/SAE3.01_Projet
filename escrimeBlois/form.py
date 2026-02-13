@@ -3,6 +3,7 @@ from wtforms.validators import DataRequired, Length, Optional
 from flask_wtf import FlaskForm
 from hashlib import sha256
 from email_validator import validate_email, EmailNotValidError, ValidatedEmail
+from email_validator.exceptions import EmailSyntaxError
 from werkzeug.utils import secure_filename
 from .app import app, db
 from .models import Demande_inscription, Formulaire, Commentaire, Information
@@ -49,9 +50,8 @@ class FormInscription(FlaskForm):
         try:
             return validate_email(self.adresse_mail.data,
                                   check_deliverability=False)
-        except EmailNotValidError as e:
-            print(str(e))
-            raise
+        except (EmailNotValidError, EmailSyntaxError) as e:
+            raise ValueError(f"Adresse email invalide : {str(e)}")
 
     def commit_inscription(self):
         if not self.bon_mdp():
@@ -133,9 +133,8 @@ class FormFormulaire(FlaskForm):
     def format_mail(self) -> ValidatedEmail:
         try:
             return validate_email(self.email.data, check_deliverability=False)
-        except EmailNotValidError as e:
-            print(str(e))
-            raise
+        except (EmailNotValidError, EmailSyntaxError) as e:
+            raise ValueError(f"Adresse email invalide : {str(e)}")
 
     def commit_formulaire(self):
         id_form = self.max_id()
@@ -159,7 +158,6 @@ class FormRechercheArticle(FlaskForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Charger les choix dynamiquement
         from .models import Article
         from sqlalchemy import extract
         try:
@@ -168,15 +166,14 @@ class FormRechercheArticle(FlaskForm):
                 extract('month', Article.date_publication).label('month'),
                 func.count().label('count')).group_by(
                     'year', 'month').order_by('year', 'month').all()
-            choices = []
+            choices = [("all", "Tous les mois")]
             for ar in lesArticles:
                 value = f"{ar.month}-{ar.year}"
                 label = f"{ar.month}-{ar.year} ({ar.count})"
                 choices.append((value, label))
             self.choix_year.choices = choices
         except:
-            # Si la table n'existe pas encore (tests), laisser vide
-            self.choix_year.choices = []
+            self.choix_year.choices = [("all", "Tous les mois")]
 
 
 class FormCommentaire(FlaskForm):
@@ -194,9 +191,8 @@ class FormCommentaire(FlaskForm):
         try:
             return validate_email(self.email_aut.data,
                                   check_deliverability=False)
-        except EmailNotValidError as e:
-            print(str(e))
-            raise
+        except (EmailNotValidError, EmailSyntaxError) as e:
+            raise ValueError(f"Adresse email invalide : {str(e)}")
 
     def envoyer_commentaire(self, id_article: int):
         mail = self.format_mail()
@@ -247,9 +243,8 @@ class FormModifMembre(FlaskForm):
         try:
             return validate_email(self.email.data,
                                   check_deliverability=False)
-        except EmailNotValidError as e:
-            print(str(e))
-            raise
+        except (EmailNotValidError, EmailSyntaxError) as e:
+            raise ValueError(f"Adresse email invalide : {str(e)}")
 
     def update_membre(self, personne):
         """Met à jour les informations d'un membre"""
@@ -341,4 +336,21 @@ class FormGestionMdpOublier(FlaskForm):
             print(f"{'='*60}\n")
             # Retourner l'utilisateur même en cas d'erreur pour permettre le développement
             return user, None
-            
+
+
+class FormConfigurationMail(FlaskForm):
+    """Formulaire pour configurer les paramètres d'envoi d'email"""
+    mail_server = StringField('Serveur SMTP', validators=[DataRequired()], default='smtp.gmail.com')
+    mail_port = IntegerField('Port', validators=[DataRequired()], default=587)
+    mail_use_tls = RadioField('Utiliser TLS', 
+                             choices=[('True', 'Oui'), ('False', 'Non')],
+                             validators=[DataRequired()],
+                             default='True')
+    mail_use_ssl = RadioField('Utiliser SSL',
+                             choices=[('True', 'Oui'), ('False', 'Non')],
+                             validators=[DataRequired()],
+                             default='False')
+    mail_username = StringField('Nom d\'utilisateur / Email', validators=[DataRequired()])
+    mail_password = PasswordField('Mot de passe / Clé API', validators=[DataRequired()])
+    mail_sender_name = StringField('Nom de l\'expéditeur', validators=[DataRequired()], default='Escrime Blois')
+    mail_sender_email = StringField('Email de l\'expéditeur', validators=[DataRequired()], default='noreply@escrimeblois.com')

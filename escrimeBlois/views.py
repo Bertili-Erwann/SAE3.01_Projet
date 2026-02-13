@@ -1,10 +1,11 @@
 from flask import flash, redirect, render_template, request, url_for, send_from_directory, session
 from flask_login import login_required, current_user, login_user, logout_user
+from flask_mail import Message
 from werkzeug.utils import secure_filename
 from hashlib import sha256
 from datetime import date, datetime
 from sqlalchemy import extract, func
-from .app import app, db
+from .app import app, db, mail
 from .models import *
 from escrimeBlois.models import (
     Formulaire,
@@ -53,10 +54,10 @@ def uploaded_file(filename):
 def insert_formulaire():
     form = FormFormulaire()
     if form.validate_on_submit():
-        form.commit_formulaire()
-        flash("Votre message a été envoyé avec succès.", "success") 
-    else:
-        flash("Erreur lors de l'envoi du formulaire.", "error")
+        try:
+            form.commit_formulaire()
+        except ValueError:
+            pass
     return redirect(request.referrer or url_for('index'))
 
 
@@ -77,22 +78,28 @@ def redirection_ffescrime():
 @app.route('/demande_article', methods=['GET'])
 def demande_article():
     formRech = FormRechercheArticle()
-    if request.method == 'GET':
-        laRecherche = request.args["recherche"]
-        date = request.args["choix_year"].split(
-            "-")  # index 0 c'est le mois et 1 l'année
-
-        listarticle = list(
-            Article.query.filter(
-                extract('month', Article.date_publication) == date[0]
-                and extract('year', Article.date_publication)
-                == date[1]).filter(Article.titre.contains(laRecherche)))
-
-        return render_template('liste_articles.html',
-                               articles=listarticle,
-                               recherche=laRecherche,date=date)
-    else:
-        return render_template("index.html", formRech=formRech())
+    laRecherche = request.args.get("recherche", "")
+    choix_date = request.args.get("choix_year", "all")
+    
+    query = Article.query
+    
+    if choix_date != "all":
+        date = choix_date.split("-")
+        query = query.filter(
+            extract('month', Article.date_publication) == int(date[0]),
+            extract('year', Article.date_publication) == int(date[1])
+        )
+    
+    if laRecherche:
+        query = query.filter(Article.titre.contains(laRecherche))
+    
+    listarticle = query.order_by(Article.date_publication.desc()).all()
+    date = choix_date.split("-") if choix_date != "all" else None
+    
+    return render_template('liste_articles.html',
+                           articles=listarticle,
+                           recherche=laRecherche,
+                           date=date)
 
 
 @app.route("/historique/")
@@ -216,8 +223,11 @@ def inscription():
 def insert_inscription():
     form = FormInscription()
     if form.validate_on_submit():
-        form.commit_inscription()
-        return redirect(url_for('index'))
+        try:
+            form.commit_inscription()
+            return redirect(url_for('index'))
+        except ValueError:
+            pass
 
     return render_template("inscription.html",
                            formInscription=form,
@@ -335,8 +345,11 @@ def insert_commentaire(ida):
     art = Article.query.get(ida)
     form = FormCommentaire()
     if form.is_submitted():
-        form.envoyer_commentaire(ida)
-        return redirect(url_for('view_article', ida=ida))
+        try:
+            form.envoyer_commentaire(ida)
+            return redirect(url_for('view_article', ida=ida))
+        except ValueError:
+            pass
     # Récupérer les images associées à l'article
     images_article = db.session.query(Image).join(Posseder).filter(
         Posseder.id_article == ida
@@ -362,9 +375,9 @@ def evenement_resultats():
     if selected_competition_id:
         classements = db.session.query(Classer, Inscription, Personne).join(
             Inscription,
-            Classer.id_competition == Inscription.id_inscription).outerjoin(
+            Classer.id_inscription == Inscription.id_inscription).outerjoin(
                 Personne, Inscription.email == Personne.email_personne).filter(
-                    Classer.id_inscription ==
+                    Classer.id_competition ==
                     selected_competition_id).order_by(
                         Classer.point.desc()).all()
 
@@ -377,30 +390,39 @@ def evenement_resultats():
 
 @app.route('/evenement/calendrier')
 def evenement_calendrier():
-    types_selectionnes = request.args.getlist('type')
-    ville_recherche = request.args.get('ville')
-    date_debut = request.args.get('date_debut')
-    date_fin = request.args.get('date_fin')
-    categorie = request.args.get('categorie')
-    niveau = request.args.get('niveau')
     query = Evenement.query
-
+    
+    types_selectionnes = request.args.getlist('type')
     if types_selectionnes:
         query = query.filter(Evenement.type_evenement.in_(types_selectionnes))
-    if ville_recherche:
-        query = query.filter(Evenement.lieu.ilike(f'%{ville_recherche}%'))
+    
+    recherche = request.args.get('ville', '').strip()
+    if recherche:
+        query = query.filter(
+            db.or_(
+                Evenement.nom.ilike(f'%{recherche}%'),
+                Evenement.lieu.ilike(f'%{recherche}%')
+            )
+        )
+    
+    date_debut = request.args.get('date_debut', '').strip()
     if date_debut:
         query = query.filter(Evenement.date >= date_debut)
+    
+    date_fin = request.args.get('date_fin', '').strip()
     if date_fin:
         query = query.filter(Evenement.date <= date_fin)
-    if categorie and categorie != "Toutes catégories":
+    
+    categorie = request.args.get('categorie', 'Toutes catégories')
+    if categorie != "Toutes catégories":
         query = query.filter(Evenement.categorie == categorie)
-    if niveau and niveau != "Niveaux":
+    
+    niveau = request.args.get('niveau', 'Niveaux')
+    if niveau != "Niveaux":
         query = query.filter(Evenement.niveau == niveau)
-
-    query = query.order_by(Evenement.date.asc())
-    evenements = query.all()
-
+    
+    evenements = query.order_by(Evenement.date.asc()).all()
+    
     return render_template('evenement/event_calendrier.html',
                            evenements=evenements,
                            filtres=request.args,
@@ -776,6 +798,81 @@ def admin_resultats():
         
     return render_template("admin/admin_miseajour_resultats.html", competitions=competitions, classements=classements, selected_id=selected_competition_id, inscriptions_sans_resultat=inscriptions_sans_resultat)
 
+# Généré par l'ia pour la configuration des mails, à revoir pour la sécurité et la gestion des erreurs
+@app.route('/admin/configuration/email', methods=['GET', 'POST'])
+@login_required
+def admin_configuration_email():
+    from escrimeBlois.form import FormConfigurationMail
+    import os
+    
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    
+    # Cargar variables actuales desde .env
+    mail_config = {
+        'mail_server': os.environ.get('MAIL_SERVER', 'smtp.gmail.com'),
+        'mail_port': os.environ.get('MAIL_PORT', '587'),
+        'mail_use_tls': os.environ.get('MAIL_USE_TLS', 'True'),
+        'mail_use_ssl': os.environ.get('MAIL_USE_SSL', 'False'),
+        'mail_username': os.environ.get('MAIL_USERNAME', ''),
+        'mail_password': os.environ.get('MAIL_PASSWORD', ''),
+        'mail_sender_name': os.environ.get('MAIL_DEFAULT_SENDER_NAME', 'Escrime Blois'),
+        'mail_sender_email': os.environ.get('MAIL_DEFAULT_SENDER_EMAIL', 'noreply@escrimeblois.com'),
+    }
+    
+    form = FormConfigurationMail()
+    
+    if form.validate_on_submit():
+        # Écrire dans le fichier .env
+        env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+        
+        env_content = f"""# Mail Configuration
+MAIL_SERVER={form.mail_server.data}
+MAIL_PORT={form.mail_port.data}
+MAIL_USE_TLS={form.mail_use_tls.data}
+MAIL_USE_SSL={form.mail_use_ssl.data}
+MAIL_USERNAME={form.mail_username.data}
+MAIL_PASSWORD={form.mail_password.data}
+MAIL_DEFAULT_SENDER_NAME={form.mail_sender_name.data}
+MAIL_DEFAULT_SENDER_EMAIL={form.mail_sender_email.data}
+"""
+        
+        try:
+            with open(env_path, 'w') as f:
+                f.write(env_content)
+            # Recharger les variables d'environnement
+            from dotenv import load_dotenv
+            load_dotenv(env_path, override=True)
+            
+            # Recharger la configuration Flask
+            app.config['MAIL_SERVER'] = form.mail_server.data
+            app.config['MAIL_PORT'] = form.mail_port.data
+            app.config['MAIL_USE_TLS'] = form.mail_use_tls.data == 'True'
+            app.config['MAIL_USE_SSL'] = form.mail_use_ssl.data == 'True'
+            app.config['MAIL_USERNAME'] = form.mail_username.data
+            app.config['MAIL_PASSWORD'] = form.mail_password.data
+            app.config['MAIL_DEFAULT_SENDER'] = (form.mail_sender_name.data, form.mail_sender_email.data)
+            
+            flash('Configuration email mise à jour avec succès et appliquée!', 'success')
+        except Exception as e:
+            app.logger.error(f"Erreur lors de la sauvegarde de la configuration: {str(e)}")
+            flash(f'Erreur lors de la sauvegarde: {str(e)}', 'error')
+        
+        return redirect(url_for('admin_configuration_email'))
+    
+    elif request.method == 'GET':
+        # Pré-remplir le formulaire avec les valeurs actuelles
+        form.mail_server.data = mail_config['mail_server']
+        form.mail_port.data = int(mail_config['mail_port'])
+        form.mail_use_tls.data = mail_config['mail_use_tls']
+        form.mail_use_ssl.data = mail_config['mail_use_ssl']
+        form.mail_username.data = mail_config['mail_username']
+        form.mail_password.data = mail_config['mail_password']
+        form.mail_sender_name.data = mail_config['mail_sender_name']
+        form.mail_sender_email.data = mail_config['mail_sender_email']
+    
+    return render_template('admin/admin_configuration_email.html', config_form=form)
+
 
 @app.route('/admin/resultats/update', methods=['POST'])
 @login_required
@@ -827,13 +924,62 @@ def responsable_gestion_formulaire():
                            form=FormFormulaire())
 
 
-@app.route("/responsable/consultation_formulaire/<id_formulaire>/")
+@app.route("/responsable/supprimer_formulaire/<id_formulaire>/", methods=["POST"])
+@login_required
+def responsable_supprimer_formulaire(id_formulaire):
+    if current_user.role != "responsable":
+        return redirect(url_for("index"))
+    unForm = Formulaire.query.get(id_formulaire)
+    if unForm:
+        db.session.delete(unForm)
+        db.session.commit()
+    return redirect(url_for("responsable_gestion_formulaire"))
+
+
+@app.route("/responsable/consultation_formulaire/<id_formulaire>/", methods=["GET", "POST"])
 @login_required
 def responsable_consultation_formulaire(id_formulaire):
     if current_user.role != "responsable":
         return redirect(url_for("index"))
     unForm = Formulaire.query.get(id_formulaire)
-    return render_template("responsable/resposable_consultation_formulaire.html",
+    if not unForm:
+        flash("Formulaire non trouvé.", "error")
+        return redirect(url_for("responsable_gestion_formulaire"))
+    if request.method == "POST":
+        reponse = request.form.get("reponse_formulaire")
+        if not reponse:
+            flash("Veuillez rédiger une réponse.", "error")
+            return render_template("responsable/responsable_consultation_formulaire.html",
+                                   selectedFormulaire=unForm,
+                                   form=FormFormulaire())
+        # Envoi du mail
+        try:
+            # Vérifier que la configuration du mail est disponible
+            username = app.config.get('MAIL_USERNAME')
+            password = app.config.get('MAIL_PASSWORD')
+            
+            app.logger.debug(f"Config mail - USERNAME: {username}, PASSWORD: {'*' * len(password) if password else 'None'}")
+            
+            if not username or not password:
+                app.logger.error(f"Configuration email incomplète - USERNAME: {username}, PASSWORD: {password}")
+                flash("Erreur : Configuration email non disponible. Contactez l'administrateur.", "error")
+                return redirect(url_for('responsable_gestion_formulaire'))
+            
+            msg = Message(
+                subject=f"Réponse à votre formulaire : {unForm.objet}",
+                sender=app.config['MAIL_DEFAULT_SENDER'],
+                recipients=[unForm.email_auteur],
+                body=f"Bonjour {unForm.nom_auteur},\n\nVotre message :\n{unForm.message}\n\nRéponse du responsable :\n{reponse}\n\nCordialement,\nLe club Escrime Blois."
+            )
+            app.logger.debug(f"Envoi d'email à {unForm.email_auteur}")
+            mail.send(msg)
+            app.logger.info(f"Email envoyé avec succès à {unForm.email_auteur}")
+            flash("Réponse envoyée par mail avec succès !", "success")
+        except Exception as e:
+            app.logger.error(f"Erreur envoi mail: {str(e)}", exc_info=True)
+            flash(f"Erreur lors de l'envoi du mail : {str(e)}", "error")
+        return redirect(url_for('responsable_gestion_formulaire'))
+    return render_template("responsable/responsable_consultation_formulaire.html",
                            selectedFormulaire=unForm,
                            form=FormFormulaire())
 
@@ -888,8 +1034,7 @@ def responsable_ajouter_article():
                     db.session.commit()
                     first_image = False
 
-        flash("Article ajouté avec succès ✅", "success")
-        return redirect(url_for("responsable_ajouter_article"))
+        return redirect(url_for('view_article', ida=article.id_article))
 
     return render_template("responsable/responsable_nouvel_article.html", form=FormFormulaire())
 

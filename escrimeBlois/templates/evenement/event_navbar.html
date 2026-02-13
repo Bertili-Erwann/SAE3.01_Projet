@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/evenement/event_navbar.css') }}">
+{% endblock %}
 
 {% block main %}
 <p id="blank_space"></p>
 <nav>
-   <div id="navbar_two">
-        <ul id="nav_responsable">
-            <!-- SECTION CALENDRIER -->
+   <div id="navbar_event">
+        <ul id="nav_event">
             <li id="event_nav_calendrier">
                 <a class="nav-link" href="{{url_for('evenement_calendrier')}}">Calendrier</a>
             </li>
 
-            <!-- SECTION RÉSULTATS -->
             <li id="event_nav_res">
                 <a class="nav-link" href="{{url_for('evenement_resultats')}}">Résultats</a>
             </li>
 
-            <!-- SECTION CLASSEMENT GLOBAL -->
             <li id="event_nav_classement_glob">
                 <a class="nav-link" href="{{url_for('redirection_ffescrime')}}">Classements nationaux</a>
             </li>
