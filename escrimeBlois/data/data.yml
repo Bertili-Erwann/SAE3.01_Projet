@@ -174,7 +174,7 @@ evenements:
     nom: "Compétition Régionale Épée"
     date: "2025-10-25"
     heure: 14
-    categorie: "Régionale"
+    categorie: "M15"
     lieu: "Salle des sports Blois"
     description: "Compétition régionale d'escrime"
     sexe: "M"
@@ -186,7 +186,7 @@ evenements:
     nom: "Session d'Inscription"
     date: "2025-10-26"
     heure: 10
-    categorie: "Administrative"
+    categorie: null
     lieu: "Bureau du club"
     description: "Session d'inscription pour la saison"
     sexe: null
@@ -198,7 +198,7 @@ evenements:
     nom: "Compétition Club Fleuret"
     date: "2025-11-05"
     heure: 16
-    categorie: "Club"
+    categorie: "M13"
     lieu: "Salle d'escrime Blois"
     description: "Compétition interne au club de fleuret"
     sexe: "M"
@@ -210,7 +210,7 @@ evenements:
     nom: "Entraînement Hebdomadaire"
     date: "2025-11-10"
     heure: 18
-    categorie: "Entraînement"
+    categorie: null
     lieu: "Salle d'escrime Blois"
     description: "Séance d'entraînement hebdomadaire"
     sexe: null
@@ -222,7 +222,7 @@ evenements:
     nom: "Championnat National Sabre"
     date: "2025-11-20"
     heure: 9
-    categorie: "Nationale"
+    categorie: "Séniors"
     lieu: "Palais des Sports, Paris"
     description: "Championnat national de sabre - Toutes catégories"
     sexe: "M"
@@ -234,7 +234,7 @@ evenements:
     nom: "Stage Débutants Fleuret"
     date: "2025-11-15"
     heure: 14
-    categorie: "Formation"
+    categorie: null
     lieu: "Salle d'escrime Blois"
     description: "Stage d'initiation au fleuret pour les débutants"
     sexe: null
@@ -246,7 +246,7 @@ evenements:
     nom: "Gala d'Escrime de Fin d'Année"
     date: "2025-12-15"
     heure: 19
-    categorie: "Événementiel"
+    categorie: null
     lieu: "Salle des fêtes de Blois"
     description: "Soirée de gala avec démonstrations et remise de prix"
     sexe: null
@@ -258,7 +258,7 @@ evenements:
     nom: "Tournoi Mixte Épée et Fleuret"
     date: "2025-12-08"
     heure: 10
-    categorie: "Club"
+    categorie: "M20"
     lieu: "Gymnase Cabochon"
     description: "Compétition mixte ouverte à tous les niveaux"
     sexe: null
@@ -270,7 +270,7 @@ evenements:
     nom: "Entraînement Jeunes M11-M15"
     date: "2025-11-25"
     heure: 17
-    categorie: "Entraînement"
+    categorie: null
     lieu: "Salle d'escrime Blois"
     description: "Séance spéciale pour les jeunes escrimeurs"
     sexe: null
@@ -282,7 +282,7 @@ evenements:
     nom: "Compétition Régionale Féminine"
     date: "2026-01-12"
     heure: 13
-    categorie: "Régionale"
+    categorie: "Séniors"
     lieu: "Salle omnisports Tours"
     description: "Compétition régionale féminine toutes armes"
     sexe: "F"
@@ -294,7 +294,7 @@ evenements:
     nom: "Session Inscription Printemps"
     date: "2026-02-15"
     heure: 10
-    categorie: "Administrative"
+    categorie: null
     lieu: "Bureau du club"
     description: "Session d'inscription pour le semestre de printemps"
     sexe: null
@@ -306,12 +306,120 @@ evenements:
     nom: "Championnat Départemental Sabre"
     date: "2026-02-22"
     heure: 14
-    categorie: "Départementale"
+    categorie: "M17"
     lieu: "Salle des sports Blois"
     description: "Championnat départemental de sabre individuel"
     sexe: "M"
-    niveau: "Club"
+    niveau: "Départemental"
     discipline: "Sabre"
+    cooperative: "Individuel"
+    type_evenement: "Compétition"
+  - id_evenement: 13
+    nom: "Tournoi International Épée"
+    date: "2026-03-10"
+    heure: 9
+    categorie: "Séniors"
+    lieu: "Centre sportif international, Paris"
+    description: "Tournoi international d'épée séniors"
+    sexe: "M"
+    niveau: "International"
+    discipline: "Épée"
+    cooperative: "Individuel"
+    type_evenement: "Compétition"
+  - id_evenement: 14
+    nom: "Compétition Vétérans 1 Fleuret"
+    date: "2026-03-15"
+    heure: 14
+    categorie: "Vétérans 1"
+    lieu: "Salle d'escrime Blois"
+    description: "Compétition régionale pour vétérans 1"
+    sexe: "M"
+    niveau: "Régional"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+    type_evenement: "Compétition"
+  - id_evenement: 15
+    nom: "Championnat Club M11"
+    date: "2026-03-20"
+    heure: 15
+    categorie: "M11"
+    lieu: "Salle d'escrime Blois"
+    description: "Championnat du club pour la catégorie M11"
+    sexe: "M"
+    niveau: "Club"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+    type_evenement: "Compétition"
+  - id_evenement: 16
+    nom: "Compétition M9 Départementale"
+    date: "2026-04-05"
+    heure: 10
+    categorie: "M9"
+    lieu: "Gymnase départemental"
+    description: "Compétition départementale pour les M9"
+    sexe: null
+    niveau: "Départemental"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+    type_evenement: "Compétition"
+  - id_evenement: 17
+    nom: "Tournoi M7 Découverte"
+    date: "2026-04-10"
+    heure: 14
+    categorie: "M7"
+    lieu: "Salle d'escrime Blois"
+    description: "Tournoi d'initiation pour les M7"
+    sexe: null
+    niveau: "Club"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+    type_evenement: "Compétition"
+  - id_evenement: 18
+    nom: "Mini Tournoi M5"
+    date: "2026-04-15"
+    heure: 15
+    categorie: "M5"
+    lieu: "Salle d'escrime Blois"
+    description: "Premier tournoi pour les plus jeunes M5"
+    sexe: null
+    niveau: "Club"
+    discipline: "Fleuret"
+    cooperative: "Individuel"
+    type_evenement: "Compétition"
+  - id_evenement: 19
+    nom: "Compétition Vétérans 2 Sabre"
+    date: "2026-04-20"
+    heure: 10
+    categorie: "Vétérans 2"
+    lieu: "Salle omnisports Tours"
+    description: "Compétition régionale vétérans 2"
+    sexe: "M"
+    niveau: "Régional"
+    discipline: "Sabre"
+    cooperative: "Individuel"
+    type_evenement: "Compétition"
+  - id_evenement: 20
+    nom: "Championnat Vétérans 3 Épée"
+    date: "2026-04-25"
+    heure: 9
+    categorie: "Vétérans 3"
+    lieu: "Centre d'escrime départemental"
+    description: "Championnat départemental vétérans 3"
+    sexe: "M"
+    niveau: "Départemental"
+    discipline: "Épée"
+    cooperative: "Individuel"
+    type_evenement: "Compétition"
+  - id_evenement: 21
+    nom: "Tournoi Vétérans 4 Fleuret"
+    date: "2026-05-05"
+    heure: 14
+    categorie: "Vétérans 4"
+    lieu: "Salle d'escrime Blois"
+    description: "Tournoi amical vétérans 4"
+    sexe: "M"
+    niveau: "Club"
+    discipline: "Fleuret"
     cooperative: "Individuel"
     type_evenement: "Compétition"
 
