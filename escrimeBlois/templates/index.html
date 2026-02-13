@@ -1,0 +1,88 @@
+{% extends "base.html" %} {% block main %}
+<!-- Sidebar de recherche (couvre toute la page) -->
+<aside class="menu-recherche">
+  <button type="button" class="aside-slide" onclick="slider()"> > </button>
+  <div class="ctn-article">
+  </div>
+  <form role="form" method="GET" action="{{ url_for('demande_article') }}">
+    <p class="recherche">Recherche d'articles</p>
+    <div class="ctn-rech">
+      {{ formRech.choix_year(class_="form-control") }}
+      <div class="ctn-valider-rech">
+        {{ formRech.recherche(class_="form-control") }}
+        <input class="btn-rech-ar" type="submit" value="Rechercher">
+      </div>
+    </div>
+  </form>
+</aside>
+<div class="header">
+  <div class="header-content">
+    <h1>Cercle d'Escrime de Blois</h1>
+  </div>
+  <button type="button" class="scroll-down-btn" aria-label="Défiler vers le bas" onclick="scrollToContent()">
+    ↓
+  </button>
+  <img
+    src="{{ url_for('static', filename='images/logo_cercle_escrime_blois.png') }}"
+    alt="Logo du cercle d'éscrime de Blois"
+  />
+</div>
+<button type="button" id="btn-entrant" class="aside-slide" onclick="sliderEntrant()"> < </button>
+<div class="main-content" id="actualite">
+   <div class="carousel-row">
+    <button type="button" class="carousel-btn prev" aria-label="Précédent">
+      ‹
+    </button>
+    <h1> ACTUALITÉ<S></S></h1>
+    <div class="articles">
+      {% for ar in articles %}
+      <article>
+        <a href="{{url_for('view_article',ida=ar.id_article ) }}" class="image featured">
+        {% if ar.miniature_image %}
+        <img src="{{ ar.miniature_image.url_image }}" alt="{{ ar.miniature_image.nom_image }}"/>
+        {% else %}
+        <img src="{{ url_for('static', filename='images/default-article-image.png') }}" alt="Image par défaut"/>
+        {% endif %}
+        <header>
+          <h3>{{ ar.titre }}</h3>
+        </header>
+        <p>{{ar.description}}</p>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+    <button type="button" class="carousel-btn next" aria-label="Suivant">
+      ›
+    </button>
+  </div>
+</div>
+<div class="inscription">
+  <img src="{{ url_for('static', filename='images/escrimeur.png') }}" />
+  <div class="inscription-wrap">
+    <h1>
+      N'attendez plus et cliquez <a href="{{ url_for('inscription') }}">ICI</a
+      ><img src="../static/images/double_fleche.png" />
+    </h1>
+    <h1>pour vous inscrire</h1>
+  </div>
+</div>
+<div class="partenaire">
+  <h1>Nos partenaires</h1>
+  <div id="partenaire-content">
+    <section>
+      <a href="https://www.blois.fr/" target="_blank"><img src="{{ url_for('static', filename='images/logo_blois.png') }}" /></a>
+      <p>Ville de Blois</p>
+    </section>
+    <section>
+      <a href="https://escrimecentre-valdeloire.com/" target="_blank"><img src="{{ url_for('static', filename='images/logo_escrime_centre_val_de_loire.png') }}" /></a>
+      <p>Ligue d'Escrime Centre-Val de Loire</p>
+    </section>
+  </div>
+</div>
+
+{% endblock %} {% block scripts %}
+<script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src= "{{ url_for('static',filename='js/slider.js')}}" ></script>
+<script src= "{{ url_for('static',filename='js/scrollBouton.js')}}" ></script>
+{% endblock %}

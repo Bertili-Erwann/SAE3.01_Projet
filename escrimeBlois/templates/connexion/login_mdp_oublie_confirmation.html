@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block main %}
+<div class="logo-texte">
+  <img
+    src="{{ url_for('static', filename='images/logo_cercle_escrime_blois.png') }}"
+    alt="Logo du cercle d'escrime de Blois"
+    width="100"
+    height="100"
+  />
+  <p>Mot de passe oublié</p>
+</div>
+<div class="fenetre-mdp-confirmer_mdp">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% if password_changed %}
+    <div class="alert alert-success">
+      <p><b>Mot de passe changé avec succès.</b></p>
+      <p>Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.</p>
+    </div>
+     <a href="{{ url_for('login') }}" id="passwrd-oublie">Revenir à la page de connexion</a>
+  {% else %}
+  <form method="POST">
+    <!-- NEW MOT DE PASSE -->
+    <h2>Nouveau mot de passe</h2>
+    <input
+      type="password"
+      name="newpassword"
+      placeholder="Entrez votre mot de passe"
+      required
+    />
+
+    <!-- CONFIRMER NEW MOT DE PASSE -->
+    <h2>Confirmation nouveau mot de passe</h2>
+    <input
+      type="password"
+      name="newpasswordconfirm"
+      placeholder="Entrez votre mot de passe"
+      required
+    />
+
+    <!-- BOUTON CONFIRMER -->
+    <input type="submit" value="Confirmer" />
+  </form>
+  {% endif %}
+</div>
+{% endblock %}

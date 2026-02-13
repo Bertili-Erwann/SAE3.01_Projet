@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin_configuration_email.css') }}">
+{% endblock %}
+
+{% block main %}
+{% include "admin/admin_navbar_globale.html" %}
+
+<main id="config_email">
+    <h1 class="text_form">Configuration des Paramètres Email</h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <div class="container_conf">
+        <form method="POST" novalidate>
+            {{ config_form.hidden_tag() }}
+            
+            <fieldset>
+                <legend>Configuration SMTP</legend>
+                
+                <div class="form-group">
+                    <label>{{ config_form.mail_server.label.text }}</label>
+                    {{ config_form.mail_server(class="") }}
+                    {% if config_form.mail_server.errors %}
+                        <span class="error">{{ config_form.mail_server.errors[0] }}</span>
+                    {% endif %}
+                    <span class="hint">Exemples: smtp.gmail.com, smtp.office365.com</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>{{ config_form.mail_port.label.text }}</label>
+                    {{ config_form.mail_port(class="", type="number") }}
+                    {% if config_form.mail_port.errors %}
+                        <span class="error">{{ config_form.mail_port.errors[0] }}</span>
+                    {% endif %}
+                    <span class="hint">Généralement: 587 (TLS) ou 465 (SSL)</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>{{ config_form.mail_use_tls.label.text }}</label>
+                    <div class="radio-wrapper">
+                        {% for choice, label in config_form.mail_use_tls.choices %}
+                            <div class="radio-group">
+                                <input type="radio" name="mail_use_tls" value="{{ choice }}" id="mail_use_tls_{{ choice }}" {% if config_form.mail_use_tls.data == choice %}checked{% endif %} />
+                                <label for="mail_use_tls_{{ choice }}">{{ label }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if config_form.mail_use_tls.errors %}
+                        <span class="error">{{ config_form.mail_use_tls.errors[0] }}</span>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label>{{ config_form.mail_use_ssl.label.text }}</label>
+                    <div class="radio-wrapper">
+                        {% for choice, label in config_form.mail_use_ssl.choices %}
+                            <div class="radio-group">
+                                <input type="radio" name="mail_use_ssl" value="{{ choice }}" id="mail_use_ssl_{{ choice }}" {% if config_form.mail_use_ssl.data == choice %}checked{% endif %} />
+                                <label for="mail_use_ssl_{{ choice }}">{{ label }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if config_form.mail_use_ssl.errors %}
+                        <span class="error">{{ config_form.mail_use_ssl.errors[0] }}</span>
+                    {% endif %}
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Authentification</legend>
+                
+                <div class="form-group">
+                    <label>{{ config_form.mail_username.label.text }}</label>
+                    {{ config_form.mail_username(class="") }}
+                    {% if config_form.mail_username.errors %}
+                        <span class="error">{{ config_form.mail_username.errors[0] }}</span>
+                    {% endif %}
+                    <span class="hint">Votre adresse email ou identifiant SMTP</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>{{ config_form.mail_password.label.text }}</label>
+                    {{ config_form.mail_password(class="", type="password") }}
+                    {% if config_form.mail_password.errors %}
+                        <span class="error">{{ config_form.mail_password.errors[0] }}</span>
+                    {% endif %}
+                    <span class="hint">Mot de passe ou clé API. <a href="https://support.google.com/accounts/answer/185833" target="_blank">Gmail</a> / <a href="https://support.microsoft.com/en-us/account-billing/using-app-passwords-with-your-microsoft-account" target="_blank">Outlook</a></span>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Expéditeur</legend>
+                
+                <div class="form-group">
+                    <label>{{ config_form.mail_sender_name.label.text }}</label>
+                    {{ config_form.mail_sender_name(class="") }}
+                    {% if config_form.mail_sender_name.errors %}
+                        <span class="error">{{ config_form.mail_sender_name.errors[0] }}</span>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label>{{ config_form.mail_sender_email.label.text }}</label>
+                    {{ config_form.mail_sender_email(class="", type="email") }}
+                    {% if config_form.mail_sender_email.errors %}
+                        <span class="error">{{ config_form.mail_sender_email.errors[0] }}</span>
+                    {% endif %}
+                </div>
+            </fieldset>
+            
+            <div class="btn-group">
+                <button type="submit" class="btn-save">Enregistrer</button>
+            </div>
+        </form>
+        
+        <div class="info-box">
+            <strong>Fournisseurs SMTP populaires:</strong>
+            <ul>
+                <li><strong>Gmail:</strong> smtp.gmail.com:587 (TLS)</li>
+                <li><strong>Outlook/Office 365:</strong> smtp.office365.com:587 (TLS)</li>
+                <li><strong>Sendgrid:</strong> smtp.sendgrid.net:587 (TLS)</li>
+                <li><strong>Mailtrap:</strong> smtp.mailtrap.io:2525 (TLS) - Tests</li>
+                <li><strong>Serveur local:</strong> localhost:25</li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

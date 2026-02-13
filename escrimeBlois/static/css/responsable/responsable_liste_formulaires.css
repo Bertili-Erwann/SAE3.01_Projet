@@ -1,0 +1,103 @@
+/* ==================== Responsable - Liste des formulaires ==================== */
+
+#gest_form {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.text_form {
+  text-align: center;
+  color: var(--text-main);
+  font-size: 32px;
+  margin: 30px 0;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+#table_form {
+  position: relative;
+  padding-top: 60px;
+  border-radius: 10px;
+  overflow: scroll;
+}
+
+#container_table_form {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+#formulaire {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: var(--bg-card);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-light);
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  margin: 0 0 10px 0;
+}
+
+#formulaire:hover {
+  background-color: var(--gray-200);
+  box-shadow: var(--shadow-medium);
+}
+
+#formulaire_infos,
+#formulaire_options {
+  flex-basis: 44%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 3%;
+  margin-right: 3%;
+}
+
+#formulaire_options {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 150px;
+}
+
+.gest_form_button_container {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+#form_consulter,
+#form_supprimer {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 20px;
+  color: var(--text-white);
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  width: auto;
+  margin: 0;
+}
+
+#form_consulter {
+  background-color: var(--gray-600);
+}
+
+#form_consulter:hover {
+  background-color: var(--gray-400);
+  transform: scale(1.05);
+}
+
+#form_supprimer {
+  background-color: var(--danger);
+}
+
+#form_supprimer:hover {
+  background-color: var(--danger-hover);
+  transform: scale(1.05);
+}

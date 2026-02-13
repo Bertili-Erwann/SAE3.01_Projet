@@ -1,0 +1,28 @@
+/* ==================== Membre - Navbar ==================== */
+
+#nav_membre {
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: var(--gray-300);
+    float: none;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+}
+
+
+#nav_membre>li {
+    list-style-type: none;
+    flex-basis: 15%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 5px;
+    display: inline-block;
+    float: none;
+}
+
+#nav_membre>li:hover {
+    font-weight: bold;
+}

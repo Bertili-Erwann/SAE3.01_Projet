@@ -1,0 +1,64 @@
+{% extends "base.html" %} {% block main %}
+<div class="historique-content">
+  <h1>Notre histoire</h1>
+  <img
+    src="{{ url_for('static', filename='images/logo_cercle_escrime_blois.png') }}"
+    alt="logo du CEB"
+  />
+  <div class="limiter">
+    <div class="container-table100">
+      <div class="wrap-table100">
+        <div class="table100">
+          <div class="table100-head">
+            <table>
+              <thead>
+                <tr class="head">
+                  <th class="date">Date</th>
+                  <th class="evenm">Évenement</th>
+                  {% if user.role=="admin" %}
+                  <th class="action"></th>
+                  {% endif %}
+                </tr>
+              </thead>
+            </table>
+          </div>
+
+          <div class="table100-body js-pscroll">
+            <table>
+              <tbody>
+                {% for event in historique %}
+                <tr class="body">
+                  <td class="date">{{ event.date }}</td>
+                  <td class="evenm">
+                    {{ event.description }}
+                  </td>
+                  {% if user.role=="admin" %}
+                  <td class="action">
+                    <form method="POST" action="{{ url_for('supprimer_historique', id_chronologique=event.id_chronologique) }}" style="display:inline;" onsubmit="return confirm('Voulez-vous vraiment supprimer cet événement ?');">
+                      <button type="submit" class="historique_supprimer">Supprimer</button>
+                    </form>
+                  </td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      {% if user.role=="admin" %}
+  <div class="historique-ajout">
+    <h2>Ajouter un événement</h2>
+    <form method="POST" action="{{ url_for('ajouter_historique') }}" class="historique-form">
+      <input type="text" name="date" placeholder="Date" required />
+      <textarea name="description" placeholder="Description" required></textarea>
+      <button type="submit" class="historique_ajouter">Ajouter</button>
+    </form>
+  </div>
+  {% endif %}
+    </div>
+  </div>
+  
+</div>
+
+{% endblock %}

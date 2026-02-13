@@ -1,0 +1,48 @@
+/* ==================== Responsable - Consultation d'un formulaire ==================== */
+
+#consult_form {
+  margin: 20px;
+}
+
+#info_form_area {
+  text-align: center;
+}
+
+.data_form {
+  margin-left: 5px;
+}
+
+.form_area {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+#reponse_form_area {
+  margin-bottom: 20px;
+}
+
+#form_button_area {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 50%;
+  margin-left: 25%;
+}
+
+.form_button_container {
+  width: 30%;
+}
+
+#form_bouton_back,
+#form_bouton_rep {
+  border-radius: 5px;
+  margin-left: 25%;
+  width: 50%;
+}
+
+#form_bouton_back {
+  background-color: var(--danger);
+}
+
+#form_bouton_rep {
+  background-color: var(--primary);
+}

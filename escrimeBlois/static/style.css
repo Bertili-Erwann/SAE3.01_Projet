@@ -1,0 +1,45 @@
+/* ==================== Fichier principal CSS ==================== */
+
+/* Variables et configuration globale */
+@import url('css/variables.css');
+
+/* Styles de base */
+@import url('css/global.css');
+
+/* navbar */
+@import url('css/navbar.css');
+
+/* Pages initiales*/
+@import url('css/index.css');
+@import url('css/auth.css');
+@import url('css/historique.css');
+@import url('css/inscriptions.css');
+@import url('css/renseignements.css');
+@import url('css/footer.css');
+@import url('css/articles.css');
+
+/* ÉVÉNEMENT */
+@import url('css/evenement/event_calendrier.css');
+@import url('css/evenement/event_consultation.css');
+@import url('css/evenement/event_inscription.css');
+@import url('css/evenement/event_resultats.css');
+
+/* MEMBRE */
+@import url('css/membre/membre_evenements_inscrits.css');
+@import url('css/membre/membre_informations.css');
+@import url('css/membre/membre_navbar.css');
+@import url('css/membre/membre_resultats.css');
+
+/* RESPONSABLE */
+@import url('css/responsable/responsable_navbar.css');
+@import url('css/responsable/responsable_liste_formulaires.css');
+@import url('css/responsable/responsable_consultation_formulaire.css');
+@import url('css/responsable/responsable_creation_evenement.css');
+@import url('css/responsable/responsable_nouvel_article.css'); 
+
+/* ADMIN */
+@import url('css/admin/admin_navbar.css');
+@import url('css/admin/admin_miseajour_resultats.css');
+@import url('css/admin/admin_liste_inscriptions.css');
+@import url('css/admin/admin_miseajour_membres.css');
+@import url('css/admin/admin_modification_informations_membre.css');

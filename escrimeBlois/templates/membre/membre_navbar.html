@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block main %}
+<p id="blank_space"></p>
+<nav>
+    {% if current_user.is_authenticated and current_user.role == 'responsable' %}
+    <div id="resp_navbar">
+        <ul id="nav_responsable">
+            <!-- SECTION GESTION FORMULAIRE -->
+            <li id="rnav_gestion_form">
+                <a class="nav-link" href="{{ url_for('responsable_gestion_formulaire') }}">Formulaires</a>
+            </li>
+
+            <!-- SECTION AJOUTER ARTICLE -->
+            <li id="rnav_ajout_art">
+                <a class="nav-link" href="{{ url_for('responsable_ajouter_article')}}">Nouvel article</a>
+            </li>
+
+            <!-- SECTION CREATION EVENEMENTS  -->
+            <li id="rnav_crea_event">
+                <a class="nav-link" href="{{ url_for('responsable_creer_evenement') }}">Nouvel événement</a>
+            </li>
+
+            <!-- SECTION INFORMATIONS PERSONNELLES  -->
+            <li id="rnav_infos_persos">
+                <a class="nav-link" href="{{url_for ('membre_information_personnel')}}">Informations personnelles</a>
+            </li>
+
+            <!-- SECTION RESULTATS PASSES  -->
+            <li id="rnav_res_passes">
+                <a class="nav-link" href="{{url_for ('membre_resultats_passes')}}">Résultats</a>
+            </li>
+
+            <!-- SECTION EVENEMENTS INSCRITS  -->
+            <li id="rnav_event_inscrits">
+                <a class="nav-link" href="{{url_for ('membre_event_inscrits')}}">Événements inscrits</a>
+            </li>
+        </ul>
+    </div>
+    {% else %}
+    <div>
+        <ul id="nav_membre">
+            <!-- SECTION INFORMATIONS PERSONNELLES -->
+            <li id="nav-item">
+                <a class="nav-link" href="{{ url_for('membre_information_personnel') }}">Informations personnelles</a>
+            </li>
+
+            <!-- SECTION RESULTATS PASSES -->
+            <li id="nav-item">
+                <a class="nav-link" href="{{ url_for('membre_resultats_passes') }}">Résultats</a>
+            </li>
+
+            <!-- SECTION EVENEMENTS INSCRITS  -->
+            <li id="nav-item">
+                <a class="nav-link" href="{{ url_for('membre_event_inscrits') }}">Évènements inscrits</a>
+            </li>
+        </ul>
+    </div>
+    {% endif %}
+</nav>
+    <section id="membre" role="membre" class="container-fluid p-0">
+      {% block membre %}{% endblock %}
+    </section>
+    {% endblock %}

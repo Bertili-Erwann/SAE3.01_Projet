@@ -1,0 +1,1222 @@
+from flask import flash, redirect, render_template, request, url_for, send_from_directory, session
+from flask_login import login_required, current_user, login_user, logout_user
+from flask_mail import Message
+from werkzeug.utils import secure_filename
+from hashlib import sha256
+from datetime import date, datetime
+from sqlalchemy import extract, func
+from .app import app, db, mail
+from .models import *
+from escrimeBlois.models import (
+    Formulaire,
+    Personne,
+    Demande_inscription,
+    Inscription,
+    Evenement,
+    Article,
+    Image,
+    Posseder,
+    Classer,
+)
+from escrimeBlois.form import (
+    FormInscription,
+    FormInscriptionEvent,
+    FormFormulaire,
+    FormRechercheArticle,
+    FormCommentaire,
+    FormInformation,
+    FormModifMembre,
+    FormGestionMdpOublier
+)
+import os
+
+
+# ======================================== CONFIGURATION ========================================
+UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
+JUSTIFICATIF_FOLDER = os.path.join(os.getcwd(), 'escrimeBlois', 'justificatifs')
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+if not os.path.exists(JUSTIFICATIF_FOLDER):
+    os.makedirs(JUSTIFICATIF_FOLDER)
+
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+app.config["JUSTIFICATIF_FOLDER"] = JUSTIFICATIF_FOLDER
+
+
+@app.route('/uploads/<path:filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+# ======================================== GESTION FOOTER (Accessible partout) ========================================
+@app.route('/insert_formulaire', methods=['POST'])
+def insert_formulaire():
+    form = FormFormulaire()
+    if form.validate_on_submit():
+        try:
+            form.commit_formulaire()
+        except ValueError:
+            pass
+    return redirect(request.referrer or url_for('index'))
+
+
+# ======================================== PAGES GLOBAL (Accessible partout) ========================================
+
+
+@app.route('/', )
+@app.route('/index/')
+def index():
+    
+    articles = Article.query.order_by(Article.date_publication.desc()).limit(10).all()
+    return render_template("index.html", formRech=FormRechercheArticle(), page_actu = 'home',articles=articles)
+
+@app.route('/event/classement/redirection_ffescrime')
+def redirection_ffescrime():
+   return render_template("evenement/event_classement_global_redirection.html")
+
+@app.route('/demande_article', methods=['GET'])
+def demande_article():
+    formRech = FormRechercheArticle()
+    laRecherche = request.args.get("recherche", "")
+    choix_date = request.args.get("choix_year", "all")
+    
+    query = Article.query
+    
+    if choix_date != "all":
+        date = choix_date.split("-")
+        query = query.filter(
+            extract('month', Article.date_publication) == int(date[0]),
+            extract('year', Article.date_publication) == int(date[1])
+        )
+    
+    if laRecherche:
+        query = query.filter(Article.titre.contains(laRecherche))
+    
+    listarticle = query.order_by(Article.date_publication.desc()).all()
+    date = choix_date.split("-") if choix_date != "all" else None
+    
+    return render_template('liste_articles.html',
+                           articles=listarticle,
+                           recherche=laRecherche,
+                           date=date)
+
+
+@app.route("/historique/")
+def historique():
+    return render_template("historique.html",
+                           historique = Historique.query.order_by(Historique.id_chronologique),
+                           user = current_user,
+                           form=FormFormulaire())
+
+
+@app.route("/historique/ajouter", methods=["POST"])
+@login_required
+def ajouter_historique():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+
+    date_event = request.form.get("date").strip()
+    description = request.form.get("description").strip()
+
+    if not date_event or not description:
+        flash("La date et la description sont obligatoires", "error")
+        return redirect(url_for("historique"))
+
+    try:
+        max_id = db.session.query(func.max(Historique.id_chronologique)).scalar()
+        next_id = max_id + 1
+        event = Historique(id_chronologique=next_id,
+                           date=date_event,
+                           description=description)
+        db.session.add(event)
+        db.session.commit()
+        flash("Événement ajouté avec succès", "success")
+    except Exception:
+        db.session.rollback()
+        flash("Erreur lors de l'ajout de l'événement", "error")
+
+    return redirect(url_for("historique"))
+
+@app.route("/historique/supprimer/<int:id_chronologique>", methods=["POST"])
+@login_required
+def supprimer_historique(id_chronologique:int):
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    try:
+        event = Historique.query.get(id_chronologique)
+        if event:
+            db.session.delete(event)
+            db.session.commit()
+            flash("Historique mis à jours avec succès", "success")
+        else:
+            flash("Événement de l'historique inexistant", "error")
+    except Exception as e:
+        db.session.rollback()
+        flash("Erreur lors de la suppression", "error")
+    return redirect(url_for("historique"))
+
+
+@app.route("/renseignement/")
+def renseignement():
+    infos = Information.query.order_by(Information.ordre).all()
+    return render_template("renseignements.html",
+                           title="renseignement",
+                           form=FormFormulaire(),
+                           infos=infos)
+
+
+@app.route("/login/", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        
+        user = Personne.query.filter_by(email_personne=email).first()
+        
+        if user:
+            m = sha256()
+            m.update(password.encode("utf-8"))
+            hashed_password = m.hexdigest()
+            
+            if user.mdp == hashed_password or user.mdp == password:
+                login_user(user)
+                return redirect(url_for('index')) 
+            else:
+                flash("Mot de passe incorrect.", "error")
+        else:
+            flash("Email inconnu.", "error")
+    return render_template("connexion/login.html", form=FormFormulaire())
+
+
+@app.route("/logout/")
+def logout():
+    logout_user()
+    return redirect(url_for("login"))
+
+@app.route("/login/mdp_oublier", methods=["POST", "GET"])
+def mdp_oublier_etape_1():
+   formAuth = FormGestionMdpOublier()
+
+
+   if formAuth.validate_on_submit():
+       user, error = formAuth.etape_1()
+       if user:
+           session['reset_email'] = user.email_personne
+           return redirect(url_for('mdp_oublier_code'))
+       else:
+           flash(error, "error")
+   return render_template("connexion/mdp_oublier_etape_1.html",
+                          form=FormFormulaire(),
+                          formAuth=formAuth)
+
+
+@app.route("/inscription/", )
+def inscription():
+    form = FormInscription(request.form)
+    return render_template("inscription.html",
+                           formInscription=form,
+                           form=FormFormulaire())
+
+
+@app.route("/inscription/insert", methods=("POST", ))
+def insert_inscription():
+    form = FormInscription()
+    if form.validate_on_submit():
+        try:
+            form.commit_inscription()
+            return redirect(url_for('index'))
+        except ValueError:
+            pass
+
+    return render_template("inscription.html",
+                           formInscription=form,
+                           form=FormFormulaire())
+
+
+@app.route("/login/mdp_oublier_envoyer_code/")
+def mdp_oublier_envoyer_code():
+    return render_template("connexion/login_mdp_oublie_envoi_code.html",
+                           form=FormFormulaire())
+
+
+@app.route("/login/mdp_oublier_code/", methods=["GET", "POST"])
+def mdp_oublier_code():
+    email = session.get('reset_email')
+    
+    if not email:
+        flash("Session expirée. Veuillez recommencer.", "error")
+        return redirect(url_for('mdp_oublier_etape_1'))
+    
+    if request.method == "POST":
+        code = request.form.get('code')
+        user = Personne.query.filter_by(email_personne=email).first()
+        
+        if not user:
+            flash("Utilisateur introuvable.", "error")
+            return redirect(url_for('mdp_oublier_etape_1'))
+        
+        # Vérifier si le code est correct et pas expiré
+        if user.code_verification_mdp == code and user.code_verification_expiration > datetime.now():
+            # Code correct, rediriger vers confirmation
+            return redirect(url_for('mdp_oublier_confirmer_mdp'))
+        elif user.code_verification_expiration <= datetime.now():
+            flash("Le code a expiré. Veuillez recommencer.", "error")
+        else:
+            flash("Code incorrect.", "error")
+        
+        return render_template("connexion/login_mdp_oublie_code.html", 
+                               form=FormFormulaire(),
+                               email=email)
+    
+    return render_template("connexion/login_mdp_oublie_code.html", 
+                           form=FormFormulaire(),
+                           email=email)
+
+
+@app.route("/login/mdp_oublier_confirmer_mdp/", methods=["GET", "POST"])
+def mdp_oublier_confirmer_mdp():
+    email = session.get('reset_email')
+    
+    if not email:
+        flash("Session expirée. Veuillez recommencer.", "error")
+        return redirect(url_for('mdp_oublier_etape_1'))
+    
+    if request.method == "POST":
+        newpassword = request.form.get("newpassword")
+        newpasswordconfirm = request.form.get("newpasswordconfirm")
+
+        if not newpassword or not newpasswordconfirm:
+            flash("Les deux champs de mot de passe sont requis.", "error")
+            return render_template("connexion/login_mdp_oublie_confirmation.html",
+                                   form=FormFormulaire())
+
+        if newpassword != newpasswordconfirm:
+            flash("Les mots de passe ne correspondent pas.", "error")
+            return render_template("connexion/login_mdp_oublie_confirmation.html",
+                                   form=FormFormulaire())
+
+        if len(newpassword) < 8:
+            flash("Le mot de passe doit contenir au moins 8 caractères.", "error")
+            return render_template("connexion/login_mdp_oublie_confirmation.html",
+                                   form=FormFormulaire())
+
+        if not any(c.isalpha() for c in newpassword) or not any(c.isdigit() for c in newpassword):
+            flash("Le mot de passe doit contenir au moins une lettre et un chiffre.", "error")
+            return render_template("connexion/login_mdp_oublie_confirmation.html",
+                                   form=FormFormulaire())
+
+        # Récupérer l'utilisateur et mettre à jour le mot de passe
+        user = Personne.query.filter_by(email_personne=email).first()
+        if user:
+            user.mdp = sha256(newpassword.encode()).hexdigest()
+            user.code_verification_mdp = None
+            user.code_verification_expiration = None
+            db.session.commit()
+            
+            # Nettoyer la session
+            session.pop('reset_email', None)
+            
+            # Afficher le message de succès sans rediriger
+            return render_template("connexion/login_mdp_oublie_confirmation.html",
+                                   form=FormFormulaire(),
+                                   password_changed=True)
+        else:
+            flash("Utilisateur introuvable.", "error")
+            return redirect(url_for('mdp_oublier_etape_1'))
+
+    return render_template("connexion/login_mdp_oublie_confirmation.html",
+                           form=FormFormulaire())
+
+
+@app.route('/article/<ida>/view')
+def view_article(ida):
+    art = Article.query.get(ida)
+    form = FormCommentaire()
+    # Récupérer les images associées à l'article
+    images_article = db.session.query(Image).join(Posseder).filter(
+        Posseder.id_article == ida
+    ).all()
+    return render_template('article.html', article=art, formCom=form, images=images_article)
+
+
+@app.route('/article/<ida>/comment', methods=["POST"])
+def insert_commentaire(ida):
+    art = Article.query.get(ida)
+    form = FormCommentaire()
+    if form.is_submitted():
+        try:
+            form.envoyer_commentaire(ida)
+            return redirect(url_for('view_article', ida=ida))
+        except ValueError:
+            pass
+    # Récupérer les images associées à l'article
+    images_article = db.session.query(Image).join(Posseder).filter(
+        Posseder.id_article == ida
+    ).all()
+    return render_template('article.html', article=art, formCom=form, images=images_article)
+
+
+@app.route('/evenement')
+@app.route('/evenement/')
+def evenement():
+    """Route par défaut pour la section événements - redirige vers le calendrier"""
+    return redirect(url_for('evenement_calendrier'))
+
+
+@app.route('/evenement/resultats')
+def evenement_resultats():
+    competitions = Evenement.query.filter_by(
+        type_evenement='Compétition').all()
+
+    selected_competition_id = request.args.get('competition')
+    classements = []
+
+    if selected_competition_id:
+        classements = db.session.query(Classer, Inscription, Personne).join(
+            Inscription,
+            Classer.id_inscription == Inscription.id_inscription).outerjoin(
+                Personne, Inscription.email == Personne.email_personne).filter(
+                    Classer.id_competition ==
+                    selected_competition_id).order_by(
+                        Classer.point.desc()).all()
+
+    return render_template("evenement/event_resultats.html",
+                           competitions=competitions,
+                           classements=classements,
+                           selected_id=selected_competition_id,
+                           form=FormFormulaire())
+
+
+@app.route('/evenement/calendrier')
+def evenement_calendrier():
+    query = Evenement.query
+    
+    types_selectionnes = request.args.getlist('type')
+    if types_selectionnes:
+        query = query.filter(Evenement.type_evenement.in_(types_selectionnes))
+    
+    recherche = request.args.get('ville', '').strip()
+    if recherche:
+        query = query.filter(
+            db.or_(
+                Evenement.nom.ilike(f'%{recherche}%'),
+                Evenement.lieu.ilike(f'%{recherche}%')
+            )
+        )
+    
+    date_debut = request.args.get('date_debut', '').strip()
+    if date_debut:
+        query = query.filter(Evenement.date >= date_debut)
+    
+    date_fin = request.args.get('date_fin', '').strip()
+    if date_fin:
+        query = query.filter(Evenement.date <= date_fin)
+    
+    categorie = request.args.get('categorie', 'Toutes catégories')
+    if categorie != "Toutes catégories":
+        query = query.filter(Evenement.categorie == categorie)
+    
+    niveau = request.args.get('niveau', 'Niveaux')
+    if niveau != "Niveaux":
+        query = query.filter(Evenement.niveau == niveau)
+    
+    evenements = query.order_by(Evenement.date.asc()).all()
+    
+    return render_template('evenement/event_calendrier.html',
+                           evenements=evenements,
+                           filtres=request.args,
+                           types_selectionnes=types_selectionnes,
+                           form=FormFormulaire())
+
+
+@app.route('/evenement/calendrier/consulter/<int:id_evenement>')
+def evenement_consulter(id_evenement):
+    evenement = Evenement.query.get_or_404(id_evenement)
+    return render_template('evenement/event_consultation.html',
+                           evenement=evenement,
+                           form=FormFormulaire())
+
+
+@app.route('/evenement/inscription/<int:id_evenement>',
+           methods=['GET', 'POST'])
+def evenement_inscription(id_evenement):
+    evenement = Evenement.query.get_or_404(id_evenement)
+
+    if evenement.type_evenement == 'reunion':
+        flash("L'inscription n'est pas disponible pour les réunions.", 'error')
+        return redirect(
+            url_for('evenement_consulter', id_evenement=id_evenement))
+
+    if current_user.is_authenticated:
+        deja_inscrit = Inscription.query.filter_by(
+            id_evenement=id_evenement,
+            nom=current_user.nom_personne,
+            prenom=current_user.prenom_personne).first()
+        if deja_inscrit:
+            flash('Vous êtes déjà inscrit à cet événement.', 'info')
+        else:
+            inscription = Inscription(
+                id_evenement=id_evenement,
+                nom=current_user.nom_personne,
+                prenom=current_user.prenom_personne,
+                email=current_user.email_personne,
+                date_naissance=current_user.date_naissance,
+                sexe=current_user.sexe)
+            db.session.add(inscription)
+            db.session.commit()
+        return redirect(
+            url_for('evenement_consulter',
+                    id_evenement=id_evenement,
+                    inscription_success=True))
+
+    form = FormInscriptionEvent()
+
+    if form.validate_on_submit():
+        justificatif_data = None
+        if form.justificatif.data:
+            f = form.justificatif.data
+            filename = secure_filename(f.filename)
+            upload_folder = os.path.join(os.getcwd(), 'uploads', 'files')
+            os.makedirs(upload_folder, exist_ok=True)
+            file_path = os.path.join(upload_folder, filename)
+            f.save(file_path)
+            
+            justificatif_data = {
+                'filename': filename,
+                'path': f'uploads/files/{filename}',
+                'original_filename': f.filename
+            }
+
+        inscription = Inscription(id_evenement=id_evenement,
+                                  nom=form.nom.data,
+                                  prenom=form.prenom.data,
+                                  email=form.email.data,
+                                  date_naissance=form.date_naissance.data,
+                                  sexe=form.sexe.data,
+                                  justificatif=justificatif_data)
+        db.session.add(inscription)
+        db.session.commit()
+        return redirect(
+            url_for('evenement_consulter',
+                    id_evenement=id_evenement,
+                    inscription_success=True))
+
+    return render_template('evenement/event_inscription.html',
+                           formInsc=form,
+                           id_evenement=id_evenement,
+                           evenement=evenement,
+                           form=FormFormulaire())
+
+
+# ======================================== PAGES ADMIN ========================================
+
+@app.route("/admin/gestion_information")
+@login_required
+def admin_gestion_information():
+    if current_user.role != "admin":
+        return redirect(url_for('login'))
+    infos = Information.query.order_by(Information.ordre).all()
+    return render_template("admin/admin_modification_renseignements.html", infos=infos)
+
+@app.route("/admin/gestion_information/ajouter", methods=["GET", "POST"])
+@login_required
+def admin_ajout_information():
+    if current_user.role != "admin":
+        return redirect(url_for('login'))
+    info_form = FormInformation()
+    if info_form.validate_on_submit():
+        info = Information(titre=info_form.titre.data,
+                           contenu=info_form.contenu.data,
+                           ordre=int(info_form.ordre.data))
+        db.session.add(info)
+        db.session.commit()
+        return redirect(url_for('admin_gestion_information'))
+    return render_template("admin/admin_modification_informations_membre.html", form=FormFormulaire(), info_form=info_form, title="Ajouter une information")
+
+@app.route("/admin/gestion_information/modifier/<int:id>", methods=["GET", "POST"])
+@login_required
+def admin_modif_information(id):
+    if current_user.role != "admin":
+        return redirect(url_for('login'))
+    info = Information.query.get_or_404(id)
+    info_form = FormInformation(obj=info)
+    if info_form.validate_on_submit():
+        info.titre = info_form.titre.data
+        info.contenu = info_form.contenu.data
+        info.ordre = int(info_form.ordre.data)
+        db.session.commit()
+        return redirect(url_for('admin_gestion_information'))
+    return render_template("admin/admin_modification_informations_membre.html", form=FormFormulaire(), info_form=info_form, title="Modifier une information")
+
+@app.route("/admin/gestion_information/supprimer/<int:id>")
+@login_required
+def admin_suppr_information(id):
+    if current_user.role != "admin":
+        return redirect(url_for('login'))
+    info = Information.query.get_or_404(id)
+    db.session.delete(info)
+    db.session.commit()
+    return redirect(url_for('admin_gestion_information'))
+
+
+
+@app.route("/admin/")
+@login_required
+def admin_index():
+    """Page d'accueil admin - redirige vers gestion des inscriptions club"""
+    return redirect(url_for('admin_gestion_inscription_club'))
+
+
+@app.route("/admin/gestion_inscription/club")
+@login_required
+def admin_gestion_inscription_club():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    demandes = Demande_inscription.query.all()
+    return render_template("admin/admin_club_liste_inscriptions.html",
+                           demandes=demandes,
+                           form=FormFormulaire())
+
+
+@app.route("/admin/gestion_inscription/club/view/<int:id_inscription>",
+           methods=["GET", "POST"])
+@login_required
+def admin_gestion_inscription_club_view(id_inscription):
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    demande = Demande_inscription.query.get_or_404(id_inscription)
+    if request.method == "POST":
+        action = request.form.get("action")
+        if action == "accepter":
+            nouveau_membre = Personne(
+                mdp=demande.mot_de_passe,
+                nom_personne=demande.nom,
+                prenom_personne=demande.prenom,
+                email_personne=demande.adresse_mail,
+                telephone=demande.num_tel,
+                sexe=demande.sexe,
+                adresse=demande.adresse_postale,
+                date_naissance=demande.date_naissance,
+                eleve=demande.eleve,
+                arme_principale="Non défini",
+                niveau="Débutant",
+                role="membre",
+            )
+            db.session.add(nouveau_membre)
+            db.session.delete(demande)
+            db.session.commit()
+        elif action == "refuser":
+            db.session.delete(demande)
+            db.session.commit()
+        return redirect(url_for("admin_gestion_inscription_club"))
+    return render_template("admin/admin_club_inscription_consultation.html",
+                           demande=demande,
+                           form=FormFormulaire())
+
+
+@app.route("/admin/gestion_inscription/evenement")
+@login_required
+def admin_gestion_inscription_evenement():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    inscriptions = Inscription.query.all()
+    return render_template("admin/admin_evenement_liste_inscriptions.html",
+                           inscriptions=inscriptions,
+                           form=FormFormulaire())
+
+    
+@app.route("/admin/gestion_inscription/evenement/view/<int:id_inscription>",
+           methods=["GET", "POST"])
+@login_required
+def admin_gestion_inscription_evenement_view(id_inscription):
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    inscription = Inscription.query.get_or_404(id_inscription)
+    if request.method == "POST":
+        action = request.form.get("action")
+        if action == "refuser":
+            db.session.delete(inscription)
+            db.session.commit()
+        return redirect(url_for("admin_gestion_inscription_evenement"))
+    return render_template("admin/admin_evenement_inscription_consultation.html",
+                           inscription=inscription,
+                           form=FormFormulaire())
+
+
+@app.route("/admin/miseajour/membres")
+@login_required
+def admin_miseajour_membres():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    les_responsables = []
+    les_membres = []
+    personne = Personne.query.all()
+    for e in personne:
+        if e.role == "responsable":
+            les_responsables.append(e)
+        elif e.role == "membre":
+            les_membres.append(e)
+    return render_template("admin/admin_miseajour_membres.html",
+                           membres=les_membres,
+                           responsables=les_responsables,
+                           form=FormFormulaire())
+
+
+@app.route("/admin/supprimer/membre/<int:id_personne>", methods=["POST"])
+@login_required
+def supprimer_membre(id_personne):
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    try:
+        personne = Personne.query.get(id_personne)
+        if personne:
+            db.session.delete(personne)
+            db.session.commit()
+            flash("Membre supprimé avec succès", "success")
+        else:
+            flash("Membre non trouvé", "error")
+    except Exception as e:
+        db.session.rollback()
+        flash("Erreur lors de la suppression", "error")
+    return redirect(url_for("admin_miseajour_membres"))
+
+
+@app.route("/admin/modifier/membre/<int:id_personne>", methods=["GET", "POST"])
+@login_required
+def modifier_membre(id_personne):
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    
+    personne = Personne.query.get_or_404(id_personne)
+    
+    if request.method == "POST":
+        from escrimeBlois.form import FormModifMembre
+        form = FormModifMembre()
+        if form.validate_on_submit():
+            try:
+                form.update_membre(personne)
+                flash("Membre modifié avec succès", "success")
+                return redirect(url_for("admin_miseajour_membres"))
+            except Exception as e:
+                db.session.rollback()
+                flash(f"Erreur lors de la modification: {str(e)}", "error")
+        else:
+            flash("Erreur de validation du formulaire", "error")
+    
+    # Pré-remplir le formulaire avec les données existantes
+    from escrimeBlois.form import FormModifMembre
+    form = FormModifMembre(
+        nom=personne.nom_personne,
+        prenom=personne.prenom_personne,
+        email=personne.email_personne,
+        telephone=personne.telephone,
+        sexe=personne.sexe,
+        date_naissance=personne.date_naissance,
+        adresse=personne.adresse,
+        eleve='Oui' if personne.eleve else 'Non',
+        arme_principale=personne.arme_principale,
+        niveau=personne.niveau,
+        role=personne.role
+    )
+    
+    return render_template("admin/admin_modifier_membre.html",
+                         form_modif=form,
+                         personne=personne,
+                         form=FormFormulaire())
+
+
+@app.route('/admin/creation_competition', methods=['GET', 'POST'])
+@login_required
+def admin_creation_competition():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    if request.method == 'POST':
+        name = request.form.get('name_create_event')
+        categories = request.form.get('categories_create_event')
+        date_str = request.form.get('date_create_event')
+        hour_str = request.form.get('hour_create_event')
+        location = request.form.get('location_create_event')
+        description = request.form.get('bottom_create_event')
+        discipline = request.form.get('discipline_comp')
+        sexe = request.form.get('sexe_comp')
+        jeu = request.form.get('jeu_comp')
+        niveau = request.form.get('niveau_comp')
+        date = datetime.strptime(date_str, '%Y-%m-%d').date()
+        hour = datetime.strptime(hour_str, '%H:%M').time()
+        heure_minutes = hour.hour * 60 + hour.minute
+
+        nouvel_evenement = Evenement(nom=name,
+                                     date=date,
+                                     heure=heure_minutes,
+                                     categorie=categories,
+                                     lieu=location,
+                                     description=description,
+                                     sexe=sexe,
+                                     niveau=niveau,
+                                     discipline=discipline,
+                                     cooperative=jeu,
+                                     type_evenement="Compétition")
+
+        db.session.add(nouvel_evenement)
+        db.session.commit()
+        flash('Compétition créée avec succès !', 'success')
+        return redirect(url_for('admin_creation_competition'))
+
+    return render_template('admin/admin_creation_competition.html', form=FormFormulaire())
+
+@app.route('/admin/resultats', methods=['GET'])
+@login_required
+def admin_resultats():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    competitions = Evenement.query.filter_by(type_evenement='Compétition').all()
+    
+    selected_competition_id = request.args.get('competition')
+    classements = []
+    
+    inscriptions_sans_resultat = []
+    
+    if selected_competition_id:
+        classements = db.session.query(Classer, Inscription, Personne).join(
+            Inscription, Classer.id_inscription == Inscription.id_inscription
+        ).outerjoin(
+            Personne, Inscription.email == Personne.email_personne
+        ).filter(
+            Classer.id_competition == selected_competition_id
+        ).order_by(Classer.point.desc()).all()
+        
+        # Récupérer les inscrits qui n'ont pas encore de résultat
+        ids_avec_resultat = [insc.id_inscription for _, insc, _ in classements]
+        inscrits_sans = db.session.query(Inscription, Personne).outerjoin(
+            Personne, Inscription.email == Personne.email_personne
+        ).filter(
+            Inscription.id_evenement == selected_competition_id,
+            ~Inscription.id_inscription.in_(ids_avec_resultat) if ids_avec_resultat else True
+        ).all()
+        inscriptions_sans_resultat = inscrits_sans
+        
+    return render_template("admin/admin_miseajour_resultats.html", competitions=competitions, classements=classements, selected_id=selected_competition_id, inscriptions_sans_resultat=inscriptions_sans_resultat)
+
+# Généré par l'ia pour la configuration des mails, à revoir pour la sécurité et la gestion des erreurs
+@app.route('/admin/configuration/email', methods=['GET', 'POST'])
+@login_required
+def admin_configuration_email():
+    from escrimeBlois.form import FormConfigurationMail
+    import os
+    
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    
+    # Cargar variables actuales desde .env
+    mail_config = {
+        'mail_server': os.environ.get('MAIL_SERVER', 'smtp.gmail.com'),
+        'mail_port': os.environ.get('MAIL_PORT', '587'),
+        'mail_use_tls': os.environ.get('MAIL_USE_TLS', 'True'),
+        'mail_use_ssl': os.environ.get('MAIL_USE_SSL', 'False'),
+        'mail_username': os.environ.get('MAIL_USERNAME', ''),
+        'mail_password': os.environ.get('MAIL_PASSWORD', ''),
+        'mail_sender_name': os.environ.get('MAIL_DEFAULT_SENDER_NAME', 'Escrime Blois'),
+        'mail_sender_email': os.environ.get('MAIL_DEFAULT_SENDER_EMAIL', 'noreply@escrimeblois.com'),
+    }
+    
+    form = FormConfigurationMail()
+    
+    if form.validate_on_submit():
+        # Écrire dans le fichier .env
+        env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+        
+        env_content = f"""# Mail Configuration
+MAIL_SERVER={form.mail_server.data}
+MAIL_PORT={form.mail_port.data}
+MAIL_USE_TLS={form.mail_use_tls.data}
+MAIL_USE_SSL={form.mail_use_ssl.data}
+MAIL_USERNAME={form.mail_username.data}
+MAIL_PASSWORD={form.mail_password.data}
+MAIL_DEFAULT_SENDER_NAME={form.mail_sender_name.data}
+MAIL_DEFAULT_SENDER_EMAIL={form.mail_sender_email.data}
+"""
+        
+        try:
+            with open(env_path, 'w') as f:
+                f.write(env_content)
+            # Recharger les variables d'environnement
+            from dotenv import load_dotenv
+            load_dotenv(env_path, override=True)
+            
+            # Recharger la configuration Flask
+            app.config['MAIL_SERVER'] = form.mail_server.data
+            app.config['MAIL_PORT'] = form.mail_port.data
+            app.config['MAIL_USE_TLS'] = form.mail_use_tls.data == 'True'
+            app.config['MAIL_USE_SSL'] = form.mail_use_ssl.data == 'True'
+            app.config['MAIL_USERNAME'] = form.mail_username.data
+            app.config['MAIL_PASSWORD'] = form.mail_password.data
+            app.config['MAIL_DEFAULT_SENDER'] = (form.mail_sender_name.data, form.mail_sender_email.data)
+            
+            flash('Configuration email mise à jour avec succès et appliquée!', 'success')
+        except Exception as e:
+            app.logger.error(f"Erreur lors de la sauvegarde de la configuration: {str(e)}")
+            flash(f'Erreur lors de la sauvegarde: {str(e)}', 'error')
+        
+        return redirect(url_for('admin_configuration_email'))
+    
+    elif request.method == 'GET':
+        # Pré-remplir le formulaire avec les valeurs actuelles
+        form.mail_server.data = mail_config['mail_server']
+        form.mail_port.data = int(mail_config['mail_port'])
+        form.mail_use_tls.data = mail_config['mail_use_tls']
+        form.mail_use_ssl.data = mail_config['mail_use_ssl']
+        form.mail_username.data = mail_config['mail_username']
+        form.mail_password.data = mail_config['mail_password']
+        form.mail_sender_name.data = mail_config['mail_sender_name']
+        form.mail_sender_email.data = mail_config['mail_sender_email']
+    
+    return render_template('admin/admin_configuration_email.html', config_form=form)
+
+
+@app.route('/admin/resultats/update', methods=['POST'])
+@login_required
+def admin_update_points():
+    if current_user.role != "admin":
+        return redirect(url_for("index"))
+    competition_id = request.form.get('competition_id')
+    
+    for key, value in request.form.items():
+        if key.startswith('points_'):
+            try:
+                _, id_event, id_insc = key.split('_')
+                points = value
+                
+                if points:
+                    classer = Classer.query.filter_by(id_inscription=id_event, id_competition=id_insc).first()
+                    if classer:
+                        classer.point = points
+                    else:
+                        nouveau_classer = Classer(id_inscription=int(id_event), id_competition=int(id_insc), point=int(points))
+                        db.session.add(nouveau_classer)
+            except ValueError:
+                continue
+                
+    db.session.commit()
+    flash('Points mis à jour avec succès', 'success')
+        
+    return redirect(url_for('admin_resultats', competition=competition_id))
+
+
+# ======================================== PAGES RESPONSABLE ========================================
+
+
+@app.route("/responsable/")
+@login_required
+def responsable_index():
+    """Page d'accueil responsable - redirige vers gestion des formulaires"""
+    return redirect(url_for('responsable_gestion_formulaire'))
+
+
+@app.route("/responsable/gestion_formulaire/")
+@login_required
+def responsable_gestion_formulaire():
+    if current_user.role != "responsable":
+        return redirect(url_for("index"))
+    lesFormulaires = Formulaire.query.all()
+    return render_template("responsable/responsable_liste_formulaires.html",
+                           formulaires=lesFormulaires,
+                           form=FormFormulaire())
+
+
+@app.route("/responsable/supprimer_formulaire/<id_formulaire>/", methods=["POST"])
+@login_required
+def responsable_supprimer_formulaire(id_formulaire):
+    if current_user.role != "responsable":
+        return redirect(url_for("index"))
+    unForm = Formulaire.query.get(id_formulaire)
+    if unForm:
+        db.session.delete(unForm)
+        db.session.commit()
+    return redirect(url_for("responsable_gestion_formulaire"))
+
+
+@app.route("/responsable/consultation_formulaire/<id_formulaire>/", methods=["GET", "POST"])
+@login_required
+def responsable_consultation_formulaire(id_formulaire):
+    if current_user.role != "responsable":
+        return redirect(url_for("index"))
+    unForm = Formulaire.query.get(id_formulaire)
+    if not unForm:
+        flash("Formulaire non trouvé.", "error")
+        return redirect(url_for("responsable_gestion_formulaire"))
+    if request.method == "POST":
+        reponse = request.form.get("reponse_formulaire")
+        if not reponse:
+            flash("Veuillez rédiger une réponse.", "error")
+            return render_template("responsable/responsable_consultation_formulaire.html",
+                                   selectedFormulaire=unForm,
+                                   form=FormFormulaire())
+        # Envoi du mail
+        try:
+            # Vérifier que la configuration du mail est disponible
+            username = app.config.get('MAIL_USERNAME')
+            password = app.config.get('MAIL_PASSWORD')
+            
+            app.logger.debug(f"Config mail - USERNAME: {username}, PASSWORD: {'*' * len(password) if password else 'None'}")
+            
+            if not username or not password:
+                app.logger.error(f"Configuration email incomplète - USERNAME: {username}, PASSWORD: {password}")
+                flash("Erreur : Configuration email non disponible. Contactez l'administrateur.", "error")
+                return redirect(url_for('responsable_gestion_formulaire'))
+            
+            msg = Message(
+                subject=f"Réponse à votre formulaire : {unForm.objet}",
+                sender=app.config['MAIL_DEFAULT_SENDER'],
+                recipients=[unForm.email_auteur],
+                body=f"Bonjour {unForm.nom_auteur},\n\nVotre message :\n{unForm.message}\n\nRéponse du responsable :\n{reponse}\n\nCordialement,\nLe club Escrime Blois."
+            )
+            app.logger.debug(f"Envoi d'email à {unForm.email_auteur}")
+            mail.send(msg)
+            app.logger.info(f"Email envoyé avec succès à {unForm.email_auteur}")
+            flash("Réponse envoyée par mail avec succès !", "success")
+        except Exception as e:
+            app.logger.error(f"Erreur envoi mail: {str(e)}", exc_info=True)
+            flash(f"Erreur lors de l'envoi du mail : {str(e)}", "error")
+        return redirect(url_for('responsable_gestion_formulaire'))
+    return render_template("responsable/responsable_consultation_formulaire.html",
+                           selectedFormulaire=unForm,
+                           form=FormFormulaire())
+
+
+@app.route("/responsable/ajouter_article/", methods=["GET", "POST"])
+@login_required
+def responsable_ajouter_article():
+    if current_user.role != "responsable":
+        return redirect(url_for("index"))
+    if request.method == 'POST':
+        # Récupération des champs du formulaire
+        titre = request.form.get('titre')
+        description = request.form.get('description')
+        theme = request.form.get('theme')
+        lien = request.form.get('lien')
+        commentable = True if request.form.get('commentable') == 'on' else False
+        responsable_id = current_user.id_personne
+        fichiers = request.files.getlist('fichiers')
+
+        # Création de l'article
+        article = Article(
+            titre=titre,
+            description=description,
+            categorie=theme,
+            lien=lien,
+            commentable=commentable,
+            responsable_id=responsable_id,
+            date_publication=date.today(),
+        )
+        db.session.add(article)
+        db.session.commit()
+
+        first_image = True
+        for fichier in fichiers:
+            if fichier and fichier.filename != "":
+                chemin_fichier = os.path.join(app.config["UPLOAD_FOLDER"],
+                                              fichier.filename)
+                fichier.save(chemin_fichier)
+
+                image = Image(nom_image=fichier.filename[:15],
+                              url_image=f'/uploads/{fichier.filename}')
+                db.session.add(image)
+                db.session.commit()
+
+                posseder = Posseder(id_image=image.id_image,
+                                    id_article=article.id_article)
+                db.session.add(posseder)
+                db.session.commit()
+
+                if first_image:
+                    article.miniature = image.id_image
+                    db.session.commit()
+                    first_image = False
+
+        return redirect(url_for('view_article', ida=article.id_article))
+
+    return render_template("responsable/responsable_nouvel_article.html", form=FormFormulaire())
+
+
+@app.route("/responsable/creer_evenement/", methods=['GET', 'POST'])
+@login_required
+def responsable_creer_evenement():
+    if current_user.role != "responsable":
+        return redirect(url_for("index"))
+    if request.method == 'POST':
+        name = request.form.get('name_create_event')
+        categories = request.form.get('categories_create_event')
+        date_str = request.form.get('date_create_event')
+        hour_str = request.form.get('hour_create_event')
+        location = request.form.get('location_create_event')
+        description = request.form.get('bottom_create_event')
+        type = request.form.get('types_create_event')
+        date = datetime.strptime(date_str, '%Y-%m-%d').date()
+        hour = datetime.strptime(hour_str, '%H:%M').time()
+        heure_minutes = hour.hour * 60 + hour.minute
+
+        nouvel_evenement = Evenement(nom=name,
+                                     date=date,
+                                     heure=heure_minutes,
+                                     categorie=categories,
+                                     lieu=location,
+                                     description=description,
+                                     sexe=None,
+                                     niveau=None,
+                                     discipline=None,
+                                     cooperative=None,
+                                     type_evenement=type)
+
+        db.session.add(nouvel_evenement)
+        db.session.commit()
+        flash('Événement créé avec succès !', 'success')
+        return redirect(url_for('responsable_creer_evenement'))
+
+    return render_template('responsable/responsable_creation_evenement.html', form=FormFormulaire())
+
+
+# ======================================== PAGES MEMBRES ========================================
+
+
+@app.route("/membre/")
+@login_required
+def membre_index():
+    """Page d'accueil membre - redirige vers informations personnelles"""
+    return redirect(url_for('membre_information_personnel'))
+
+
+@app.route("/membre/information_personnel/")
+@login_required
+def membre_information_personnel():
+    if current_user.role != "membre" and current_user.role != "responsable":
+        return redirect(url_for("index"))
+    return render_template("membre/membre_informations.html",
+                           personne=current_user,
+                           form=FormFormulaire())
+
+# Événements auxquels le membre est inscrit
+@app.route('/membre/event_inscrits/')
+@login_required
+def membre_event_inscrits():
+    if current_user.role != 'membre' and current_user.role != 'responsable':
+        return redirect(url_for('index'))
+
+    inscriptions = Inscription.query.filter_by(
+        nom=current_user.nom_personne,
+        prenom=current_user.prenom_personne).all()
+
+    evenements_inscrits = [
+        insc.evenement for insc in inscriptions if insc.evenement
+    ]
+
+    return render_template('membre/membre_evenements_inscrits.html',
+                           evenements=evenements_inscrits,
+                           form=FormFormulaire())
+
+
+@app.route('/membre/consult_event/<int:id_event>/')
+@login_required
+def membre_consult_event(id_event):
+    if current_user.role != 'membre' and current_user.role != 'responsable':
+        return redirect(url_for('index'))
+
+    event = Evenement.query.get_or_404(id_event)
+    return render_template('membre/membre_evenement_inscrit_consultation.html', evenement=event, form=FormFormulaire())
+
+# Résultats passés du membre
+@app.route('/membre/resultats_passes/')
+@login_required
+def membre_resultats_passes():
+    if current_user.role != 'membre' and current_user.role != 'responsable':
+        return redirect(url_for('index'))
+    
+    resultats = db.session.query(Evenement, Classer).join(
+        Inscription, Inscription.id_evenement == Evenement.id_evenement
+    ).join(
+        Classer, Classer.id_inscription == Inscription.id_inscription
+    ).filter(
+        Classer.id_competition == Evenement.id_evenement,
+        Inscription.email == current_user.email_personne
+    ).order_by(Evenement.date.desc()).all()
+    
+    resultats_finaux = []
+    for evenement, classement_utilisateur in resultats:
+        tous_les_scores = db.session.query(Classer).filter(
+            Classer.id_competition == evenement.id_evenement
+        ).order_by(Classer.point.desc()).all()
+        
+        rang = 1
+        for score in tous_les_scores:
+            if score.id_inscription == classement_utilisateur.id_inscription:
+                break
+            rang += 1
+            
+        resultats_finaux.append({
+            'competition': evenement,
+            'points': classement_utilisateur.point,
+            'rang': rang
+        })
+
+    return render_template('membre/membre_resultats.html', resultats=resultats_finaux, form=FormFormulaire())
+
+@app.route("/membre/information_personnel/changer_mdp/", methods=["POST"])
+@login_required
+def membre_change_password():
+    new_password = request.form.get("new_password")
+    confirm_password = request.form.get("confirm_password")
+
+    if not new_password or not confirm_password:
+        flash("Les deux champs de mot de passe sont requis.", "error")
+        return redirect(url_for("membre_information_personnel"))
+
+    if new_password != confirm_password:
+        flash("Les mots de passe ne correspondent pas.", "error")
+        return redirect(url_for("membre_information_personnel"))
+
+    if len(new_password) < 8:
+        flash("Le mot de passe doit contenir au moins 8 caractères.", "error")
+        return redirect(url_for("membre_information_personnel"))
+
+    if not any(c.isalpha()
+               for c in new_password) or not any(c.isdigit()
+                                                 for c in new_password):
+        flash(
+            "Le mot de passe doit contenir au moins une lettre et un chiffre.",
+            "error")
+        return redirect(url_for("membre_information_personnel"))
+
+    try:
+        m = sha256()
+        m.update(new_password.encode("utf-8"))
+        hashed_password = m.hexdigest()
+        current_user.mdp = hashed_password
+        db.session.commit()
+        flash("Votre mot de passe a été mis à jour avec succès.", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(
+            "Une erreur est survenue lors de la mise à jour du mot de passe.",
+            "error")
+        app.logger.error(
+            f"Erreur lors du changement de mot de passe: {str(e)}")
+
+    return redirect(url_for("membre_information_personnel"))
+
+
+@app.route("/membre/information_personnel/updt_arme_principale",
+           methods=["POST"])
+@login_required
+def membre_update_arme():
+    arme = request.form.get("arme_principale")
+    try:
+        current_user.arme_principale = arme
+        db.session.commit()
+        flash("Votre arme principale a été mise à jour avec succès.",
+              "success")
+    except Exception as e:
+        db.session.rollback()
+        flash("Une erreur est survenue lors de la mise à jour de l'arme.",
+              "error")
+        app.logger.error(f"Erreur lors de la mise à jour de l'arme: {str(e)}")
+    return redirect(url_for('membre_information_personnel'))

@@ -1,0 +1,515 @@
+/* ==================== Styles Globaux ==================== */
+
+/* -------------------- Reset & Base -------------------- */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--text-main);
+  background-color: var(--bg-body);
+  /* Scroll fluide sur toute la page */
+  scroll-behavior: smooth;
+}
+
+/* -------------------- Animations Globales -------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-10px);
+  }
+
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Classes utilitaires d'animation */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.animate-slide-left {
+  animation: slideInLeft 0.5s ease forwards;
+}
+
+.animate-slide-right {
+  animation: slideInRight 0.5s ease forwards;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+a {
+  color: var(--accent-link);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--accent-link-hover);
+  text-decoration: underline;
+}
+
+/* -------------------- Utilitaires -------------------- */
+.hidden {
+  display: none;
+}
+
+#blank_space {
+  padding: 10px;
+}
+
+/* -------------------- Classes de Boutons -------------------- */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--border-radius-pill);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: var(--font-size-sm);
+  text-align: center;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+  box-shadow: var(--shadow-light);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet ripple sur les boutons */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: var(--shadow-medium);
+}
+
+.btn:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: var(--shadow-light);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--text-white);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  color: var(--text-white);
+  text-decoration: none;
+}
+
+.btn-secondary {
+  background-color: var(--gray-600);
+  color: var(--text-white);
+}
+
+.btn-secondary:hover {
+  background-color: var(--gray-700);
+  color: var(--text-white);
+  text-decoration: none;
+}
+
+.btn-success {
+  background-color: var(--success);
+  color: var(--text-white);
+}
+
+.btn-success:hover {
+  background-color: var(--success-hover);
+  color: var(--text-white);
+  text-decoration: none;
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  color: var(--text-white);
+}
+
+.btn-danger:hover {
+  background-color: var(--danger-hover);
+  color: var(--text-white);
+  text-decoration: none;
+}
+
+.btn-warning {
+  background-color: var(--warning);
+  color: var(--text-black);
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+  color: var(--text-black);
+  text-decoration: none;
+}
+
+/* -------------------- Classes de Cartes -------------------- */
+.card {
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-light);
+  transition: var(--transition-smooth);
+}
+
+.card-hover:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-5px);
+}
+
+/* Animation d'entrée pour les cartes */
+.card-animated {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.card-animated:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.card-animated:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.card-animated:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.card-animated:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.card-animated:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+/* -------------------- Formulaires -------------------- */
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-base);
+  background-color: var(--text-white);
+  transition: var(--transition-smooth);
+  box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  background-color: var(--text-white);
+  box-shadow: 0 0 0 3px rgba(102, 145, 255, 0.2);
+  transform: scale(1.01);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* -------------------- Utilitaires de Texte -------------------- */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-muted {
+  color: var(--text-light);
+}
+
+.text-white {
+  color: var(--text-white);
+}
+
+.text-danger {
+  color: var(--danger);
+}
+
+.text-success {
+  color: var(--success);
+}
+
+/* -------------------- Utilitaires de Margin/Padding -------------------- */
+.mt-0 {
+  margin-top: 0;
+}
+
+.mt-1 {
+  margin-top: var(--spacing-sm);
+}
+
+.mt-2 {
+  margin-top: var(--spacing-md);
+}
+
+.mt-3 {
+  margin-top: var(--spacing-lg);
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mb-1 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.mb-2 {
+  margin-bottom: var(--spacing-md);
+}
+
+.mb-3 {
+  margin-bottom: var(--spacing-lg);
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* -------------------- Sidebar de recherche (globale) -------------------- */
+.menu-recherche {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  /* Prend toute la hauteur */
+  z-index: 100;
+  overflow-y: auto;
+  width: 280px;
+  max-width: 85vw;
+  box-sizing: border-box;
+  background-color: rgba(40, 40, 40, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: none;
+  /* Fermée par défaut */
+  flex-direction: column;
+  align-items: stretch;
+  padding: 12px;
+  padding-top: 70px;
+  /* Espace pour la navbar */
+  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Quand jQuery ajoute display:block via toggle, on force flex */
+.menu-recherche[style*="block"] {
+  display: flex !important;
+}
+
+.aside-slide {
+  background-color: var(--cold-dark);
+  border-radius: 25px;
+  align-self: center;
+  margin: 8px 0 12px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.aside-slide:hover {
+  background-color: var(--cold);
+  transform: scale(1.05);
+}
+
+.menu-recherche p {
+  background-color: var(--gray-500);
+  border-radius: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 10px 0;
+  padding: 8px 12px;
+  transition: var(--transition-smooth);
+}
+
+.menu-recherche p:hover {
+  background-color: var(--gray-400);
+}
+
+.ctn-rech {
+  margin: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ctn-rech .form-control {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+  background-color: var(--text-white);
+  font-size: var(--font-size-base);
+  transition: var(--transition-smooth);
+}
+
+.ctn-rech .form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(102, 145, 255, 0.2);
+}
+
+.ctn-valider-rech {
+  display: flex;
+  gap: 8px;
+  margin-block: 10px;
+}
+
+.btn-rech-ar {
+  background-color: var(--cold);
+  border-radius: var(--border-radius-sm);
+  font-weight: 300;
+  transition: var(--transition-smooth);
+}
+
+.btn-rech-ar:hover {
+  background-color: var(--primary);
+  color: var(--text-white);
+}
+
+#recherche {
+  border-radius: 25px;
+  transition: var(--transition-smooth);
+}
+
+#recherche:focus {
+  box-shadow: 0 0 0 3px rgba(102, 145, 255, 0.3);
+}
+
+#btn-entrant {
+  position: fixed;
+  right: 0;
+  z-index: 99;
+  top: 50%;
+  transform: translateY(-50%);
+  width: fit-content;
+  padding: 8px 12px;
+  background-color: var(--primary);
+  color: var(--text-white);
+  border: none;
+  border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: var(--shadow-medium);
+}
+
+#btn-entrant.hidden {
+  display: none !important;
+}
+
+#btn-entrant:hover {
+  background-color: var(--primary-hover);
+  padding-right: 18px;
+}

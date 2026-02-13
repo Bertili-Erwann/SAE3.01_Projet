@@ -1,0 +1,154 @@
+/* ==================== Footer ==================== */
+
+/* -------------------- Conteneur principal -------------------- */
+#footer {
+  background-color: var(--bg-footer);
+}
+
+#foot_title {
+  text-align: center;
+  color: var(--text-white);
+  padding: 2%;
+}
+
+/* -------------------- Sections -------------------- */
+#foot_section_1 {
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 20px;
+}
+
+#foot_section_2 {
+  flex: 1;
+  max-width: 60%;
+  padding-right: 20px;
+}
+
+#foot_section_2 form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#foot_section_2_bis {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 40%;
+  margin-bottom: 5%;
+}
+
+/* -------------------- Champs formulaire -------------------- */
+.form-row-footer {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+}
+
+.form-row-footer .form-control {
+  flex: 1;
+}
+
+#foot_section_2 .form-control {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font-size: 14px;
+  background-color: var(--bg-body);
+  resize: vertical;
+}
+
+#foot_section_2 .form-control:focus {
+  outline: none;
+  border-color: var(--gray-600);
+  background-color: var(--text-white);
+}
+
+#foot_bouton_robot {
+  flex: 1;
+  padding: 12px 20px;
+  background-color: var(--gray-200);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#foot_bouton_robot:hover {
+  background-color: var(--gray-300);
+}
+
+#foot_bouton_envoi {
+  flex: 1;
+  padding: 12px 20px;
+  background-color: var(--accent-coral);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  color: var(--text-white);
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#foot_bouton_envoi:hover {
+  background-color: var(--danger-hover);
+}
+
+#foot_bouton_envoi img {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) invert(1);
+}
+
+/* -------------------- Logo & texte -------------------- */
+#foot_logo_CEB {
+  width: 60px;
+  height: 60px;
+  margin-top: 15px;
+  display: block;
+}
+
+#foot_last_line {
+  color: var(--text-white);
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* -------------------- Informations de contact -------------------- */
+#foot_div_1,
+#foot_div_2,
+#foot_div_3 {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-basis: 60%;
+  margin-right: 38%;
+  margin-left: 2%;
+  margin-top: 2%;
+}
+
+#foot_image_email,
+#foot_image_tel,
+#foot_image_geo {
+  margin-right: 2%;
+  width: 30px;
+  height: 30px;
+}
+
+#foot_adresse_email,
+#foot_num_tel,
+#foot_adresse_postale {
+  color: var(--text-white);
+}
+
+#foot_adresse_postale:hover,
+#foot_num_tel:hover,
+#foot_adresse_email:hover {
+  color: var(--primary);
+}
+
+#foot_map {
+  margin-left: 2%;
+}

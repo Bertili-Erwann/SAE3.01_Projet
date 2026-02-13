@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block main %}
+<div class="firstbloc"></div>
+
+{% for info in infos %}
+<div class="rens">
+  <input type="checkbox" id="bloc{{ loop.index }}" class="toggle" />
+  <label for="bloc{{ loop.index }}" class="TRens">{{ info.titre }}</label>
+  <div class="contenu">
+    {{ info.contenu | safe }}
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

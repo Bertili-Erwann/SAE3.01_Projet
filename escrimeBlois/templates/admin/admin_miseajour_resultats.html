@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin_miseajour_resultats.css') }}">
+{% endblock %}
+
+{% block main %}
+<main id="admin_nav" role="admin_nav" class="container-fluid p-0">
+  {% include "admin/admin_navbar_globale.html" %}
+</main>
+<div id='blank_space'></div>
+<h1 class="text_form">Gestion des résultats de compétitions</h1>
+<div class="result-page-container">
+    <div class="result-search-bar">
+        <form method="GET" action="{{ url_for('admin_resultats') }}" class="result-search-form">
+            <select name="competition" id="competition-select" class="form-control result-search-select">
+                <option value="">Sélectionner une compétition</option>
+                {% for comp in competitions %}
+                    <option value="{{ comp.id_evenement }}" {% if selected_id|int == comp.id_evenement %}selected{% endif %}>
+                        {{ comp.nom }} - {{ comp.date.strftime('%d/%m/%Y') if comp.date else 'Date non définie' }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="result-search-btn">
+                Afficher
+                <img src="{{ url_for('static', filename='images/loupe_recherche.png') }}" alt="Recherche" width="20" class="result-search-icon">
+            </button>
+        </form>
+    </div>
+
+    {% if selected_id %}
+    <!-- Formulaire de mise à jour des résultats -->
+    <form action="{{ url_for('admin_update_points') }}" method="POST">
+        <input type="hidden" name="competition_id" value="{{ selected_id }}">
+        
+        <div class="result-table-container">
+            <h2>Participants avec résultats</h2>
+            {% if classements %}
+            <table class="result-table">
+                <thead>
+                    <tr class="result-table-header">
+                        <th class="result-table-th">Position</th>
+                        <th class="result-table-th">Nom</th>
+                        <th class="result-table-th">Prénom</th>
+                        <th class="result-table-th">Membre</th>
+                        <th class="result-table-th">Points actuels</th>
+                        <th class="result-table-th">Nouveaux points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for classer, inscription, personne in classements %}
+                    <tr class="result-table-row">
+                        <td class="result-table-td">{{ loop.index }}</td>
+                        <td class="result-table-td">{{ inscription.nom }}</td>
+                        <td class="result-table-td">{{ inscription.prenom }}</td>
+                        <td class="result-table-td">
+                            {% if personne and personne.role == 'membre' %}
+                                <span class="badge bg-success">Oui</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Non</span>
+                            {% endif %}
+                        </td>
+                        <td class="result-table-td">{{ classer.point }}</td>
+                        <td class="result-table-td">
+                            <input type="number" name="points_{{ inscription.id_inscription }}_{{ selected_id }}" 
+                                   value="{{ classer.point }}" 
+                                   class="form-control result-points-input" 
+                                   min="0" step="1" placeholder="Points">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="text-muted">Aucun résultat enregistré pour cette compétition.</p>
+            {% endif %}
+        </div>
+
+        {% if inscriptions_sans_resultat %}
+        <div class="result-table-container mt-4">
+            <h2>Participants sans résultats</h2>
+            <table class="result-table">
+                <thead>
+                    <tr class="result-table-header">
+                        <th class="result-table-th">Nom</th>
+                        <th class="result-table-th">Prénom</th>
+                        <th class="result-table-th">Membre</th>
+                        <th class="result-table-th">Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inscription, personne in inscriptions_sans_resultat %}
+                    <tr class="result-table-row-new">
+                        <td class="result-table-td">{{ inscription.nom }}</td>
+                        <td class="result-table-td">{{ inscription.prenom }}</td>
+                        <td class="result-table-td">
+                            {% if personne and personne.role == 'membre' %}
+                                <span class="badge bg-success">Oui</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Non</span>
+                            {% endif %}
+                        </td>
+                        <td class="result-table-td">
+                            <input type="number" name="points_{{ inscription.id_inscription }}_{{ selected_id }}" 
+                                   class="form-control result-points-input" 
+                                   min="0" step="1" placeholder="Ajouter points">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        <div class="result-submit-container">
+            <button type="submit" class="btn btn-success btn-lg">
+                <i class="fas fa-save"></i> Enregistrer tous les résultats
+            </button>
+            <a href="{{ url_for('admin_resultats') }}" class="btn btn-secondary btn-lg">
+                <i class="fas fa-times"></i> Annuler
+            </a>
+        </div>
+    </form>
+    {% else %}
+    <div class="alert alert-info text-center">
+        <i class="fas fa-info-circle"></i> Veuillez sélectionner une compétition pour gérer ses résultats.
+    </div>
+    {% endif %}
+
+    <div id="blank_space"></div>
+</div>
+
+{% endblock %}

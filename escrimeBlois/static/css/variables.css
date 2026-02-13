@@ -1,0 +1,100 @@
+/* ==================== Variables CSS Globales ==================== */
+:root {
+  /* --- Couleurs Principales (Bleus) --- */
+  --primary: #6691ff;
+  /* Boutons principaux, liens */
+  --primary-hover: #5273cc;
+  /* Survol boutons */
+  --secondary: #6495ED;
+  /* CornflowerBlue - Accents, recherche */
+  --cold: #c3c2f4;
+  /* Thème existant (froid) */
+  --cold-dark: #a8a8a8;
+  /* Nuance plus sombre pour contrastes */
+
+  /* --- Palette Grise Étendue --- */
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+
+  /* --- Couleurs d'Accent --- */
+  --accent-coral: #ff8282;
+  /* Liens inscription, alertes douces */
+  --accent-link: #357abd;
+  /* Liens actifs */
+  --accent-link-hover: #2a5f94;
+  /* Liens survol */
+
+  /* --- Médailles/Rang --- */
+  --rank-gold: #ffd700;
+  --rank-silver: #c0c0c0;
+  --rank-bronze: #cd7f32;
+
+  /* --- Textes --- */
+  --text-main: #333333;
+  /* Texte standard */
+  --text-light: #555555;
+  /* Sous-titres, détails */
+  --text-white: #ffffff;
+  --text-black: #000000;
+
+  /* --- Arrière-plans (Backgrounds) --- */
+  --bg-body: #f5f5f5;
+  /* Fond de page général */
+  --bg-card: #f0f0f0;
+  /* Fond des formulaires, cartes */
+  --bg-medium: #dcdcdc;
+  /* Fond table, zones intermédiaires */
+  --bg-dark: #444444;
+  /* En-têtes, titres sombres */
+  --bg-footer: #484848;
+  /* Footer spécifique */
+
+  /* --- Actions & États --- */
+  --success: #4CAF50;
+  /* Vert standard */
+  --success-hover: #45a049;
+  --danger: #d90000;
+  /* Rouge */
+  --danger-hover: #b22222;
+  --warning: #ffc107;
+  /* Jaune/Orange */
+
+  /* --- Bordures & Ombres --- */
+  --border-color: #dddddd;
+  --shadow-light: 0 2px 5px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+  /* --- Typographie --- */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.25rem;
+  --line-height-base: 1.5;
+
+  /* --- Espacements --- */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* --- Bordures & Radius --- */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 15px;
+  --border-radius-pill: 20px;
+
+  /* --- Transitions & Animations --- */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
