@@ -822,28 +822,28 @@ articles:
 image:
   - id_image: 1
     nom_image: "nouveau membre"
-    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e2b30608f3f68caf31d3_94.png"
+    url_image: "/static/images/default-article-image.png"
   - id_image: 2
     nom_image: "trophée champion"
-    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e28f7fcc9ca2da09be62_Trophy.png"
+    url_image: "/static/images/default-article-image.png"
   - id_image: 3
     nom_image: "épée fleuret"
-    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e0b37fcc9ca2da09bba9_Fencing.png"
+    url_image: "/static/images/default-article-image.png"
   - id_image: 4
     nom_image: "calendrier événement"
-    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3dff57fcc9ca2da09bb4f_Calendar.png"
+    url_image: "/static/images/default-article-image.png"
   - id_image: 5
     nom_image: "étoile excellence"
-    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e2aaf8ae4b2c1ae79931_Star.png"
+    url_image: "/static/images/default-article-image.png"
   - id_image: 6
     nom_image: "celebration fête"
-    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e23c0608f3f68caf31aa_Party%20Popper.png"
+    url_image: "/static/images/default-article-image.png"
   - id_image: 7
     nom_image: "formation apprentissage"
-    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e0117fcc9ca2da09bb27_Books.png"
+    url_image: "/static/images/default-article-image.png"
   - id_image: 8
     nom_image: "cœur passion"
-    url_image: "https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e1cf7fcc9ca2da09bc8b_Red%20Heart.png"
+    url_image: "/static/images/default-article-image.png"
 
 posseder:
   - id_image: 1

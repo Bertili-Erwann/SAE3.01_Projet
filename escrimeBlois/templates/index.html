@@ -41,7 +41,7 @@
         {% if ar.miniature_image %}
         <img src="{{ ar.miniature_image.url_image }}" alt="{{ ar.miniature_image.nom_image }}"/>
         {% else %}
-        <img src="{{ url_for('static', filename='images/placeholder1.png') }}" alt=""/>
+        <img src="{{ url_for('static', filename='images/default-article-image.png') }}" alt="Image par défaut"/>
         {% endif %}
         <header>
           <h3>{{ ar.titre }}</h3>
