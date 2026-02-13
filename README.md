@@ -36,14 +36,32 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Initialiser la base de données
+### 3. Configuration des emails (optionnel)
+
+Pour activer l'envoi d'emails (récupération de mot de passe, notifications, etc.), copier le fichier `.env.example` et le renommer en `.env` :
+
+**Windows :**
+```powershell
+Copy-Item escrimeBlois\.env.example escrimeBlois\.env
+```
+
+**Linux :**
+```bash
+cp escrimeBlois/.env.example escrimeBlois/.env
+```
+
+Ensuite, éditer le fichier `escrimeBlois/.env` et configurer les paramètres SMTP :
+- **SendGrid** (recommandé, gratuit jusqu'à 100 emails/jour) : créer un compte sur [sendgrid.com](https://sendgrid.com) et générer une API Key
+- Ou utiliser un autre service SMTP en modifiant les paramètres dans le fichier `.env`
+
+### 4. Initialiser la base de données
 
 ```bash
 flask syncdb
 flask loaddb ./escrimeBlois/data/data.yml
 ```
 
-### 4. Lancer le serveur
+### 5. Lancer le serveur
 
 ```bash
 flask run
