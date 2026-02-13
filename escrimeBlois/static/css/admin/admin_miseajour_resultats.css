@@ -40,27 +40,35 @@
   min-width: 250px;
   border-radius: var(--border-radius-pill);
   border: none;
-  padding: 5px 15px;
-}
-.result-search-icon {
-  opacity: 0.6;
-  margin-left: 5px;
-}
-
-.result-search-btn,
-.result-pdf-btn {
-  border-radius: var(--border-radius-pill);
-  border: none;
-  color: var(--text-white);
-  cursor: pointer;
-  transition: var(--transition-base);
+  padding: 8px 15px;
 }
 
 .result-search-btn {
   background-color: var(--secondary);
-  padding: 5px 20px;
+  padding: 8px 20px;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-white);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  font-size: 14px;
+  border-radius: var(--border-radius-pill);
+  border: none;
 }
+
+.result-search-btn:hover {
+  background-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.result-search-btn .result-search-icon {
+  opacity: 0.8;
+  margin: 0;
+  flex-shrink: 0;
+}
+
 .result-pdf-btn {
   background-color: var(--gray-600);
   font-size: 0.8rem;
@@ -68,8 +76,13 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  border-radius: var(--border-radius-pill);
+  border: none;
+  color: var(--text-white);
+  cursor: pointer;
+  transition: var(--transition-base);
 }
-.result-search-btn:hover,
+
 .result-pdf-btn:hover {
   opacity: 0.9;
 }

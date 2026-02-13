@@ -15,7 +15,12 @@
       {% endfor %}
     </div>
     {% endif %}
-    <p>{{ article.description }}</p>
+    <p>{{ article.description|urlify|safe }}</p>
+    {% if article.lien %}
+    <div class="article-lien">
+      <a href="{{ article.lien }}" target="_blank" class="btn-lien">En savoir plus →</a>
+    </div>
+    {% endif %}
   </div>
 
   {% if article.commentable %} {% if article.commentaires %}

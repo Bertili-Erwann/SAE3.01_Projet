@@ -6,14 +6,14 @@
   </div>
   <form role="form" method="GET" action="{{ url_for('demande_article') }}">
     <p class="recherche">Recherche d'articles</p>
-  <div class="ctn-rech">
-    {{ formRech.choix_year(class_="form-control") }}
-    <div class="ctn-valider-rech">
-      {{ formRech.recherche(class_="form-control") }}
-      <input class="btn-rech-ar" type="submit" value="Rechercher">
-  </div>
+    <div class="ctn-rech">
+      {{ formRech.choix_year(class_="form-control") }}
+      <div class="ctn-valider-rech">
+        {{ formRech.recherche(class_="form-control") }}
+        <input class="btn-rech-ar" type="submit" value="Rechercher">
+      </div>
+    </div>
   </form>
-</div>
 </aside>
 <div class="header">
   <div class="header-content">
@@ -41,7 +41,7 @@
         {% if ar.miniature_image %}
         <img src="{{ ar.miniature_image.url_image }}" alt="{{ ar.miniature_image.nom_image }}"/>
         {% else %}
-        <img src="{{ url_for('static', filename='images/placeholder1.png') }}" alt=""/>
+        <img src="{{ url_for('static', filename='images/default-article-image.png') }}" alt="Image par défaut"/>
         {% endif %}
         <header>
           <h3>{{ ar.titre }}</h3>
